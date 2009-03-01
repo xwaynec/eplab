@@ -1,0 +1,715 @@
+AX51 MACRO ASSEMBLER  EEPROM                                                                02/18/09 20:32:28 PAGE     1
+
+
+MACRO ASSEMBLER AX51 V3.06a
+OBJECT MODULE PLACED IN .\eeprom.obj
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\AX51.exe .\eeprom.src EP DEBUG SYMBOLS OJ(.\eeprom.obj) PR(.\eeprom.ls1) 
+
+LOC    OBJ             LINE     SOURCE
+
+                          1     ; ./eeprom.src generated from: ..\..\include\eeprom\eeprom.c
+                          2     ; COMPILER INVOKED BY:
+                          3     ;        C:\Keil\C51\BIN\C51.exe ..\..\include\eeprom\eeprom.c BROWSE DEBUG CODE LISTINC
+                               LUDE SYMBOLS PREPRINT INCDIR(../../Include) PRINT(./eeprom.lst) PREPRINT(./eeprom.i) SRC(./eeprom.src)
+                          4     
+                          5     $nomod51 
+                          6     
+                          7     NAME    EEPROM
+                          8     
+ 00A0.7                   9     PWR_UP  BIT     0A0H.7
+ 0080                    10     P0      DATA    080H
+ 0090                    11     P1      DATA    090H
+ 00D0.6                  12     AC      BIT     0D0H.6
+ 0080.5                  13     T0      BIT     080H.5
+ 00B3                    14     SPI_CTRL        DATA    0B3H
+ 0080.6                  15     T1      BIT     080H.6
+ 00A8.7                  16     EA      BIT     0A8H.7
+ 0090.0                  17     T2      BIT     090H.0
+ 00A0.6                  18     CE      BIT     0A0H.6
+ 00BE                    19     DEV_OFFSET      DATA    0BEH
+ 00A0.1                  20     CLK1    BIT     0A0H.1
+ 0090.2                  21     DIN0    BIT     090H.2
+ 00A0.5                  22     CLK2    BIT     0A0H.5
+ 0090.0                  23     DIO0    BIT     090H.0
+ 0083                    24     DPH0    DATA    083H
+ 0090.1                  25     DIO1    BIT     090H.1
+ 00A8                    26     IE      DATA    0A8H
+ 0085                    27     DPH1    DATA    085H
+ 0080.0                  28     DIO2    BIT     080H.0
+ 0080.1                  29     DIO3    BIT     080H.1
+ 0080.0                  30     P0_0    BIT     080H.0
+ 0090.0                  31     P1_0    BIT     090H.0
+ 0080.2                  32     DIO4    BIT     080H.2
+ 0080.1                  33     P0_1    BIT     080H.1
+ 0082                    34     DPL0    DATA    082H
+ 0090.1                  35     P1_1    BIT     090H.1
+ 0080.3                  36     DIO5    BIT     080H.3
+ 0080.2                  37     P0_2    BIT     080H.2
+ 0084                    38     DPL1    DATA    084H
+ 0090.2                  39     P1_2    BIT     090H.2
+ 0080.4                  40     DIO6    BIT     080H.4
+ 0080.3                  41     P0_3    BIT     080H.3
+ 0080.5                  42     DIO7    BIT     080H.5
+ 0080.4                  43     P0_4    BIT     080H.4
+ 00A4                    44     ADCSTATIC       DATA    0A4H
+ 0080.6                  45     DIO8    BIT     080H.6
+ 0080.5                  46     P0_5    BIT     080H.5
+ 00C8.6                  47     EXF2    BIT     0C8H.6
+ 00A0.3                  48     CS      BIT     0A0H.3
+ 0080.7                  49     DIO9    BIT     080H.7
+ 0080.6                  50     P0_6    BIT     080H.6
+ 0080.7                  51     P0_7    BIT     080H.7
+ 00A8.4                  52     ES      BIT     0A8H.4
+ 00B8                    53     IP      DATA    0B8H
+ 00A0.0                  54     DATA?   BIT     0A0H.0
+ 0098.0                  55     RI      BIT     098H.0
+ 00D0.7                  56     CY      BIT     0D0H.7
+ 0098.1                  57     TI      BIT     098H.1
+AX51 MACRO ASSEMBLER  EEPROM                                                                02/18/09 20:32:28 PAGE     2
+
+ 00BC                    58     T1_1V2  DATA    0BCH
+ 008F                    59     SPC_FNC DATA    08FH
+ 00BD                    60     T2_1V2  DATA    0BDH
+ 00CB                    61     RCAP2H  DATA    0CBH
+ 00B8.4                  62     PS      BIT     0B8H.4
+ 0081                    63     SP      DATA    081H
+ 00D0.2                  64     OV      BIT     0D0H.2
+ 00B6                    65     CK_CTRL DATA    0B6H
+ 00CA                    66     RCAP2L  DATA    0CAH
+ 00B5                    67     TICK_DV DATA    0B5H
+ 00B1                    68     RSTREAS DATA    0B1H
+ 00C8.1                  69     C_T2    BIT     0C8H.1
+ 00E8.4                  70     EWDI    BIT     0E8H.4
+ 00A1                    71     ADCCON  DATA    0A1H
+ 00C8.5                  72     RCLK    BIT     0C8H.5
+ 00A2                    73     ADCDATAH        DATA    0A2H
+ 0091                    74     EXIF    DATA    091H
+ 00C8.4                  75     TCLK    BIT     0C8H.4
+ 00A0.6                  76     DR2_CE  BIT     0A0H.6
+ 00A3                    77     ADCDATAL        DATA    0A3H
+ 0099                    78     SBUF    DATA    099H
+ 0087                    79     PCON    DATA    087H
+ 0098                    80     SCON    DATA    098H
+ 00F8.4                  81     PWDI    BIT     0F8H.4
+ 0089                    82     TMOD    DATA    089H
+ 0088                    83     TCON    DATA    088H
+ 00D8.3                  84     WDTI    BIT     0D8H.3
+ 00AA                    85     PWMDUTY DATA    0AAH
+ 0088.1                  86     IE0     BIT     088H.1
+ 0088.3                  87     IE1     BIT     088H.3
+ 0094                    88     P0_DIR  DATA    094H
+ 00F0                    89     B       DATA    0F0H
+ 0096                    90     P1_DIR  DATA    096H
+ 0095                    91     P0_ALT  DATA    095H
+ 0097                    92     P1_ALT  DATA    097H
+ 00C8.0                  93     CP_RL2  BIT     0C8H.0
+ 00A0.2                  94     DR1     BIT     0A0H.2
+ 00E0                    95     ACC     DATA    0E0H
+ 00A0.6                  96     DR2     BIT     0A0H.6
+ 00B7                    97     TEST_MODE       DATA    0B7H
+ 00B4                    98     SPICLK  DATA    0B4H
+ 00C8.1                  99     CT2     BIT     0C8H.1
+ 00A8.1                 100     ET0     BIT     0A8H.1
+ 00A8.3                 101     ET1     BIT     0A8H.3
+ 0088.5                 102     TF0     BIT     088H.5
+ 0080.3                 103     INT0_N  BIT     080H.3
+ 00A8.5                 104     ET2     BIT     0A8H.5
+ 0088.7                 105     TF1     BIT     088H.7
+ 0080.4                 106     INT1_N  BIT     080H.4
+ 00C8.7                 107     TF2     BIT     0C8H.7
+ 0098.2                 108     RB8     BIT     098H.2
+ 008C                   109     TH0     DATA    08CH
+ 00A8.0                 110     EX0     BIT     0A8H.0
+ 0088.0                 111     IT0     BIT     088H.0
+ 008D                   112     TH1     DATA    08DH
+ 00A8.2                 113     EX1     BIT     0A8H.2
+ 0098.3                 114     TB8     BIT     098H.3
+ 0088.2                 115     IT1     BIT     088H.2
+ 00CD                   116     TH2     DATA    0CDH
+ 00AD                   117     REGX_CTRL       DATA    0ADH
+ 00E8.0                 118     EX2     BIT     0E8H.0
+ 00D0.0                 119     P       BIT     0D0H.0
+ 00E8.1                 120     EX3     BIT     0E8H.1
+ 0098.7                 121     SM0     BIT     098H.7
+ 008A                   122     TL0     DATA    08AH
+ 00E8.2                 123     EX4     BIT     0E8H.2
+AX51 MACRO ASSEMBLER  EEPROM                                                                02/18/09 20:32:28 PAGE     3
+
+ 0098.6                 124     SM1     BIT     098H.6
+ 008B                   125     TL1     DATA    08BH
+ 00E8.3                 126     EX5     BIT     0E8H.3
+ 0098.5                 127     SM2     BIT     098H.5
+ 00CC                   128     TL2     DATA    0CCH
+ 00E8                   129     EIE     DATA    0E8H
+ 00B8.1                 130     PT0     BIT     0B8H.1
+ 00D0.3                 131     RS0     BIT     0D0H.3
+ 00B8.3                 132     PT1     BIT     0B8H.3
+ 00D0.4                 133     RS1     BIT     0D0H.4
+ 00B8.5                 134     PT2     BIT     0B8H.5
+ 0088.4                 135     TR0     BIT     088H.4
+ 00A9                   136     PWMCON  DATA    0A9H
+ 0088.6                 137     TR1     BIT     088H.6
+ 00C8.2                 138     TR2     BIT     0C8H.2
+ 00B8.0                 139     PX0     BIT     0B8H.0
+ 00B8.2                 140     PX1     BIT     0B8H.2
+ 00F8.0                 141     PX2     BIT     0F8H.0
+ 00F8.1                 142     PX3     BIT     0F8H.1
+ 00F8.2                 143     PX4     BIT     0F8H.2
+ 0083                   144     DPH     DATA    083H
+ 00F8.3                 145     PX5     BIT     0F8H.3
+ 00F8                   146     EIP     DATA    0F8H
+ 0082                   147     DPL     DATA    082H
+ 00C8.3                 148     EXEN2   BIT     0C8H.3
+ 00C8.0                 149     CPRL2   BIT     0C8H.0
+ 0098.4                 150     REN     BIT     098H.4
+ 00C8                   151     T2CON   DATA    0C8H
+ 0086                   152     DPS     DATA    086H
+ 00B2                   153     SPI_DATA        DATA    0B2H
+ 0092                   154     MPAGE   DATA    092H
+ 0080.1                 155     RXD     BIT     080H.1
+ 00A0.4                 156     DOUT2   BIT     0A0H.4
+ 00D8                   157     EICON   DATA    0D8H
+ 008E                   158     CKCON   DATA    08EH
+ 0080.2                 159     TXD     BIT     080H.2
+ 00A0                   160     RADIO   DATA    0A0H
+ 0080.7                 161     PWM     BIT     080H.7
+ 00D0.5                 162     F0      BIT     0D0H.5
+ 00D0.1                 163     F1      BIT     0D0H.1
+ 00AC                   164     REGX_LSB        DATA    0ACH
+ 00D0                   165     PSW     DATA    0D0H
+ 00AB                   166     REGX_MSB        DATA    0ABH
+------                  167     ?PR?eeprom_init?EEPROM                   SEGMENT CODE 
+------                  168     ?PR?eeprom_status?EEPROM                 SEGMENT CODE 
+------                  169     ?PR?_eeprom_write?EEPROM                 SEGMENT CODE 
+------                  170     ?DT?_eeprom_write?EEPROM                 SEGMENT DATA OVERLAYABLE 
+------                  171     ?PR?_eeprom_read?EEPROM                  SEGMENT CODE 
+------                  172     ?DT?_eeprom_read?EEPROM                  SEGMENT DATA OVERLAYABLE 
+------                  173     ?PR?flash_erase_all?EEPROM               SEGMENT CODE 
+                        174             EXTRN   CODE (_spi_init)
+                        175             EXTRN   CODE (_spi_write_then_read)
+                        176             PUBLIC  flash_erase_all
+                        177             PUBLIC  _eeprom_read
+                        178             PUBLIC  _eeprom_write
+                        179             PUBLIC  eeprom_status
+                        180             PUBLIC  eeprom_init
+                        181     
+------                  182             RSEG  ?DT?_eeprom_read?EEPROM
+000000                  183     ?_eeprom_read?BYTE:
+000000                  184            addr?343:   DS   2
+000002                  185             ORG  2
+000002                  186            byte?344:   DS   1
+                        187     
+------                  188             RSEG  ?DT?_eeprom_write?EEPROM
+000000                  189     ?_eeprom_write?BYTE:
+AX51 MACRO ASSEMBLER  EEPROM                                                                02/18/09 20:32:28 PAGE     4
+
+000000                  190            addr?241:   DS   2
+000002                  191             ORG  2
+000002                  192            byte?242:   DS   1
+                        193     ; /*
+                        194     ;  * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+                        195     ;  * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+                        196     ;  * Permission to copy, modify, and distribute this program is granted 
+                        197     ;  * for noncommercial purposes, provided the author(s) and copyright
+                        198     ;  * notice are retained. All other uses require explicit written
+                        199     ;  * permission from NTHU. 
+                        200     ;  *
+                        201     ;  * eeprom driver
+                        202     ;  * Min-Hua Chen <orca.chen@gmail.com> 
+                        203     ;  * 2007/8/23
+                        204     ;  * 2008/3/6
+                        205     ;  */
+                        206     ; 
+                        207     ; #include "Eco/reg24e1.h"
+                        208     ; #include "spi/spi.h"
+                        209     ; #include "eeprom/eeprom.h"
+                        210     ; 
+                        211     ; 
+                        212     ; /* Eco programmer mode, issue output signal as EE_CS signal 
+                        213     ;  * to another Eco debugger board. With correct wire connection,
+                        214     ;  * we can write date to another debugging board, check the manual
+                        215     ;  * for the connection part
+                        216     ;  */
+                        217     ; 
+                        218     ; 
+                        219     ; #ifdef ECO_PROG_MODE
+                        220     ; #undef EE_CS
+                        221     ; /* I/O port as CS for Eco sensor node*/
+                        222     ; #define EE_CS INT0_N
+                        223     ; #endif 
+                        224     ; 
+                        225     ; #ifdef ECO_DEV_PROG_MODE
+                        226     ; #undef EE_CS
+                        227     ; /* I/O port as CS for new debugging boad */
+                        228     ; #define EE_CS DIO7
+                        229     ; #endif 
+                        230     ; 
+                        231     ; /* eeproom_init - init the eeprom, connect eeprom to the SPI
+                        232     ;  * interface */
+                        233     ; void eeprom_init()
+                        234     
+------                  235             RSEG  ?PR?eeprom_init?EEPROM
+000000                  236     eeprom_init:
+                        237             USING   0
+                        238                             ; SOURCE LINE # 41
+                        239     ; {
+                        240                             ; SOURCE LINE # 42
+                        241     ;       /* connect spi to eeprom and setup clock rate to 1/8 of CPU */
+                        242     ;       spi_init(SPI_CONN_EEPROM, SPI_CLK_D8);
+                        243                             ; SOURCE LINE # 44
+000000 E4               244             CLR     A
+000001 FD               245             MOV     R5,A
+000002 7F01             246             MOV     R7,#01H
+000004 120000     E     247             LCALL   _spi_init
+                        248     ;       /* set p0.0(EEPROM CSN) to output mode */
+                        249     ;       P0_DIR &= ~0x01;
+                        250                             ; SOURCE LINE # 46
+000007 5394FE           251             ANL     P0_DIR,#0FEH
+                        252     ; }
+                        253                             ; SOURCE LINE # 47
+00000A 22               254             RET     
+                        255     ; END OF eeprom_init
+AX51 MACRO ASSEMBLER  EEPROM                                                                02/18/09 20:32:28 PAGE     5
+
+                        256     
+                        257     ; 
+                        258     ; /* eeprom_status - read the status register */
+                        259     ; char eeprom_status()
+                        260     
+------                  261             RSEG  ?PR?eeprom_status?EEPROM
+000000                  262     eeprom_status:
+                        263             USING   0
+                        264                             ; SOURCE LINE # 50
+                        265     ; {
+                        266                             ; SOURCE LINE # 51
+                        267     ;       char byte;
+                        268     ;       EE_CS = 0;      /* active eeprom */
+                        269                             ; SOURCE LINE # 53
+000000 C280             270             CLR     P0_0
+                        271     ;       spi_write_then_read(EE_RDSR);   /* send read-status-register
+                        272                             ; SOURCE LINE # 54
+000002 7F05             273             MOV     R7,#05H
+000004 120000     E     274             LCALL   _spi_write_then_read
+                        275     ;                                          instruction to the eeprom */
+                        276     ;       byte = spi_write_then_read(0);
+                        277                             ; SOURCE LINE # 56
+000007 E4               278             CLR     A
+000008 FF               279             MOV     R7,A
+000009 120000     E     280             LCALL   _spi_write_then_read
+                        281     ;---- Variable 'byte?140' assigned to Register 'R7' ----
+                        282     ;       EE_CS = 1;      /* inactive eeprom */
+                        283                             ; SOURCE LINE # 57
+00000C D280             284             SETB    P0_0
+                        285     ; 
+                        286     ;       return byte;
+                        287                             ; SOURCE LINE # 59
+                        288     ; }
+                        289                             ; SOURCE LINE # 60
+00000E                  290     ?C0002:
+00000E 22               291             RET     
+                        292     ; END OF eeprom_status
+                        293     
+                        294     ; 
+                        295     ; /* eeprom_write - write a single byte to specified address
+                        296     ;  * @addr: target address
+                        297     ;  * @byte: writting byte of data
+                        298     ;  */
+                        299     ; void eeprom_write(unsigned int addr, char byte)
+                        300     
+------                  301             RSEG  ?PR?_eeprom_write?EEPROM
+000000                  302     _eeprom_write:
+                        303             USING   0
+                        304                             ; SOURCE LINE # 66
+000000 8E00       F     305             MOV     addr?241,R6
+000002 8F00       F     306             MOV     addr?241+01H,R7
+000004 8D00       F     307             MOV     byte?242,R5
+                        308     ; {
+                        309                             ; SOURCE LINE # 67
+000006                  310     ?C0003:
+                        311     ;       while (eeprom_status() & 0x01)  /* wait until write cycle done */
+                        312                             ; SOURCE LINE # 68
+000006 120000     F     313             LCALL   eeprom_status
+000009 EF               314             MOV     A,R7
+00000A 20E0F9           315             JB      ACC.0,?C0003
+00000D                  316     ?C0004:
+                        317     ;               ;
+                        318     ;       EE_CS = 0;      /* active eeprom */
+                        319                             ; SOURCE LINE # 70
+00000D C280             320             CLR     P0_0
+                        321     ;       spi_write_then_read(EE_WREN);   /* write-enable instruction */
+AX51 MACRO ASSEMBLER  EEPROM                                                                02/18/09 20:32:28 PAGE     6
+
+                        322                             ; SOURCE LINE # 71
+00000F 7F06             323             MOV     R7,#06H
+000011 120000     E     324             LCALL   _spi_write_then_read
+                        325     ;       EE_CS = 1;      /* inactive eeprom */
+                        326                             ; SOURCE LINE # 72
+000014 D280             327             SETB    P0_0
+                        328     ;       EE_CS = 0;      /* active eeprom */
+                        329                             ; SOURCE LINE # 73
+000016 C280             330             CLR     P0_0
+                        331     ;       spi_write_then_read(EE_WRITE);  /* write instruction */
+                        332                             ; SOURCE LINE # 74
+000018 7F02             333             MOV     R7,#02H
+00001A 120000     E     334             LCALL   _spi_write_then_read
+                        335     ;       spi_write_then_read(addr >> 8); /* higher byte of addr */
+                        336                             ; SOURCE LINE # 75
+00001D E500       F     337             MOV     A,addr?241
+00001F FF               338             MOV     R7,A
+000020 120000     E     339             LCALL   _spi_write_then_read
+                        340     ;       spi_write_then_read(addr & 0xff);       /* lower byte */
+                        341                             ; SOURCE LINE # 76
+000023 AF00       F     342             MOV     R7,addr?241+01H
+000025 E500       F     343             MOV     A,addr?241+01H
+000027 120000     E     344             LCALL   _spi_write_then_read
+                        345     ;       spi_write_then_read(byte);      /* write data */
+                        346                             ; SOURCE LINE # 77
+00002A AF00       F     347             MOV     R7,byte?242
+00002C 120000     E     348             LCALL   _spi_write_then_read
+                        349     ;       EE_CS = 1;      /* inactive eeprom */
+                        350                             ; SOURCE LINE # 78
+00002F D280             351             SETB    P0_0
+                        352     ;       EE_CS = 0;      /* active eeprom */
+                        353                             ; SOURCE LINE # 79
+000031 C280             354             CLR     P0_0
+                        355     ;       spi_write_then_read(EE_WRDI);   /* write-disable instruction */
+                        356                             ; SOURCE LINE # 80
+000033 7F04             357             MOV     R7,#04H
+000035 120000     E     358             LCALL   _spi_write_then_read
+                        359     ;       EE_CS = 1;      /* inactive eeprom */
+                        360                             ; SOURCE LINE # 81
+000038 D280             361             SETB    P0_0
+                        362     ; }
+                        363                             ; SOURCE LINE # 82
+00003A 22               364             RET     
+                        365     ; END OF _eeprom_write
+                        366     
+                        367     ; 
+                        368     ; /* eeprom_read - read single byte from specified address
+                        369     ;  * @addr: target address
+                        370     ;  */
+                        371     ; char eeprom_read(unsigned int addr)
+                        372     
+------                  373             RSEG  ?PR?_eeprom_read?EEPROM
+000000                  374     _eeprom_read:
+                        375             USING   0
+                        376                             ; SOURCE LINE # 87
+000000 8E00       F     377             MOV     addr?343,R6
+000002 8F00       F     378             MOV     addr?343+01H,R7
+                        379     ; {
+                        380                             ; SOURCE LINE # 88
+                        381     ;       char byte = 0;
+                        382                             ; SOURCE LINE # 89
+000004 E4               383             CLR     A
+000005 F500       F     384             MOV     byte?344,A
+000007                  385     ?C0006:
+                        386     ;       while (eeprom_status() & 0x01)  /* wait until write cycle done */
+                        387                             ; SOURCE LINE # 90
+AX51 MACRO ASSEMBLER  EEPROM                                                                02/18/09 20:32:28 PAGE     7
+
+000007 120000     F     388             LCALL   eeprom_status
+00000A EF               389             MOV     A,R7
+00000B 20E0F9           390             JB      ACC.0,?C0006
+00000E                  391     ?C0007:
+                        392     ;               ;
+                        393     ;       EE_CS = 0;      /* active eeprom */
+                        394                             ; SOURCE LINE # 92
+00000E C280             395             CLR     P0_0
+                        396     ;       spi_write_then_read(EE_READ);   /* read instruction */
+                        397                             ; SOURCE LINE # 93
+000010 7F03             398             MOV     R7,#03H
+000012 120000     E     399             LCALL   _spi_write_then_read
+                        400     ;       spi_write_then_read(addr >> 8); /* higher byte of addr */
+                        401                             ; SOURCE LINE # 94
+000015 E500       F     402             MOV     A,addr?343
+000017 FF               403             MOV     R7,A
+000018 120000     E     404             LCALL   _spi_write_then_read
+                        405     ;       spi_write_then_read(addr & 0xff);       /* lower byte */
+                        406                             ; SOURCE LINE # 95
+00001B AF00       F     407             MOV     R7,addr?343+01H
+00001D E500       F     408             MOV     A,addr?343+01H
+00001F 120000     E     409             LCALL   _spi_write_then_read
+                        410     ;       byte = spi_write_then_read(0); /* read data */
+                        411                             ; SOURCE LINE # 96
+000022 E4               412             CLR     A
+000023 FF               413             MOV     R7,A
+000024 120000     E     414             LCALL   _spi_write_then_read
+000027 8F00       F     415             MOV     byte?344,R7
+                        416     ;       EE_CS = 1;      /* inactive eeprom */
+                        417                             ; SOURCE LINE # 97
+000029 D280             418             SETB    P0_0
+                        419     ;       return byte;
+                        420                             ; SOURCE LINE # 98
+                        421     ; }
+                        422                             ; SOURCE LINE # 99
+00002B                  423     ?C0008:
+00002B 22               424             RET     
+                        425     ; END OF _eeprom_read
+                        426     
+                        427     ; 
+                        428     ; /* flash_erase_all - erase all pages on flash memory */
+                        429     ; void flash_erase_all()
+                        430     
+------                  431             RSEG  ?PR?flash_erase_all?EEPROM
+000000                  432     flash_erase_all:
+                        433             USING   0
+                        434                             ; SOURCE LINE # 102
+                        435     ; {
+                        436                             ; SOURCE LINE # 103
+000000                  437     ?C0009:
+                        438     ;       while (eeprom_status() & 0x01)  /* wait until write cycle done */
+                        439                             ; SOURCE LINE # 104
+000000 120000     F     440             LCALL   eeprom_status
+000003 EF               441             MOV     A,R7
+000004 20E0F9           442             JB      ACC.0,?C0009
+000007                  443     ?C0010:
+                        444     ;               ;
+                        445     ;       EE_CS = 0;      /* enable SPI slave */
+                        446                             ; SOURCE LINE # 106
+000007 C280             447             CLR     P0_0
+                        448     ;       spi_write_then_read(EE_WREN);   /* write-enable instruction */
+                        449                             ; SOURCE LINE # 107
+000009 7F06             450             MOV     R7,#06H
+00000B 120000     E     451             LCALL   _spi_write_then_read
+                        452     ;       EE_CS = 1;      /* start erase operation */
+                        453                             ; SOURCE LINE # 108
+AX51 MACRO ASSEMBLER  EEPROM                                                                02/18/09 20:32:28 PAGE     8
+
+00000E D280             454             SETB    P0_0
+                        455     ;       EE_CS = 0;      /* start erase operation */
+                        456                             ; SOURCE LINE # 109
+000010 C280             457             CLR     P0_0
+                        458     ;       spi_write_then_read(ERASE_ALL); /* read instruction */
+                        459                             ; SOURCE LINE # 110
+000012 7F62             460             MOV     R7,#062H
+000014 120000     E     461             LCALL   _spi_write_then_read
+                        462     ;       EE_CS = 1;      /* start erase operation */
+                        463                             ; SOURCE LINE # 111
+000017 D280             464             SETB    P0_0
+                        465     ;       while (eeprom_status() & 0x00)  /* wait until erase done */
+                        466                             ; SOURCE LINE # 112
+000019                  467     ?C0012:
+                        468     ;               ;
+                        469     ;       /* re-enable flash write operation */
+                        470     ;       EE_CS = 0;      /* enable SPI slave */
+                        471                             ; SOURCE LINE # 115
+000019 C280             472             CLR     P0_0
+                        473     ;       spi_write_then_read(EE_WREN);   /* write-enable instruction */
+                        474                             ; SOURCE LINE # 116
+00001B 7F06             475             MOV     R7,#06H
+00001D 120000     E     476             LCALL   _spi_write_then_read
+                        477     ;       EE_CS = 1;      /* start erase operation */
+                        478                             ; SOURCE LINE # 117
+000020 D280             479             SETB    P0_0
+                        480     ; }
+                        481                             ; SOURCE LINE # 118
+000022 22               482             RET     
+                        483     ; END OF flash_erase_all
+                        484     
+                        485             END
+AX51 MACRO ASSEMBLER  EEPROM                                                                02/18/09 20:32:28 PAGE     9
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                                    T Y P E  V A L U E     ATTRIBUTES
+
+?_EEPROM_READ?BYTE. . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_EEPROM_READ?EEPROM
+?_EEPROM_WRITE?BYTE . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_EEPROM_WRITE?EEPROM
+?C0002. . . . . . . . . . . . . . . . .    C  ADDR  000EH     R   SEG=?PR?EEPROM_STATUS?EEPROM
+?C0003. . . . . . . . . . . . . . . . .    C  ADDR  0006H     R   SEG=?PR?_EEPROM_WRITE?EEPROM
+?C0004. . . . . . . . . . . . . . . . .    C  ADDR  000DH     R   SEG=?PR?_EEPROM_WRITE?EEPROM
+?C0006. . . . . . . . . . . . . . . . .    C  ADDR  0007H     R   SEG=?PR?_EEPROM_READ?EEPROM
+?C0007. . . . . . . . . . . . . . . . .    C  ADDR  000EH     R   SEG=?PR?_EEPROM_READ?EEPROM
+?C0008. . . . . . . . . . . . . . . . .    C  ADDR  002BH     R   SEG=?PR?_EEPROM_READ?EEPROM
+?C0009. . . . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?FLASH_ERASE_ALL?EEPROM
+?C0010. . . . . . . . . . . . . . . . .    C  ADDR  0007H     R   SEG=?PR?FLASH_ERASE_ALL?EEPROM
+?C0012. . . . . . . . . . . . . . . . .    C  ADDR  0019H     R   SEG=?PR?FLASH_ERASE_ALL?EEPROM
+?DT?_EEPROM_READ?EEPROM . . . . . . . .    D  SEG   000003H       REL=UNIT, ALN=BYTE
+?DT?_EEPROM_WRITE?EEPROM. . . . . . . .    D  SEG   000003H       REL=UNIT, ALN=BYTE
+?PR?_EEPROM_READ?EEPROM . . . . . . . .    C  SEG   00002CH       REL=UNIT, ALN=BYTE
+?PR?_EEPROM_WRITE?EEPROM. . . . . . . .    C  SEG   00003BH       REL=UNIT, ALN=BYTE
+?PR?EEPROM_INIT?EEPROM. . . . . . . . .    C  SEG   00000BH       REL=UNIT, ALN=BYTE
+?PR?EEPROM_STATUS?EEPROM. . . . . . . .    C  SEG   00000FH       REL=UNIT, ALN=BYTE
+?PR?FLASH_ERASE_ALL?EEPROM. . . . . . .    C  SEG   000023H       REL=UNIT, ALN=BYTE
+_EEPROM_READ. . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_EEPROM_READ?EEPROM
+_EEPROM_WRITE . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_EEPROM_WRITE?EEPROM
+_SPI_INIT . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+_SPI_WRITE_THEN_READ. . . . . . . . . .    C  ADDR  -------       EXT
+AC. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.6   A   
+ACC . . . . . . . . . . . . . . . . . .    D  ADDR  00E0H     A   
+ADCCON. . . . . . . . . . . . . . . . .    D  ADDR  00A1H     A   
+ADCDATAH. . . . . . . . . . . . . . . .    D  ADDR  00A2H     A   
+ADCDATAL. . . . . . . . . . . . . . . .    D  ADDR  00A3H     A   
+ADCSTATIC . . . . . . . . . . . . . . .    D  ADDR  00A4H     A   
+ADDR?241. . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_EEPROM_WRITE?EEPROM
+ADDR?343. . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_EEPROM_READ?EEPROM
+B . . . . . . . . . . . . . . . . . . .    D  ADDR  00F0H     A   
+BYTE?242. . . . . . . . . . . . . . . .    D  ADDR  0002H     R   SEG=?DT?_EEPROM_WRITE?EEPROM
+BYTE?344. . . . . . . . . . . . . . . .    D  ADDR  0002H     R   SEG=?DT?_EEPROM_READ?EEPROM
+C_T2. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.1   A   
+CE. . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+CK_CTRL . . . . . . . . . . . . . . . .    D  ADDR  00B6H     A   
+CKCON . . . . . . . . . . . . . . . . .    D  ADDR  008EH     A   
+CLK1. . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.1   A   
+CLK2. . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.5   A   
+CP_RL2. . . . . . . . . . . . . . . . .    B  ADDR  00C8H.0   A   
+CPRL2 . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.0   A   
+CS. . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.3   A   
+CT2 . . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.1   A   
+CY. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.7   A   
+DATA? . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.0   A   
+DEV_OFFSET. . . . . . . . . . . . . . .    D  ADDR  00BEH     A   
+DIN0. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.2   A   
+DIO0. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+DIO1. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.1   A   
+DIO2. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.0   A   
+DIO3. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+DIO4. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+DIO5. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+DIO6. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+DIO7. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+DIO8. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+DIO9. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+DOUT2 . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.4   A   
+DPH . . . . . . . . . . . . . . . . . .    D  ADDR  0083H     A   
+DPH0. . . . . . . . . . . . . . . . . .    D  ADDR  0083H     A   
+AX51 MACRO ASSEMBLER  EEPROM                                                                02/18/09 20:32:28 PAGE    10
+
+DPH1. . . . . . . . . . . . . . . . . .    D  ADDR  0085H     A   
+DPL . . . . . . . . . . . . . . . . . .    D  ADDR  0082H     A   
+DPL0. . . . . . . . . . . . . . . . . .    D  ADDR  0082H     A   
+DPL1. . . . . . . . . . . . . . . . . .    D  ADDR  0084H     A   
+DPS . . . . . . . . . . . . . . . . . .    D  ADDR  0086H     A   
+DR1 . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.2   A   
+DR2 . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+DR2_CE. . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+EA. . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.7   A   
+EEPROM. . . . . . . . . . . . . . . . .    -- ----  -------       
+EEPROM_INIT . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?EEPROM_INIT?EEPROM
+EEPROM_STATUS . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?EEPROM_STATUS?EEPROM
+EICON . . . . . . . . . . . . . . . . .    D  ADDR  00D8H     A   
+EIE . . . . . . . . . . . . . . . . . .    D  ADDR  00E8H     A   
+EIP . . . . . . . . . . . . . . . . . .    D  ADDR  00F8H     A   
+ES. . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.4   A   
+ET0 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.1   A   
+ET1 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.3   A   
+ET2 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.5   A   
+EWDI. . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.4   A   
+EX0 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.0   A   
+EX1 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.2   A   
+EX2 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.0   A   
+EX3 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.1   A   
+EX4 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.2   A   
+EX5 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.3   A   
+EXEN2 . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.3   A   
+EXF2. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.6   A   
+EXIF. . . . . . . . . . . . . . . . . .    D  ADDR  0091H     A   
+F0. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.5   A   
+F1. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.1   A   
+FLASH_ERASE_ALL . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?FLASH_ERASE_ALL?EEPROM
+IE. . . . . . . . . . . . . . . . . . .    D  ADDR  00A8H     A   
+IE0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.1   A   
+IE1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.3   A   
+INT0_N. . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+INT1_N. . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+IP. . . . . . . . . . . . . . . . . . .    D  ADDR  00B8H     A   
+IT0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.0   A   
+IT1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.2   A   
+MPAGE . . . . . . . . . . . . . . . . .    D  ADDR  0092H     A   
+OV. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.2   A   
+P . . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.0   A   
+P0. . . . . . . . . . . . . . . . . . .    D  ADDR  0080H     A   
+P0_0. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.0   A   
+P0_1. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+P0_2. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+P0_3. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+P0_4. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+P0_5. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+P0_6. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+P0_7. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+P0_ALT. . . . . . . . . . . . . . . . .    D  ADDR  0095H     A   
+P0_DIR. . . . . . . . . . . . . . . . .    D  ADDR  0094H     A   
+P1. . . . . . . . . . . . . . . . . . .    D  ADDR  0090H     A   
+P1_0. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+P1_1. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.1   A   
+P1_2. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.2   A   
+P1_ALT. . . . . . . . . . . . . . . . .    D  ADDR  0097H     A   
+P1_DIR. . . . . . . . . . . . . . . . .    D  ADDR  0096H     A   
+PCON. . . . . . . . . . . . . . . . . .    D  ADDR  0087H     A   
+PS. . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.4   A   
+PSW . . . . . . . . . . . . . . . . . .    D  ADDR  00D0H     A   
+PT0 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.1   A   
+PT1 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.3   A   
+PT2 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.5   A   
+AX51 MACRO ASSEMBLER  EEPROM                                                                02/18/09 20:32:28 PAGE    11
+
+PWDI. . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.4   A   
+PWM . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+PWMCON. . . . . . . . . . . . . . . . .    D  ADDR  00A9H     A   
+PWMDUTY . . . . . . . . . . . . . . . .    D  ADDR  00AAH     A   
+PWR_UP. . . . . . . . . . . . . . . . .    B  ADDR  00A0H.7   A   
+PX0 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.0   A   
+PX1 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.2   A   
+PX2 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.0   A   
+PX3 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.1   A   
+PX4 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.2   A   
+PX5 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.3   A   
+RADIO . . . . . . . . . . . . . . . . .    D  ADDR  00A0H     A   
+RB8 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.2   A   
+RCAP2H. . . . . . . . . . . . . . . . .    D  ADDR  00CBH     A   
+RCAP2L. . . . . . . . . . . . . . . . .    D  ADDR  00CAH     A   
+RCLK. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.5   A   
+REGX_CTRL . . . . . . . . . . . . . . .    D  ADDR  00ADH     A   
+REGX_LSB. . . . . . . . . . . . . . . .    D  ADDR  00ACH     A   
+REGX_MSB. . . . . . . . . . . . . . . .    D  ADDR  00ABH     A   
+REN . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.4   A   
+RI. . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.0   A   
+RS0 . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.3   A   
+RS1 . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.4   A   
+RSTREAS . . . . . . . . . . . . . . . .    D  ADDR  00B1H     A   
+RXD . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+SBUF. . . . . . . . . . . . . . . . . .    D  ADDR  0099H     A   
+SCON. . . . . . . . . . . . . . . . . .    D  ADDR  0098H     A   
+SM0 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.7   A   
+SM1 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.6   A   
+SM2 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.5   A   
+SP. . . . . . . . . . . . . . . . . . .    D  ADDR  0081H     A   
+SPC_FNC . . . . . . . . . . . . . . . .    D  ADDR  008FH     A   
+SPI_CTRL. . . . . . . . . . . . . . . .    D  ADDR  00B3H     A   
+SPI_DATA. . . . . . . . . . . . . . . .    D  ADDR  00B2H     A   
+SPICLK. . . . . . . . . . . . . . . . .    D  ADDR  00B4H     A   
+T0. . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+T1. . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+T1_1V2. . . . . . . . . . . . . . . . .    D  ADDR  00BCH     A   
+T2. . . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+T2_1V2. . . . . . . . . . . . . . . . .    D  ADDR  00BDH     A   
+T2CON . . . . . . . . . . . . . . . . .    D  ADDR  00C8H     A   
+TB8 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.3   A   
+TCLK. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.4   A   
+TCON. . . . . . . . . . . . . . . . . .    D  ADDR  0088H     A   
+TEST_MODE . . . . . . . . . . . . . . .    D  ADDR  00B7H     A   
+TF0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.5   A   
+TF1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.7   A   
+TF2 . . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.7   A   
+TH0 . . . . . . . . . . . . . . . . . .    D  ADDR  008CH     A   
+TH1 . . . . . . . . . . . . . . . . . .    D  ADDR  008DH     A   
+TH2 . . . . . . . . . . . . . . . . . .    D  ADDR  00CDH     A   
+TI. . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.1   A   
+TICK_DV . . . . . . . . . . . . . . . .    D  ADDR  00B5H     A   
+TL0 . . . . . . . . . . . . . . . . . .    D  ADDR  008AH     A   
+TL1 . . . . . . . . . . . . . . . . . .    D  ADDR  008BH     A   
+TL2 . . . . . . . . . . . . . . . . . .    D  ADDR  00CCH     A   
+TMOD. . . . . . . . . . . . . . . . . .    D  ADDR  0089H     A   
+TR0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.4   A   
+TR1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.6   A   
+TR2 . . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.2   A   
+TXD . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+WDTI. . . . . . . . . . . . . . . . . .    B  ADDR  00D8H.3   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S).

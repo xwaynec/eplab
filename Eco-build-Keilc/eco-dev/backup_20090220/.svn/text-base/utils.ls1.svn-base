@@ -1,0 +1,678 @@
+AX51 MACRO ASSEMBLER  UTILS                                                                 02/20/09 23:30:57 PAGE     1
+
+
+MACRO ASSEMBLER AX51 V3.06a
+OBJECT MODULE PLACED IN .\utils.obj
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\AX51.exe .\utils.src EP DEBUG SYMBOLS OJ(.\utils.obj) PR(.\utils.ls1) 
+
+LOC    OBJ             LINE     SOURCE
+
+                          1     ; ./utils.src generated from: ..\..\include\utils\utils.c
+                          2     ; COMPILER INVOKED BY:
+                          3     ;        C:\Keil\C51\BIN\C51.exe ..\..\include\utils\utils.c BROWSE DEBUG CODE LISTINCLU
+                               DE SYMBOLS PREPRINT INCDIR(../../Include) PRINT(./utils.lst) PREPRINT(./utils.i) SRC(./utils.src)
+                          4     
+                          5     $nomod51 
+                          6     
+                          7     NAME    UTILS
+                          8     
+ 00A0.7                   9     PWR_UP  BIT     0A0H.7
+ 0080                    10     P0      DATA    080H
+ 0090                    11     P1      DATA    090H
+ 00D0.6                  12     AC      BIT     0D0H.6
+ 0080.5                  13     T0      BIT     080H.5
+ 00B3                    14     SPI_CTRL        DATA    0B3H
+ 0080.6                  15     T1      BIT     080H.6
+ 00A8.7                  16     EA      BIT     0A8H.7
+ 0090.0                  17     T2      BIT     090H.0
+ 00A0.6                  18     CE      BIT     0A0H.6
+ 00BE                    19     DEV_OFFSET      DATA    0BEH
+ 00A0.1                  20     CLK1    BIT     0A0H.1
+ 0090.2                  21     DIN0    BIT     090H.2
+ 00A0.5                  22     CLK2    BIT     0A0H.5
+ 0090.0                  23     DIO0    BIT     090H.0
+ 0083                    24     DPH0    DATA    083H
+ 0090.1                  25     DIO1    BIT     090H.1
+ 00A8                    26     IE      DATA    0A8H
+ 0085                    27     DPH1    DATA    085H
+ 0080.0                  28     DIO2    BIT     080H.0
+ 0080.1                  29     DIO3    BIT     080H.1
+ 0080.0                  30     P0_0    BIT     080H.0
+ 0090.0                  31     P1_0    BIT     090H.0
+ 0080.2                  32     DIO4    BIT     080H.2
+ 0080.1                  33     P0_1    BIT     080H.1
+ 0082                    34     DPL0    DATA    082H
+ 0090.1                  35     P1_1    BIT     090H.1
+ 0080.3                  36     DIO5    BIT     080H.3
+ 0080.2                  37     P0_2    BIT     080H.2
+ 0084                    38     DPL1    DATA    084H
+ 0090.2                  39     P1_2    BIT     090H.2
+ 0080.4                  40     DIO6    BIT     080H.4
+ 0080.3                  41     P0_3    BIT     080H.3
+ 0080.5                  42     DIO7    BIT     080H.5
+ 0080.4                  43     P0_4    BIT     080H.4
+ 00A4                    44     ADCSTATIC       DATA    0A4H
+ 0080.6                  45     DIO8    BIT     080H.6
+ 0080.5                  46     P0_5    BIT     080H.5
+ 00C8.6                  47     EXF2    BIT     0C8H.6
+ 00A0.3                  48     CS      BIT     0A0H.3
+ 0080.7                  49     DIO9    BIT     080H.7
+ 0080.6                  50     P0_6    BIT     080H.6
+ 0080.7                  51     P0_7    BIT     080H.7
+ 00A8.4                  52     ES      BIT     0A8H.4
+ 00B8                    53     IP      DATA    0B8H
+ 00A0.0                  54     DATA?   BIT     0A0H.0
+ 0098.0                  55     RI      BIT     098H.0
+ 00D0.7                  56     CY      BIT     0D0H.7
+ 0098.1                  57     TI      BIT     098H.1
+AX51 MACRO ASSEMBLER  UTILS                                                                 02/20/09 23:30:57 PAGE     2
+
+ 00BC                    58     T1_1V2  DATA    0BCH
+ 008F                    59     SPC_FNC DATA    08FH
+ 00BD                    60     T2_1V2  DATA    0BDH
+ 00CB                    61     RCAP2H  DATA    0CBH
+ 00B8.4                  62     PS      BIT     0B8H.4
+ 0081                    63     SP      DATA    081H
+ 00D0.2                  64     OV      BIT     0D0H.2
+ 00B6                    65     CK_CTRL DATA    0B6H
+ 00CA                    66     RCAP2L  DATA    0CAH
+ 00B5                    67     TICK_DV DATA    0B5H
+ 00B1                    68     RSTREAS DATA    0B1H
+ 00C8.1                  69     C_T2    BIT     0C8H.1
+ 00E8.4                  70     EWDI    BIT     0E8H.4
+ 00A1                    71     ADCCON  DATA    0A1H
+ 00C8.5                  72     RCLK    BIT     0C8H.5
+ 00A2                    73     ADCDATAH        DATA    0A2H
+ 0091                    74     EXIF    DATA    091H
+ 00C8.4                  75     TCLK    BIT     0C8H.4
+ 00A0.6                  76     DR2_CE  BIT     0A0H.6
+ 00A3                    77     ADCDATAL        DATA    0A3H
+ 0099                    78     SBUF    DATA    099H
+ 0087                    79     PCON    DATA    087H
+ 0098                    80     SCON    DATA    098H
+ 00F8.4                  81     PWDI    BIT     0F8H.4
+ 0089                    82     TMOD    DATA    089H
+ 0088                    83     TCON    DATA    088H
+ 00D8.3                  84     WDTI    BIT     0D8H.3
+ 00AA                    85     PWMDUTY DATA    0AAH
+ 0088.1                  86     IE0     BIT     088H.1
+ 0088.3                  87     IE1     BIT     088H.3
+ 0094                    88     P0_DIR  DATA    094H
+ 00F0                    89     B       DATA    0F0H
+ 0096                    90     P1_DIR  DATA    096H
+ 0095                    91     P0_ALT  DATA    095H
+ 0097                    92     P1_ALT  DATA    097H
+ 00C8.0                  93     CP_RL2  BIT     0C8H.0
+ 00A0.2                  94     DR1     BIT     0A0H.2
+ 00E0                    95     ACC     DATA    0E0H
+ 00A0.6                  96     DR2     BIT     0A0H.6
+ 00B7                    97     TEST_MODE       DATA    0B7H
+ 00B4                    98     SPICLK  DATA    0B4H
+ 00C8.1                  99     CT2     BIT     0C8H.1
+ 00A8.1                 100     ET0     BIT     0A8H.1
+ 00A8.3                 101     ET1     BIT     0A8H.3
+ 0088.5                 102     TF0     BIT     088H.5
+ 0080.3                 103     INT0_N  BIT     080H.3
+ 00A8.5                 104     ET2     BIT     0A8H.5
+ 0088.7                 105     TF1     BIT     088H.7
+ 0080.4                 106     INT1_N  BIT     080H.4
+ 00C8.7                 107     TF2     BIT     0C8H.7
+ 0098.2                 108     RB8     BIT     098H.2
+ 008C                   109     TH0     DATA    08CH
+ 00A8.0                 110     EX0     BIT     0A8H.0
+ 0088.0                 111     IT0     BIT     088H.0
+ 008D                   112     TH1     DATA    08DH
+ 00A8.2                 113     EX1     BIT     0A8H.2
+ 0098.3                 114     TB8     BIT     098H.3
+ 0088.2                 115     IT1     BIT     088H.2
+ 00CD                   116     TH2     DATA    0CDH
+ 00AD                   117     REGX_CTRL       DATA    0ADH
+ 00E8.0                 118     EX2     BIT     0E8H.0
+ 00D0.0                 119     P       BIT     0D0H.0
+ 00E8.1                 120     EX3     BIT     0E8H.1
+ 0098.7                 121     SM0     BIT     098H.7
+ 008A                   122     TL0     DATA    08AH
+ 00E8.2                 123     EX4     BIT     0E8H.2
+AX51 MACRO ASSEMBLER  UTILS                                                                 02/20/09 23:30:57 PAGE     3
+
+ 0098.6                 124     SM1     BIT     098H.6
+ 008B                   125     TL1     DATA    08BH
+ 00E8.3                 126     EX5     BIT     0E8H.3
+ 0098.5                 127     SM2     BIT     098H.5
+ 00CC                   128     TL2     DATA    0CCH
+ 00E8                   129     EIE     DATA    0E8H
+ 00B8.1                 130     PT0     BIT     0B8H.1
+ 00D0.3                 131     RS0     BIT     0D0H.3
+ 00B8.3                 132     PT1     BIT     0B8H.3
+ 00D0.4                 133     RS1     BIT     0D0H.4
+ 00B8.5                 134     PT2     BIT     0B8H.5
+ 0088.4                 135     TR0     BIT     088H.4
+ 00A9                   136     PWMCON  DATA    0A9H
+ 0088.6                 137     TR1     BIT     088H.6
+ 00C8.2                 138     TR2     BIT     0C8H.2
+ 00B8.0                 139     PX0     BIT     0B8H.0
+ 00B8.2                 140     PX1     BIT     0B8H.2
+ 00F8.0                 141     PX2     BIT     0F8H.0
+ 00F8.1                 142     PX3     BIT     0F8H.1
+ 00F8.2                 143     PX4     BIT     0F8H.2
+ 0083                   144     DPH     DATA    083H
+ 00F8.3                 145     PX5     BIT     0F8H.3
+ 00F8                   146     EIP     DATA    0F8H
+ 0082                   147     DPL     DATA    082H
+ 00C8.3                 148     EXEN2   BIT     0C8H.3
+ 00C8.0                 149     CPRL2   BIT     0C8H.0
+ 0098.4                 150     REN     BIT     098H.4
+ 00C8                   151     T2CON   DATA    0C8H
+ 0086                   152     DPS     DATA    086H
+ 00B2                   153     SPI_DATA        DATA    0B2H
+ 0092                   154     MPAGE   DATA    092H
+ 0080.1                 155     RXD     BIT     080H.1
+ 00A0.4                 156     DOUT2   BIT     0A0H.4
+ 00D8                   157     EICON   DATA    0D8H
+ 008E                   158     CKCON   DATA    08EH
+ 0080.2                 159     TXD     BIT     080H.2
+ 00A0                   160     RADIO   DATA    0A0H
+ 0080.7                 161     PWM     BIT     080H.7
+ 00D0.5                 162     F0      BIT     0D0H.5
+ 00D0.1                 163     F1      BIT     0D0H.1
+ 00AC                   164     REGX_LSB        DATA    0ACH
+ 00D0                   165     PSW     DATA    0D0H
+ 00AB                   166     REGX_MSB        DATA    0ABH
+------                  167     ?PR?_store_cpu_rate?UTILS                SEGMENT CODE 
+------                  168     ?PR?_mdelay?UTILS    SEGMENT CODE 
+------                  169     ?DT?_mdelay?UTILS    SEGMENT DATA OVERLAYABLE 
+------                  170     ?PR?_wdt_load?UTILS  SEGMENT CODE 
+------                  171     ?PR?_strncpy?UTILS   SEGMENT CODE 
+------                  172     ?DT?_strncpy?UTILS   SEGMENT DATA OVERLAYABLE 
+------                  173     ?DT?UTILS            SEGMENT DATA 
+                        174             EXTRN   CODE (?C?LMUL)
+                        175             EXTRN   CODE (?C?ULDIV)
+                        176             EXTRN   CODE (?C?CLDPTR)
+                        177             EXTRN   CODE (?C?CSTPTR)
+                        178             PUBLIC  MHZ
+                        179             PUBLIC  ?_strncpy?BYTE
+                        180             PUBLIC  _strncpy
+                        181             PUBLIC  _wdt_load
+                        182             PUBLIC  _mdelay
+                        183             PUBLIC  _store_cpu_rate
+                        184     
+------                  185             RSEG  ?DT?_mdelay?UTILS
+000000                  186     ?_mdelay?BYTE:
+000000                  187            msec?141:   DS   2
+                        188     
+------                  189             RSEG  ?DT?_strncpy?UTILS
+AX51 MACRO ASSEMBLER  UTILS                                                                 02/20/09 23:30:57 PAGE     4
+
+000000                  190     ?_strncpy?BYTE:
+000000                  191             src?346:   DS   3
+000003                  192             ORG  3
+000003                  193             dst?347:   DS   3
+000006                  194             ORG  6
+000006                  195               n?348:   DS   2
+                        196     
+------                  197             RSEG  ?DT?UTILS
+000000                  198                 MHZ:   DS   4
+                        199     ; /* 
+                        200     ;  * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+                        201     ;  * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+                        202     ;  * Permission to copy, modify, and distribute this program is granted 
+                        203     ;  * for noncommercial purposes, provided the author(s) and copyright
+                        204     ;  * notice are retained. All other uses require explicit written
+                        205     ;  * permission from NTHU. 
+                        206     ;  *
+                        207     ;  * utils.c
+                        208     ;  *
+                        209     ;  * small utils, architecture dependent
+                        210     ;  * the udelay is stolen from Linux kernel
+                        211     ;  * Min-Hua Chen <orca.chen@gmail.com> 
+                        212     ;  * 2007/10/22
+                        213     ;  */
+                        214     ; #include "Eco/reg24e1.h"
+                        215     ; unsigned long MHZ;    /* system clock rate */
+                        216     ; 
+                        217     ; /* 
+                        218     ;  * store_cpu_rate - store the cpu rate to the global variable MHZ
+                        219     ;  * @mhz: default cpu rate (in MHz)
+                        220     ;  */
+                        221     ; void store_cpu_rate(int mhz)
+                        222     
+------                  223             RSEG  ?PR?_store_cpu_rate?UTILS
+000000                  224     _store_cpu_rate:
+                        225                             ; SOURCE LINE # 23
+                        226     ;---- Variable 'mhz?040' assigned to Register 'R6/R7' ----
+                        227     ; {
+                        228                             ; SOURCE LINE # 24
+                        229     ;       MHZ = mhz;      /* store clock rate */
+                        230                             ; SOURCE LINE # 25
+000000 EE               231             MOV     A,R6
+000001 33               232             RLC     A
+000002 95E0             233             SUBB    A,ACC
+000004 8F00       F     234             MOV     MHZ+03H,R7
+000006 8E00       F     235             MOV     MHZ+02H,R6
+000008 F500       F     236             MOV     MHZ+01H,A
+00000A F500       F     237             MOV     MHZ,A
+                        238     ; }
+                        239                             ; SOURCE LINE # 26
+00000C 22               240             RET     
+                        241     ; END OF _store_cpu_rate
+                        242     
+                        243     ; 
+                        244     ; /* 
+                        245     ;  * mdelay - delay 1 msec
+                        246     ;  * @msec: number of msec to delay
+                        247     ;  * (HZ >> 20) instructions takes 1 usec
+                        248     ;  * This function is not verified by oscilloscope
+                        249     ;  */
+                        250     ; void mdelay(unsigned int msec)
+                        251     
+------                  252             RSEG  ?PR?_mdelay?UTILS
+000000                  253     _mdelay:
+                        254             USING   0
+                        255                             ; SOURCE LINE # 34
+AX51 MACRO ASSEMBLER  UTILS                                                                 02/20/09 23:30:57 PAGE     5
+
+000000 8E00       F     256             MOV     msec?141,R6
+000002 8F00       F     257             MOV     msec?141+01H,R7
+                        258     ; {
+                        259                             ; SOURCE LINE # 35
+                        260     ;       int i, j, instr_per_msec;
+                        261     ;       instr_per_msec = 43 * MHZ / 4;
+                        262                             ; SOURCE LINE # 37
+000004 E4               263             CLR     A
+000005 7F2B             264             MOV     R7,#02BH
+000007 FE               265             MOV     R6,A
+000008 FD               266             MOV     R5,A
+000009 FC               267             MOV     R4,A
+00000A AB00       F     268             MOV     R3,MHZ+03H
+00000C AA00       F     269             MOV     R2,MHZ+02H
+00000E A900       F     270             MOV     R1,MHZ+01H
+000010 A800       F     271             MOV     R0,MHZ
+000012 120000     E     272             LCALL   ?C?LMUL
+000015 E4               273             CLR     A
+000016 7B04             274             MOV     R3,#04H
+000018 FA               275             MOV     R2,A
+000019 F9               276             MOV     R1,A
+00001A F8               277             MOV     R0,A
+00001B 120000     E     278             LCALL   ?C?ULDIV
+                        279     ;---- Variable 'instr_per_msec?144' assigned to Register 'R6/R7' ----
+                        280     ;       for (i = 0; i < msec; i++)      /* delay */
+                        281                             ; SOURCE LINE # 38
+                        282     ;---- Variable 'i?142' assigned to Register 'R4/R5' ----
+00001E E4               283             CLR     A
+00001F FD               284             MOV     R5,A
+000020 FC               285             MOV     R4,A
+000021                  286     ?C0002:
+000021 C3               287             CLR     C
+000022 ED               288             MOV     A,R5
+000023 9500       F     289             SUBB    A,msec?141+01H
+000025 EC               290             MOV     A,R4
+000026 9500       F     291             SUBB    A,msec?141
+000028 501E             292             JNC     ?C0008
+                        293     ;               for (j = 0; j < instr_per_msec; j++)
+                        294                             ; SOURCE LINE # 39
+                        295     ;---- Variable 'j?143' assigned to Register 'R2/R3' ----
+00002A E4               296             CLR     A
+00002B FB               297             MOV     R3,A
+00002C FA               298             MOV     R2,A
+00002D                  299     ?C0005:
+00002D C3               300             CLR     C
+00002E EB               301             MOV     A,R3
+00002F 9F               302             SUBB    A,R7
+000030 EE               303             MOV     A,R6
+000031 6480             304             XRL     A,#080H
+000033 F8               305             MOV     R0,A
+000034 EA               306             MOV     A,R2
+000035 6480             307             XRL     A,#080H
+000037 98               308             SUBB    A,R0
+000038 5007             309             JNC     ?C0004
+00003A 0B               310             INC     R3
+00003B BB0001           311             CJNE    R3,#00H,?C0016
+00003E 0A               312             INC     R2
+00003F                  313     ?C0016:
+00003F 80EC             314             SJMP    ?C0005
+000041                  315     ?C0004:
+000041 0D               316             INC     R5
+000042 BD0001           317             CJNE    R5,#00H,?C0017
+000045 0C               318             INC     R4
+000046                  319     ?C0017:
+000046 80D9             320             SJMP    ?C0002
+                        321     ;                       ;
+AX51 MACRO ASSEMBLER  UTILS                                                                 02/20/09 23:30:57 PAGE     6
+
+                        322     ; }
+                        323                             ; SOURCE LINE # 41
+000048                  324     ?C0008:
+000048 22               325             RET     
+                        326     ; END OF _mdelay
+                        327     
+                        328     ; 
+                        329     ; /* 
+                        330     ;  * wdt_load - load the watchdog timer (WDT), the WDT expires when
+                        331     ;  * the number of ticks is 0. The counter decreases every 10 ms.
+                        332     ;  * @cnt: number of cycles for the watchdog timer (max: 16-bits)
+                        333     ;  */
+                        334     ; void wdt_load(unsigned int cnt)
+                        335     
+------                  336             RSEG  ?PR?_wdt_load?UTILS
+000000                  337     _wdt_load:
+                        338             USING   0
+                        339                             ; SOURCE LINE # 48
+                        340     ;---- Variable 'cnt?245' assigned to Register 'R4/R5' ----
+000000 AD07             341             MOV     R5,AR7
+000002 AC06             342             MOV     R4,AR6
+                        343     ; {
+                        344                             ; SOURCE LINE # 49
+000004                  345     ?C0009:
+                        346     ;       while ((REGX_CTRL & 0x10))      /* wait until not busy */
+                        347                             ; SOURCE LINE # 50
+000004 E5AD             348             MOV     A,REGX_CTRL
+000006 20E4FB           349             JB      ACC.4,?C0009
+000009                  350     ?C0010:
+                        351     ;               ;
+                        352     ;       REGX_MSB = cnt >> 8;
+                        353                             ; SOURCE LINE # 52
+000009 8CAB             354             MOV     REGX_MSB,R4
+                        355     ;       REGX_LSB = cnt & 0xff;
+                        356                             ; SOURCE LINE # 53
+00000B ED               357             MOV     A,R5
+00000C F5AC             358             MOV     REGX_LSB,A
+                        359     ;       REGX_CTRL = 0x08;       /* op-code for write WTD */
+                        360                             ; SOURCE LINE # 54
+00000E 75AD08           361             MOV     REGX_CTRL,#08H
+                        362     ; }
+                        363                             ; SOURCE LINE # 55
+000011 22               364             RET     
+                        365     ; END OF _wdt_load
+                        366     
+                        367     ; 
+                        368     ; /*
+                        369     ;  * strncpy - copy n bytes of data from src to dst
+                        370     ;  * @src: char pointer to source
+                        371     ;  * @dst: char pointer to destination
+                        372     ;  * @n: number of bytes of data
+                        373     ;  */
+                        374     ; void strncpy(char *src, char *dst, int n)
+                        375     
+------                  376             RSEG  ?PR?_strncpy?UTILS
+000000                  377     _strncpy:
+                        378             USING   0
+                        379                             ; SOURCE LINE # 63
+000000 8B00       F     380             MOV     src?346,R3
+000002 8A00       F     381             MOV     src?346+01H,R2
+000004 8900       F     382             MOV     src?346+02H,R1
+                        383     ; {
+                        384                             ; SOURCE LINE # 64
+                        385     ;       int i;
+                        386     ;       for (i = 0; i < n; i++) {
+                        387                             ; SOURCE LINE # 66
+AX51 MACRO ASSEMBLER  UTILS                                                                 02/20/09 23:30:57 PAGE     7
+
+                        388     ;---- Variable 'i?349' assigned to Register 'R6/R7' ----
+000006 E4               389             CLR     A
+000007 FF               390             MOV     R7,A
+000008 FE               391             MOV     R6,A
+000009                  392     ?C0012:
+000009 C3               393             CLR     C
+00000A EF               394             MOV     A,R7
+00000B 9500       F     395             SUBB    A,n?348+01H
+00000D E500       F     396             MOV     A,n?348
+00000F 6480             397             XRL     A,#080H
+000011 F8               398             MOV     R0,A
+000012 EE               399             MOV     A,R6
+000013 6480             400             XRL     A,#080H
+000015 98               401             SUBB    A,R0
+000016 502B             402             JNC     ?C0015
+                        403     ;               *dst++ = *src++;
+                        404                             ; SOURCE LINE # 67
+000018 AB00       F     405             MOV     R3,src?346
+00001A 0500       F     406             INC     src?346+02H
+00001C E500       F     407             MOV     A,src?346+02H
+00001E AA00       F     408             MOV     R2,src?346+01H
+000020 7002             409             JNZ     ?C0018
+000022 0500       F     410             INC     src?346+01H
+000024                  411     ?C0018:
+000024 14               412             DEC     A
+000025 F9               413             MOV     R1,A
+000026 120000     E     414             LCALL   ?C?CLDPTR
+000029 FD               415             MOV     R5,A
+00002A AB00       F     416             MOV     R3,dst?347
+00002C 0500       F     417             INC     dst?347+02H
+00002E E500       F     418             MOV     A,dst?347+02H
+000030 AA00       F     419             MOV     R2,dst?347+01H
+000032 7002             420             JNZ     ?C0019
+000034 0500       F     421             INC     dst?347+01H
+000036                  422     ?C0019:
+000036 14               423             DEC     A
+000037 F9               424             MOV     R1,A
+000038 ED               425             MOV     A,R5
+000039 120000     E     426             LCALL   ?C?CSTPTR
+                        427     ;       }
+                        428                             ; SOURCE LINE # 68
+00003C 0F               429             INC     R7
+00003D BF0001           430             CJNE    R7,#00H,?C0020
+000040 0E               431             INC     R6
+000041                  432     ?C0020:
+000041 80C6             433             SJMP    ?C0012
+                        434     ; }
+                        435                             ; SOURCE LINE # 69
+000043                  436     ?C0015:
+000043 22               437             RET     
+                        438     ; END OF _strncpy
+                        439     
+                        440             END
+AX51 MACRO ASSEMBLER  UTILS                                                                 02/20/09 23:30:57 PAGE     8
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                                    T Y P E  V A L U E     ATTRIBUTES
+
+?_MDELAY?BYTE . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_MDELAY?UTILS
+?_STRNCPY?BYTE. . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_STRNCPY?UTILS
+?C0002. . . . . . . . . . . . . . . . .    C  ADDR  0021H     R   SEG=?PR?_MDELAY?UTILS
+?C0004. . . . . . . . . . . . . . . . .    C  ADDR  0041H     R   SEG=?PR?_MDELAY?UTILS
+?C0005. . . . . . . . . . . . . . . . .    C  ADDR  002DH     R   SEG=?PR?_MDELAY?UTILS
+?C0008. . . . . . . . . . . . . . . . .    C  ADDR  0048H     R   SEG=?PR?_MDELAY?UTILS
+?C0009. . . . . . . . . . . . . . . . .    C  ADDR  0004H     R   SEG=?PR?_WDT_LOAD?UTILS
+?C0010. . . . . . . . . . . . . . . . .    C  ADDR  0009H     R   SEG=?PR?_WDT_LOAD?UTILS
+?C0012. . . . . . . . . . . . . . . . .    C  ADDR  0009H     R   SEG=?PR?_STRNCPY?UTILS
+?C0015. . . . . . . . . . . . . . . . .    C  ADDR  0043H     R   SEG=?PR?_STRNCPY?UTILS
+?C0016. . . . . . . . . . . . . . . . .    C  ADDR  003FH     R   SEG=?PR?_MDELAY?UTILS
+?C0017. . . . . . . . . . . . . . . . .    C  ADDR  0046H     R   SEG=?PR?_MDELAY?UTILS
+?C0018. . . . . . . . . . . . . . . . .    C  ADDR  0024H     R   SEG=?PR?_STRNCPY?UTILS
+?C0019. . . . . . . . . . . . . . . . .    C  ADDR  0036H     R   SEG=?PR?_STRNCPY?UTILS
+?C0020. . . . . . . . . . . . . . . . .    C  ADDR  0041H     R   SEG=?PR?_STRNCPY?UTILS
+?C?CLDPTR . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C?CSTPTR . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C?LMUL . . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C?ULDIV. . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?DT?_MDELAY?UTILS . . . . . . . . . . .    D  SEG   000002H       REL=UNIT, ALN=BYTE
+?DT?_STRNCPY?UTILS. . . . . . . . . . .    D  SEG   000008H       REL=UNIT, ALN=BYTE
+?DT?UTILS . . . . . . . . . . . . . . .    D  SEG   000004H       REL=UNIT, ALN=BYTE
+?PR?_MDELAY?UTILS . . . . . . . . . . .    C  SEG   000049H       REL=UNIT, ALN=BYTE
+?PR?_STORE_CPU_RATE?UTILS . . . . . . .    C  SEG   00000DH       REL=UNIT, ALN=BYTE
+?PR?_STRNCPY?UTILS. . . . . . . . . . .    C  SEG   000044H       REL=UNIT, ALN=BYTE
+?PR?_WDT_LOAD?UTILS . . . . . . . . . .    C  SEG   000012H       REL=UNIT, ALN=BYTE
+_MDELAY . . . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_MDELAY?UTILS
+_STORE_CPU_RATE . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_STORE_CPU_RATE?UTILS
+_STRNCPY. . . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_STRNCPY?UTILS
+_WDT_LOAD . . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_WDT_LOAD?UTILS
+AC. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.6   A   
+ACC . . . . . . . . . . . . . . . . . .    D  ADDR  00E0H     A   
+ADCCON. . . . . . . . . . . . . . . . .    D  ADDR  00A1H     A   
+ADCDATAH. . . . . . . . . . . . . . . .    D  ADDR  00A2H     A   
+ADCDATAL. . . . . . . . . . . . . . . .    D  ADDR  00A3H     A   
+ADCSTATIC . . . . . . . . . . . . . . .    D  ADDR  00A4H     A   
+AR6 . . . . . . . . . . . . . . . . . .    D  ADDR  0006H     A   
+AR7 . . . . . . . . . . . . . . . . . .    D  ADDR  0007H     A   
+B . . . . . . . . . . . . . . . . . . .    D  ADDR  00F0H     A   
+C_T2. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.1   A   
+CE. . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+CK_CTRL . . . . . . . . . . . . . . . .    D  ADDR  00B6H     A   
+CKCON . . . . . . . . . . . . . . . . .    D  ADDR  008EH     A   
+CLK1. . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.1   A   
+CLK2. . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.5   A   
+CP_RL2. . . . . . . . . . . . . . . . .    B  ADDR  00C8H.0   A   
+CPRL2 . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.0   A   
+CS. . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.3   A   
+CT2 . . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.1   A   
+CY. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.7   A   
+DATA? . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.0   A   
+DEV_OFFSET. . . . . . . . . . . . . . .    D  ADDR  00BEH     A   
+DIN0. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.2   A   
+DIO0. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+DIO1. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.1   A   
+DIO2. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.0   A   
+DIO3. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+DIO4. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+DIO5. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+DIO6. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+AX51 MACRO ASSEMBLER  UTILS                                                                 02/20/09 23:30:57 PAGE     9
+
+DIO7. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+DIO8. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+DIO9. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+DOUT2 . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.4   A   
+DPH . . . . . . . . . . . . . . . . . .    D  ADDR  0083H     A   
+DPH0. . . . . . . . . . . . . . . . . .    D  ADDR  0083H     A   
+DPH1. . . . . . . . . . . . . . . . . .    D  ADDR  0085H     A   
+DPL . . . . . . . . . . . . . . . . . .    D  ADDR  0082H     A   
+DPL0. . . . . . . . . . . . . . . . . .    D  ADDR  0082H     A   
+DPL1. . . . . . . . . . . . . . . . . .    D  ADDR  0084H     A   
+DPS . . . . . . . . . . . . . . . . . .    D  ADDR  0086H     A   
+DR1 . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.2   A   
+DR2 . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+DR2_CE. . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+DST?347 . . . . . . . . . . . . . . . .    D  ADDR  0003H     R   SEG=?DT?_STRNCPY?UTILS
+EA. . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.7   A   
+EICON . . . . . . . . . . . . . . . . .    D  ADDR  00D8H     A   
+EIE . . . . . . . . . . . . . . . . . .    D  ADDR  00E8H     A   
+EIP . . . . . . . . . . . . . . . . . .    D  ADDR  00F8H     A   
+ES. . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.4   A   
+ET0 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.1   A   
+ET1 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.3   A   
+ET2 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.5   A   
+EWDI. . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.4   A   
+EX0 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.0   A   
+EX1 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.2   A   
+EX2 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.0   A   
+EX3 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.1   A   
+EX4 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.2   A   
+EX5 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.3   A   
+EXEN2 . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.3   A   
+EXF2. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.6   A   
+EXIF. . . . . . . . . . . . . . . . . .    D  ADDR  0091H     A   
+F0. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.5   A   
+F1. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.1   A   
+IE. . . . . . . . . . . . . . . . . . .    D  ADDR  00A8H     A   
+IE0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.1   A   
+IE1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.3   A   
+INT0_N. . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+INT1_N. . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+IP. . . . . . . . . . . . . . . . . . .    D  ADDR  00B8H     A   
+IT0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.0   A   
+IT1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.2   A   
+MHZ . . . . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?UTILS
+MPAGE . . . . . . . . . . . . . . . . .    D  ADDR  0092H     A   
+MSEC?141. . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_MDELAY?UTILS
+N?348 . . . . . . . . . . . . . . . . .    D  ADDR  0006H     R   SEG=?DT?_STRNCPY?UTILS
+OV. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.2   A   
+P . . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.0   A   
+P0. . . . . . . . . . . . . . . . . . .    D  ADDR  0080H     A   
+P0_0. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.0   A   
+P0_1. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+P0_2. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+P0_3. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+P0_4. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+P0_5. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+P0_6. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+P0_7. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+P0_ALT. . . . . . . . . . . . . . . . .    D  ADDR  0095H     A   
+P0_DIR. . . . . . . . . . . . . . . . .    D  ADDR  0094H     A   
+P1. . . . . . . . . . . . . . . . . . .    D  ADDR  0090H     A   
+P1_0. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+P1_1. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.1   A   
+P1_2. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.2   A   
+P1_ALT. . . . . . . . . . . . . . . . .    D  ADDR  0097H     A   
+P1_DIR. . . . . . . . . . . . . . . . .    D  ADDR  0096H     A   
+AX51 MACRO ASSEMBLER  UTILS                                                                 02/20/09 23:30:57 PAGE    10
+
+PCON. . . . . . . . . . . . . . . . . .    D  ADDR  0087H     A   
+PS. . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.4   A   
+PSW . . . . . . . . . . . . . . . . . .    D  ADDR  00D0H     A   
+PT0 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.1   A   
+PT1 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.3   A   
+PT2 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.5   A   
+PWDI. . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.4   A   
+PWM . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+PWMCON. . . . . . . . . . . . . . . . .    D  ADDR  00A9H     A   
+PWMDUTY . . . . . . . . . . . . . . . .    D  ADDR  00AAH     A   
+PWR_UP. . . . . . . . . . . . . . . . .    B  ADDR  00A0H.7   A   
+PX0 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.0   A   
+PX1 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.2   A   
+PX2 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.0   A   
+PX3 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.1   A   
+PX4 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.2   A   
+PX5 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.3   A   
+RADIO . . . . . . . . . . . . . . . . .    D  ADDR  00A0H     A   
+RB8 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.2   A   
+RCAP2H. . . . . . . . . . . . . . . . .    D  ADDR  00CBH     A   
+RCAP2L. . . . . . . . . . . . . . . . .    D  ADDR  00CAH     A   
+RCLK. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.5   A   
+REGX_CTRL . . . . . . . . . . . . . . .    D  ADDR  00ADH     A   
+REGX_LSB. . . . . . . . . . . . . . . .    D  ADDR  00ACH     A   
+REGX_MSB. . . . . . . . . . . . . . . .    D  ADDR  00ABH     A   
+REN . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.4   A   
+RI. . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.0   A   
+RS0 . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.3   A   
+RS1 . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.4   A   
+RSTREAS . . . . . . . . . . . . . . . .    D  ADDR  00B1H     A   
+RXD . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+SBUF. . . . . . . . . . . . . . . . . .    D  ADDR  0099H     A   
+SCON. . . . . . . . . . . . . . . . . .    D  ADDR  0098H     A   
+SM0 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.7   A   
+SM1 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.6   A   
+SM2 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.5   A   
+SP. . . . . . . . . . . . . . . . . . .    D  ADDR  0081H     A   
+SPC_FNC . . . . . . . . . . . . . . . .    D  ADDR  008FH     A   
+SPI_CTRL. . . . . . . . . . . . . . . .    D  ADDR  00B3H     A   
+SPI_DATA. . . . . . . . . . . . . . . .    D  ADDR  00B2H     A   
+SPICLK. . . . . . . . . . . . . . . . .    D  ADDR  00B4H     A   
+SRC?346 . . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_STRNCPY?UTILS
+T0. . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+T1. . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+T1_1V2. . . . . . . . . . . . . . . . .    D  ADDR  00BCH     A   
+T2. . . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+T2_1V2. . . . . . . . . . . . . . . . .    D  ADDR  00BDH     A   
+T2CON . . . . . . . . . . . . . . . . .    D  ADDR  00C8H     A   
+TB8 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.3   A   
+TCLK. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.4   A   
+TCON. . . . . . . . . . . . . . . . . .    D  ADDR  0088H     A   
+TEST_MODE . . . . . . . . . . . . . . .    D  ADDR  00B7H     A   
+TF0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.5   A   
+TF1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.7   A   
+TF2 . . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.7   A   
+TH0 . . . . . . . . . . . . . . . . . .    D  ADDR  008CH     A   
+TH1 . . . . . . . . . . . . . . . . . .    D  ADDR  008DH     A   
+TH2 . . . . . . . . . . . . . . . . . .    D  ADDR  00CDH     A   
+TI. . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.1   A   
+TICK_DV . . . . . . . . . . . . . . . .    D  ADDR  00B5H     A   
+TL0 . . . . . . . . . . . . . . . . . .    D  ADDR  008AH     A   
+TL1 . . . . . . . . . . . . . . . . . .    D  ADDR  008BH     A   
+TL2 . . . . . . . . . . . . . . . . . .    D  ADDR  00CCH     A   
+TMOD. . . . . . . . . . . . . . . . . .    D  ADDR  0089H     A   
+TR0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.4   A   
+TR1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.6   A   
+AX51 MACRO ASSEMBLER  UTILS                                                                 02/20/09 23:30:57 PAGE    11
+
+TR2 . . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.2   A   
+TXD . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+UTILS . . . . . . . . . . . . . . . . .    -- ----  -------       
+WDTI. . . . . . . . . . . . . . . . . .    B  ADDR  00D8H.3   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S).

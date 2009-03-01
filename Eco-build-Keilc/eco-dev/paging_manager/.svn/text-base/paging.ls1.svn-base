@@ -1,0 +1,1374 @@
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE     1
+
+
+MACRO ASSEMBLER AX51 V3.06a
+OBJECT MODULE PLACED IN .\paging.obj
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\AX51.exe .\paging.src EP DEBUG SYMBOLS OJ(.\paging.obj) PR(.\paging.ls1) 
+
+LOC    OBJ             LINE     SOURCE
+
+                          1     ; ./paging.src generated from: ./paging.c
+                          2     ; COMPILER INVOKED BY:
+                          3     ;        c:\Keil\C51\BIN\C51.exe ./paging.c BROWSE DEBUG CODE LISTINCLUDE SYMBOLS PREPRI
+                               NT INCDIR(../../Include) SRC(./paging.src)
+                          4     
+                          5     $nomod51 
+                          6     
+                          7     NAME    __PAGING
+                          8     
+ 00A0.7                   9     PWR_UP  BIT     0A0H.7
+ 0080                    10     P0      DATA    080H
+ 0090                    11     P1      DATA    090H
+ 00D0.6                  12     AC      BIT     0D0H.6
+ 0080.5                  13     T0      BIT     080H.5
+ 00B3                    14     SPI_CTRL        DATA    0B3H
+ 0080.6                  15     T1      BIT     080H.6
+ 00A8.7                  16     EA      BIT     0A8H.7
+ 0090.0                  17     T2      BIT     090H.0
+ 00A0.6                  18     CE      BIT     0A0H.6
+ 00BE                    19     DEV_OFFSET      DATA    0BEH
+ 00A0.1                  20     CLK1    BIT     0A0H.1
+ 0090.2                  21     DIN0    BIT     090H.2
+ 00A0.5                  22     CLK2    BIT     0A0H.5
+ 0090.0                  23     DIO0    BIT     090H.0
+ 0083                    24     DPH0    DATA    083H
+ 0090.1                  25     DIO1    BIT     090H.1
+ 00A8                    26     IE      DATA    0A8H
+ 0085                    27     DPH1    DATA    085H
+ 0080.0                  28     DIO2    BIT     080H.0
+ 0080.1                  29     DIO3    BIT     080H.1
+ 0080.0                  30     P0_0    BIT     080H.0
+ 0090.0                  31     P1_0    BIT     090H.0
+ 0080.2                  32     DIO4    BIT     080H.2
+ 0080.1                  33     P0_1    BIT     080H.1
+ 0082                    34     DPL0    DATA    082H
+ 0090.1                  35     P1_1    BIT     090H.1
+ 0080.3                  36     DIO5    BIT     080H.3
+ 0080.2                  37     P0_2    BIT     080H.2
+ 0084                    38     DPL1    DATA    084H
+ 0090.2                  39     P1_2    BIT     090H.2
+ 0080.4                  40     DIO6    BIT     080H.4
+ 0080.3                  41     P0_3    BIT     080H.3
+ 0080.5                  42     DIO7    BIT     080H.5
+ 0080.4                  43     P0_4    BIT     080H.4
+ 00A4                    44     ADCSTATIC       DATA    0A4H
+ 0080.6                  45     DIO8    BIT     080H.6
+ 0080.5                  46     P0_5    BIT     080H.5
+ 00C8.6                  47     EXF2    BIT     0C8H.6
+ 00A0.3                  48     CS      BIT     0A0H.3
+ 0080.7                  49     DIO9    BIT     080H.7
+ 0080.6                  50     P0_6    BIT     080H.6
+ 0080.7                  51     P0_7    BIT     080H.7
+ 00A8.4                  52     ES      BIT     0A8H.4
+ 00B8                    53     IP      DATA    0B8H
+ 00A0.0                  54     DATA?   BIT     0A0H.0
+ 0098.0                  55     RI      BIT     098H.0
+ 00D0.7                  56     CY      BIT     0D0H.7
+ 0098.1                  57     TI      BIT     098H.1
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE     2
+
+ 00BC                    58     T1_1V2  DATA    0BCH
+ 008F                    59     SPC_FNC DATA    08FH
+ 00BD                    60     T2_1V2  DATA    0BDH
+ 00CB                    61     RCAP2H  DATA    0CBH
+ 00B8.4                  62     PS      BIT     0B8H.4
+ 0081                    63     SP      DATA    081H
+ 00D0.2                  64     OV      BIT     0D0H.2
+ 00B6                    65     CK_CTRL DATA    0B6H
+ 00CA                    66     RCAP2L  DATA    0CAH
+ 00B5                    67     TICK_DV DATA    0B5H
+ 00B1                    68     RSTREAS DATA    0B1H
+ 00C8.1                  69     C_T2    BIT     0C8H.1
+ 00E8.4                  70     EWDI    BIT     0E8H.4
+ 00A1                    71     ADCCON  DATA    0A1H
+ 00C8.5                  72     RCLK    BIT     0C8H.5
+ 00A2                    73     ADCDATAH        DATA    0A2H
+ 0091                    74     EXIF    DATA    091H
+ 00C8.4                  75     TCLK    BIT     0C8H.4
+ 00A0.6                  76     DR2_CE  BIT     0A0H.6
+ 00A3                    77     ADCDATAL        DATA    0A3H
+ 0099                    78     SBUF    DATA    099H
+ 0087                    79     PCON    DATA    087H
+ 0098                    80     SCON    DATA    098H
+ 00F8.4                  81     PWDI    BIT     0F8H.4
+ 0089                    82     TMOD    DATA    089H
+ 0088                    83     TCON    DATA    088H
+ 00D8.3                  84     WDTI    BIT     0D8H.3
+ 00AA                    85     PWMDUTY DATA    0AAH
+ 0088.1                  86     IE0     BIT     088H.1
+ 0088.3                  87     IE1     BIT     088H.3
+ 0094                    88     P0_DIR  DATA    094H
+ 00F0                    89     B       DATA    0F0H
+ 0096                    90     P1_DIR  DATA    096H
+ 0095                    91     P0_ALT  DATA    095H
+ 0097                    92     P1_ALT  DATA    097H
+ 00C8.0                  93     CP_RL2  BIT     0C8H.0
+ 00A0.2                  94     DR1     BIT     0A0H.2
+ 00E0                    95     ACC     DATA    0E0H
+ 00A0.6                  96     DR2     BIT     0A0H.6
+ 00B7                    97     TEST_MODE       DATA    0B7H
+ 00B4                    98     SPICLK  DATA    0B4H
+ 00C8.1                  99     CT2     BIT     0C8H.1
+ 00A8.1                 100     ET0     BIT     0A8H.1
+ 00A8.3                 101     ET1     BIT     0A8H.3
+ 0088.5                 102     TF0     BIT     088H.5
+ 0080.3                 103     INT0_N  BIT     080H.3
+ 00A8.5                 104     ET2     BIT     0A8H.5
+ 0088.7                 105     TF1     BIT     088H.7
+ 0080.4                 106     INT1_N  BIT     080H.4
+ 00C8.7                 107     TF2     BIT     0C8H.7
+ 0098.2                 108     RB8     BIT     098H.2
+ 008C                   109     TH0     DATA    08CH
+ 00A8.0                 110     EX0     BIT     0A8H.0
+ 0088.0                 111     IT0     BIT     088H.0
+ 008D                   112     TH1     DATA    08DH
+ 00A8.2                 113     EX1     BIT     0A8H.2
+ 0098.3                 114     TB8     BIT     098H.3
+ 0088.2                 115     IT1     BIT     088H.2
+ 00CD                   116     TH2     DATA    0CDH
+ 00AD                   117     REGX_CTRL       DATA    0ADH
+ 00E8.0                 118     EX2     BIT     0E8H.0
+ 00D0.0                 119     P       BIT     0D0H.0
+ 00E8.1                 120     EX3     BIT     0E8H.1
+ 0098.7                 121     SM0     BIT     098H.7
+ 008A                   122     TL0     DATA    08AH
+ 00E8.2                 123     EX4     BIT     0E8H.2
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE     3
+
+ 0098.6                 124     SM1     BIT     098H.6
+ 008B                   125     TL1     DATA    08BH
+ 00E8.3                 126     EX5     BIT     0E8H.3
+ 0098.5                 127     SM2     BIT     098H.5
+ 00CC                   128     TL2     DATA    0CCH
+ 00E8                   129     EIE     DATA    0E8H
+ 00B8.1                 130     PT0     BIT     0B8H.1
+ 00D0.3                 131     RS0     BIT     0D0H.3
+ 00B8.3                 132     PT1     BIT     0B8H.3
+ 00D0.4                 133     RS1     BIT     0D0H.4
+ 00B8.5                 134     PT2     BIT     0B8H.5
+ 0088.4                 135     TR0     BIT     088H.4
+ 00A9                   136     PWMCON  DATA    0A9H
+ 0088.6                 137     TR1     BIT     088H.6
+ 00C8.2                 138     TR2     BIT     0C8H.2
+ 00B8.0                 139     PX0     BIT     0B8H.0
+ 00B8.2                 140     PX1     BIT     0B8H.2
+ 00F8.0                 141     PX2     BIT     0F8H.0
+ 00F8.1                 142     PX3     BIT     0F8H.1
+ 00F8.2                 143     PX4     BIT     0F8H.2
+ 0083                   144     DPH     DATA    083H
+ 00F8.3                 145     PX5     BIT     0F8H.3
+ 00F8                   146     EIP     DATA    0F8H
+ 0082                   147     DPL     DATA    082H
+ 00C8.3                 148     EXEN2   BIT     0C8H.3
+ 00C8.0                 149     CPRL2   BIT     0C8H.0
+ 0098.4                 150     REN     BIT     098H.4
+ 00C8                   151     T2CON   DATA    0C8H
+ 0086                   152     DPS     DATA    086H
+ 00B2                   153     SPI_DATA        DATA    0B2H
+ 0092                   154     MPAGE   DATA    092H
+ 0080.1                 155     RXD     BIT     080H.1
+ 00A0.4                 156     DOUT2   BIT     0A0H.4
+ 00D8                   157     EICON   DATA    0D8H
+ 008E                   158     CKCON   DATA    08EH
+ 0080.2                 159     TXD     BIT     080H.2
+ 00A0                   160     RADIO   DATA    0A0H
+ 0080.7                 161     PWM     BIT     080H.7
+ 00D0.5                 162     F0      BIT     0D0H.5
+ 00D0.1                 163     F1      BIT     0D0H.1
+ 00AC                   164     REGX_LSB        DATA    0ACH
+ 00D0                   165     PSW     DATA    0D0H
+ 00AB                   166     REGX_MSB        DATA    0ABH
+------                  167     ?PR?ECO_PAGE_INIT?__PAGING               SEGMENT CODE 
+------                  168     ?PR?_ECO_PAGE_TABLE_UPDATE?__PAGING      SEGMENT CODE 
+------                  169     ?PR?ECO_PAGE_SEGMENT_UPDATE?__PAGING     SEGMENT CODE 
+------                  170     ?DT?ECO_PAGE_SEGMENT_UPDATE?__PAGING     SEGMENT DATA OVERLAYABLE 
+------                  171     ?PR?ECO_PAGE_MANAGER?__PAGING            SEGMENT CODE 
+------                  172     ?DT?ECO_PAGE_MANAGER?__PAGING            SEGMENT DATA OVERLAYABLE 
+------                  173     ?PR?_blink_led_auto?__PAGING             SEGMENT CODE 
+------                  174     ?DT?_blink_led_auto?__PAGING             SEGMENT DATA OVERLAYABLE 
+------                  175     ?PR?_blink_led_by_time?__PAGING          SEGMENT CODE 
+------                  176     ?DT?_blink_led_by_time?__PAGING          SEGMENT DATA OVERLAYABLE 
+------                  177     ?PR?blink_fast?__PAGING                  SEGMENT CODE 
+------                  178     ?DT?blink_fast?__PAGING                  SEGMENT DATA OVERLAYABLE 
+------                  179     ?PR?blink_fast2?__PAGING                 SEGMENT CODE 
+------                  180     ?DT?blink_fast2?__PAGING                 SEGMENT DATA OVERLAYABLE 
+------                  181     ?PR?main?__PAGING    SEGMENT CODE 
+------                  182     ?DT?main?__PAGING    SEGMENT DATA OVERLAYABLE 
+------                  183     ?DT?__PAGING         SEGMENT DATA 
+                        184             EXTRN   CODE (_mdelay)
+                        185             EXTRN   CODE (_eeprom_read)
+                        186             EXTRN   CODE (eeprom_init)
+                        187             EXTRN   CODE (_store_cpu_rate)
+                        188             EXTRN   CODE (?C?IMUL)
+                        189             EXTRN   CODE (?C_STARTUP)
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE     4
+
+                        190             EXTRN   CODE (?C?ICALL2)
+                        191             PUBLIC  main
+                        192             PUBLIC  blink_fast2
+                        193             PUBLIC  blink_fast
+                        194             PUBLIC  _blink_led_by_time
+                        195             PUBLIC  ?_blink_led_auto?BYTE
+                        196             PUBLIC  _blink_led_auto
+                        197             PUBLIC  ECO_PAGE_MANAGER
+                        198             PUBLIC  ECO_PAGE_SEGMENT_UPDATE
+                        199             PUBLIC  _ECO_PAGE_TABLE_UPDATE
+                        200             PUBLIC  ECO_PAGE_INIT
+                        201     
+------                  202             RSEG  ?DT?blink_fast?__PAGING
+000000                  203     ?blink_fast?BYTE:
+000000                  204               i?655:   DS   2
+                        205     
+------                  206             RSEG  ?DT?main?__PAGING
+000000                  207     ?main?BYTE:
+000000                  208               i?857:   DS   2
+                        209     
+------                  210             RSEG  ?DT?ECO_PAGE_MANAGER?__PAGING
+000000                  211     ?ECO_PAGE_MANAGER?BYTE:
+000004                  212             ORG  4
+000004                  213             seg?343:   DS   2
+000000                  214             ORG  0
+000000                  215               i?344:   DS   2
+000002                  216             ORG  2
+000002                  217      page_index?345:   DS   2
+                        218     
+------                  219             RSEG  ?DT?_blink_led_auto?__PAGING
+000000                  220     ?_blink_led_auto?BYTE:
+000000                  221               x?446:   DS   2
+000002                  222             ORG  2
+000002                  223               y?447:   DS   2
+000004                  224             ORG  4
+000004                  225               z?448:   DS   2
+000006                  226             ORG  6
+000006                  227               w?449:   DS   2
+000008                  228             ORG  8
+000008                  229               s?450:   DS   2
+00000A                  230             ORG  10
+00000A                  231               i?451:   DS   2
+                        232     
+------                  233             RSEG  ?DT?blink_fast2?__PAGING
+000000                  234     ?blink_fast2?BYTE:
+000000                  235               i?756:   DS   2
+                        236     
+------                  237             RSEG  ?DT?ECO_PAGE_SEGMENT_UPDATE?__PAGING
+000000                  238     ?ECO_PAGE_SEGMENT_UPDATE?BYTE:
+000000                  239             seg?242:   DS   2
+                        240     
+------                  241             RSEG  ?DT?_blink_led_by_time?__PAGING
+000000                  242     ?_blink_led_by_time?BYTE:
+000000                  243           times?552:   DS   2
+000002                  244             ORG  2
+000002                  245            slot?553:   DS   2
+000004                  246             ORG  4
+000004                  247               i?554:   DS   2
+                        248     
+------                  249             RSEG  ?DT?__PAGING
+000000                  250           PAGE_ADDR:   DS   2
+000002                  251      ECO_PAGE_TABLE:   DS   10
+00000C                  252           JUMP_ADDR:   DS   2
+00000E                  253     PAGE_TABLE_INDEX:   DS   2
+000010                  254           SP_ADDR_H:   DS   2
+000012                  255           SP_ADDR_L:   DS   2
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE     5
+
+000014                  256       ECO_PAGE_ADDR:   DS   1
+000015                  257     ECO_PAGE_TABLE_INDEX:   DS   2
+                        258     ; #include "Eco/reg24e1.h"
+                        259     ; #include "Eco/eco_sys.h"
+                        260     ; #include "utils/utils.h"
+                        261     ; #include "eeprom/eeprom.h"
+                        262     ; 
+                        263     ; #include "eco_page.h"
+                        264     ; #define EEPROM_HEADER 3
+                        265     ; #define PAGE_ADDR_OFFSET      6
+                        266     ; #define ECO_ADDR_SHIFT(x)     ((unsigned int)(x) + 3)
+                        267     ; 
+                        268     ; static unsigned int PAGE_ADDR,PAGE_TABLE_INDEX;
+                        269     ; static unsigned int SP_ADDR_L,SP_ADDR_H;
+                        270     ; static unsigned char ECO_PAGE_TABLE[10];
+                        271     ; static unsigned int JUMP_ADDR;
+                        272     ; 
+                        273     ; 
+                        274     ; void ECO_PAGE_INIT()
+                        275     
+------                  276             RSEG  ?PR?ECO_PAGE_INIT?__PAGING
+000000                  277     ECO_PAGE_INIT:
+                        278                             ; SOURCE LINE # 17
+                        279     ; {
+                        280                             ; SOURCE LINE # 18
+                        281     ;       
+                        282     ;       PAGE_TABLE_INDEX = 5;
+                        283                             ; SOURCE LINE # 20
+000000 750000     F     284             MOV     PAGE_TABLE_INDEX,#00H
+000003 750005     F     285             MOV     PAGE_TABLE_INDEX+01H,#05H
+                        286     ;       
+                        287     ;               
+                        288     ;       ECO_PAGE_TABLE[0] = -1;
+                        289                             ; SOURCE LINE # 23
+000006 7500FF     F     290             MOV     ECO_PAGE_TABLE,#0FFH
+                        291     ;       ECO_PAGE_TABLE[1] = -1;
+                        292                             ; SOURCE LINE # 24
+000009 7500FF     F     293             MOV     ECO_PAGE_TABLE+01H,#0FFH
+                        294     ;       ECO_PAGE_TABLE[2] = 8;
+                        295                             ; SOURCE LINE # 25
+00000C 750008     F     296             MOV     ECO_PAGE_TABLE+02H,#08H
+                        297     ;       ECO_PAGE_TABLE[3] = -1;
+                        298                             ; SOURCE LINE # 26
+00000F 7500FF     F     299             MOV     ECO_PAGE_TABLE+03H,#0FFH
+                        300     ;       ECO_PAGE_TABLE[4] = -1;
+                        301                             ; SOURCE LINE # 27
+000012 7500FF     F     302             MOV     ECO_PAGE_TABLE+04H,#0FFH
+                        303     ;       ECO_PAGE_TABLE[5] = -1;
+                        304                             ; SOURCE LINE # 28
+000015 7500FF     F     305             MOV     ECO_PAGE_TABLE+05H,#0FFH
+                        306     ;       ECO_PAGE_TABLE[6] = -1;
+                        307                             ; SOURCE LINE # 29
+000018 7500FF     F     308             MOV     ECO_PAGE_TABLE+06H,#0FFH
+                        309     ;       ECO_PAGE_TABLE[7] = -1;
+                        310                             ; SOURCE LINE # 30
+00001B 7500FF     F     311             MOV     ECO_PAGE_TABLE+07H,#0FFH
+                        312     ;       ECO_PAGE_TABLE[8] = -1;
+                        313                             ; SOURCE LINE # 31
+00001E 7500FF     F     314             MOV     ECO_PAGE_TABLE+08H,#0FFH
+                        315     ;       ECO_PAGE_TABLE[9] = -1; 
+                        316                             ; SOURCE LINE # 32
+000021 7500FF     F     317             MOV     ECO_PAGE_TABLE+09H,#0FFH
+                        318     ; 
+                        319     ; }
+                        320                             ; SOURCE LINE # 34
+000024 22               321             RET     
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE     6
+
+                        322     ; END OF ECO_PAGE_INIT
+                        323     
+                        324     ; 
+                        325     ; void ECO_PAGE_TABLE_UPDATE(int index,int page_number)
+                        326     
+------                  327             RSEG  ?PR?_ECO_PAGE_TABLE_UPDATE?__PAGING
+000000                  328     _ECO_PAGE_TABLE_UPDATE:
+                        329             USING   0
+                        330                             ; SOURCE LINE # 36
+                        331     ;---- Variable 'page_number?141' assigned to Register 'R4/R5' ----
+                        332     ;---- Variable 'index?140' assigned to Register 'R6/R7' ----
+                        333     ; {
+                        334                             ; SOURCE LINE # 37
+                        335     ;       ECO_PAGE_TABLE[index] = page_number;
+                        336                             ; SOURCE LINE # 38
+000000 7400       F     337             MOV     A,#LOW (ECO_PAGE_TABLE)
+000002 2F               338             ADD     A,R7
+000003 F8               339             MOV     R0,A
+000004 A605             340             MOV     @R0,AR5
+                        341     ; }
+                        342                             ; SOURCE LINE # 39
+000006 22               343             RET     
+                        344     ; END OF _ECO_PAGE_TABLE_UPDATE
+                        345     
+                        346     ; 
+                        347     ; void ECO_PAGE_SEGMENT_UPDATE()
+                        348     
+------                  349             RSEG  ?PR?ECO_PAGE_SEGMENT_UPDATE?__PAGING
+000000                  350     ECO_PAGE_SEGMENT_UPDATE:
+                        351                             ; SOURCE LINE # 41
+                        352     ; {
+                        353                             ; SOURCE LINE # 42
+                        354     ;       unsigned char xdata *seg = (unsigned char xdata *)(0x500);
+                        355                             ; SOURCE LINE # 43
+000000 750005     F     356             MOV     seg?242,#05H
+000003 750000     F     357             MOV     seg?242+01H,#00H
+                        358     ;       
+                        359     ;       
+                        360     ; }
+                        361                             ; SOURCE LINE # 46
+000006 22               362             RET     
+                        363     ; END OF ECO_PAGE_SEGMENT_UPDATE
+                        364     
+                        365     ; 
+                        366     ; void ECO_PAGE_MANAGER()
+                        367     
+------                  368             RSEG  ?PR?ECO_PAGE_MANAGER?__PAGING
+000000                  369     ECO_PAGE_MANAGER:
+                        370             USING   0
+                        371                             ; SOURCE LINE # 48
+                        372     ; {
+                        373                             ; SOURCE LINE # 49
+                        374     ;       unsigned int i,page_index = -1; 
+                        375                             ; SOURCE LINE # 50
+000000 74FF             376             MOV     A,#0FFH
+000002 F500       F     377             MOV     page_index?345,A
+000004 F500       F     378             MOV     page_index?345+01H,A
+                        379     ;               
+                        380     ;       //Check POP instruction 
+                        381     ;       for(i=0;i<10;i++)
+                        382                             ; SOURCE LINE # 53
+000006 E4               383             CLR     A
+000007 F500       F     384             MOV     i?344,A
+000009 F500       F     385             MOV     i?344+01H,A
+00000B                  386     ?C0004:
+                        387     ;       {       
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE     7
+
+                        388                             ; SOURCE LINE # 54
+                        389     ;               blink_led();
+                        390                             ; SOURCE LINE # 55
+00000B 638020           391             XRL     P0,#020H
+                        392     ;               mdelay(400);
+                        393                             ; SOURCE LINE # 56
+00000E 7F90             394             MOV     R7,#090H
+000010 7E01             395             MOV     R6,#01H
+000012 120000     E     396             LCALL   _mdelay
+                        397     ;       }       
+                        398                             ; SOURCE LINE # 57
+000015 0500       F     399             INC     i?344+01H
+000017 E500       F     400             MOV     A,i?344+01H
+000019 7002             401             JNZ     ?C0043
+00001B 0500       F     402             INC     i?344
+00001D                  403     ?C0043:
+00001D C3               404             CLR     C
+00001E 940A             405             SUBB    A,#0AH
+000020 E500       F     406             MOV     A,i?344
+000022 9400             407             SUBB    A,#00H
+000024 40E5             408             JC      ?C0004
+000026                  409     ?C0005:
+                        410     ; 
+                        411     ;       mdelay(1000);
+                        412                             ; SOURCE LINE # 59
+000026 7FE8             413             MOV     R7,#0E8H
+000028 7E03             414             MOV     R6,#03H
+00002A 120000     E     415             LCALL   _mdelay
+                        416     ;       
+                        417     ;       //Check Table   
+                        418     ;       for(i=0;i<10;i++)
+                        419                             ; SOURCE LINE # 62
+00002D E4               420             CLR     A
+00002E F500       F     421             MOV     i?344,A
+000030 F500       F     422             MOV     i?344+01H,A
+000032                  423     ?C0007:
+                        424     ;       {
+                        425                             ; SOURCE LINE # 63
+                        426     ;               if(PAGE_ADDR == (ECO_PAGE_TABLE[i] << 8))
+                        427                             ; SOURCE LINE # 64
+000032 7400       F     428             MOV     A,#LOW (ECO_PAGE_TABLE)
+000034 2500       F     429             ADD     A,i?344+01H
+000036 F8               430             MOV     R0,A
+000037 E6               431             MOV     A,@R0
+000038 FE               432             MOV     R6,A
+000039 E4               433             CLR     A
+00003A B5000C           434             CJNE    A,PAGE_ADDR+01H,?C0009
+00003D EE               435             MOV     A,R6
+00003E B50008           436             CJNE    A,PAGE_ADDR,?C0009
+                        437     ;               {
+                        438                             ; SOURCE LINE # 65
+                        439     ;                       page_index = i;
+                        440                             ; SOURCE LINE # 66
+000041 850000     F     441             MOV     page_index?345,i?344
+000044 850000     F     442             MOV     page_index?345+01H,i?344+01H
+                        443     ;                       break;          
+                        444                             ; SOURCE LINE # 67
+000047 800E             445             SJMP    ?C0008
+                        446     ;               }       
+                        447                             ; SOURCE LINE # 68
+                        448     ;               
+                        449     ;       }
+                        450                             ; SOURCE LINE # 70
+000049                  451     ?C0009:
+000049 0500       F     452             INC     i?344+01H
+00004B E500       F     453             MOV     A,i?344+01H
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE     8
+
+00004D 7002             454             JNZ     ?C0045
+00004F 0500       F     455             INC     i?344
+000051                  456     ?C0045:
+000051 640A             457             XRL     A,#0AH
+000053 4500       F     458             ORL     A,i?344
+000055 70DB             459             JNZ     ?C0007
+000057                  460     ?C0008:
+                        461     ;       if(page_index != -1)
+                        462                             ; SOURCE LINE # 71
+000057 E500       F     463             MOV     A,page_index?345+01H
+000059 F4               464             CPL     A
+00005A 7003             465             JNZ     ?C0046
+00005C E500       F     466             MOV     A,page_index?345
+00005E F4               467             CPL     A
+00005F                  468     ?C0046:
+00005F 6039             469             JZ      ?C0011
+                        470     ;       {
+                        471                             ; SOURCE LINE # 72
+                        472     ;               //memory page is in ram
+                        473     ;               for(i=0;i<4;i++)
+                        474                             ; SOURCE LINE # 74
+000061 E4               475             CLR     A
+000062 F500       F     476             MOV     i?344,A
+000064 F500       F     477             MOV     i?344+01H,A
+000066                  478     ?C0012:
+                        479     ;               {
+                        480                             ; SOURCE LINE # 75
+                        481     ;                       blink_led();
+                        482                             ; SOURCE LINE # 76
+000066 638020           483             XRL     P0,#020H
+                        484     ;                       mdelay(400);
+                        485                             ; SOURCE LINE # 77
+000069 7F90             486             MOV     R7,#090H
+00006B 7E01             487             MOV     R6,#01H
+00006D 120000     E     488             LCALL   _mdelay
+                        489     ;               }
+                        490                             ; SOURCE LINE # 78
+000070 0500       F     491             INC     i?344+01H
+000072 E500       F     492             MOV     A,i?344+01H
+000074 7002             493             JNZ     ?C0047
+000076 0500       F     494             INC     i?344
+000078                  495     ?C0047:
+000078 C3               496             CLR     C
+000079 9404             497             SUBB    A,#04H
+00007B E500       F     498             MOV     A,i?344
+00007D 9400             499             SUBB    A,#00H
+00007F 40E5             500             JC      ?C0012
+000081                  501     ?C0013:
+                        502     ;               PAGE_ADDR = (page_index + PAGE_ADDR_OFFSET) << 8;
+                        503                             ; SOURCE LINE # 79
+000081 E500       F     504             MOV     A,page_index?345+01H
+000083 2406             505             ADD     A,#06H
+000085 FF               506             MOV     R7,A
+000086 E4               507             CLR     A
+000087 3500       F     508             ADDC    A,page_index?345
+000089 EF               509             MOV     A,R7
+00008A 750000     F     510             MOV     PAGE_ADDR+01H,#00H
+00008D F500       F     511             MOV     PAGE_ADDR,A
+                        512     ;               #pragma asm
+                        513     ;               MOV     DPH,PAGE_ADDR
+00008F 850083     F     514               MOV   DPH,PAGE_ADDR
+                        515     ;               MOV     DPL,PAGE_ADDR+01H
+000092 850082     F     516               MOV   DPL,PAGE_ADDR+01H
+000095 120000     E     517             LCALL   ?C?ICALL2
+                        518     ;               #pragma endasm
+                        519     ;       }
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE     9
+
+                        520                             ; SOURCE LINE # 84
+000098 8068             521             SJMP    ?C0015
+00009A                  522     ?C0011:
+                        523     ;       else
+                        524     ;       {
+                        525                             ; SOURCE LINE # 86
+                        526     ;               //page fault
+                        527     ;               /* Move Data from EEPROM to iRAM */     
+                        528     ;               unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX
+                                + PAGE_ADDR_OFFSET)<<8);       
+                        529                             ; SOURCE LINE # 89
+00009A E500       F     530             MOV     A,ECO_PAGE_TABLE_INDEX+01H
+00009C 2406             531             ADD     A,#06H
+00009E FF               532             MOV     R7,A
+00009F EF               533             MOV     A,R7
+0000A0 F500       F     534             MOV     seg?343,A
+0000A2 750000     F     535             MOV     seg?343+01H,#00H
+                        536     ;                       
+                        537     ;               for(i=0;i<256;i++)
+                        538                             ; SOURCE LINE # 91
+0000A5 E4               539             CLR     A
+0000A6 F500       F     540             MOV     i?344,A
+0000A8 F500       F     541             MOV     i?344+01H,A
+0000AA                  542     ?C0016:
+                        543     ;               {
+                        544                             ; SOURCE LINE # 92
+                        545     ;                       *(seg+i) = eeprom_read(ECO_ADDR_SHIFT(PAGE_ADDR) +i);
+                        546                             ; SOURCE LINE # 93
+0000AA E500       F     547             MOV     A,PAGE_ADDR+01H
+0000AC 2403             548             ADD     A,#03H
+0000AE CF               549             XCH     A,R7
+0000AF E4               550             CLR     A
+0000B0 3500       F     551             ADDC    A,PAGE_ADDR
+0000B2 CF               552             XCH     A,R7
+0000B3 2500       F     553             ADD     A,i?344+01H
+0000B5 CF               554             XCH     A,R7
+0000B6 3500       F     555             ADDC    A,i?344
+0000B8 FE               556             MOV     R6,A
+0000B9 120000     E     557             LCALL   _eeprom_read
+0000BC E500       F     558             MOV     A,seg?343+01H
+0000BE 2500       F     559             ADD     A,i?344+01H
+0000C0 F582             560             MOV     DPL,A
+0000C2 E500       F     561             MOV     A,seg?343
+0000C4 3500       F     562             ADDC    A,i?344
+0000C6 F583             563             MOV     DPH,A
+0000C8 EF               564             MOV     A,R7
+0000C9 F0               565             MOVX    @DPTR,A
+                        566     ;               }
+                        567                             ; SOURCE LINE # 94
+0000CA 0500       F     568             INC     i?344+01H
+0000CC E500       F     569             MOV     A,i?344+01H
+0000CE 7002             570             JNZ     ?C0048
+0000D0 0500       F     571             INC     i?344
+0000D2                  572     ?C0048:
+0000D2 C3               573             CLR     C
+0000D3 E500       F     574             MOV     A,i?344
+0000D5 9401             575             SUBB    A,#01H
+0000D7 40D1             576             JC      ?C0016
+0000D9                  577     ?C0017:
+                        578     ; 
+                        579     ;               //Update Page Table
+                        580     ;               ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = PAGE_ADDR >> 8;
+                        581                             ; SOURCE LINE # 97
+0000D9 E500       F     582             MOV     A,PAGE_ADDR
+0000DB FF               583             MOV     R7,A
+0000DC 7400       F     584             MOV     A,#LOW (ECO_PAGE_TABLE)
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE    10
+
+0000DE 2500       F     585             ADD     A,ECO_PAGE_TABLE_INDEX+01H
+0000E0 F8               586             MOV     R0,A
+0000E1 A607             587             MOV     @R0,AR7
+                        588     ;               
+                        589     ;               //Update Page Address
+                        590     ;               PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + PAGE_ADDR_OFFSET) << 8);
+                        591                             ; SOURCE LINE # 100
+0000E3 E500       F     592             MOV     A,ECO_PAGE_TABLE_INDEX+01H
+0000E5 2406             593             ADD     A,#06H
+0000E7 FF               594             MOV     R7,A
+0000E8 E4               595             CLR     A
+0000E9 3500       F     596             ADDC    A,ECO_PAGE_TABLE_INDEX
+0000EB EF               597             MOV     A,R7
+0000EC 750000     F     598             MOV     PAGE_ADDR+01H,#00H
+0000EF F500       F     599             MOV     PAGE_ADDR,A
+                        600     ;       
+                        601     ;               ECO_PAGE_TABLE_INDEX++;
+                        602                             ; SOURCE LINE # 102
+0000F1 0500       F     603             INC     ECO_PAGE_TABLE_INDEX+01H
+0000F3 E500       F     604             MOV     A,ECO_PAGE_TABLE_INDEX+01H
+0000F5 7002             605             JNZ     ?C0049
+0000F7 0500       F     606             INC     ECO_PAGE_TABLE_INDEX
+0000F9                  607     ?C0049:
+                        608     ;       
+                        609     ;               //Jump  to Function Address     
+                        610     ;               
+                        611     ;               #pragma asm
+                        612     ;               MOV     DPH,PAGE_ADDR
+0000F9 850083     F     613               MOV   DPH,PAGE_ADDR
+                        614     ;               MOV     DPL,PAGE_ADDR+01H
+0000FC 850082     F     615               MOV   DPL,PAGE_ADDR+01H
+0000FF 120000     E     616             LCALL   ?C?ICALL2
+                        617     ;               #pragma endasm
+                        618     ;                       
+                        619     ;       }
+                        620                             ; SOURCE LINE # 111
+000102                  621     ?C0015:
+                        622     ;               
+                        623     ;       
+                        624     ;       mdelay(1);
+                        625                             ; SOURCE LINE # 114
+000102 7F01             626             MOV     R7,#01H
+000104 7E00             627             MOV     R6,#00H
+000106 020000     E     628             LJMP    _mdelay
+                        629     ; END OF ECO_PAGE_MANAGER
+                        630     
+                        631     ;               
+                        632     ; }
+                        633     ; 
+                        634     ; 
+                        635     ; int blink_led_auto(int x,int y,int z,int w,int s)
+                        636     
+------                  637             RSEG  ?PR?_blink_led_auto?__PAGING
+000000                  638     _blink_led_auto:
+                        639             USING   0
+                        640                             ; SOURCE LINE # 119
+000000 8E00       F     641             MOV     x?446,R6
+000002 8F00       F     642             MOV     x?446+01H,R7
+000004 8C00       F     643             MOV     y?447,R4
+000006 8D00       F     644             MOV     y?447+01H,R5
+000008 8A00       F     645             MOV     z?448,R2
+00000A 8B00       F     646             MOV     z?448+01H,R3
+                        647     ; {
+                        648                             ; SOURCE LINE # 120
+                        649     ;       int i;
+                        650     ; 
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE    11
+
+                        651     ;       for(i=0;i<x;i++)
+                        652                             ; SOURCE LINE # 123
+00000C E4               653             CLR     A
+00000D F500       F     654             MOV     i?451,A
+00000F F500       F     655             MOV     i?451+01H,A
+000011                  656     ?C0020:
+000011 C3               657             CLR     C
+000012 E500       F     658             MOV     A,i?451+01H
+000014 9500       F     659             SUBB    A,x?446+01H
+000016 E500       F     660             MOV     A,x?446
+000018 6480             661             XRL     A,#080H
+00001A F8               662             MOV     R0,A
+00001B E500       F     663             MOV     A,i?451
+00001D 6480             664             XRL     A,#080H
+00001F 98               665             SUBB    A,R0
+000020 501B             666             JNC     ?C0021
+                        667     ;       {
+                        668                             ; SOURCE LINE # 124
+                        669     ;               blink_led();
+                        670                             ; SOURCE LINE # 125
+000022 638020           671             XRL     P0,#020H
+                        672     ;               mdelay(y*100);
+                        673                             ; SOURCE LINE # 126
+000025 AE00       F     674             MOV     R6,y?447
+000027 AF00       F     675             MOV     R7,y?447+01H
+000029 7C00             676             MOV     R4,#00H
+00002B 7D64             677             MOV     R5,#064H
+00002D 120000     E     678             LCALL   ?C?IMUL
+000030 120000     E     679             LCALL   _mdelay
+                        680     ;       }
+                        681                             ; SOURCE LINE # 127
+000033 0500       F     682             INC     i?451+01H
+000035 E500       F     683             MOV     A,i?451+01H
+000037 70D8             684             JNZ     ?C0020
+000039 0500       F     685             INC     i?451
+00003B                  686     ?C0050:
+00003B 80D4             687             SJMP    ?C0020
+00003D                  688     ?C0021:
+                        689     ; 
+                        690     ;       for(i=0;i<w;i++)
+                        691                             ; SOURCE LINE # 129
+00003D E4               692             CLR     A
+00003E F500       F     693             MOV     i?451,A
+000040 F500       F     694             MOV     i?451+01H,A
+000042                  695     ?C0023:
+000042 C3               696             CLR     C
+000043 E500       F     697             MOV     A,i?451+01H
+000045 9500       F     698             SUBB    A,w?449+01H
+000047 E500       F     699             MOV     A,w?449
+000049 6480             700             XRL     A,#080H
+00004B F8               701             MOV     R0,A
+00004C E500       F     702             MOV     A,i?451
+00004E 6480             703             XRL     A,#080H
+000050 98               704             SUBB    A,R0
+000051 501B             705             JNC     ?C0024
+                        706     ;       {
+                        707                             ; SOURCE LINE # 130
+                        708     ;               blink_led();
+                        709                             ; SOURCE LINE # 131
+000053 638020           710             XRL     P0,#020H
+                        711     ;               mdelay(z*100);
+                        712                             ; SOURCE LINE # 132
+000056 AE00       F     713             MOV     R6,z?448
+000058 AF00       F     714             MOV     R7,z?448+01H
+00005A 7C00             715             MOV     R4,#00H
+00005C 7D64             716             MOV     R5,#064H
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE    12
+
+00005E 120000     E     717             LCALL   ?C?IMUL
+000061 120000     E     718             LCALL   _mdelay
+                        719     ;       }
+                        720                             ; SOURCE LINE # 133
+000064 0500       F     721             INC     i?451+01H
+000066 E500       F     722             MOV     A,i?451+01H
+000068 70D8             723             JNZ     ?C0023
+00006A 0500       F     724             INC     i?451
+00006C                  725     ?C0051:
+00006C 80D4             726             SJMP    ?C0023
+00006E                  727     ?C0024:
+                        728     ; 
+                        729     ;       mdelay(s*100);
+                        730                             ; SOURCE LINE # 135
+00006E AE00       F     731             MOV     R6,s?450
+000070 AF00       F     732             MOV     R7,s?450+01H
+000072 7C00             733             MOV     R4,#00H
+000074 7D64             734             MOV     R5,#064H
+000076 120000     E     735             LCALL   ?C?IMUL
+000079 120000     E     736             LCALL   _mdelay
+                        737     ; 
+                        738     ;       return x+y+z;
+                        739                             ; SOURCE LINE # 137
+00007C E500       F     740             MOV     A,x?446+01H
+00007E 2500       F     741             ADD     A,y?447+01H
+000080 CF               742             XCH     A,R7
+000081 E500       F     743             MOV     A,x?446
+000083 3500       F     744             ADDC    A,y?447
+000085 CF               745             XCH     A,R7
+000086 2500       F     746             ADD     A,z?448+01H
+000088 CF               747             XCH     A,R7
+000089 3500       F     748             ADDC    A,z?448
+00008B FE               749             MOV     R6,A
+                        750     ; }
+                        751                             ; SOURCE LINE # 138
+00008C                  752     ?C0026:
+00008C 22               753             RET     
+                        754     ; END OF _blink_led_auto
+                        755     
+                        756     ; 
+                        757     ; void blink_led_by_time(int times,int slot)
+                        758     
+------                  759             RSEG  ?PR?_blink_led_by_time?__PAGING
+000000                  760     _blink_led_by_time:
+                        761             USING   0
+                        762                             ; SOURCE LINE # 140
+000000 8E00       F     763             MOV     times?552,R6
+000002 8F00       F     764             MOV     times?552+01H,R7
+000004 8C00       F     765             MOV     slot?553,R4
+000006 8D00       F     766             MOV     slot?553+01H,R5
+                        767     ; {
+                        768                             ; SOURCE LINE # 141
+                        769     ;       int i;
+                        770     ;       for(i=0;i<times;i++)
+                        771                             ; SOURCE LINE # 143
+000008 E4               772             CLR     A
+000009 F500       F     773             MOV     i?554,A
+00000B F500       F     774             MOV     i?554+01H,A
+00000D                  775     ?C0027:
+00000D C3               776             CLR     C
+00000E E500       F     777             MOV     A,i?554+01H
+000010 9500       F     778             SUBB    A,times?552+01H
+000012 E500       F     779             MOV     A,times?552
+000014 6480             780             XRL     A,#080H
+000016 F8               781             MOV     R0,A
+000017 E500       F     782             MOV     A,i?554
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE    13
+
+000019 6480             783             XRL     A,#080H
+00001B 98               784             SUBB    A,R0
+00001C 501B             785             JNC     ?C0030
+                        786     ;       {
+                        787                             ; SOURCE LINE # 144
+                        788     ;               blink_led();
+                        789                             ; SOURCE LINE # 145
+00001E 638020           790             XRL     P0,#020H
+                        791     ;               mdelay(slot*100);
+                        792                             ; SOURCE LINE # 146
+000021 AE00       F     793             MOV     R6,slot?553
+000023 AF00       F     794             MOV     R7,slot?553+01H
+000025 7C00             795             MOV     R4,#00H
+000027 7D64             796             MOV     R5,#064H
+000029 120000     E     797             LCALL   ?C?IMUL
+00002C 120000     E     798             LCALL   _mdelay
+                        799     ;       }
+                        800                             ; SOURCE LINE # 147
+00002F 0500       F     801             INC     i?554+01H
+000031 E500       F     802             MOV     A,i?554+01H
+000033 70D8             803             JNZ     ?C0027
+000035 0500       F     804             INC     i?554
+000037                  805     ?C0052:
+000037 80D4             806             SJMP    ?C0027
+                        807     ; }
+                        808                             ; SOURCE LINE # 148
+000039                  809     ?C0030:
+000039 22               810             RET     
+                        811     ; END OF _blink_led_by_time
+                        812     
+                        813     ; 
+                        814     ; 
+                        815     ; void blink_fast()
+                        816     
+------                  817             RSEG  ?PR?blink_fast?__PAGING
+000000                  818     blink_fast:
+                        819             USING   0
+                        820                             ; SOURCE LINE # 151
+                        821     ; {
+                        822                             ; SOURCE LINE # 152
+                        823     ;       int i;
+                        824     ;       mdelay(400);
+                        825                             ; SOURCE LINE # 154
+000000 7F90             826             MOV     R7,#090H
+000002 7E01             827             MOV     R6,#01H
+000004 120000     E     828             LCALL   _mdelay
+                        829     ;       for(i=0;i<14;i++)       
+                        830                             ; SOURCE LINE # 155
+000007 E4               831             CLR     A
+000008 F500       F     832             MOV     i?655,A
+00000A F500       F     833             MOV     i?655+01H,A
+00000C                  834     ?C0031:
+                        835     ;       {
+                        836                             ; SOURCE LINE # 156
+                        837     ;               blink_led();    
+                        838                             ; SOURCE LINE # 157
+00000C 638020           839             XRL     P0,#020H
+                        840     ;               mdelay(300);
+                        841                             ; SOURCE LINE # 158
+00000F 7F2C             842             MOV     R7,#02CH
+000011 7E01             843             MOV     R6,#01H
+000013 120000     E     844             LCALL   _mdelay
+                        845     ;       }
+                        846                             ; SOURCE LINE # 159
+000016 0500       F     847             INC     i?655+01H
+000018 E500       F     848             MOV     A,i?655+01H
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE    14
+
+00001A 7002             849             JNZ     ?C0053
+00001C 0500       F     850             INC     i?655
+00001E                  851     ?C0053:
+00001E C3               852             CLR     C
+00001F 940E             853             SUBB    A,#0EH
+000021 E500       F     854             MOV     A,i?655
+000023 6480             855             XRL     A,#080H
+000025 9480             856             SUBB    A,#080H
+000027 40E3             857             JC      ?C0031
+                        858     ; }
+                        859                             ; SOURCE LINE # 160
+000029                  860     ?C0034:
+000029 22               861             RET     
+                        862     ; END OF blink_fast
+                        863     
+                        864     ; void blink_fast2()
+                        865     
+------                  866             RSEG  ?PR?blink_fast2?__PAGING
+000000                  867     blink_fast2:
+                        868             USING   0
+                        869                             ; SOURCE LINE # 161
+                        870     ; {
+                        871                             ; SOURCE LINE # 162
+                        872     ;       int i;
+                        873     ;       mdelay(400);
+                        874                             ; SOURCE LINE # 164
+000000 7F90             875             MOV     R7,#090H
+000002 7E01             876             MOV     R6,#01H
+000004 120000     E     877             LCALL   _mdelay
+                        878     ;       for(i=0;i<12;i++)       
+                        879                             ; SOURCE LINE # 165
+000007 E4               880             CLR     A
+000008 F500       F     881             MOV     i?756,A
+00000A F500       F     882             MOV     i?756+01H,A
+00000C                  883     ?C0035:
+                        884     ;       {
+                        885                             ; SOURCE LINE # 166
+                        886     ;               blink_led();    
+                        887                             ; SOURCE LINE # 167
+00000C 638020           888             XRL     P0,#020H
+                        889     ;               mdelay(400);
+                        890                             ; SOURCE LINE # 168
+00000F 7F90             891             MOV     R7,#090H
+000011 7E01             892             MOV     R6,#01H
+000013 120000     E     893             LCALL   _mdelay
+                        894     ;       }
+                        895                             ; SOURCE LINE # 169
+000016 0500       F     896             INC     i?756+01H
+000018 E500       F     897             MOV     A,i?756+01H
+00001A 7002             898             JNZ     ?C0054
+00001C 0500       F     899             INC     i?756
+00001E                  900     ?C0054:
+00001E C3               901             CLR     C
+00001F 940C             902             SUBB    A,#0CH
+000021 E500       F     903             MOV     A,i?756
+000023 6480             904             XRL     A,#080H
+000025 9480             905             SUBB    A,#080H
+000027 40E3             906             JC      ?C0035
+                        907     ; }
+                        908                             ; SOURCE LINE # 170
+000029                  909     ?C0038:
+000029 22               910             RET     
+                        911     ; END OF blink_fast2
+                        912     
+                        913     ; 
+                        914     ; 
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE    15
+
+                        915     ; 
+                        916     ; void main(void)
+                        917     
+------                  918             RSEG  ?PR?main?__PAGING
+000000                  919     main:
+                        920             USING   0
+                        921                             ; SOURCE LINE # 174
+                        922     ; {
+                        923                             ; SOURCE LINE # 175
+                        924     ;       int i;
+                        925     ;       //unsigned char xdata *seg = (unsigned char xdata *)(0x500);
+                        926     ; 
+                        927     ;       //int auto_i;
+                        928     ;       
+                        929     ;       
+                        930     ;       //init LED
+                        931     ;       P0_DIR &= ~0x28;
+                        932                             ; SOURCE LINE # 183
+000000 5394D7           933             ANL     P0_DIR,#0D7H
+                        934     ;       P0_ALT &= ~0x28;
+                        935                             ; SOURCE LINE # 184
+000003 5395D7           936             ANL     P0_ALT,#0D7H
+                        937     ; 
+                        938     ;       store_cpu_rate(16);
+                        939                             ; SOURCE LINE # 186
+000006 7F10             940             MOV     R7,#010H
+000008 7E00             941             MOV     R6,#00H
+00000A 120000     E     942             LCALL   _store_cpu_rate
+                        943     ; 
+                        944     ;       for(i=0;i<6;i++)
+                        945                             ; SOURCE LINE # 188
+00000D E4               946             CLR     A
+00000E F500       F     947             MOV     i?857,A
+000010 F500       F     948             MOV     i?857+01H,A
+000012                  949     ?C0039:
+                        950     ;       {
+                        951                             ; SOURCE LINE # 189
+                        952     ;               //LED blink
+                        953     ;               blink_led();
+                        954                             ; SOURCE LINE # 191
+000012 638020           955             XRL     P0,#020H
+                        956     ;               mdelay(200);
+                        957                             ; SOURCE LINE # 192
+000015 7FC8             958             MOV     R7,#0C8H
+000017 7E00             959             MOV     R6,#00H
+000019 120000     E     960             LCALL   _mdelay
+                        961     ;       }
+                        962                             ; SOURCE LINE # 193
+00001C 0500       F     963             INC     i?857+01H
+00001E E500       F     964             MOV     A,i?857+01H
+000020 7002             965             JNZ     ?C0055
+000022 0500       F     966             INC     i?857
+000024                  967     ?C0055:
+000024 C3               968             CLR     C
+000025 9406             969             SUBB    A,#06H
+000027 E500       F     970             MOV     A,i?857
+000029 6480             971             XRL     A,#080H
+00002B 9480             972             SUBB    A,#080H
+00002D 40E3             973             JC      ?C0039
+00002F                  974     ?C0040:
+                        975     ; 
+                        976     ;       mdelay(1000);   
+                        977                             ; SOURCE LINE # 195
+00002F 7FE8             978             MOV     R7,#0E8H
+000031 7E03             979             MOV     R6,#03H
+000033 120000     E     980             LCALL   _mdelay
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE    16
+
+                        981     ;               
+                        982     ;       eeprom_init();
+                        983                             ; SOURCE LINE # 197
+000036 120000     E     984             LCALL   eeprom_init
+                        985     ;       
+                        986     ;       //Get data from 0x1000 address
+                        987     ;       //for(i=0;i<64;i++)
+                        988     ;       //{
+                        989     ;       //      *(seg+i) = eeprom_read(ECO_ADDR_SHIFT(4096) +i);
+                        990     ;       //}     
+                        991     ;       mdelay(1000);
+                        992                             ; SOURCE LINE # 204
+000039 7FE8             993             MOV     R7,#0E8H
+00003B 7E03             994             MOV     R6,#03H
+00003D 120000     E     995             LCALL   _mdelay
+                        996     ; 
+                        997     ;       ECO_PAGE_INIT();        
+                        998                             ; SOURCE LINE # 206
+000040 120000     F     999             LCALL   ECO_PAGE_INIT
+                       1000     ;               
+                       1001     ;       //ECO_PAGE_MANAGER();
+                       1002     ; 
+                       1003     ;       blink_fast2();          
+                       1004                             ; SOURCE LINE # 210
+                       1005             ;LCALL  blink_fast2
+000043 750000     F    1006             MOV     PAGE_ADDR,#HIGH (blink_fast2)
+000046 750000     F    1007             MOV     PAGE_ADDR+01H,#LOW (blink_fast2)        
+000049 120000     F    1008             LCALL   ECO_PAGE_MANAGER        
+                       1009     ;       
+                       1010     ;       mdelay(1000);           
+                       1011                             ; SOURCE LINE # 215
+00004C 7FE8            1012             MOV     R7,#0E8H
+00004E 7E03            1013             MOV     R6,#03H
+000050 120000     E    1014             LCALL   _mdelay
+                       1015     ; 
+                       1016     ;       //blink_led_by_time(4,6);
+                       1017     ; 
+                       1018     ;       blink_fast();
+                       1019                             ; SOURCE LINE # 219
+                       1020             ;LCALL  blink_fast
+000053 750000     F    1021             MOV     PAGE_ADDR,#HIGH (blink_fast)
+000056 750000     F    1022             MOV     PAGE_ADDR+01H,#LOW (blink_fast) 
+000059 120000     F    1023             LCALL   ECO_PAGE_MANAGER        
+                       1024     ;       //mdelay(1000);
+                       1025     ;       
+                       1026     ;       //auto_i = blink_led_auto(4,4,5,6,2);
+                       1027     ;       //ECO_PAGE_MANAGER();
+                       1028     ;       
+                       1029     ;       mdelay(1000);
+                       1030                             ; SOURCE LINE # 228
+00005C 7FE8            1031             MOV     R7,#0E8H
+00005E 7E03            1032             MOV     R6,#03H
+000060 120000     E    1033             LCALL   _mdelay
+                       1034     ;       
+                       1035     ;       blink_fast();
+                       1036                             ; SOURCE LINE # 230
+                       1037             ;LCALL  blink_fast
+000063 750000     F    1038             MOV     PAGE_ADDR,#HIGH (blink_fast)
+000066 750000     F    1039             MOV     PAGE_ADDR+01H,#LOW (blink_fast) 
+000069 120000     F    1040             LCALL   ECO_PAGE_MANAGER        
+                       1041     ;       mdelay(1);      
+                       1042                             ; SOURCE LINE # 234
+00006C 7F01            1043             MOV     R7,#01H
+00006E 7E00            1044             MOV     R6,#00H
+000070 020000     E    1045             LJMP    _mdelay
+                       1046     ; END OF main
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE    17
+
+                       1047     
+                       1048             END
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE    18
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                                    T Y P E  V A L U E     ATTRIBUTES
+
+?_BLINK_LED_AUTO?BYTE . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_BLINK_LED_AUTO?__PAGING
+?_BLINK_LED_BY_TIME?BYTE. . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_BLINK_LED_BY_TIME?__PAGING
+?BLINK_FAST2?BYTE . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?BLINK_FAST2?__PAGING
+?BLINK_FAST?BYTE. . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?BLINK_FAST?__PAGING
+?C0004. . . . . . . . . . . . . . . . .    C  ADDR  000BH     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0005. . . . . . . . . . . . . . . . .    C  ADDR  0026H     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0007. . . . . . . . . . . . . . . . .    C  ADDR  0032H     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0008. . . . . . . . . . . . . . . . .    C  ADDR  0057H     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0009. . . . . . . . . . . . . . . . .    C  ADDR  0049H     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0011. . . . . . . . . . . . . . . . .    C  ADDR  009AH     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0012. . . . . . . . . . . . . . . . .    C  ADDR  0066H     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0013. . . . . . . . . . . . . . . . .    C  ADDR  0081H     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0015. . . . . . . . . . . . . . . . .    C  ADDR  0102H     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0016. . . . . . . . . . . . . . . . .    C  ADDR  00AAH     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0017. . . . . . . . . . . . . . . . .    C  ADDR  00D9H     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0020. . . . . . . . . . . . . . . . .    C  ADDR  0011H     R   SEG=?PR?_BLINK_LED_AUTO?__PAGING
+?C0021. . . . . . . . . . . . . . . . .    C  ADDR  003DH     R   SEG=?PR?_BLINK_LED_AUTO?__PAGING
+?C0023. . . . . . . . . . . . . . . . .    C  ADDR  0042H     R   SEG=?PR?_BLINK_LED_AUTO?__PAGING
+?C0024. . . . . . . . . . . . . . . . .    C  ADDR  006EH     R   SEG=?PR?_BLINK_LED_AUTO?__PAGING
+?C0026. . . . . . . . . . . . . . . . .    C  ADDR  008CH     R   SEG=?PR?_BLINK_LED_AUTO?__PAGING
+?C0027. . . . . . . . . . . . . . . . .    C  ADDR  000DH     R   SEG=?PR?_BLINK_LED_BY_TIME?__PAGING
+?C0030. . . . . . . . . . . . . . . . .    C  ADDR  0039H     R   SEG=?PR?_BLINK_LED_BY_TIME?__PAGING
+?C0031. . . . . . . . . . . . . . . . .    C  ADDR  000CH     R   SEG=?PR?BLINK_FAST?__PAGING
+?C0034. . . . . . . . . . . . . . . . .    C  ADDR  0029H     R   SEG=?PR?BLINK_FAST?__PAGING
+?C0035. . . . . . . . . . . . . . . . .    C  ADDR  000CH     R   SEG=?PR?BLINK_FAST2?__PAGING
+?C0038. . . . . . . . . . . . . . . . .    C  ADDR  0029H     R   SEG=?PR?BLINK_FAST2?__PAGING
+?C0039. . . . . . . . . . . . . . . . .    C  ADDR  0012H     R   SEG=?PR?MAIN?__PAGING
+?C0040. . . . . . . . . . . . . . . . .    C  ADDR  002FH     R   SEG=?PR?MAIN?__PAGING
+?C0043. . . . . . . . . . . . . . . . .    C  ADDR  001DH     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0045. . . . . . . . . . . . . . . . .    C  ADDR  0051H     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0046. . . . . . . . . . . . . . . . .    C  ADDR  005FH     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0047. . . . . . . . . . . . . . . . .    C  ADDR  0078H     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0048. . . . . . . . . . . . . . . . .    C  ADDR  00D2H     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0049. . . . . . . . . . . . . . . . .    C  ADDR  00F9H     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+?C0050. . . . . . . . . . . . . . . . .    C  ADDR  003BH     R   SEG=?PR?_BLINK_LED_AUTO?__PAGING
+?C0051. . . . . . . . . . . . . . . . .    C  ADDR  006CH     R   SEG=?PR?_BLINK_LED_AUTO?__PAGING
+?C0052. . . . . . . . . . . . . . . . .    C  ADDR  0037H     R   SEG=?PR?_BLINK_LED_BY_TIME?__PAGING
+?C0053. . . . . . . . . . . . . . . . .    C  ADDR  001EH     R   SEG=?PR?BLINK_FAST?__PAGING
+?C0054. . . . . . . . . . . . . . . . .    C  ADDR  001EH     R   SEG=?PR?BLINK_FAST2?__PAGING
+?C0055. . . . . . . . . . . . . . . . .    C  ADDR  0024H     R   SEG=?PR?MAIN?__PAGING
+?C?ICALL2 . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C?IMUL . . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C_STARTUP. . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?DT?__PAGING. . . . . . . . . . . . . .    D  SEG   000017H       REL=UNIT, ALN=BYTE
+?DT?_BLINK_LED_AUTO?__PAGING. . . . . .    D  SEG   00000CH       REL=UNIT, ALN=BYTE
+?DT?_BLINK_LED_BY_TIME?__PAGING . . . .    D  SEG   000006H       REL=UNIT, ALN=BYTE
+?DT?BLINK_FAST2?__PAGING. . . . . . . .    D  SEG   000002H       REL=UNIT, ALN=BYTE
+?DT?BLINK_FAST?__PAGING . . . . . . . .    D  SEG   000002H       REL=UNIT, ALN=BYTE
+?DT?ECO_PAGE_MANAGER?__PAGING . . . . .    D  SEG   000006H       REL=UNIT, ALN=BYTE
+?DT?ECO_PAGE_SEGMENT_UPDATE?__PAGING. .    D  SEG   000002H       REL=UNIT, ALN=BYTE
+?DT?MAIN?__PAGING . . . . . . . . . . .    D  SEG   000002H       REL=UNIT, ALN=BYTE
+?ECO_PAGE_MANAGER?BYTE. . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?ECO_PAGE_MANAGER?__PAGING
+?ECO_PAGE_SEGMENT_UPDATE?BYTE . . . . .    D  ADDR  0000H     R   SEG=?DT?ECO_PAGE_SEGMENT_UPDATE?__PAGING
+?MAIN?BYTE. . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?MAIN?__PAGING
+?PR?_BLINK_LED_AUTO?__PAGING. . . . . .    C  SEG   00008DH       REL=UNIT, ALN=BYTE
+?PR?_BLINK_LED_BY_TIME?__PAGING . . . .    C  SEG   00003AH       REL=UNIT, ALN=BYTE
+?PR?_ECO_PAGE_TABLE_UPDATE?__PAGING . .    C  SEG   000007H       REL=UNIT, ALN=BYTE
+?PR?BLINK_FAST2?__PAGING. . . . . . . .    C  SEG   00002AH       REL=UNIT, ALN=BYTE
+?PR?BLINK_FAST?__PAGING . . . . . . . .    C  SEG   00002AH       REL=UNIT, ALN=BYTE
+?PR?ECO_PAGE_INIT?__PAGING. . . . . . .    C  SEG   000025H       REL=UNIT, ALN=BYTE
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE    19
+
+?PR?ECO_PAGE_MANAGER?__PAGING . . . . .    C  SEG   000109H       REL=UNIT, ALN=BYTE
+?PR?ECO_PAGE_SEGMENT_UPDATE?__PAGING. .    C  SEG   000007H       REL=UNIT, ALN=BYTE
+?PR?MAIN?__PAGING . . . . . . . . . . .    C  SEG   000073H       REL=UNIT, ALN=BYTE
+__PAGING. . . . . . . . . . . . . . . .    -- ----  -------       
+_BLINK_LED_AUTO . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_BLINK_LED_AUTO?__PAGING
+_BLINK_LED_BY_TIME. . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_BLINK_LED_BY_TIME?__PAGING
+_ECO_PAGE_TABLE_UPDATE. . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_ECO_PAGE_TABLE_UPDATE?__PAGING
+_EEPROM_READ. . . . . . . . . . . . . .    C  ADDR  -------       EXT
+_MDELAY . . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+_STORE_CPU_RATE . . . . . . . . . . . .    C  ADDR  -------       EXT
+AC. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.6   A   
+ACC . . . . . . . . . . . . . . . . . .    D  ADDR  00E0H     A   
+ADCCON. . . . . . . . . . . . . . . . .    D  ADDR  00A1H     A   
+ADCDATAH. . . . . . . . . . . . . . . .    D  ADDR  00A2H     A   
+ADCDATAL. . . . . . . . . . . . . . . .    D  ADDR  00A3H     A   
+ADCSTATIC . . . . . . . . . . . . . . .    D  ADDR  00A4H     A   
+AR5 . . . . . . . . . . . . . . . . . .    D  ADDR  0005H     A   
+AR7 . . . . . . . . . . . . . . . . . .    D  ADDR  0007H     A   
+B . . . . . . . . . . . . . . . . . . .    D  ADDR  00F0H     A   
+BLINK_FAST. . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?BLINK_FAST?__PAGING
+BLINK_FAST2 . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?BLINK_FAST2?__PAGING
+C_T2. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.1   A   
+CE. . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+CK_CTRL . . . . . . . . . . . . . . . .    D  ADDR  00B6H     A   
+CKCON . . . . . . . . . . . . . . . . .    D  ADDR  008EH     A   
+CLK1. . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.1   A   
+CLK2. . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.5   A   
+CP_RL2. . . . . . . . . . . . . . . . .    B  ADDR  00C8H.0   A   
+CPRL2 . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.0   A   
+CS. . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.3   A   
+CT2 . . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.1   A   
+CY. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.7   A   
+DATA? . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.0   A   
+DEV_OFFSET. . . . . . . . . . . . . . .    D  ADDR  00BEH     A   
+DIN0. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.2   A   
+DIO0. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+DIO1. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.1   A   
+DIO2. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.0   A   
+DIO3. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+DIO4. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+DIO5. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+DIO6. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+DIO7. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+DIO8. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+DIO9. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+DOUT2 . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.4   A   
+DPH . . . . . . . . . . . . . . . . . .    D  ADDR  0083H     A   
+DPH0. . . . . . . . . . . . . . . . . .    D  ADDR  0083H     A   
+DPH1. . . . . . . . . . . . . . . . . .    D  ADDR  0085H     A   
+DPL . . . . . . . . . . . . . . . . . .    D  ADDR  0082H     A   
+DPL0. . . . . . . . . . . . . . . . . .    D  ADDR  0082H     A   
+DPL1. . . . . . . . . . . . . . . . . .    D  ADDR  0084H     A   
+DPS . . . . . . . . . . . . . . . . . .    D  ADDR  0086H     A   
+DR1 . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.2   A   
+DR2 . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+DR2_CE. . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+EA. . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.7   A   
+ECO_PAGE_ADDR . . . . . . . . . . . . .    D  ADDR  0014H     R   SEG=?DT?__PAGING
+ECO_PAGE_INIT . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?ECO_PAGE_INIT?__PAGING
+ECO_PAGE_MANAGER. . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?ECO_PAGE_MANAGER?__PAGING
+ECO_PAGE_SEGMENT_UPDATE . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?ECO_PAGE_SEGMENT_UPDATE?__PAGING
+ECO_PAGE_TABLE. . . . . . . . . . . . .    D  ADDR  0002H     R   SEG=?DT?__PAGING
+ECO_PAGE_TABLE_INDEX. . . . . . . . . .    D  ADDR  0015H     R   SEG=?DT?__PAGING
+EEPROM_INIT . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+EICON . . . . . . . . . . . . . . . . .    D  ADDR  00D8H     A   
+EIE . . . . . . . . . . . . . . . . . .    D  ADDR  00E8H     A   
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE    20
+
+EIP . . . . . . . . . . . . . . . . . .    D  ADDR  00F8H     A   
+ES. . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.4   A   
+ET0 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.1   A   
+ET1 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.3   A   
+ET2 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.5   A   
+EWDI. . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.4   A   
+EX0 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.0   A   
+EX1 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.2   A   
+EX2 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.0   A   
+EX3 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.1   A   
+EX4 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.2   A   
+EX5 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.3   A   
+EXEN2 . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.3   A   
+EXF2. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.6   A   
+EXIF. . . . . . . . . . . . . . . . . .    D  ADDR  0091H     A   
+F0. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.5   A   
+F1. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.1   A   
+I?344 . . . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?ECO_PAGE_MANAGER?__PAGING
+I?451 . . . . . . . . . . . . . . . . .    D  ADDR  000AH     R   SEG=?DT?_BLINK_LED_AUTO?__PAGING
+I?554 . . . . . . . . . . . . . . . . .    D  ADDR  0004H     R   SEG=?DT?_BLINK_LED_BY_TIME?__PAGING
+I?655 . . . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?BLINK_FAST?__PAGING
+I?756 . . . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?BLINK_FAST2?__PAGING
+I?857 . . . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?MAIN?__PAGING
+IE. . . . . . . . . . . . . . . . . . .    D  ADDR  00A8H     A   
+IE0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.1   A   
+IE1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.3   A   
+INT0_N. . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+INT1_N. . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+IP. . . . . . . . . . . . . . . . . . .    D  ADDR  00B8H     A   
+IT0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.0   A   
+IT1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.2   A   
+JUMP_ADDR . . . . . . . . . . . . . . .    D  ADDR  000CH     R   SEG=?DT?__PAGING
+MAIN. . . . . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?MAIN?__PAGING
+MPAGE . . . . . . . . . . . . . . . . .    D  ADDR  0092H     A   
+OV. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.2   A   
+P . . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.0   A   
+P0. . . . . . . . . . . . . . . . . . .    D  ADDR  0080H     A   
+P0_0. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.0   A   
+P0_1. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+P0_2. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+P0_3. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+P0_4. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+P0_5. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+P0_6. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+P0_7. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+P0_ALT. . . . . . . . . . . . . . . . .    D  ADDR  0095H     A   
+P0_DIR. . . . . . . . . . . . . . . . .    D  ADDR  0094H     A   
+P1. . . . . . . . . . . . . . . . . . .    D  ADDR  0090H     A   
+P1_0. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+P1_1. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.1   A   
+P1_2. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.2   A   
+P1_ALT. . . . . . . . . . . . . . . . .    D  ADDR  0097H     A   
+P1_DIR. . . . . . . . . . . . . . . . .    D  ADDR  0096H     A   
+PAGE_ADDR . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?__PAGING
+PAGE_INDEX?345. . . . . . . . . . . . .    D  ADDR  0002H     R   SEG=?DT?ECO_PAGE_MANAGER?__PAGING
+PAGE_TABLE_INDEX. . . . . . . . . . . .    D  ADDR  000EH     R   SEG=?DT?__PAGING
+PCON. . . . . . . . . . . . . . . . . .    D  ADDR  0087H     A   
+PS. . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.4   A   
+PSW . . . . . . . . . . . . . . . . . .    D  ADDR  00D0H     A   
+PT0 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.1   A   
+PT1 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.3   A   
+PT2 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.5   A   
+PWDI. . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.4   A   
+PWM . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+PWMCON. . . . . . . . . . . . . . . . .    D  ADDR  00A9H     A   
+PWMDUTY . . . . . . . . . . . . . . . .    D  ADDR  00AAH     A   
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE    21
+
+PWR_UP. . . . . . . . . . . . . . . . .    B  ADDR  00A0H.7   A   
+PX0 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.0   A   
+PX1 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.2   A   
+PX2 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.0   A   
+PX3 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.1   A   
+PX4 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.2   A   
+PX5 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.3   A   
+RADIO . . . . . . . . . . . . . . . . .    D  ADDR  00A0H     A   
+RB8 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.2   A   
+RCAP2H. . . . . . . . . . . . . . . . .    D  ADDR  00CBH     A   
+RCAP2L. . . . . . . . . . . . . . . . .    D  ADDR  00CAH     A   
+RCLK. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.5   A   
+REGX_CTRL . . . . . . . . . . . . . . .    D  ADDR  00ADH     A   
+REGX_LSB. . . . . . . . . . . . . . . .    D  ADDR  00ACH     A   
+REGX_MSB. . . . . . . . . . . . . . . .    D  ADDR  00ABH     A   
+REN . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.4   A   
+RI. . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.0   A   
+RS0 . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.3   A   
+RS1 . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.4   A   
+RSTREAS . . . . . . . . . . . . . . . .    D  ADDR  00B1H     A   
+RXD . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+S?450 . . . . . . . . . . . . . . . . .    D  ADDR  0008H     R   SEG=?DT?_BLINK_LED_AUTO?__PAGING
+SBUF. . . . . . . . . . . . . . . . . .    D  ADDR  0099H     A   
+SCON. . . . . . . . . . . . . . . . . .    D  ADDR  0098H     A   
+SEG?242 . . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?ECO_PAGE_SEGMENT_UPDATE?__PAGING
+SEG?343 . . . . . . . . . . . . . . . .    D  ADDR  0004H     R   SEG=?DT?ECO_PAGE_MANAGER?__PAGING
+SLOT?553. . . . . . . . . . . . . . . .    D  ADDR  0002H     R   SEG=?DT?_BLINK_LED_BY_TIME?__PAGING
+SM0 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.7   A   
+SM1 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.6   A   
+SM2 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.5   A   
+SP. . . . . . . . . . . . . . . . . . .    D  ADDR  0081H     A   
+SP_ADDR_H . . . . . . . . . . . . . . .    D  ADDR  0010H     R   SEG=?DT?__PAGING
+SP_ADDR_L . . . . . . . . . . . . . . .    D  ADDR  0012H     R   SEG=?DT?__PAGING
+SPC_FNC . . . . . . . . . . . . . . . .    D  ADDR  008FH     A   
+SPI_CTRL. . . . . . . . . . . . . . . .    D  ADDR  00B3H     A   
+SPI_DATA. . . . . . . . . . . . . . . .    D  ADDR  00B2H     A   
+SPICLK. . . . . . . . . . . . . . . . .    D  ADDR  00B4H     A   
+T0. . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+T1. . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+T1_1V2. . . . . . . . . . . . . . . . .    D  ADDR  00BCH     A   
+T2. . . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+T2_1V2. . . . . . . . . . . . . . . . .    D  ADDR  00BDH     A   
+T2CON . . . . . . . . . . . . . . . . .    D  ADDR  00C8H     A   
+TB8 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.3   A   
+TCLK. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.4   A   
+TCON. . . . . . . . . . . . . . . . . .    D  ADDR  0088H     A   
+TEST_MODE . . . . . . . . . . . . . . .    D  ADDR  00B7H     A   
+TF0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.5   A   
+TF1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.7   A   
+TF2 . . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.7   A   
+TH0 . . . . . . . . . . . . . . . . . .    D  ADDR  008CH     A   
+TH1 . . . . . . . . . . . . . . . . . .    D  ADDR  008DH     A   
+TH2 . . . . . . . . . . . . . . . . . .    D  ADDR  00CDH     A   
+TI. . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.1   A   
+TICK_DV . . . . . . . . . . . . . . . .    D  ADDR  00B5H     A   
+TIMES?552 . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_BLINK_LED_BY_TIME?__PAGING
+TL0 . . . . . . . . . . . . . . . . . .    D  ADDR  008AH     A   
+TL1 . . . . . . . . . . . . . . . . . .    D  ADDR  008BH     A   
+TL2 . . . . . . . . . . . . . . . . . .    D  ADDR  00CCH     A   
+TMOD. . . . . . . . . . . . . . . . . .    D  ADDR  0089H     A   
+TR0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.4   A   
+TR1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.6   A   
+TR2 . . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.2   A   
+TXD . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+W?449 . . . . . . . . . . . . . . . . .    D  ADDR  0006H     R   SEG=?DT?_BLINK_LED_AUTO?__PAGING
+WDTI. . . . . . . . . . . . . . . . . .    B  ADDR  00D8H.3   A   
+AX51 MACRO ASSEMBLER  PAGING                                                                02/18/09 20:32:11 PAGE    22
+
+X?446 . . . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_BLINK_LED_AUTO?__PAGING
+Y?447 . . . . . . . . . . . . . . . . .    D  ADDR  0002H     R   SEG=?DT?_BLINK_LED_AUTO?__PAGING
+Z?448 . . . . . . . . . . . . . . . . .    D  ADDR  0004H     R   SEG=?DT?_BLINK_LED_AUTO?__PAGING
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S).

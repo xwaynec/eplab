@@ -1,0 +1,602 @@
+; ./paging.src generated from: ./paging.c
+; COMPILER INVOKED BY:
+;        c:\Keil\C51\BIN\C51.exe ./paging.c BROWSE DEBUG CODE LISTINCLUDE SYMBOLS PREPRINT INCDIR(../../Include) SRC(./paging.src)
+
+$NOMOD51
+
+NAME	__PAGING
+
+PWR_UP	BIT	0A0H.7
+P0	DATA	080H
+P1	DATA	090H
+AC	BIT	0D0H.6
+T0	BIT	080H.5
+SPI_CTRL	DATA	0B3H
+T1	BIT	080H.6
+EA	BIT	0A8H.7
+T2	BIT	090H.0
+CE	BIT	0A0H.6
+DEV_OFFSET	DATA	0BEH
+CLK1	BIT	0A0H.1
+DIN0	BIT	090H.2
+CLK2	BIT	0A0H.5
+DIO0	BIT	090H.0
+DPH0	DATA	083H
+DIO1	BIT	090H.1
+IE	DATA	0A8H
+DPH1	DATA	085H
+DIO2	BIT	080H.0
+DIO3	BIT	080H.1
+P0_0	BIT	080H.0
+P1_0	BIT	090H.0
+DIO4	BIT	080H.2
+P0_1	BIT	080H.1
+DPL0	DATA	082H
+P1_1	BIT	090H.1
+DIO5	BIT	080H.3
+P0_2	BIT	080H.2
+DPL1	DATA	084H
+P1_2	BIT	090H.2
+DIO6	BIT	080H.4
+P0_3	BIT	080H.3
+DIO7	BIT	080H.5
+P0_4	BIT	080H.4
+ADCSTATIC	DATA	0A4H
+DIO8	BIT	080H.6
+P0_5	BIT	080H.5
+EXF2	BIT	0C8H.6
+CS	BIT	0A0H.3
+DIO9	BIT	080H.7
+P0_6	BIT	080H.6
+P0_7	BIT	080H.7
+ES	BIT	0A8H.4
+IP	DATA	0B8H
+DATA?	BIT	0A0H.0
+RI	BIT	098H.0
+CY	BIT	0D0H.7
+TI	BIT	098H.1
+T1_1V2	DATA	0BCH
+SPC_FNC	DATA	08FH
+T2_1V2	DATA	0BDH
+RCAP2H	DATA	0CBH
+PS	BIT	0B8H.4
+SP	DATA	081H
+OV	BIT	0D0H.2
+CK_CTRL	DATA	0B6H
+RCAP2L	DATA	0CAH
+TICK_DV	DATA	0B5H
+RSTREAS	DATA	0B1H
+C_T2	BIT	0C8H.1
+EWDI	BIT	0E8H.4
+ADCCON	DATA	0A1H
+RCLK	BIT	0C8H.5
+ADCDATAH	DATA	0A2H
+EXIF	DATA	091H
+TCLK	BIT	0C8H.4
+DR2_CE	BIT	0A0H.6
+ADCDATAL	DATA	0A3H
+SBUF	DATA	099H
+PCON	DATA	087H
+SCON	DATA	098H
+PWDI	BIT	0F8H.4
+TMOD	DATA	089H
+TCON	DATA	088H
+WDTI	BIT	0D8H.3
+PWMDUTY	DATA	0AAH
+IE0	BIT	088H.1
+IE1	BIT	088H.3
+P0_DIR	DATA	094H
+B	DATA	0F0H
+P1_DIR	DATA	096H
+P0_ALT	DATA	095H
+P1_ALT	DATA	097H
+CP_RL2	BIT	0C8H.0
+DR1	BIT	0A0H.2
+ACC	DATA	0E0H
+DR2	BIT	0A0H.6
+TEST_MODE	DATA	0B7H
+SPICLK	DATA	0B4H
+CT2	BIT	0C8H.1
+ET0	BIT	0A8H.1
+ET1	BIT	0A8H.3
+TF0	BIT	088H.5
+INT0_N	BIT	080H.3
+ET2	BIT	0A8H.5
+TF1	BIT	088H.7
+INT1_N	BIT	080H.4
+TF2	BIT	0C8H.7
+RB8	BIT	098H.2
+TH0	DATA	08CH
+EX0	BIT	0A8H.0
+IT0	BIT	088H.0
+TH1	DATA	08DH
+EX1	BIT	0A8H.2
+TB8	BIT	098H.3
+IT1	BIT	088H.2
+TH2	DATA	0CDH
+REGX_CTRL	DATA	0ADH
+EX2	BIT	0E8H.0
+P	BIT	0D0H.0
+EX3	BIT	0E8H.1
+SM0	BIT	098H.7
+TL0	DATA	08AH
+EX4	BIT	0E8H.2
+SM1	BIT	098H.6
+TL1	DATA	08BH
+EX5	BIT	0E8H.3
+SM2	BIT	098H.5
+TL2	DATA	0CCH
+EIE	DATA	0E8H
+PT0	BIT	0B8H.1
+RS0	BIT	0D0H.3
+PT1	BIT	0B8H.3
+RS1	BIT	0D0H.4
+PT2	BIT	0B8H.5
+TR0	BIT	088H.4
+PWMCON	DATA	0A9H
+TR1	BIT	088H.6
+TR2	BIT	0C8H.2
+PX0	BIT	0B8H.0
+PX1	BIT	0B8H.2
+PX2	BIT	0F8H.0
+PX3	BIT	0F8H.1
+PX4	BIT	0F8H.2
+DPH	DATA	083H
+PX5	BIT	0F8H.3
+EIP	DATA	0F8H
+DPL	DATA	082H
+EXEN2	BIT	0C8H.3
+CPRL2	BIT	0C8H.0
+REN	BIT	098H.4
+T2CON	DATA	0C8H
+DPS	DATA	086H
+SPI_DATA	DATA	0B2H
+MPAGE	DATA	092H
+RXD	BIT	080H.1
+DOUT2	BIT	0A0H.4
+EICON	DATA	0D8H
+CKCON	DATA	08EH
+TXD	BIT	080H.2
+RADIO	DATA	0A0H
+PWM	BIT	080H.7
+F0	BIT	0D0H.5
+F1	BIT	0D0H.1
+REGX_LSB	DATA	0ACH
+PSW	DATA	0D0H
+REGX_MSB	DATA	0ABH
+?PR?ECO_PAGE_MANAGER?__PAGING            SEGMENT CODE 
+?DT?ECO_PAGE_MANAGER?__PAGING            SEGMENT DATA OVERLAYABLE 
+?PR?blink_fast?__PAGING                  SEGMENT CODE 
+?DT?blink_fast?__PAGING                  SEGMENT DATA OVERLAYABLE 
+?PR?main?__PAGING    SEGMENT CODE 
+?DT?main?__PAGING    SEGMENT DATA OVERLAYABLE 
+?DT?__PAGING         SEGMENT DATA 
+	EXTRN	CODE (_mdelay)
+	EXTRN	CODE (_eeprom_read)
+	EXTRN	CODE (eeprom_init)
+	EXTRN	CODE (_store_cpu_rate)
+	EXTRN	CODE (?C_STARTUP)
+	EXTRN	CODE (?C?ICALL)
+	PUBLIC	main
+	PUBLIC	blink_fast
+	PUBLIC	ECO_PAGE_MANAGER
+
+	RSEG  ?DT?blink_fast?__PAGING
+?blink_fast?BYTE:
+          i?141:   DS   2
+
+	RSEG  ?DT?main?__PAGING
+?main?BYTE:
+          i?242:   DS   2
+	ORG  2
+        seg?243:   DS   2
+
+	RSEG  ?DT?ECO_PAGE_MANAGER?__PAGING
+?ECO_PAGE_MANAGER?BYTE:
+          i?040:   DS   2
+
+	RSEG  ?DT?__PAGING
+ ECO_PAGE_TABLE:   DS   10
+    PAGE_ADDR_H:   DS   2
+    PAGE_ADDR_L:   DS   2
+      SP_ADDR_H:   DS   2
+      SP_ADDR_L:   DS   2
+  ECO_PAGE_ADDR:   DS   1
+ECO_PAGE_TABLE_INDEX:   DS   2
+; #include "Eco/reg24e1.h"
+; #include "Eco/eco_sys.h"
+; #include "utils/utils.h"
+; #include "eeprom/eeprom.h"
+; 
+; #include "eco_page.h"
+; #define EEPROM_HEADER 3
+; #define ECO_ADDR_SHIFT(x)	((unsigned int)(x) + 3)
+; 
+; static unsigned int PAGE_ADDR_L,PAGE_ADDR_H;
+; static unsigned int SP_ADDR_L,SP_ADDR_H;
+; static unsigned char ECO_PAGE_TABLE[10];
+; 
+; 
+; void ECO_PAGE_MANAGER()
+
+	RSEG  ?PR?ECO_PAGE_MANAGER?__PAGING
+ECO_PAGE_MANAGER:
+	USING	0
+			; SOURCE LINE # 15
+; {
+			; SOURCE LINE # 16
+; 	unsigned int i;	
+; 
+; 	#pragma asm
+; 		;POP LCALL ADDR_HIGHT
+	  ;POP LCALL ADDR_HIGHT
+; 		POP	SP_ADDR_H+01H
+	  POP	SP_ADDR_H+01H
+; 		MOV	SP_ADDR_H,#00H
+	  MOV	SP_ADDR_H,#00H
+; 
+	  
+; 		;POP LCALL ADDR_LOW	
+	  ;POP LCALL ADDR_LOW	
+; 		POP	SP_ADDR_L+01H
+	  POP	SP_ADDR_L+01H
+; 		MOV	SP_ADDR_L,#00H
+	  MOV	SP_ADDR_L,#00H
+; 		
+	  
+; 		;POP Function Address
+	  ;POP Function Address
+; 		POP	PAGE_ADDR_H+01H
+	  POP	PAGE_ADDR_H+01H
+; 		MOV	PAGE_ADDR_H,#00H
+	  MOV	PAGE_ADDR_H,#00H
+; 
+	  
+; 		POP	PAGE_ADDR_L+01H
+	  POP	PAGE_ADDR_L+01H
+; 		MOV  	PAGE_ADDR_L,#00H
+	  MOV  	PAGE_ADDR_L,#00H
+; 
+	  
+; 	#pragma endasm	
+; 	
+; 	//Check POP instruction 
+; 	for(i=0;i<PAGE_ADDR_H;i++)
+			; SOURCE LINE # 38
+	CLR  	A
+	MOV  	i?040,A
+	MOV  	i?040+01H,A
+?C0001:
+	CLR  	C
+	MOV  	A,i?040+01H
+	SUBB 	A,PAGE_ADDR_H+01H
+	MOV  	A,i?040
+	SUBB 	A,PAGE_ADDR_H
+	JNC  	?C0002
+; 	{	
+			; SOURCE LINE # 39
+; 		blink_led();
+			; SOURCE LINE # 40
+	XRL  	P0,#020H
+; 		mdelay(400);
+			; SOURCE LINE # 41
+	MOV  	R7,#090H
+	MOV  	R6,#01H
+	LCALL	_mdelay
+; 	}	
+			; SOURCE LINE # 42
+	INC  	i?040+01H
+	MOV  	A,i?040+01H
+	JNZ  	?C0001
+	INC  	i?040
+?C0019:
+	SJMP 	?C0001
+?C0002:
+; 	
+; 	//Check Table	
+; 		
+; 
+; 	
+; 	//Set Return Address Back
+; 	#pragma asm
+; 
+	  
+; 		CLR	A
+	  CLR	A
+; 		MOV	A,SP_ADDR_L	
+	  MOV	A,SP_ADDR_L	
+; 		PUSH	ACC	
+	  PUSH	ACC	
+; 
+	  
+; 		CLR	A
+	  CLR	A
+; 		MOV	A,SP_ADDR_H
+	  MOV	A,SP_ADDR_H
+; 		PUSH	ACC
+	  PUSH	ACC
+; 
+	  
+; 		RET	
+	  RET	
+; 	#pragma endasm
+; 	
+; }
+			; SOURCE LINE # 62
+	RET  	
+; END OF ECO_PAGE_MANAGER
+
+; 
+; void blink_fast()
+
+	RSEG  ?PR?blink_fast?__PAGING
+blink_fast:
+	USING	0
+			; SOURCE LINE # 64
+; {
+			; SOURCE LINE # 65
+; 	int i;
+; 	mdelay(400);
+			; SOURCE LINE # 67
+	MOV  	R7,#090H
+	MOV  	R6,#01H
+	LCALL	_mdelay
+; 	for(i=0;i<12;i++)	
+			; SOURCE LINE # 68
+	CLR  	A
+	MOV  	i?141,A
+	MOV  	i?141+01H,A
+?C0005:
+; 	{
+			; SOURCE LINE # 69
+; 		blink_led();	
+			; SOURCE LINE # 70
+	XRL  	P0,#020H
+; 		mdelay(400);
+			; SOURCE LINE # 71
+	MOV  	R7,#090H
+	MOV  	R6,#01H
+	LCALL	_mdelay
+; 	}
+			; SOURCE LINE # 72
+	INC  	i?141+01H
+	MOV  	A,i?141+01H
+	JNZ  	?C0020
+	INC  	i?141
+?C0020:
+	CLR  	C
+	SUBB 	A,#0CH
+	MOV  	A,i?141
+	XRL  	A,#080H
+	SUBB 	A,#080H
+	JC   	?C0005
+?C0006:
+; 	mdelay(400);
+			; SOURCE LINE # 73
+	MOV  	R7,#090H
+	MOV  	R6,#01H
+	LJMP 	_mdelay
+; END OF blink_fast
+
+; }
+; 
+; 
+; void main(void)
+
+	RSEG  ?PR?main?__PAGING
+main:
+	USING	0
+			; SOURCE LINE # 77
+; {
+			; SOURCE LINE # 78
+; 	int i;
+; 	unsigned char xdata *seg = (unsigned char xdata *)(0x500);
+			; SOURCE LINE # 80
+	MOV  	seg?243,#05H
+	MOV  	seg?243+01H,#00H
+; 	
+; 	unsigned char xdata *jump_fp;
+; 
+; 	//void(code *fp)();
+; 
+; 	ECO_PAGE_TABLE[0] = 2; 
+			; SOURCE LINE # 86
+	MOV  	ECO_PAGE_TABLE,#02H
+; 	
+; 	
+; 	PAGE_ADDR_L = 10;
+			; SOURCE LINE # 89
+	MOV  	PAGE_ADDR_L,#00H
+	MOV  	PAGE_ADDR_L+01H,#0AH
+; 	PAGE_ADDR_H = 11;
+			; SOURCE LINE # 90
+	MOV  	PAGE_ADDR_H,#00H
+	MOV  	PAGE_ADDR_H+01H,#0BH
+; 	
+; 	//init LED
+; 	P0_DIR &= ~0x28;
+			; SOURCE LINE # 93
+	ANL  	P0_DIR,#0D7H
+; 	P0_ALT &= ~0x28;
+			; SOURCE LINE # 94
+	ANL  	P0_ALT,#0D7H
+; 
+; 	store_cpu_rate(16);
+			; SOURCE LINE # 96
+	MOV  	R7,#010H
+	MOV  	R6,#00H
+	LCALL	_store_cpu_rate
+; 
+; 	for(i=0;i<6;i++)
+			; SOURCE LINE # 98
+	CLR  	A
+	MOV  	i?242,A
+	MOV  	i?242+01H,A
+?C0009:
+; 	{
+			; SOURCE LINE # 99
+; 		//LED blink
+; 		blink_led();
+			; SOURCE LINE # 101
+	XRL  	P0,#020H
+; 		mdelay(200);
+			; SOURCE LINE # 102
+	MOV  	R7,#0C8H
+	MOV  	R6,#00H
+	LCALL	_mdelay
+; 	}
+			; SOURCE LINE # 103
+	INC  	i?242+01H
+	MOV  	A,i?242+01H
+	JNZ  	?C0021
+	INC  	i?242
+?C0021:
+	CLR  	C
+	SUBB 	A,#06H
+	MOV  	A,i?242
+	XRL  	A,#080H
+	SUBB 	A,#080H
+	JC   	?C0009
+?C0010:
+; 
+; 	mdelay(800);	
+			; SOURCE LINE # 105
+	MOV  	R7,#020H
+	MOV  	R6,#03H
+	LCALL	_mdelay
+; 		
+; 	eeprom_init();
+			; SOURCE LINE # 107
+	LCALL	eeprom_init
+; 	
+; 	//Get data from 0x1000 address
+; 	for(i=0;i<64;i++)
+			; SOURCE LINE # 110
+	CLR  	A
+	MOV  	i?242,A
+	MOV  	i?242+01H,A
+?C0012:
+; 	{
+			; SOURCE LINE # 111
+; 		*(seg+i) = eeprom_read(ECO_ADDR_SHIFT(4096) +i);
+			; SOURCE LINE # 112
+	MOV  	A,i?242+01H
+	ADD  	A,#03H
+	MOV  	R7,A
+	MOV  	A,i?242
+	ADDC 	A,#010H
+	MOV  	R6,A
+	LCALL	_eeprom_read
+	MOV  	A,seg?243+01H
+	ADD  	A,i?242+01H
+	MOV  	DPL,A
+	MOV  	A,seg?243
+	ADDC 	A,i?242
+	MOV  	DPH,A
+	MOV  	A,R7
+	MOVX 	@DPTR,A
+; 	}	
+			; SOURCE LINE # 113
+	INC  	i?242+01H
+	MOV  	A,i?242+01H
+	JNZ  	?C0022
+	INC  	i?242
+?C0022:
+	CLR  	C
+	SUBB 	A,#040H
+	MOV  	A,i?242
+	XRL  	A,#080H
+	SUBB 	A,#080H
+	JC   	?C0012
+?C0013:
+; 	mdelay(400);
+			; SOURCE LINE # 114
+	MOV  	R7,#090H
+	MOV  	R6,#01H
+	LCALL	_mdelay
+; 
+; 
+; 	//function pointer to blink_fast() 
+; 	jump_fp = (unsigned char xdata *)((1280));	
+			; SOURCE LINE # 118
+;---- Variable 'jump_fp?244' assigned to Register 'R6/R7' ----
+; 	((void (code *)(void))jump_fp)();	
+			; SOURCE LINE # 119
+	MOV  	R2,#05H
+	MOV  	R1,#00H
+	LCALL	?C?ICALL
+; 
+; 	
+; 	
+; 	/*for(i=0;i<8;i++)
+; 	{
+; 		blink_led();
+; 		mdelay(200);
+; 	}
+; 	mdelay(800);	
+; 	*/
+; 	
+; 
+; 	//blink_fast();	
+; 	
+; 	/*
+; 	#pragma asm
+; 		//LCALL	0x500
+; 
+; 		CLR	A	
+; 		;ADDR_LOW
+; 		MOV	A,#0CH
+; 		PUSH	ACC	
+; 	
+; 		CLR	A
+; 		;ADDR_HIGH	
+; 		MOV	A,#0AH
+; 		PUSH	ACC	
+; 	#pragma endasm
+; 	*/
+; 
+; 	//ECO_PAGE_MANAGER();
+; 	
+; 	mdelay(800);
+			; SOURCE LINE # 152
+	MOV  	R7,#020H
+	MOV  	R6,#03H
+	LCALL	_mdelay
+; 	for(i=0;i<10;i++)
+			; SOURCE LINE # 153
+	CLR  	A
+	MOV  	i?242,A
+	MOV  	i?242+01H,A
+?C0015:
+; 	{
+			; SOURCE LINE # 154
+; 		blink_led();
+			; SOURCE LINE # 155
+	XRL  	P0,#020H
+; 		mdelay(200);
+			; SOURCE LINE # 156
+	MOV  	R7,#0C8H
+	MOV  	R6,#00H
+	LCALL	_mdelay
+; 	}
+			; SOURCE LINE # 157
+	INC  	i?242+01H
+	MOV  	A,i?242+01H
+	JNZ  	?C0023
+	INC  	i?242
+?C0023:
+	CLR  	C
+	SUBB 	A,#0AH
+	MOV  	A,i?242
+	XRL  	A,#080H
+	SUBB 	A,#080H
+	JC   	?C0015
+?C0016:
+; 	mdelay(200);
+			; SOURCE LINE # 158
+	MOV  	R7,#0C8H
+	MOV  	R6,#00H
+	LJMP 	_mdelay
+; END OF main
+
+	END
