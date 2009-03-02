@@ -177,10 +177,13 @@ REGX_MSB	DATA	0ABH
 	EXTRN	CODE (_store_cpu_rate)
 	EXTRN	CODE (rf_init)
 	EXTRN	CODE (?C_STARTUP)
-	EXTRN	DATA (ECO_PAGE_REGISTER3)
-	EXTRN	DATA (ECO_PAGE_REGISTER2)
-	EXTRN	DATA (ECO_PAGE_REGISTER1)
-	EXTRN	DATA (ECO_PAGE_REGISTER5)
+	EXTRN   IDATA(ECO_PAGE_REGISTER1)
+	EXTRN   IDATA(ECO_PAGE_REGISTER2)
+	EXTRN   IDATA(ECO_PAGE_REGISTER3)
+	EXTRN   IDATA(ECO_PAGE_REGISTER4)
+	EXTRN   IDATA(ECO_PAGE_REGISTER5)
+	EXTRN   IDATA(ECO_PAGE_REGISTER6)
+	EXTRN   IDATA(ECO_PAGE_REGISTER7)
 	PUBLIC	rf_data
 	PUBLIC	dst_addr
 	PUBLIC	msg
@@ -250,10 +253,6 @@ REGX_MSB	DATA	0ABH
 ; 
 ; 
 ; extern unsigned char ECO_PAGE_SPI_CONN;
-; extern unsigned char ECO_PAGE_REGISTER3;
-; extern unsigned char ECO_PAGE_REGISTER2;
-; extern unsigned char ECO_PAGE_REGISTER1;
-; extern unsigned char ECO_PAGE_REGISTER5;
 ; /* rf.c
 ; void rf_init();
 ; void rf_configure(struct rf_config);
@@ -265,86 +264,85 @@ REGX_MSB	DATA	0ABH
 	RSEG  ?PR?main?MAIN
 main:
 	USING	0
-			; SOURCE LINE # 32
+			; SOURCE LINE # 28
 ; {
-			; SOURCE LINE # 33
+			; SOURCE LINE # 29
 ; 	unsigned char idx;
 ; 	unsigned int i = 0;
-			; SOURCE LINE # 35
+			; SOURCE LINE # 31
 	CLR  	A
 	MOV  	i?041,A
 	MOV  	i?041+01H,A
 ; 	store_cpu_rate(16);
-			; SOURCE LINE # 36
+			; SOURCE LINE # 32
 	MOV  	R7,#010H
 	MOV  	R6,A
 	LCALL	_store_cpu_rate
 ; 	P0_DIR &= ~0x28;
-			; SOURCE LINE # 37
+			; SOURCE LINE # 33
 	ANL  	P0_DIR,#0D7H
 ; 	P0_ALT &= ~0x28;
-			; SOURCE LINE # 38
+			; SOURCE LINE # 34
 	ANL  	P0_ALT,#0D7H
-; 		
 ; 	rf_init();
-			; SOURCE LINE # 40
+			; SOURCE LINE # 35
 	LCALL	rf_init
 ; 	rf_configure(cfg);
-			; SOURCE LINE # 41
+			; SOURCE LINE # 36
 	MOV  	R3,cfg
 	MOV  	R2,cfg+01H
 	MOV  	R1,cfg+02H
 	LCALL	_rf_configure
 ; 	serial_init(19200);	
-			; SOURCE LINE # 42
+			; SOURCE LINE # 37
 	MOV  	R7,#00H
 	MOV  	R6,#04BH
 	LCALL	_serial_init
 ; 	eco_page_init();
-			; SOURCE LINE # 43
+			; SOURCE LINE # 38
 	LCALL	eco_page_init
 ; 
 ; 	msg[0] = 0x0A;
-			; SOURCE LINE # 45
+			; SOURCE LINE # 40
 	MOV  	msg,#0AH
 ; 	msg[1] = 0x00;
-			; SOURCE LINE # 46
+			; SOURCE LINE # 41
 	CLR  	A
 	MOV  	msg+01H,A
 ; 	/* ADDR */
 ; 	msg[2] = 0x02;
-			; SOURCE LINE # 48
+			; SOURCE LINE # 43
 	MOV  	msg+02H,#02H
 ; 	msg[3] = 0xA0;
-			; SOURCE LINE # 49
+			; SOURCE LINE # 44
 	MOV  	msg+03H,#0A0H
 ; 	/* LEN */
 ; 	msg[4] = 0x02;
-			; SOURCE LINE # 51
+			; SOURCE LINE # 46
 	MOV  	msg+04H,#02H
 ; 	msg[5] = 0xDD;
-			; SOURCE LINE # 52
+			; SOURCE LINE # 47
 	MOV  	msg+05H,#0DDH
 ; 	msg[6] = 0xCC;
-			; SOURCE LINE # 53
+			; SOURCE LINE # 48
 	MOV  	msg+06H,#0CCH
 ; 	
 ; 	for(idx = 4; idx > 0; idx--)
-			; SOURCE LINE # 55
+			; SOURCE LINE # 50
 	MOV  	idx?040,#04H
 ?C0001:
 ; 	{
-			; SOURCE LINE # 56
+			; SOURCE LINE # 51
 ; 		blink_led();		
-			; SOURCE LINE # 57
+			; SOURCE LINE # 52
 	XRL  	P0,#020H
 ; 		mdelay(300);
-			; SOURCE LINE # 58
+			; SOURCE LINE # 53
 	MOV  	R7,#02CH
 	MOV  	R6,#01H
 	LCALL	_mdelay
 ; 	}
-			; SOURCE LINE # 59
+			; SOURCE LINE # 54
 	DEC  	idx?040
 	MOV  	A,idx?040
 	SETB 	C
@@ -352,42 +350,49 @@ main:
 	JNC  	?C0001
 ?C0002:
 ; 	mdelay(1000);	
-			; SOURCE LINE # 60
+			; SOURCE LINE # 55
 	MOV  	R7,#0E8H
 	MOV  	R6,#03H
 	LCALL	_mdelay
 ?C0004:
 ; 	while(1)
-			; SOURCE LINE # 61
+			; SOURCE LINE # 56
 ; 	{
-			; SOURCE LINE # 62
+			; SOURCE LINE # 57
 ; 		rf_send(dst_addr, 3, msg, 7);
-			; SOURCE LINE # 63
+			; SOURCE LINE # 58
 	MOV  	?_rf_send?BYTE+04H,#00H
 	MOV  	?_rf_send?BYTE+05H,#HIGH (msg)
 	MOV  	?_rf_send?BYTE+06H,#LOW (msg)
 	MOV  	?_rf_send?BYTE+07H,#07H
-	MOV  	R3,#00H
-	MOV  	R2,#HIGH (dst_addr)
-	MOV  	R1,#LOW (dst_addr)
-	MOV  	R5,#03H
-	;---------------------------
-	MOV		ECO_PAGE_REGISTER3,#00H
-	MOV  	ECO_PAGE_REGISTER2,#HIGH (dst_addr)
-	MOV  	ECO_PAGE_REGISTER1,#LOW (dst_addr)
-	MOV  	ECO_PAGE_REGISTER5,#03H
+	;MOV  	R3,#00H
+	;MOV  	R2,#HIGH (dst_addr)
+	;MOV  	R1,#LOW (dst_addr)
+	;MOV  	R5,#03H
+	;
+	MOV		R0,#LOW (ECO_PAGE_REGISTER3)
+	MOV		@R0,#00H
+
+	MOV		R0,#LOW (ECO_PAGE_REGISTER2)
+	MOV		@R0,#HIGH (dst_addr)
+
+	MOV		R0,#LOW	(ECO_PAGE_REGISTER1)
+	MOV		@R0,#LOW (dst_addr)
+
+	MOV		R0,#LOW (ECO_PAGE_REGISTER5)
+	MOV		@R0,#03H
 
 	LCALL	_rf_send
 ; 		blink_led();
-			; SOURCE LINE # 64
+			; SOURCE LINE # 59
 	XRL  	P0,#020H
 ; 		mdelay(800);	
-			; SOURCE LINE # 65
+			; SOURCE LINE # 60
 	MOV  	R7,#020H
 	MOV  	R6,#03H
 	LCALL	_mdelay
 ; 	}
-			; SOURCE LINE # 66
+			; SOURCE LINE # 61
 	SJMP 	?C0004
 ; END OF main
 

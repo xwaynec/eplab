@@ -616,69 +616,31 @@
 #line 17 ".\eco_page.c" /0
 #line 17 ".\eco_page.c" /0
  
-  
-#line 1 "../../INCLUDE\ISR/ISR_RF.H" /0
-
-
-
-
-
-
-
  
- 
- 
- 
- 
- 
- 
- struct rf_config {
- 
- unsigned char data2_width;
- unsigned char data1_width;
- 
- char addr2[5];
- char addr1[5];
- 
- char addr_and_crc;
- char rf_prog[2];	 
- };
- 
- 
- struct radio_buffer {
- unsigned char ready;
- unsigned char buffer[23];
- };
- 
- void rf_init();
- void rf_configure(struct rf_config *cfg);
- void rf_send(char *addr, unsigned char addr_len,
- char *payload, unsigned char pl_len);
- void rf_wait_msg();
- 
- extern struct radio_buffer rf_buf;
- 
- 
-#line 18 ".\eco_page.c" /0
- 
- 
- 
- static unsigned char ECO_PAGE_TABLE[10];
- static unsigned int ECO_PAGE_TABLE_INDEX;
+ unsigned char ECO_PAGE_TABLE[10];
+ unsigned int ECO_PAGE_TABLE_INDEX;
  
  unsigned int ECO_PAGE_ADDR;
  unsigned char ECO_PAGE_SPI_CONN;
  
- unsigned char ECO_PAGE_REGISTER3;
- unsigned char ECO_PAGE_REGISTER2;
- unsigned char ECO_PAGE_REGISTER1;
- unsigned char ECO_PAGE_REGISTER5;
+ 
+ 
+ unsigned char idata ECO_PAGE_REGISTER1;
+ unsigned char idata ECO_PAGE_REGISTER2;
+ unsigned char idata ECO_PAGE_REGISTER3;
+ unsigned char idata ECO_PAGE_REGISTER4;
+ unsigned char idata ECO_PAGE_REGISTER5;
+ unsigned char idata ECO_PAGE_REGISTER6;
+ unsigned char idata ECO_PAGE_REGISTER7;
+ 
  
  void eco_page_init()
  {
  
  
  ECO_PAGE_TABLE_INDEX = 5;
+ 
+ 
  
  ECO_PAGE_ADDR = 0;
  
@@ -731,7 +693,6 @@
  
  ECO_PAGE_ADDR = (page_index + 6) << 8;
  
- rf_init();
  #pragma asm
  
  
@@ -776,7 +737,6 @@
  ECO_PAGE_TABLE_INDEX++;
  
  
- rf_init();
  #pragma asm
  
  

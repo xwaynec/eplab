@@ -971,10 +971,6 @@
  
  
  extern unsigned char ECO_PAGE_SPI_CONN;
- extern unsigned char ECO_PAGE_REGISTER3;
- extern unsigned char ECO_PAGE_REGISTER2;
- extern unsigned char ECO_PAGE_REGISTER1;
- extern unsigned char ECO_PAGE_REGISTER5;
 
 
 
@@ -988,7 +984,6 @@
  store_cpu_rate(16);
  P0_DIR &= ~0x28;
  P0_ALT &= ~0x28;
- 
  rf_init();
  rf_configure(cfg);
  serial_init(19200);	

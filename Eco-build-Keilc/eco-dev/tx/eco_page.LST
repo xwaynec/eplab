@@ -1,4 +1,4 @@
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 1   
+C51 COMPILER V8.16   ECO_PAGE                                                              03/02/2009 22:31:03 PAGE 1   
 
 
 C51 COMPILER V8.16, COMPILATION OF MODULE ECO_PAGE
@@ -62,7 +62,7 @@ line level    source
   17      =2  sfr TL0                 = 0x8A ;
   18      =2  sfr TL1                 = 0x8B ;
   19      =2  sfr TH0                 = 0x8C ;
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 2   
+C51 COMPILER V8.16   ECO_PAGE                                                              03/02/2009 22:31:03 PAGE 2   
 
   20      =2  sfr TH1                 = 0x8D ;
   21      =2  sfr CKCON               = 0x8E ;
@@ -126,7 +126,7 @@ line level    source
   79      =2  sbit DIO5       = 0x83  ;
   80      =2  sbit P0_4       = 0x84  ;
   81      =2  sbit INT1_N     = 0x84  ;
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 3   
+C51 COMPILER V8.16   ECO_PAGE                                                              03/02/2009 22:31:03 PAGE 3   
 
   82      =2  sbit DIO6       = 0x84  ;
   83      =2  sbit P0_5       = 0x85  ;
@@ -190,7 +190,7 @@ line level    source
  141      =2  sbit EA         = 0xAF ;
  142      =2  
  143      =2  /*  IP   */
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 4   
+C51 COMPILER V8.16   ECO_PAGE                                                              03/02/2009 22:31:03 PAGE 4   
 
  144      =2  sbit PX0        = 0xB8 ;
  145      =2  sbit PT0        = 0xB9 ;
@@ -254,7 +254,7 @@ line level    source
  203      =2  #define T0_GATE         0x08
  204      =2  #define T1_M0           0x10
  205      =2  #define T1_M1           0x20
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 5   
+C51 COMPILER V8.16   ECO_PAGE                                                              03/02/2009 22:31:03 PAGE 5   
 
  206      =2  #define T1_CT           0x40
  207      =2  #define T1_GATE         0x80
@@ -318,7 +318,7 @@ line level    source
            =3 sfr SBUF                = 0x99 ;
            =3 sfr RADIO               = 0xA0 ;
            =3 sfr ADCCON              = 0xA1 ;
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 6   
+C51 COMPILER V8.16   ECO_PAGE                                                              03/02/2009 22:31:03 PAGE 6   
 
            =3 sfr ADCDATAH    = 0xA2 ;
            =3 sfr ADCDATAL    = 0xA3 ;
@@ -382,7 +382,7 @@ line level    source
            =3 /*  TCON  */
            =3 sbit IT0        = 0x88 ;
            =3 sbit IE0        = 0x89 ;
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 7   
+C51 COMPILER V8.16   ECO_PAGE                                                              03/02/2009 22:31:03 PAGE 7   
 
            =3 sbit IT1        = 0x8A ;
            =3 sbit IE1        = 0x8B ;
@@ -446,7 +446,7 @@ line level    source
            =3 sbit CT2        = 0xC9 ;
            =3 sbit TR2        = 0xCA ;
            =3 sbit EXEN2      = 0xCB ;
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 8   
+C51 COMPILER V8.16   ECO_PAGE                                                              03/02/2009 22:31:03 PAGE 8   
 
            =3 sbit TCLK       = 0xCC ;
            =3 sbit RCLK       = 0xCD ;
@@ -510,7 +510,7 @@ line level    source
            =3 #define SI0_VECTOR      4       /* 0x23 serial port 0 */
            =3 
            =3 #endif
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 9   
+C51 COMPILER V8.16   ECO_PAGE                                                              03/02/2009 22:31:03 PAGE 9   
 
   15      =2  
   16      =2  #define blink_led() P0 ^= 0x20
@@ -574,7 +574,7 @@ line level    source
   27      =1  
   28      =1  /*
   29      =1  static unsigned char ECO_PAGE_TABLE[10];
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 10  
+C51 COMPILER V8.16   ECO_PAGE                                                              03/02/2009 22:31:03 PAGE 10  
 
   30      =1  
   31      =1  static unsigned int ECO_PAGE_ADDR;
@@ -617,182 +617,143 @@ line level    source
            =1 char eeprom_status();
            =1 
            =1 #endif 
-  18          #include "isr/isr_rf.h"
-   1      =1  /* 
-   2      =1   * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
-   3      =1   * Copyright (c) 2008 National Tsing Hua University (NTHU) 
-   4      =1   * Permission to copy, modify, and distribute this program is granted 
-   5      =1   * for noncommercial purposes, provided the author(s) and copyright
-   6      =1   * notice are retained. All other uses require explicit written
-   7      =1   * permission from NTHU. 
-   8      =1   */
-   9      =1  #ifndef _RADIO_H_
-  10      =1  #define _RADIO_H_
-  11      =1  
-  12      =1  #define RF_BUF_LEN      23      /* default rf buffer size */
-  13      =1  
-  14      =1  /* RF configuration descriptor */
-  15      =1  struct rf_config {
-  16      =1          /* data width (in bits) */
-  17      =1          unsigned char data2_width;
-  18      =1          unsigned char data1_width;
-  19      =1          /* address for two channels ,for only one channel, use addr1 */
-  20      =1          char addr2[5];
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 11  
-
-  21      =1          char addr1[5];
-  22      =1          /* [7:2] is address width (in bits), [1:0] is for CRC control */
-  23      =1          char addr_and_crc;
-  24      =1          char rf_prog[2];        /* rf programming */
-  25      =1  };
-  26      =1  
-  27      =1  /* RF buffer */
-  28      =1  struct radio_buffer {
-  29      =1          unsigned char ready;
-  30      =1          unsigned char buffer[RF_BUF_LEN];
-  31      =1  };
-  32      =1  
-  33      =1  void rf_init();
-  34      =1  void rf_configure(struct rf_config *cfg);
-  35      =1  void rf_send(char *addr, unsigned char addr_len,
-  36      =1                  char *payload, unsigned char pl_len);
-  37      =1  void rf_wait_msg();
-  38      =1  //void rf_ch1_recv() interrupt 10;
-  39      =1  extern struct radio_buffer rf_buf;
-  40      =1  
-  41      =1  #endif 
-  19          //test
-  20          
-  21          static unsigned char ECO_PAGE_TABLE[10];
-  22          static unsigned int ECO_PAGE_TABLE_INDEX;
-  23          
-  24          unsigned int ECO_PAGE_ADDR;
-  25          unsigned char ECO_PAGE_SPI_CONN;
+  18          
+  19          unsigned char ECO_PAGE_TABLE[10];
+  20          unsigned int ECO_PAGE_TABLE_INDEX;
+  21          
+  22          unsigned int ECO_PAGE_ADDR;
+  23          unsigned char ECO_PAGE_SPI_CONN;
+  24          
+  25          //unsigned char ECO_PAGE_REGISTER[7];
   26          
-  27          unsigned char ECO_PAGE_REGISTER3;
-  28          unsigned char ECO_PAGE_REGISTER2;
-  29          unsigned char ECO_PAGE_REGISTER1;
-  30          unsigned char ECO_PAGE_REGISTER5;
-  31          
-  32          void eco_page_init()
-  33          {
-  34   1              
-  35   1      
-  36   1              ECO_PAGE_TABLE_INDEX = 5;
-  37   1      
-  38   1              ECO_PAGE_ADDR = 0;
+  27          unsigned char idata ECO_PAGE_REGISTER1;
+  28          unsigned char idata ECO_PAGE_REGISTER2;
+  29          unsigned char idata ECO_PAGE_REGISTER3;
+  30          unsigned char idata ECO_PAGE_REGISTER4;
+  31          unsigned char idata ECO_PAGE_REGISTER5;
+  32          unsigned char idata ECO_PAGE_REGISTER6;
+  33          unsigned char idata ECO_PAGE_REGISTER7;
+  34          
+  35          
+  36          void eco_page_init()
+  37          {
+  38   1              
+C51 COMPILER V8.16   ECO_PAGE                                                              03/02/2009 22:31:03 PAGE 11  
+
   39   1      
-  40   1              ECO_PAGE_TABLE[0] = -1; 
-  41   1              ECO_PAGE_TABLE[1] = -1; 
-  42   1              ECO_PAGE_TABLE[2] = 8;
-  43   1              ECO_PAGE_TABLE[3] = -1; 
-  44   1              ECO_PAGE_TABLE[4] = -1; 
-  45   1              ECO_PAGE_TABLE[5] = -1; 
-  46   1              ECO_PAGE_TABLE[6] = -1; 
-  47   1              ECO_PAGE_TABLE[7] = -1; 
-  48   1              ECO_PAGE_TABLE[8] = -1; 
-  49   1              ECO_PAGE_TABLE[9] = -1; 
-  50   1      }
-  51          
-  52          
-  53          void eco_page_manager()
-  54          {
-  55   1              unsigned int i;
-  56   1              unsigned int page_index = -1; 
-  57   1      
-  58   1              //Check POP instruction 
-  59   1              /*for(i=0;i<10;i++)
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 12  
+  40   1              ECO_PAGE_TABLE_INDEX = 5;
+  41   1              //ECO_PAGE_TABLE_INDEX++;       
+  42   1              //ECO_PAGE_REGISTER5 = 0xA7;
+  43   1              //ECO_PAGE_REGISTER3 = ECO_PAGE_TABLE_INDEX;
+  44   1              ECO_PAGE_ADDR = 0;
+  45   1      
+  46   1              ECO_PAGE_TABLE[0] = -1; 
+  47   1              ECO_PAGE_TABLE[1] = -1; 
+  48   1              ECO_PAGE_TABLE[2] = 8;
+  49   1              ECO_PAGE_TABLE[3] = -1; 
+  50   1              ECO_PAGE_TABLE[4] = -1; 
+  51   1              ECO_PAGE_TABLE[5] = -1; 
+  52   1              ECO_PAGE_TABLE[6] = -1; 
+  53   1              ECO_PAGE_TABLE[7] = -1; 
+  54   1              ECO_PAGE_TABLE[8] = -1; 
+  55   1              ECO_PAGE_TABLE[9] = -1; 
+  56   1      }
+  57          
+  58          
+  59          void eco_page_manager()
+  60          {
+  61   1              unsigned int i;
+  62   1              unsigned int page_index = -1; 
+  63   1      
+  64   1              //Check POP instruction 
+  65   1              /*for(i=0;i<10;i++)
+  66   1              {    
+  67   1                      blink_led();
+  68   1                      mdelay(200);
+  69   1              }    
+  70   1      
+  71   1              mdelay(1000);
+  72   1              */
+  73   1              //Check Table   
+  74   1              for(i=0;i<10;i++)
+  75   1              {   
+  76   2                      if(ECO_PAGE_ADDR == (ECO_PAGE_TABLE[i] << 8)) 
+  77   2                      {   
+  78   3                              page_index = i;
+  79   3                              break;    
+  80   3                      }    
+  81   2              }
+  82   1      
+  83   1              if(page_index != -1) 
+  84   1              {   
+  85   2                      //memory page is in ram
+  86   2                      /*for(i=0;i<4;i++)
+  87   2                      {   
+  88   2                              blink_led();
+  89   2                              mdelay(400);
+  90   2                      } 
+  91   2                      */
+  92   2      
+  93   2                      ECO_PAGE_ADDR = (page_index + ECO_PAGE_ADDR_OFFSET) << 8;
+  94   2              
+  95   2                      #pragma asm
+  96   2                      //eco_page_function_call
+  97   2                      //MOV     DPH,ECO_PAGE_ADDR
+  98   2                      //MOV     DPL,ECO_PAGE_ADDR+01H
+  99   2                      //LCALL ?C?ICALL2
+ 100   2                      #pragma endasm
+C51 COMPILER V8.16   ECO_PAGE                                                              03/02/2009 22:31:03 PAGE 12  
 
-  60   1              {    
-  61   1                      blink_led();
-  62   1                      mdelay(200);
-  63   1              }    
-  64   1      
-  65   1              mdelay(1000);
-  66   1              */
-  67   1              //Check Table   
-  68   1              for(i=0;i<10;i++)
-  69   1              {   
-  70   2                      if(ECO_PAGE_ADDR == (ECO_PAGE_TABLE[i] << 8)) 
-  71   2                      {   
-  72   3                              page_index = i;
-  73   3                              break;    
-  74   3                      }    
-  75   2              }
-  76   1      
-  77   1              if(page_index != -1) 
-  78   1              {   
-  79   2                      //memory page is in ram
-  80   2                      /*for(i=0;i<4;i++)
-  81   2                      {   
-  82   2                              blink_led();
-  83   2                              mdelay(400);
-  84   2                      } 
-  85   2                      */
-  86   2      
-  87   2                      ECO_PAGE_ADDR = (page_index + ECO_PAGE_ADDR_OFFSET) << 8;
-  88   2              
-  89   2                      rf_init();
-  90   2                      #pragma asm
-  91   2                      //eco_page_function_call
-  92   2                      //MOV     DPH,ECO_PAGE_ADDR
-  93   2                      //MOV     DPL,ECO_PAGE_ADDR+01H
-  94   2                      //LCALL ?C?ICALL2
-  95   2                      #pragma endasm
-  96   2              }   
-  97   1              else
-  98   1              {
-  99   2                      //page fault
- 100   2                      /* Move Data from EEPROM to iRAM */
- 101   2                      unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET)<<8);
- 102   2                      
- 103   2                      //memory page is in ram
- 104   2                      /*for(i=0;i<4;i++)
- 105   2                      {   
- 106   2                              blink_led();
- 107   2                              mdelay(400);
- 108   2                      }
- 109   2                      mdelay(1000);
- 110   2      */
- 111   2                      eeprom_init();
- 112   2                      for(i=0;i<256;i++)
- 113   2                      {
- 114   3                              *(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR) +i);
- 115   3                      }
- 116   2                      
- 117   2                      //memory page is in ram
- 118   2                      /*for(i=0;i<4;i++)
- 119   2                      {   
- 120   2                              blink_led();
- 121   2                              mdelay(300);
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 13  
-
- 122   2                      }*/
- 123   2                      //mdelay(1000);
- 124   2      
- 125   2                      //Update Page Table
- 126   2                      ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 8;
- 127   2      
- 128   2                      //Update Page Address
- 129   2                      ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8);
- 130   2      
- 131   2                      ECO_PAGE_TABLE_INDEX++;
+ 101   2              }   
+ 102   1              else
+ 103   1              {
+ 104   2                      //page fault
+ 105   2                      /* Move Data from EEPROM to iRAM */
+ 106   2                      unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET)<<8);
+ 107   2                      
+ 108   2                      //memory page is in ram
+ 109   2                      /*for(i=0;i<4;i++)
+ 110   2                      {   
+ 111   2                              blink_led();
+ 112   2                              mdelay(400);
+ 113   2                      }
+ 114   2                      mdelay(1000);
+ 115   2      */
+ 116   2                      eeprom_init();
+ 117   2                      for(i=0;i<256;i++)
+ 118   2                      {
+ 119   3                              *(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR) +i);
+ 120   3                      }
+ 121   2                      
+ 122   2                      //memory page is in ram
+ 123   2                      /*for(i=0;i<4;i++)
+ 124   2                      {   
+ 125   2                              blink_led();
+ 126   2                              mdelay(300);
+ 127   2                      }*/
+ 128   2                      //mdelay(1000);
+ 129   2      
+ 130   2                      //Update Page Table
+ 131   2                      ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 8;
  132   2      
- 133   2                      //Jump  to Function Address
- 134   2                      rf_init();
- 135   2                      #pragma asm
- 136   2                      //MOV     DPH,ECO_PAGE_ADDR
- 137   2                      //MOV     DPL,ECO_PAGE_ADDR+01H
- 138   2                      //LCALL        ?C?ICALL2               
- 139   2                      #pragma endasm
- 140   2      
- 141   2              }
- 142   1      
- 143   1              mdelay(1);
- 144   1      
- 145   1      }
-C51 COMPILER V8.16   ECO_PAGE                                                              03/01/2009 16:11:19 PAGE 14  
+ 133   2                      //Update Page Address
+ 134   2                      ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8);
+ 135   2      
+ 136   2                      ECO_PAGE_TABLE_INDEX++;
+ 137   2      
+ 138   2                      //Jump  to Function Address
+ 139   2                      #pragma asm
+ 140   2                      //MOV     DPH,ECO_PAGE_ADDR
+ 141   2                      //MOV     DPL,ECO_PAGE_ADDR+01H
+ 142   2                      //LCALL        ?C?ICALL2               
+ 143   2                      #pragma endasm
+ 144   2      
+ 145   2              }
+ 146   1      
+ 147   1              mdelay(1);
+ 148   1      
+ 149   1      }
+C51 COMPILER V8.16   ECO_PAGE                                                              03/02/2009 22:31:03 PAGE 13  
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -800,40 +761,32 @@ NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 
 _mdelay. . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 _eeprom_read . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-ECO_PAGE_TABLE . . . . . . . . . . . .  STATIC   DATA   ARRAY    0000H  10
+ECO_PAGE_TABLE . . . . . . . . . . . .  PUBLIC   DATA   ARRAY    0000H  10
 eeprom_init. . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-rf_config. . . . . . . . . . . . . . .  * TAG *  -----  STRUCT   -----  15
-  data2_width. . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0000H  1
-  data1_width. . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0001H  1
-  addr2. . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0002H  5
-  addr1. . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0007H  5
-  addr_and_crc . . . . . . . . . . . .  MEMBER   -----  CHAR     000CH  1
-  rf_prog. . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    000DH  2
 ECO_PAGE_SPI_CONN. . . . . . . . . . .  PUBLIC   DATA   U_CHAR   000AH  1
 eco_page_init. . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-ECO_PAGE_REGISTER1 . . . . . . . . . .  PUBLIC   DATA   U_CHAR   000BH  1
-ECO_PAGE_REGISTER2 . . . . . . . . . .  PUBLIC   DATA   U_CHAR   000CH  1
-ECO_PAGE_REGISTER3 . . . . . . . . . .  PUBLIC   DATA   U_CHAR   000DH  1
-ECO_PAGE_ADDR. . . . . . . . . . . . .  PUBLIC   DATA   U_INT    000EH  2
-ECO_PAGE_REGISTER5 . . . . . . . . . .  PUBLIC   DATA   U_CHAR   0010H  1
-rf_init. . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-radio_buffer . . . . . . . . . . . . .  * TAG *  -----  STRUCT   -----  24
-  ready. . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0000H  1
-  buffer . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0001H  23
+ECO_PAGE_REGISTER1 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0000H  1
+ECO_PAGE_REGISTER2 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0001H  1
+ECO_PAGE_REGISTER3 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0002H  1
+ECO_PAGE_ADDR. . . . . . . . . . . . .  PUBLIC   DATA   U_INT    000BH  2
+ECO_PAGE_REGISTER4 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0003H  1
+ECO_PAGE_REGISTER5 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0004H  1
+ECO_PAGE_REGISTER6 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0005H  1
+ECO_PAGE_REGISTER7 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0006H  1
 eco_page_manager . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
   seg?140. . . . . . . . . . . . . . .  AUTO     DATA   PTR      0002H  2
   i?141. . . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
   page_index?142 . . . . . . . . . . .  * REG *  DATA   U_INT    0004H  2
-ECO_PAGE_TABLE_INDEX . . . . . . . . .  STATIC   DATA   U_INT    0011H  2
+ECO_PAGE_TABLE_INDEX . . . . . . . . .  PUBLIC   DATA   U_INT    000DH  2
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    243    ----
+   CODE SIZE        =    237    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     19       4
-   IDATA SIZE       =   ----    ----
+   DATA SIZE        =     15       4
+   IDATA SIZE       =      7    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
