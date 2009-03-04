@@ -15,26 +15,32 @@
 
 #include "eco_page.h"
 #include "eeprom/eeprom.h"
-#include "isr/isr_rf.h"
-//test
 
-static unsigned char ECO_PAGE_TABLE[10];
-static unsigned int ECO_PAGE_TABLE_INDEX;
+unsigned char ECO_PAGE_TABLE[10];
+unsigned int ECO_PAGE_TABLE_INDEX;
 
 unsigned int ECO_PAGE_ADDR;
 unsigned char ECO_PAGE_SPI_CONN;
 
-unsigned char ECO_PAGE_REGISTER3;
-unsigned char ECO_PAGE_REGISTER2;
-unsigned char ECO_PAGE_REGISTER1;
-unsigned char ECO_PAGE_REGISTER5;
+//unsigned char ECO_PAGE_REGISTER[7];
+
+unsigned char idata ECO_PAGE_REGISTER1;
+unsigned char idata ECO_PAGE_REGISTER2;
+unsigned char idata ECO_PAGE_REGISTER3;
+unsigned char idata ECO_PAGE_REGISTER4;
+unsigned char idata ECO_PAGE_REGISTER5;
+unsigned char idata ECO_PAGE_REGISTER6;
+unsigned char idata ECO_PAGE_REGISTER7;
+
 
 void eco_page_init()
 {
 	
 
 	ECO_PAGE_TABLE_INDEX = 5;
-
+	//ECO_PAGE_TABLE_INDEX++;	
+	//ECO_PAGE_REGISTER5 = 0xA7;
+	//ECO_PAGE_REGISTER3 = ECO_PAGE_TABLE_INDEX;
 	ECO_PAGE_ADDR = 0;
 
 	ECO_PAGE_TABLE[0] = -1; 
@@ -86,7 +92,6 @@ void eco_page_manager()
 
 		ECO_PAGE_ADDR = (page_index + ECO_PAGE_ADDR_OFFSET) << 8;
 	
-		rf_init();
 		#pragma asm
 		//eco_page_function_call
 		//MOV     DPH,ECO_PAGE_ADDR
@@ -131,7 +136,6 @@ void eco_page_manager()
 		ECO_PAGE_TABLE_INDEX++;
 
 		//Jump  to Function Address
-		rf_init();
 		#pragma asm
 		//MOV     DPH,ECO_PAGE_ADDR
 		//MOV     DPL,ECO_PAGE_ADDR+01H

@@ -61,6 +61,11 @@ void ECO_PAGE_MANAGER()
 	
 }
 
+void blink_test()
+{
+	blink_led();
+}
+
 void blink_fast()
 {
 	int i;
@@ -82,7 +87,7 @@ void main(void)
 	//unsigned char xdata *jump_fp;
 
 	//void(code *fp)();
-
+	blink_test();
 	ECO_PAGE_TABLE[0] = 2; 
 	
 	

@@ -113,6 +113,7 @@ int main()
 	serial_init(19200);	
 	eco_page_init();
 	
+	long_function(4,6,8,4);
 	msg[0] = 0x0A;
 	msg[1] = 0x00;
 	/* ADDR */

@@ -47,6 +47,11 @@ void blink_fast()
 	}
 }
 
+void blink_test()
+{
+	blink_led();	
+}
+
 void blink_slow()
 {
 	int i;
@@ -67,6 +72,7 @@ void main(void)
 	P0_DIR &= ~0x28;
 	P0_ALT &= ~0x28;
 	
+	blink_test();
 	for(i=0;i<6;i++)
 	{
 		//LED blink
