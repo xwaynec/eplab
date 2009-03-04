@@ -1,9 +1,9 @@
-LX51 LINKER/LOCATER V4.34a                                                              03/04/2009  17:40:23  PAGE 1
+LX51 LINKER/LOCATER V4.34a                                                              03/04/2009  20:19:45  PAGE 1
 
 
 LX51 LINKER/LOCATER V4.34a, INVOKED BY:
 C:\KEIL\C51\BIN\LX51.EXE MAIN.OBJ, ISR_RF.OBJ, ECO_PAGE.OBJ, ADC.OBJ, UTILS.OBJ, SERIAL.OBJ, SPI.OBJ, EEPROM.OBJ, C51S.L
->> IB TO MAIN SEGMENTS (?PR?_RF_SEND?ISR_RF (C:0X1000))
+>> IB TO MAIN
 
 
 CPU MODE:     8051 MODE
@@ -42,8 +42,6 @@ INPUT MODULES INCLUDED:
          COMMENT TYPE 1: A51 / ASM51 Assembler
   C51S.LIB (?C?ICASE)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C51S.LIB (?C?ICALL)
-         COMMENT TYPE 1: A51 / ASM51 Assembler
   C51S.LIB (?C_IBP)
          COMMENT TYPE 1: A51 / ASM51 Assembler
   C51S.LIB (?C_INIT)
@@ -54,8 +52,8 @@ ACTIVE MEMORY CLASSES OF MODULE:  MAIN (MAIN)
 
 BASE        START       END         USED      MEMORY CLASS
 ==========================================================
-C:000000H   C:000000H   C:00FFFFH   00080BH   CODE
-I:000000H   I:000000H   I:00007FH   00007BH   DATA
+C:000000H   C:000000H   C:00FFFFH   00074BH   CODE
+I:000000H   I:000000H   I:00007FH   00005EH   DATA
 I:000000H   I:000000H   I:0000FFH   000008H   IDATA
 
 
@@ -67,65 +65,62 @@ START     STOP      LENGTH    ALIGN  RELOC    MEMORY CLASS   SEGMENT NAME
 
 * * * * * * * * * * *   D A T A   M E M O R Y   * * * * * * * * * * * * *
 000000H   000007H   000008H   ---    AT..     DATA           "REG BANK 0"
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 2
+000008H   00001FH   000018H   BYTE   UNIT     DATA           ?DT?ISR_RF
+000020H   00002EH   00000FH   BYTE   UNIT     DATA           ?DT?ECO_PAGE
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 2
 
 
-000008H   000023H   00001CH   BYTE   UNIT     DATA           ?DT?MAIN
-000024H   00003BH   000018H   BYTE   UNIT     DATA           ?DT?ISR_RF
-00003CH   00004AH   00000FH   BYTE   UNIT     DATA           ?DT?ECO_PAGE
-00004BH   000054H   00000AH   BYTE   UNIT     DATA           ?DT?_RF_SEND?ISR_RF
-000055H   00005CH   000008H   BYTE   UNIT     DATA           ?DT?_STRNCPY?UTILS
-00005DH   000061H   000005H   BYTE   UNIT     DATA           ?DT?_RF_CONFIGURE?ISR_RF
-000062H   000065H   000004H   BYTE   UNIT     DATA           ?DT?ECO_PAGE_MANAGER?ECO_PAGE
-000066H   000069H   000004H   BYTE   UNIT     DATA           ?DT?UTILS
-00006AH   00006CH   000003H   BYTE   UNIT     DATA           ?DT?MAIN?MAIN
-00006DH   00006FH   000003H   BYTE   UNIT     DATA           ?DT?_PUTS?SERIAL
-000070H   000072H   000003H   BYTE   UNIT     DATA           ?DT?_EEPROM_WRITE?EEPROM
-000073H   000075H   000003H   BYTE   UNIT     DATA           ?DT?_EEPROM_READ?EEPROM
-000076H   000077H   000002H   BYTE   UNIT     DATA           ?DT?RF_CH1_RECV?ISR_RF
-000078H   000079H   000002H   BYTE   UNIT     DATA           ?DT?_MDELAY?UTILS
-00007AH   00007AH   000001H   BYTE   UNIT     DATA           ?C?LIB_DATA
-00007BH   000081H   000007H   BYTE   UNIT     IDATA          ?ID?ECO_PAGE
-000082H   000082H   000001H   BYTE   UNIT     IDATA          ?STACK
+00002FH   000038H   00000AH   BYTE   UNIT     DATA           ?DT?_RF_SEND?ISR_RF
+000039H   000040H   000008H   BYTE   UNIT     DATA           ?DT?_STRNCPY?UTILS
+000041H   000045H   000005H   BYTE   UNIT     DATA           ?DT?_RF_CONFIGURE?ISR_RF
+000046H   000049H   000004H   BYTE   UNIT     DATA           ?DT?ECO_PAGE_MANAGER?ECO_PAGE
+00004AH   00004DH   000004H   BYTE   UNIT     DATA           ?DT?UTILS
+00004EH   000050H   000003H   BYTE   UNIT     DATA           ?DT?_PUTS?SERIAL
+000051H   000053H   000003H   BYTE   UNIT     DATA           ?DT?_EEPROM_WRITE?EEPROM
+000054H   000056H   000003H   BYTE   UNIT     DATA           ?DT?_EEPROM_READ?EEPROM
+000057H   000058H   000002H   BYTE   UNIT     DATA           ?DT?MAIN?MAIN
+000059H   00005AH   000002H   BYTE   UNIT     DATA           ?DT?RF_CH1_RECV?ISR_RF
+00005BH   00005CH   000002H   BYTE   UNIT     DATA           ?DT?_MDELAY?UTILS
+00005DH   00005DH   000001H   BYTE   UNIT     DATA           ?C?LIB_DATA
+00005EH   000064H   000007H   BYTE   UNIT     IDATA          ?ID?ECO_PAGE
+000065H   000065H   000001H   BYTE   UNIT     IDATA          ?STACK
 
 * * * * * * * * * * *   C O D E   M E M O R Y   * * * * * * * * * * * * *
 000000H   000002H   000003H   ---    OFFS..   CODE           ?CO??C_STARTUP?0
 000003H   00004FH   00004DH   BYTE   UNIT     CODE           ?PR?P_ADC_READ?ADC
 000050H   000052H   000003H   BYTE   UNIT     CODE           ?PR?_PUTC?SERIAL
 000053H   000055H   000003H   ---    OFFS..   CODE           ?CO?ISR_RF?11
-000056H   000252H   0001FDH   BYTE   UNIT     CODE           ?C?LIB_CODE
-000253H   000339H   0000E7H   BYTE   UNIT     CODE           ?PR?ECO_PAGE_MANAGER?ECO_PAGE
-00033AH   0003C5H   00008CH   BYTE   UNIT     CODE           ?C_C51STARTUP
-0003C6H   000444H   00007FH   BYTE   UNIT     CODE           ?PR?MAIN?MAIN
-000445H   0004A4H   000060H   BYTE   UNIT     CODE           ?PR?RF_CH1_RECV?ISR_RF
-0004A5H   0004EDH   000049H   BYTE   UNIT     CODE           ?PR?_MDELAY?UTILS
-0004EEH   000531H   000044H   BYTE   UNIT     CODE           ?PR?_STRNCPY?UTILS
-000532H   00056EH   00003DH   BYTE   UNIT     CODE           ?PR?_SETUP_BAUDRATE?SERIAL
-00056FH   0005A9H   00003BH   BYTE   UNIT     CODE           ?PR?_EEPROM_WRITE?EEPROM
-0005AAH   0005E3H   00003AH   BYTE   UNIT     CODE           ?PR?_?INT_PRINT?SERIAL
-0005E4H   000619H   000036H   BYTE   UNIT     CODE           ?C_INITSEG
-00061AH   00064FH   000036H   BYTE   UNIT     CODE           ?PR?_RF_CONFIGURE?ISR_RF
-000650H   00067BH   00002CH   BYTE   UNIT     CODE           ?PR?_EEPROM_READ?EEPROM
-00067CH   0006A5H   00002AH   BYTE   UNIT     CODE           ?PR?ECO_PAGE_INIT?ECO_PAGE
-0006A6H   0006CAH   000025H   BYTE   UNIT     CODE           ?PR?_PUTS?SERIAL
-0006CBH   0006EDH   000023H   BYTE   UNIT     CODE           ?PR?FLASH_ERASE_ALL?EEPROM
-0006EEH   000708H   00001BH   BYTE   UNIT     CODE           ?PR?_ADC_READ?ADC
-000709H   00071BH   000013H   BYTE   UNIT     CODE           ?PR?_ADC_INIT?ADC
-00071CH   00072DH   000012H   BYTE   UNIT     CODE           ?PR?_WDT_LOAD?UTILS
-00072EH   00073CH   00000FH   BYTE   UNIT     CODE           ?PR?EEPROM_STATUS?EEPROM
-00073DH   00074AH   00000EH   BYTE   UNIT     CODE           ?PR?RF_INIT?ISR_RF
-00074BH   000757H   00000DH   BYTE   UNIT     CODE           ?PR?_STORE_CPU_RATE?UTILS
-000758H   000764H   00000DH   BYTE   UNIT     CODE           ?PR?_SPI_WRITE_THEN_READ?SPI
-000765H   00076FH   00000BH   BYTE   UNIT     CODE           ?PR?EEPROM_INIT?EEPROM
-000770H   000779H   00000AH   BYTE   UNIT     CODE           ?PR?_SERIAL_INIT?SERIAL
-00077AH   000782H   000009H   BYTE   UNIT     CODE           ?PR?RF_WAIT_MSG?ISR_RF
-000783H   00078AH   000008H   BYTE   UNIT     CODE           ?PR?_SERIAL_WRITE?SERIAL
-00078BH   000792H   000008H   BYTE   UNIT     CODE           ?PR?SERIAL_READ?SERIAL
-000793H   000797H   000005H   BYTE   UNIT     CODE           ?PR?_SPI_INIT?SPI
-000798H   00079BH   000004H   BYTE   UNIT     CODE           ?PR?TEST?MAIN
-00079CH   00079FH   000004H   BYTE   UNIT     CODE           ?PR?GETC?SERIAL
-0007A0H   000FFFH   000860H   ---    ---      **GAP**
-001000H   00106AH   00006BH   BYTE   UNIT     CODE           ?PR?_RF_SEND?ISR_RF
+000056H   00024CH   0001F7H   BYTE   UNIT     CODE           ?C?LIB_CODE
+00024DH   0002FAH   0000AEH   BYTE   UNIT     CODE           ?PR?ECO_PAGE_MANAGER?ECO_PAGE
+0002FBH   000386H   00008CH   BYTE   UNIT     CODE           ?C_C51STARTUP
+000387H   0003F1H   00006BH   BYTE   UNIT     CODE           ?PR?_RF_SEND?ISR_RF
+0003F2H   000451H   000060H   BYTE   UNIT     CODE           ?PR?RF_CH1_RECV?ISR_RF
+000452H   00049AH   000049H   BYTE   UNIT     CODE           ?PR?_MDELAY?UTILS
+00049BH   0004DEH   000044H   BYTE   UNIT     CODE           ?PR?_STRNCPY?UTILS
+0004DFH   00051BH   00003DH   BYTE   UNIT     CODE           ?PR?_SETUP_BAUDRATE?SERIAL
+00051CH   000556H   00003BH   BYTE   UNIT     CODE           ?PR?_EEPROM_WRITE?EEPROM
+000557H   000590H   00003AH   BYTE   UNIT     CODE           ?PR?_?INT_PRINT?SERIAL
+000591H   0005C6H   000036H   BYTE   UNIT     CODE           ?PR?_RF_CONFIGURE?ISR_RF
+0005C7H   0005F2H   00002CH   BYTE   UNIT     CODE           ?PR?_EEPROM_READ?EEPROM
+0005F3H   00061CH   00002AH   BYTE   UNIT     CODE           ?PR?ECO_PAGE_INIT?ECO_PAGE
+00061DH   000641H   000025H   BYTE   UNIT     CODE           ?PR?_PUTS?SERIAL
+000642H   000664H   000023H   BYTE   UNIT     CODE           ?PR?FLASH_ERASE_ALL?EEPROM
+000665H   000681H   00001DH   BYTE   UNIT     CODE           ?PR?MAIN?MAIN
+000682H   00069CH   00001BH   BYTE   UNIT     CODE           ?C_INITSEG
+00069DH   0006B7H   00001BH   BYTE   UNIT     CODE           ?PR?_ADC_READ?ADC
+0006B8H   0006CAH   000013H   BYTE   UNIT     CODE           ?PR?_ADC_INIT?ADC
+0006CBH   0006DCH   000012H   BYTE   UNIT     CODE           ?PR?_WDT_LOAD?UTILS
+0006DDH   0006EBH   00000FH   BYTE   UNIT     CODE           ?PR?EEPROM_STATUS?EEPROM
+0006ECH   0006F9H   00000EH   BYTE   UNIT     CODE           ?PR?RF_INIT?ISR_RF
+0006FAH   000706H   00000DH   BYTE   UNIT     CODE           ?PR?_STORE_CPU_RATE?UTILS
+000707H   000713H   00000DH   BYTE   UNIT     CODE           ?PR?_SPI_WRITE_THEN_READ?SPI
+000714H   00071EH   00000BH   BYTE   UNIT     CODE           ?PR?EEPROM_INIT?EEPROM
+00071FH   000728H   00000AH   BYTE   UNIT     CODE           ?PR?_SERIAL_INIT?SERIAL
+000729H   000731H   000009H   BYTE   UNIT     CODE           ?PR?RF_WAIT_MSG?ISR_RF
+000732H   000739H   000008H   BYTE   UNIT     CODE           ?PR?_SERIAL_WRITE?SERIAL
+00073AH   000741H   000008H   BYTE   UNIT     CODE           ?PR?SERIAL_READ?SERIAL
+000742H   000746H   000005H   BYTE   UNIT     CODE           ?PR?_SPI_INIT?SPI
+000747H   00074AH   000004H   BYTE   UNIT     CODE           ?PR?GETC?SERIAL
 
 
 
@@ -134,41 +129,39 @@ PUBLIC SYMBOLS OF MODULE:  MAIN (MAIN)
 
       VALUE       CLASS    TYPE      PUBLIC SYMBOL NAME
       =================================================
-      0000004BH   DATA     BYTE      ?_RF_SEND?BYTE
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 3
-
-
-      00000055H   DATA     BYTE      ?_STRNCPY?BYTE
+      0000002FH   DATA     BYTE      ?_RF_SEND?BYTE
+      00000039H   DATA     BYTE      ?_STRNCPY?BYTE
       0100006FH   CODE     ---       ?C?CLDOPTR
       01000056H   CODE     ---       ?C?CLDPTR
       00000000H   NUMBER   ---       ?C?CODESEG
       0100009CH   CODE     ---       ?C?CSTPTR
-      0100024DH   CODE     ---       ?C?ICALL
-      01000251H   CODE     ---       ?C?ICALL2
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 3
+
+
       01000220H   CODE     ---       ?C?ICASE
       01000103H   CODE     ---       ?C?LMUL
       010000AEH   CODE     ---       ?C?UIDIV
       0100018EH   CODE     ---       ?C?ULDIV
       00000000H   NUMBER   ---       ?C?XDATASEG
-      0000007AH   DATA     ---       ?C_IBP
-      01000381H   CODE     ---       ?C_START
+      0000005DH   DATA     ---       ?C_IBP
+      01000342H   CODE     ---       ?C_START
       01000000H   CODE     ---       ?C_STARTUP
-      010005AAH   CODE     NEAR LAB  _?INT_PRINT
-      01000709H   CODE     NEAR LAB  _ADC_INIT
-      010006EEH   CODE     NEAR LAB  _ADC_READ
-      01000650H   CODE     NEAR LAB  _EEPROM_READ
-      0100056FH   CODE     NEAR LAB  _EEPROM_WRITE
-      010004A5H   CODE     NEAR LAB  _MDELAY
+      01000557H   CODE     NEAR LAB  _?INT_PRINT
+      010006B8H   CODE     NEAR LAB  _ADC_INIT
+      0100069DH   CODE     NEAR LAB  _ADC_READ
+      010005C7H   CODE     NEAR LAB  _EEPROM_READ
+      0100051CH   CODE     NEAR LAB  _EEPROM_WRITE
+      01000452H   CODE     NEAR LAB  _MDELAY
       01000050H   CODE     NEAR LAB  _PUTC
-      010006A6H   CODE     NEAR LAB  _PUTS
-      0100061AH   CODE     NEAR LAB  _RF_CONFIGURE
-      01001000H   CODE     NEAR LAB  _RF_SEND
-      01000770H   CODE     NEAR LAB  _SERIAL_INIT
-      01000793H   CODE     NEAR LAB  _SPI_INIT
-      01000758H   CODE     NEAR LAB  _SPI_WRITE_THEN_READ
-      0100074BH   CODE     NEAR LAB  _STORE_CPU_RATE
-      010004EEH   CODE     NEAR LAB  _STRNCPY
-      0100071CH   CODE     NEAR LAB  _WDT_LOAD
+      0100061DH   CODE     NEAR LAB  _PUTS
+      01000591H   CODE     NEAR LAB  _RF_CONFIGURE
+      01000387H   CODE     NEAR LAB  _RF_SEND
+      0100071FH   CODE     NEAR LAB  _SERIAL_INIT
+      01000742H   CODE     NEAR LAB  _SPI_INIT
+      01000707H   CODE     NEAR LAB  _SPI_WRITE_THEN_READ
+      010006FAH   CODE     NEAR LAB  _STORE_CPU_RATE
+      0100049BH   CODE     NEAR LAB  _STRNCPY
+      010006CBH   CODE     NEAR LAB  _WDT_LOAD
 *SFR* 000000D0H.6 DATA     BIT       AC
 *SFR* 000000E0H   DATA     BYTE      ACC
 *SFR* 000000A1H   DATA     BYTE      ADCCON
@@ -178,7 +171,6 @@ PUBLIC SYMBOLS OF MODULE:  MAIN (MAIN)
 *SFR* 000000F0H   DATA     BYTE      B
 *SFR* 000000C8H.1 DATA     BIT       C_T2
 *SFR* 000000A0H.6 DATA     BIT       CE
-      00000008H   DATA     BYTE      CFG
 *SFR* 000000B6H   DATA     BYTE      CK_CTRL
 *SFR* 0000008EH   DATA     BYTE      CKCON
 *SFR* 000000A0H.1 DATA     BIT       CLK1
@@ -203,9 +195,6 @@ PUBLIC SYMBOLS OF MODULE:  MAIN (MAIN)
 *SFR* 00000080H.7 DATA     BIT       DIO9
 *SFR* 000000A0H.4 DATA     BIT       DOUT2
 *SFR* 00000083H   DATA     BYTE      DPH
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 4
-
-
 *SFR* 00000083H   DATA     BYTE      DPH0
 *SFR* 00000085H   DATA     BYTE      DPH1
 *SFR* 00000082H   DATA     BYTE      DPL
@@ -214,24 +203,26 @@ PUBLIC SYMBOLS OF MODULE:  MAIN (MAIN)
 *SFR* 00000086H   DATA     BYTE      DPS
 *SFR* 000000A0H.2 DATA     BIT       DR1
 *SFR* 000000A0H.6 DATA     BIT       DR2
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 4
+
+
 *SFR* 000000A0H.6 DATA     BIT       DR2_CE
-      00000012H   DATA     BYTE      DST_ADDR
 *SFR* 000000A8H.7 DATA     BIT       EA
-      00000047H   DATA     BYTE      ECO_PAGE_ADDR
-      0100067CH   CODE     NEAR LAB  ECO_PAGE_INIT
-      01000253H   CODE     NEAR LAB  ECO_PAGE_MANAGER
-      0000007BH   IDATA    BYTE      ECO_PAGE_REGISTER1
-      0000007CH   IDATA    BYTE      ECO_PAGE_REGISTER2
-      0000007DH   IDATA    BYTE      ECO_PAGE_REGISTER3
-      0000007EH   IDATA    BYTE      ECO_PAGE_REGISTER4
-      0000007FH   IDATA    BYTE      ECO_PAGE_REGISTER5
-      00000080H   IDATA    BYTE      ECO_PAGE_REGISTER6
-      00000081H   IDATA    BYTE      ECO_PAGE_REGISTER7
-      00000046H   DATA     BYTE      ECO_PAGE_SPI_CONN
-      0000003CH   DATA     BYTE      ECO_PAGE_TABLE
-      00000049H   DATA     BYTE      ECO_PAGE_TABLE_INDEX
-      01000765H   CODE     NEAR LAB  EEPROM_INIT
-      0100072EH   CODE     NEAR LAB  EEPROM_STATUS
+      0000002BH   DATA     BYTE      ECO_PAGE_ADDR
+      010005F3H   CODE     NEAR LAB  ECO_PAGE_INIT
+      0100024DH   CODE     NEAR LAB  ECO_PAGE_MANAGER
+      0000005EH   IDATA    BYTE      ECO_PAGE_REGISTER1
+      0000005FH   IDATA    BYTE      ECO_PAGE_REGISTER2
+      00000060H   IDATA    BYTE      ECO_PAGE_REGISTER3
+      00000061H   IDATA    BYTE      ECO_PAGE_REGISTER4
+      00000062H   IDATA    BYTE      ECO_PAGE_REGISTER5
+      00000063H   IDATA    BYTE      ECO_PAGE_REGISTER6
+      00000064H   IDATA    BYTE      ECO_PAGE_REGISTER7
+      0000002AH   DATA     BYTE      ECO_PAGE_SPI_CONN
+      00000020H   DATA     BYTE      ECO_PAGE_TABLE
+      0000002DH   DATA     BYTE      ECO_PAGE_TABLE_INDEX
+      01000714H   CODE     NEAR LAB  EEPROM_INIT
+      010006DDH   CODE     NEAR LAB  EEPROM_STATUS
 *SFR* 000000D8H   DATA     BYTE      EICON
 *SFR* 000000E8H   DATA     BYTE      EIE
 *SFR* 000000F8H   DATA     BYTE      EIP
@@ -251,8 +242,8 @@ PUBLIC SYMBOLS OF MODULE:  MAIN (MAIN)
 *SFR* 00000091H   DATA     BYTE      EXIF
 *SFR* 000000D0H.5 DATA     BIT       F0
 *SFR* 000000D0H.1 DATA     BIT       F1
-      010006CBH   CODE     NEAR LAB  FLASH_ERASE_ALL
-      0100079CH   CODE     NEAR LAB  GETC
+      01000642H   CODE     NEAR LAB  FLASH_ERASE_ALL
+      01000747H   CODE     NEAR LAB  GETC
 *SFR* 000000A8H   DATA     BYTE      IE
 *SFR* 00000088H.1 DATA     BIT       IE0
 *SFR* 00000088H.3 DATA     BIT       IE1
@@ -261,19 +252,15 @@ PUBLIC SYMBOLS OF MODULE:  MAIN (MAIN)
 *SFR* 000000B8H   DATA     BYTE      IP
 *SFR* 00000088H   DATA     BIT       IT0
 *SFR* 00000088H.2 DATA     BIT       IT1
-      010003C6H   CODE     NEAR LAB  MAIN
-      00000066H   DATA     BYTE      MHZ
+      01000665H   CODE     NEAR LAB  MAIN
+      0000004AH   DATA     BYTE      MHZ
 *SFR* 00000092H   DATA     BYTE      MPAGE
-      0000000BH   DATA     BYTE      MSG
 *SFR* 000000D0H.2 DATA     BIT       OV
 *SFR* 000000D0H   DATA     BIT       P
 *SFR* 00000080H   DATA     BYTE      P0
 *SFR* 00000080H   DATA     BIT       P0_0
 *SFR* 00000080H.1 DATA     BIT       P0_1
 *SFR* 00000080H.2 DATA     BIT       P0_2
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 5
-
-
 *SFR* 00000080H.3 DATA     BIT       P0_3
 *SFR* 00000080H.4 DATA     BIT       P0_4
 *SFR* 00000080H.5 DATA     BIT       P0_5
@@ -284,6 +271,9 @@ PUBLIC SYMBOLS OF MODULE:  MAIN (MAIN)
 *SFR* 00000090H   DATA     BYTE      P1
 *SFR* 00000090H   DATA     BIT       P1_0
 *SFR* 00000090H.1 DATA     BIT       P1_1
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 5
+
+
 *SFR* 00000090H.2 DATA     BIT       P1_2
 *SFR* 00000097H   DATA     BYTE      P1_ALT
 *SFR* 00000096H   DATA     BYTE      P1_DIR
@@ -313,11 +303,10 @@ PUBLIC SYMBOLS OF MODULE:  MAIN (MAIN)
 *SFR* 000000ACH   DATA     BYTE      REGX_LSB
 *SFR* 000000ABH   DATA     BYTE      REGX_MSB
 *SFR* 00000098H.4 DATA     BIT       REN
-      00000024H   DATA     BYTE      RF_BUF
-      01000445H   CODE     NEAR LAB  RF_CH1_RECV
-      00000015H   DATA     BYTE      RF_DATA
-      0100073DH   CODE     NEAR LAB  RF_INIT
-      0100077AH   CODE     NEAR LAB  RF_WAIT_MSG
+      00000008H   DATA     BYTE      RF_BUF
+      010003F2H   CODE     NEAR LAB  RF_CH1_RECV
+      010006ECH   CODE     NEAR LAB  RF_INIT
+      01000729H   CODE     NEAR LAB  RF_WAIT_MSG
 *SFR* 00000098H   DATA     BIT       RI
 *SFR* 000000D0H.3 DATA     BIT       RS0
 *SFR* 000000D0H.4 DATA     BIT       RS1
@@ -339,13 +328,9 @@ PUBLIC SYMBOLS OF MODULE:  MAIN (MAIN)
 *SFR* 00000090H   DATA     BIT       T2
 *SFR* 000000BDH   DATA     BYTE      T2_1V2
 *SFR* 000000C8H   DATA     BYTE      T2CON
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 6
-
-
 *SFR* 00000098H.3 DATA     BIT       TB8
 *SFR* 000000C8H.4 DATA     BIT       TCLK
 *SFR* 00000088H   DATA     BYTE      TCON
-      01000798H   CODE     NEAR LAB  TEST
 *SFR* 000000B7H   DATA     BYTE      TEST_MODE
 *SFR* 00000088H.5 DATA     BIT       TF0
 *SFR* 00000088H.7 DATA     BIT       TF1
@@ -354,6 +339,9 @@ PUBLIC SYMBOLS OF MODULE:  MAIN (MAIN)
 *SFR* 0000008DH   DATA     BYTE      TH1
 *SFR* 000000CDH   DATA     BYTE      TH2
 *SFR* 00000098H.1 DATA     BIT       TI
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 6
+
+
 *SFR* 000000B5H   DATA     BYTE      TICK_DV
 *SFR* 0000008AH   DATA     BYTE      TL0
 *SFR* 0000008BH   DATA     BYTE      TL1
@@ -372,12 +360,7 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       VALUE       REP       CLASS    TYPE      SYMBOL NAME
       ====================================================
       ---         MODULE    ---      ---       MAIN
-      00000008H   PUBLIC    DATA     BYTE      CFG
-      00000012H   PUBLIC    DATA     BYTE      DST_ADDR
-      010003C6H   PUBLIC    CODE     NEAR LAB  MAIN
-      0000000BH   PUBLIC    DATA     BYTE      MSG
-      00000015H   PUBLIC    DATA     BYTE      RF_DATA
-      01000798H   PUBLIC    CODE     NEAR LAB  TEST
+      01000665H   PUBLIC    CODE     NEAR LAB  MAIN
       000000D0H.6 SFRSYM    DATA     BIT       AC
       000000E0H   SFRSYM    DATA     BYTE      ACC
       000000A1H   SFRSYM    DATA     BYTE      ADCCON
@@ -407,9 +390,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       00000080H.3 SFRSYM    DATA     BIT       DIO5
       00000080H.4 SFRSYM    DATA     BIT       DIO6
       00000080H.5 SFRSYM    DATA     BIT       DIO7
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 7
-
-
       00000080H.6 SFRSYM    DATA     BIT       DIO8
       00000080H.7 SFRSYM    DATA     BIT       DIO9
       000000A0H.4 SFRSYM    DATA     BIT       DOUT2
@@ -427,6 +407,9 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000D8H   SFRSYM    DATA     BYTE      EICON
       000000E8H   SFRSYM    DATA     BYTE      EIE
       000000F8H   SFRSYM    DATA     BYTE      EIP
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 7
+
+
       000000A8H.4 SFRSYM    DATA     BIT       ES
       000000A8H.1 SFRSYM    DATA     BIT       ET0
       000000A8H.3 SFRSYM    DATA     BIT       ET1
@@ -475,9 +458,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000B8H.4 SFRSYM    DATA     BIT       PS
       000000D0H   SFRSYM    DATA     BYTE      PSW
       000000B8H.1 SFRSYM    DATA     BIT       PT0
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 8
-
-
       000000B8H.3 SFRSYM    DATA     BIT       PT1
       000000B8H.5 SFRSYM    DATA     BIT       PT2
       000000F8H.4 SFRSYM    DATA     BIT       PWDI
@@ -495,6 +475,9 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       00000098H.2 SFRSYM    DATA     BIT       RB8
       000000CBH   SFRSYM    DATA     BYTE      RCAP2H
       000000CAH   SFRSYM    DATA     BYTE      RCAP2L
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 8
+
+
       000000C8H.5 SFRSYM    DATA     BIT       RCLK
       000000ADH   SFRSYM    DATA     BYTE      REGX_CTRL
       000000ACH   SFRSYM    DATA     BYTE      REGX_LSB
@@ -542,88 +525,37 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000C8H.2 SFRSYM    DATA     BIT       TR2
       00000080H.2 SFRSYM    DATA     BIT       TXD
       000000D8H.3 SFRSYM    DATA     BIT       WDTI
-      01000408H   SYMBOL    CODE     NEAR LAB  ?C0002
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 9
+      01000676H   SYMBOL    CODE     NEAR LAB  ?C0001
+      00000057H   SYMBOL    DATA     BYTE      ?MAIN?BYTE
+      00000057H   SYMBOL    DATA     BYTE      I?040
 
-
-      0100041BH   SYMBOL    CODE     NEAR LAB  ?C0003
-      01000422H   SYMBOL    CODE     NEAR LAB  ?C0005
-      0000006AH   SYMBOL    DATA     BYTE      ?MAIN?BYTE
-      0000006BH   SYMBOL    DATA     BYTE      I?141
-      0000006AH   SYMBOL    DATA     BYTE      IDX?140
-
-      01000798H   BLOCK     CODE     NEAR LAB  LVL=0
-      01000798H   LINE      CODE     ---       #265
-      0100079BH   LINE      CODE     ---       #268
-      ---         BLOCKEND  ---      ---       LVL=0
-
-      010003C6H   BLOCK     CODE     NEAR LAB  LVL=0
-      010003C6H   LINE      CODE     ---       #283
-      010003C7H   LINE      CODE     ---       #284
-      010003C9H   LINE      CODE     ---       #285
-      010003CBH   LINE      CODE     ---       #288
-      010003CDH   LINE      CODE     ---       #289
-      010003CEH   LINE      CODE     ---       #290
-      010003D1H   LINE      CODE     ---       #293
-      010003D4H   LINE      CODE     ---       #296
-      010003D7H   LINE      CODE     ---       #299
-      010003DAH   LINE      CODE     ---       #302
-      010003DCH   LINE      CODE     ---       #303
-      010003DEH   LINE      CODE     ---       #304
-      010003E0H   LINE      CODE     ---       #305
-      010003E3H   LINE      CODE     ---       #308
-      010003E5H   LINE      CODE     ---       #309
-      010003E7H   LINE      CODE     ---       #310
-      010003EAH   LINE      CODE     ---       #313
-      010003EDH   LINE      CODE     ---       #316
-      010003F0H   LINE      CODE     ---       #319
-      010003F3H   LINE      CODE     ---       #322
-      010003F4H   LINE      CODE     ---       #323
-      010003F6H   LINE      CODE     ---       #327
-      010003F9H   LINE      CODE     ---       #330
-      010003FCH   LINE      CODE     ---       #334
-      010003FFH   LINE      CODE     ---       #337
-      01000402H   LINE      CODE     ---       #340
-      01000405H   LINE      CODE     ---       #344
-      01000408H   LINE      CODE     ---       #350
-      0100040BH   LINE      CODE     ---       #353
-      0100040DH   LINE      CODE     ---       #354
-      0100040FH   LINE      CODE     ---       #355
-      01000412H   LINE      CODE     ---       #358
-      01000414H   LINE      CODE     ---       #359
-      01000416H   LINE      CODE     ---       #360
-      01000417H   LINE      CODE     ---       #361
-      01000419H   LINE      CODE     ---       #362
-      0100041BH   LINE      CODE     ---       #366
-      0100041DH   LINE      CODE     ---       #367
-      0100041FH   LINE      CODE     ---       #368
-      01000422H   LINE      CODE     ---       #376
-      01000425H   LINE      CODE     ---       #377
-      01000428H   LINE      CODE     ---       #378
-      0100042BH   LINE      CODE     ---       #379
-      0100042EH   LINE      CODE     ---       #380
-      01000430H   LINE      CODE     ---       #381
-      01000432H   LINE      CODE     ---       #382
-      01000434H   LINE      CODE     ---       #383
-      01000436H   LINE      CODE     ---       #384
-      01000439H   LINE      CODE     ---       #387
-      0100043CH   LINE      CODE     ---       #390
-      0100043EH   LINE      CODE     ---       #391
-      01000440H   LINE      CODE     ---       #392
-      01000443H   LINE      CODE     ---       #395
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 10
+      01000665H   BLOCK     CODE     NEAR LAB  LVL=0
+      01000665H   LINE      CODE     ---       #192
+      01000666H   LINE      CODE     ---       #193
+      01000668H   LINE      CODE     ---       #194
+      0100066AH   LINE      CODE     ---       #197
+      0100066CH   LINE      CODE     ---       #198
+      0100066DH   LINE      CODE     ---       #199
+      01000670H   LINE      CODE     ---       #203
+      01000673H   LINE      CODE     ---       #206
+      01000676H   LINE      CODE     ---       #216
+      01000679H   LINE      CODE     ---       #219
+      0100067BH   LINE      CODE     ---       #220
+      0100067DH   LINE      CODE     ---       #221
+      01000680H   LINE      CODE     ---       #224
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 9
 
 
       ---         BLOCKEND  ---      ---       LVL=0
 
       ---         MODULE    ---      ---       ISR_RF
-      0000004BH   PUBLIC    DATA     BYTE      ?_RF_SEND?BYTE
-      0100061AH   PUBLIC    CODE     NEAR LAB  _RF_CONFIGURE
-      01001000H   PUBLIC    CODE     NEAR LAB  _RF_SEND
-      00000024H   PUBLIC    DATA     BYTE      RF_BUF
-      01000445H   PUBLIC    CODE     NEAR LAB  RF_CH1_RECV
-      0100073DH   PUBLIC    CODE     NEAR LAB  RF_INIT
-      0100077AH   PUBLIC    CODE     NEAR LAB  RF_WAIT_MSG
+      0000002FH   PUBLIC    DATA     BYTE      ?_RF_SEND?BYTE
+      01000591H   PUBLIC    CODE     NEAR LAB  _RF_CONFIGURE
+      01000387H   PUBLIC    CODE     NEAR LAB  _RF_SEND
+      00000008H   PUBLIC    DATA     BYTE      RF_BUF
+      010003F2H   PUBLIC    CODE     NEAR LAB  RF_CH1_RECV
+      010006ECH   PUBLIC    CODE     NEAR LAB  RF_INIT
+      01000729H   PUBLIC    CODE     NEAR LAB  RF_WAIT_MSG
       000000D0H.6 SFRSYM    DATA     BIT       AC
       000000E0H   SFRSYM    DATA     BYTE      ACC
       000000A1H   SFRSYM    DATA     BYTE      ADCCON
@@ -679,7 +611,7 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000A8H.2 SFRSYM    DATA     BIT       EX1
       000000E8H   SFRSYM    DATA     BIT       EX2
       000000E8H.1 SFRSYM    DATA     BIT       EX3
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 11
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 10
 
 
       000000E8H.2 SFRSYM    DATA     BIT       EX4
@@ -747,7 +679,7 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000D0H.3 SFRSYM    DATA     BIT       RS0
       000000D0H.4 SFRSYM    DATA     BIT       RS1
       000000B1H   SFRSYM    DATA     BYTE      RSTREAS
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 12
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 11
 
 
       00000080H.1 SFRSYM    DATA     BIT       RXD
@@ -788,216 +720,216 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000C8H.2 SFRSYM    DATA     BIT       TR2
       00000080H.2 SFRSYM    DATA     BIT       TXD
       000000D8H.3 SFRSYM    DATA     BIT       WDTI
-      0000005DH   SYMBOL    DATA     BYTE      ?_RF_CONFIGURE?BYTE
-      01000627H   SYMBOL    CODE     NEAR LAB  ?C0002
-      0100064DH   SYMBOL    CODE     NEAR LAB  ?C0003
-      0100100FH   SYMBOL    CODE     NEAR LAB  ?C0006
-      01001039H   SYMBOL    CODE     NEAR LAB  ?C0007
-      0100103EH   SYMBOL    CODE     NEAR LAB  ?C0009
-      01001068H   SYMBOL    CODE     NEAR LAB  ?C0010
-      0100046CH   SYMBOL    CODE     NEAR LAB  ?C0015
-      01000484H   SYMBOL    CODE     NEAR LAB  ?C0016
-      0100077CH   SYMBOL    CODE     NEAR LAB  ?C0018
-      01000780H   SYMBOL    CODE     NEAR LAB  ?C0019
-      01000642H   SYMBOL    CODE     NEAR LAB  ?C0021
-      01001037H   SYMBOL    CODE     NEAR LAB  ?C0022
-      01001066H   SYMBOL    CODE     NEAR LAB  ?C0023
-      0100047CH   SYMBOL    CODE     NEAR LAB  ?C0024
-      00000076H   SYMBOL    DATA     BYTE      ?RF_CH1_RECV?BYTE
-      01000487H   SYMBOL    CODE     NEAR LAB  ?RF_CH1_RECV?OUT
-      0000004BH   SYMBOL    DATA     BYTE      ADDR?243
-      0000004EH   SYMBOL    DATA     BYTE      ADDR_LEN?244
-      00000060H   SYMBOL    DATA     BYTE      I?142
-      00000053H   SYMBOL    DATA     BYTE      I?247
-      00000076H   SYMBOL    DATA     BYTE      I?348
-      0000005DH   SYMBOL    DATA     BYTE      P?141
-      0000004FH   SYMBOL    DATA     BYTE      PAYLOAD?245
-      00000052H   SYMBOL    DATA     BYTE      PL_LEN?246
+      00000041H   SYMBOL    DATA     BYTE      ?_RF_CONFIGURE?BYTE
+      0100059EH   SYMBOL    CODE     NEAR LAB  ?C0002
+      010005C4H   SYMBOL    CODE     NEAR LAB  ?C0003
+      01000396H   SYMBOL    CODE     NEAR LAB  ?C0006
+      010003C0H   SYMBOL    CODE     NEAR LAB  ?C0007
+      010003C5H   SYMBOL    CODE     NEAR LAB  ?C0009
+      010003EFH   SYMBOL    CODE     NEAR LAB  ?C0010
+      01000419H   SYMBOL    CODE     NEAR LAB  ?C0015
+      01000431H   SYMBOL    CODE     NEAR LAB  ?C0016
+      0100072BH   SYMBOL    CODE     NEAR LAB  ?C0018
+      0100072FH   SYMBOL    CODE     NEAR LAB  ?C0019
+      010005B9H   SYMBOL    CODE     NEAR LAB  ?C0021
+      010003BEH   SYMBOL    CODE     NEAR LAB  ?C0022
+      010003EDH   SYMBOL    CODE     NEAR LAB  ?C0023
+      01000429H   SYMBOL    CODE     NEAR LAB  ?C0024
+      00000059H   SYMBOL    DATA     BYTE      ?RF_CH1_RECV?BYTE
+      01000434H   SYMBOL    CODE     NEAR LAB  ?RF_CH1_RECV?OUT
+      0000002FH   SYMBOL    DATA     BYTE      ADDR?243
+      00000032H   SYMBOL    DATA     BYTE      ADDR_LEN?244
+      00000044H   SYMBOL    DATA     BYTE      I?142
+      00000037H   SYMBOL    DATA     BYTE      I?247
+      00000059H   SYMBOL    DATA     BYTE      I?348
+      00000041H   SYMBOL    DATA     BYTE      P?141
+      00000033H   SYMBOL    DATA     BYTE      PAYLOAD?245
+      00000036H   SYMBOL    DATA     BYTE      PL_LEN?246
 
-      0100073DH   BLOCK     CODE     NEAR LAB  LVL=0
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 13
+      010006ECH   BLOCK     CODE     NEAR LAB  LVL=0
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 12
 
 
-      0100073DH   LINE      CODE     ---       #265
-      0100073FH   LINE      CODE     ---       #269
-      01000740H   LINE      CODE     ---       #270
-      01000741H   LINE      CODE     ---       #271
-      01000743H   LINE      CODE     ---       #272
-      01000746H   LINE      CODE     ---       #275
-      01000748H   LINE      CODE     ---       #278
-      0100074AH   LINE      CODE     ---       #281
+      010006ECH   LINE      CODE     ---       #265
+      010006EEH   LINE      CODE     ---       #269
+      010006EFH   LINE      CODE     ---       #270
+      010006F0H   LINE      CODE     ---       #271
+      010006F2H   LINE      CODE     ---       #272
+      010006F5H   LINE      CODE     ---       #275
+      010006F7H   LINE      CODE     ---       #278
+      010006F9H   LINE      CODE     ---       #281
       ---         BLOCKEND  ---      ---       LVL=0
 
-      0100061AH   BLOCK     CODE     NEAR LAB  LVL=0
-      0100061AH   LINE      CODE     ---       #304
-      0100061CH   LINE      CODE     ---       #308
-      0100061EH   LINE      CODE     ---       #309
-      01000620H   LINE      CODE     ---       #310
-      01000622H   LINE      CODE     ---       #314
-      01000623H   LINE      CODE     ---       #315
-      01000625H   LINE      CODE     ---       #316
-      01000627H   LINE      CODE     ---       #320
-      01000629H   LINE      CODE     ---       #321
-      0100062BH   LINE      CODE     ---       #322
-      0100062DH   LINE      CODE     ---       #323
-      01000630H   LINE      CODE     ---       #324
-      01000633H   LINE      CODE     ---       #325
-      01000636H   LINE      CODE     ---       #326
-      01000637H   LINE      CODE     ---       #327
-      0100063AH   LINE      CODE     ---       #330
-      0100063CH   LINE      CODE     ---       #331
-      0100063EH   LINE      CODE     ---       #332
-      01000640H   LINE      CODE     ---       #333
-      01000642H   LINE      CODE     ---       #335
-      01000643H   LINE      CODE     ---       #336
-      01000645H   LINE      CODE     ---       #337
-      01000647H   LINE      CODE     ---       #338
-      01000649H   LINE      CODE     ---       #339
-      0100064BH   LINE      CODE     ---       #340
-      0100064DH   LINE      CODE     ---       #345
-      0100064FH   LINE      CODE     ---       #348
+      01000591H   BLOCK     CODE     NEAR LAB  LVL=0
+      01000591H   LINE      CODE     ---       #304
+      01000593H   LINE      CODE     ---       #308
+      01000595H   LINE      CODE     ---       #309
+      01000597H   LINE      CODE     ---       #310
+      01000599H   LINE      CODE     ---       #314
+      0100059AH   LINE      CODE     ---       #315
+      0100059CH   LINE      CODE     ---       #316
+      0100059EH   LINE      CODE     ---       #320
+      010005A0H   LINE      CODE     ---       #321
+      010005A2H   LINE      CODE     ---       #322
+      010005A4H   LINE      CODE     ---       #323
+      010005A7H   LINE      CODE     ---       #324
+      010005AAH   LINE      CODE     ---       #325
+      010005ADH   LINE      CODE     ---       #326
+      010005AEH   LINE      CODE     ---       #327
+      010005B1H   LINE      CODE     ---       #330
+      010005B3H   LINE      CODE     ---       #331
+      010005B5H   LINE      CODE     ---       #332
+      010005B7H   LINE      CODE     ---       #333
+      010005B9H   LINE      CODE     ---       #335
+      010005BAH   LINE      CODE     ---       #336
+      010005BCH   LINE      CODE     ---       #337
+      010005BEH   LINE      CODE     ---       #338
+      010005C0H   LINE      CODE     ---       #339
+      010005C2H   LINE      CODE     ---       #340
+      010005C4H   LINE      CODE     ---       #345
+      010005C6H   LINE      CODE     ---       #348
       ---         BLOCKEND  ---      ---       LVL=0
 
-      01001000H   BLOCK     CODE     NEAR LAB  LVL=0
-      01001000H   LINE      CODE     ---       #365
-      01001002H   LINE      CODE     ---       #366
-      01001004H   LINE      CODE     ---       #367
-      01001006H   LINE      CODE     ---       #368
-      01001008H   LINE      CODE     ---       #376
-      0100100AH   LINE      CODE     ---       #381
-      0100100BH   LINE      CODE     ---       #382
-      0100100DH   LINE      CODE     ---       #383
-      0100100FH   LINE      CODE     ---       #385
-      01001010H   LINE      CODE     ---       #386
-      01001012H   LINE      CODE     ---       #387
-      01001014H   LINE      CODE     ---       #388
-      01001016H   LINE      CODE     ---       #389
-      01001017H   LINE      CODE     ---       #390
-      01001019H   LINE      CODE     ---       #391
-      0100101AH   LINE      CODE     ---       #392
-      0100101CH   LINE      CODE     ---       #395
-      0100101EH   LINE      CODE     ---       #396
-      01001020H   LINE      CODE     ---       #397
-      01001022H   LINE      CODE     ---       #398
-      01001025H   LINE      CODE     ---       #399
-      01001028H   LINE      CODE     ---       #400
-      0100102BH   LINE      CODE     ---       #401
-      0100102CH   LINE      CODE     ---       #402
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 14
+      01000387H   BLOCK     CODE     NEAR LAB  LVL=0
+      01000387H   LINE      CODE     ---       #365
+      01000389H   LINE      CODE     ---       #366
+      0100038BH   LINE      CODE     ---       #367
+      0100038DH   LINE      CODE     ---       #368
+      0100038FH   LINE      CODE     ---       #376
+      01000391H   LINE      CODE     ---       #381
+      01000392H   LINE      CODE     ---       #382
+      01000394H   LINE      CODE     ---       #383
+      01000396H   LINE      CODE     ---       #385
+      01000397H   LINE      CODE     ---       #386
+      01000399H   LINE      CODE     ---       #387
+      0100039BH   LINE      CODE     ---       #388
+      0100039DH   LINE      CODE     ---       #389
+      0100039EH   LINE      CODE     ---       #390
+      010003A0H   LINE      CODE     ---       #391
+      010003A1H   LINE      CODE     ---       #392
+      010003A3H   LINE      CODE     ---       #395
+      010003A5H   LINE      CODE     ---       #396
+      010003A7H   LINE      CODE     ---       #397
+      010003A9H   LINE      CODE     ---       #398
+      010003ACH   LINE      CODE     ---       #399
+      010003AFH   LINE      CODE     ---       #400
+      010003B2H   LINE      CODE     ---       #401
+      010003B3H   LINE      CODE     ---       #402
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 13
 
 
-      0100102FH   LINE      CODE     ---       #403
-      01001031H   LINE      CODE     ---       #404
-      01001033H   LINE      CODE     ---       #405
-      01001035H   LINE      CODE     ---       #406
-      01001037H   LINE      CODE     ---       #408
-      01001039H   LINE      CODE     ---       #413
-      0100103AH   LINE      CODE     ---       #414
-      0100103CH   LINE      CODE     ---       #415
-      0100103EH   LINE      CODE     ---       #417
-      0100103FH   LINE      CODE     ---       #418
-      01001041H   LINE      CODE     ---       #419
-      01001043H   LINE      CODE     ---       #420
-      01001045H   LINE      CODE     ---       #421
-      01001046H   LINE      CODE     ---       #422
-      01001048H   LINE      CODE     ---       #423
-      01001049H   LINE      CODE     ---       #424
-      0100104BH   LINE      CODE     ---       #427
-      0100104DH   LINE      CODE     ---       #428
-      0100104FH   LINE      CODE     ---       #429
-      01001051H   LINE      CODE     ---       #430
-      01001054H   LINE      CODE     ---       #431
-      01001057H   LINE      CODE     ---       #432
-      0100105AH   LINE      CODE     ---       #433
-      0100105BH   LINE      CODE     ---       #434
-      0100105EH   LINE      CODE     ---       #435
-      01001060H   LINE      CODE     ---       #436
-      01001062H   LINE      CODE     ---       #437
-      01001064H   LINE      CODE     ---       #438
-      01001066H   LINE      CODE     ---       #440
-      01001068H   LINE      CODE     ---       #445
-      0100106AH   LINE      CODE     ---       #448
+      010003B6H   LINE      CODE     ---       #403
+      010003B8H   LINE      CODE     ---       #404
+      010003BAH   LINE      CODE     ---       #405
+      010003BCH   LINE      CODE     ---       #406
+      010003BEH   LINE      CODE     ---       #408
+      010003C0H   LINE      CODE     ---       #413
+      010003C1H   LINE      CODE     ---       #414
+      010003C3H   LINE      CODE     ---       #415
+      010003C5H   LINE      CODE     ---       #417
+      010003C6H   LINE      CODE     ---       #418
+      010003C8H   LINE      CODE     ---       #419
+      010003CAH   LINE      CODE     ---       #420
+      010003CCH   LINE      CODE     ---       #421
+      010003CDH   LINE      CODE     ---       #422
+      010003CFH   LINE      CODE     ---       #423
+      010003D0H   LINE      CODE     ---       #424
+      010003D2H   LINE      CODE     ---       #427
+      010003D4H   LINE      CODE     ---       #428
+      010003D6H   LINE      CODE     ---       #429
+      010003D8H   LINE      CODE     ---       #430
+      010003DBH   LINE      CODE     ---       #431
+      010003DEH   LINE      CODE     ---       #432
+      010003E1H   LINE      CODE     ---       #433
+      010003E2H   LINE      CODE     ---       #434
+      010003E5H   LINE      CODE     ---       #435
+      010003E7H   LINE      CODE     ---       #436
+      010003E9H   LINE      CODE     ---       #437
+      010003EBH   LINE      CODE     ---       #438
+      010003EDH   LINE      CODE     ---       #440
+      010003EFH   LINE      CODE     ---       #445
+      010003F1H   LINE      CODE     ---       #448
       ---         BLOCKEND  ---      ---       LVL=0
 
       01000053H   BLOCK     CODE     NEAR LAB  LVL=0
       01000053H   LINE      CODE     ---       #452
       ---         BLOCKEND  ---      ---       LVL=0
 
-      01000445H   BLOCK     CODE     NEAR LAB  LVL=0
-      01000445H   LINE      CODE     ---       #461
-      01000447H   LINE      CODE     ---       #462
-      01000449H   LINE      CODE     ---       #463
-      0100044BH   LINE      CODE     ---       #464
-      0100044DH   LINE      CODE     ---       #465
-      0100044FH   LINE      CODE     ---       #466
-      01000452H   LINE      CODE     ---       #467
-      01000454H   LINE      CODE     ---       #468
-      01000456H   LINE      CODE     ---       #469
-      01000458H   LINE      CODE     ---       #470
-      0100045AH   LINE      CODE     ---       #471
-      0100045CH   LINE      CODE     ---       #472
-      0100045EH   LINE      CODE     ---       #473
-      01000460H   LINE      CODE     ---       #474
-      01000462H   LINE      CODE     ---       #480
-      01000465H   LINE      CODE     ---       #481
-      01000468H   LINE      CODE     ---       #488
-      0100046AH   LINE      CODE     ---       #489
-      0100046CH   LINE      CODE     ---       #495
-      0100046FH   LINE      CODE     ---       #498
-      01000470H   LINE      CODE     ---       #499
-      01000471H   LINE      CODE     ---       #500
-      01000474H   LINE      CODE     ---       #501
-      01000476H   LINE      CODE     ---       #502
-      01000478H   LINE      CODE     ---       #503
-      0100047AH   LINE      CODE     ---       #504
-      0100047CH   LINE      CODE     ---       #506
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 15
+      010003F2H   BLOCK     CODE     NEAR LAB  LVL=0
+      010003F2H   LINE      CODE     ---       #461
+      010003F4H   LINE      CODE     ---       #462
+      010003F6H   LINE      CODE     ---       #463
+      010003F8H   LINE      CODE     ---       #464
+      010003FAH   LINE      CODE     ---       #465
+      010003FCH   LINE      CODE     ---       #466
+      010003FFH   LINE      CODE     ---       #467
+      01000401H   LINE      CODE     ---       #468
+      01000403H   LINE      CODE     ---       #469
+      01000405H   LINE      CODE     ---       #470
+      01000407H   LINE      CODE     ---       #471
+      01000409H   LINE      CODE     ---       #472
+      0100040BH   LINE      CODE     ---       #473
+      0100040DH   LINE      CODE     ---       #474
+      0100040FH   LINE      CODE     ---       #480
+      01000412H   LINE      CODE     ---       #481
+      01000415H   LINE      CODE     ---       #488
+      01000417H   LINE      CODE     ---       #489
+      01000419H   LINE      CODE     ---       #495
+      0100041CH   LINE      CODE     ---       #498
+      0100041DH   LINE      CODE     ---       #499
+      0100041EH   LINE      CODE     ---       #500
+      01000421H   LINE      CODE     ---       #501
+      01000423H   LINE      CODE     ---       #502
+      01000425H   LINE      CODE     ---       #503
+      01000427H   LINE      CODE     ---       #504
+      01000429H   LINE      CODE     ---       #506
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 14
 
 
-      0100047DH   LINE      CODE     ---       #507
-      0100047FH   LINE      CODE     ---       #508
-      01000480H   LINE      CODE     ---       #509
-      01000482H   LINE      CODE     ---       #512
-      01000484H   LINE      CODE     ---       #516
-      01000487H   LINE      CODE     ---       #523
-      0100048AH   LINE      CODE     ---       #526
-      0100048CH   LINE      CODE     ---       #527
-      0100048EH   LINE      CODE     ---       #528
-      01000490H   LINE      CODE     ---       #529
-      01000492H   LINE      CODE     ---       #530
-      01000494H   LINE      CODE     ---       #531
-      01000496H   LINE      CODE     ---       #532
-      01000498H   LINE      CODE     ---       #533
-      0100049AH   LINE      CODE     ---       #534
-      0100049CH   LINE      CODE     ---       #535
-      0100049EH   LINE      CODE     ---       #536
-      010004A0H   LINE      CODE     ---       #537
-      010004A2H   LINE      CODE     ---       #538
-      010004A4H   LINE      CODE     ---       #539
+      0100042AH   LINE      CODE     ---       #507
+      0100042CH   LINE      CODE     ---       #508
+      0100042DH   LINE      CODE     ---       #509
+      0100042FH   LINE      CODE     ---       #512
+      01000431H   LINE      CODE     ---       #516
+      01000434H   LINE      CODE     ---       #523
+      01000437H   LINE      CODE     ---       #526
+      01000439H   LINE      CODE     ---       #527
+      0100043BH   LINE      CODE     ---       #528
+      0100043DH   LINE      CODE     ---       #529
+      0100043FH   LINE      CODE     ---       #530
+      01000441H   LINE      CODE     ---       #531
+      01000443H   LINE      CODE     ---       #532
+      01000445H   LINE      CODE     ---       #533
+      01000447H   LINE      CODE     ---       #534
+      01000449H   LINE      CODE     ---       #535
+      0100044BH   LINE      CODE     ---       #536
+      0100044DH   LINE      CODE     ---       #537
+      0100044FH   LINE      CODE     ---       #538
+      01000451H   LINE      CODE     ---       #539
       ---         BLOCKEND  ---      ---       LVL=0
 
-      0100077AH   BLOCK     CODE     NEAR LAB  LVL=0
-      0100077AH   LINE      CODE     ---       #555
-      0100077CH   LINE      CODE     ---       #559
-      0100077EH   LINE      CODE     ---       #560
-      01000780H   LINE      CODE     ---       #565
-      01000782H   LINE      CODE     ---       #568
+      01000729H   BLOCK     CODE     NEAR LAB  LVL=0
+      01000729H   LINE      CODE     ---       #555
+      0100072BH   LINE      CODE     ---       #559
+      0100072DH   LINE      CODE     ---       #560
+      0100072FH   LINE      CODE     ---       #565
+      01000731H   LINE      CODE     ---       #568
       ---         BLOCKEND  ---      ---       LVL=0
 
       ---         MODULE    ---      ---       ECO_PAGE
-      00000047H   PUBLIC    DATA     BYTE      ECO_PAGE_ADDR
-      0100067CH   PUBLIC    CODE     NEAR LAB  ECO_PAGE_INIT
-      01000253H   PUBLIC    CODE     NEAR LAB  ECO_PAGE_MANAGER
-      0000007BH   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER1
-      0000007CH   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER2
-      0000007DH   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER3
-      0000007EH   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER4
-      0000007FH   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER5
-      00000080H   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER6
-      00000081H   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER7
-      00000046H   PUBLIC    DATA     BYTE      ECO_PAGE_SPI_CONN
-      0000003CH   PUBLIC    DATA     BYTE      ECO_PAGE_TABLE
-      00000049H   PUBLIC    DATA     BYTE      ECO_PAGE_TABLE_INDEX
+      0000002BH   PUBLIC    DATA     BYTE      ECO_PAGE_ADDR
+      010005F3H   PUBLIC    CODE     NEAR LAB  ECO_PAGE_INIT
+      0100024DH   PUBLIC    CODE     NEAR LAB  ECO_PAGE_MANAGER
+      0000005EH   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER1
+      0000005FH   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER2
+      00000060H   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER3
+      00000061H   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER4
+      00000062H   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER5
+      00000063H   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER6
+      00000064H   PUBLIC    IDATA    BYTE      ECO_PAGE_REGISTER7
+      0000002AH   PUBLIC    DATA     BYTE      ECO_PAGE_SPI_CONN
+      00000020H   PUBLIC    DATA     BYTE      ECO_PAGE_TABLE
+      0000002DH   PUBLIC    DATA     BYTE      ECO_PAGE_TABLE_INDEX
       000000D0H.6 SFRSYM    DATA     BIT       AC
       000000E0H   SFRSYM    DATA     BYTE      ACC
       000000A1H   SFRSYM    DATA     BYTE      ADCCON
@@ -1019,7 +951,7 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000A0H   SFRSYM    DATA     BIT       DATA?
       000000BEH   SFRSYM    DATA     BYTE      DEV_OFFSET
       00000090H.2 SFRSYM    DATA     BIT       DIN0
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 16
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 15
 
 
       00000090H   SFRSYM    DATA     BIT       DIO0
@@ -1087,7 +1019,7 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       00000094H   SFRSYM    DATA     BYTE      P0_DIR
       00000090H   SFRSYM    DATA     BYTE      P1
       00000090H   SFRSYM    DATA     BIT       P1_0
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 17
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 16
 
 
       00000090H.1 SFRSYM    DATA     BIT       P1_1
@@ -1155,7 +1087,7 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000B5H   SFRSYM    DATA     BYTE      TICK_DV
       0000008AH   SFRSYM    DATA     BYTE      TL0
       0000008BH   SFRSYM    DATA     BYTE      TL1
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 18
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 17
 
 
       000000CCH   SFRSYM    DATA     BYTE      TL2
@@ -1165,184 +1097,152 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000C8H.2 SFRSYM    DATA     BIT       TR2
       00000080H.2 SFRSYM    DATA     BIT       TXD
       000000D8H.3 SFRSYM    DATA     BIT       WDTI
-      0100025CH   SYMBOL    CODE     NEAR LAB  ?C0002
-      0100027FH   SYMBOL    CODE     NEAR LAB  ?C0003
-      01000271H   SYMBOL    CODE     NEAR LAB  ?C0004
-      010002B2H   SYMBOL    CODE     NEAR LAB  ?C0006
-      01000333H   SYMBOL    CODE     NEAR LAB  ?C0007
-      010002C8H   SYMBOL    CODE     NEAR LAB  ?C0008
-      010002F7H   SYMBOL    CODE     NEAR LAB  ?C0009
-      01000279H   SYMBOL    CODE     NEAR LAB  ?C0013
-      01000285H   SYMBOL    CODE     NEAR LAB  ?C0014
-      010002F0H   SYMBOL    CODE     NEAR LAB  ?C0015
-      01000317H   SYMBOL    CODE     NEAR LAB  ?C0016
-      00000062H   SYMBOL    DATA     BYTE      ?ECO_PAGE_MANAGER?BYTE
-      00000062H   SYMBOL    DATA     BYTE      I?141
-      00000064H   SYMBOL    DATA     BYTE      SEG?140
+      01000256H   SYMBOL    CODE     NEAR LAB  ?C0002
+      01000279H   SYMBOL    CODE     NEAR LAB  ?C0003
+      0100026BH   SYMBOL    CODE     NEAR LAB  ?C0004
+      0100028FH   SYMBOL    CODE     NEAR LAB  ?C0006
+      010002F4H   SYMBOL    CODE     NEAR LAB  ?C0007
+      010002A5H   SYMBOL    CODE     NEAR LAB  ?C0008
+      010002D4H   SYMBOL    CODE     NEAR LAB  ?C0009
+      01000273H   SYMBOL    CODE     NEAR LAB  ?C0013
+      0100027FH   SYMBOL    CODE     NEAR LAB  ?C0014
+      010002CDH   SYMBOL    CODE     NEAR LAB  ?C0015
+      010002F4H   SYMBOL    CODE     NEAR LAB  ?C0016
+      00000046H   SYMBOL    DATA     BYTE      ?ECO_PAGE_MANAGER?BYTE
+      00000046H   SYMBOL    DATA     BYTE      I?141
+      00000048H   SYMBOL    DATA     BYTE      SEG?140
 
-      0100067CH   BLOCK     CODE     NEAR LAB  LVL=0
-      0100067CH   LINE      CODE     ---       #257
-      0100067FH   LINE      CODE     ---       #258
-      01000682H   LINE      CODE     ---       #264
-      01000683H   LINE      CODE     ---       #265
-      01000685H   LINE      CODE     ---       #266
-      01000687H   LINE      CODE     ---       #270
-      0100068AH   LINE      CODE     ---       #273
-      0100068DH   LINE      CODE     ---       #276
-      01000690H   LINE      CODE     ---       #279
-      01000693H   LINE      CODE     ---       #282
-      01000696H   LINE      CODE     ---       #285
-      01000699H   LINE      CODE     ---       #288
-      0100069CH   LINE      CODE     ---       #291
-      0100069FH   LINE      CODE     ---       #294
-      010006A2H   LINE      CODE     ---       #297
-      010006A5H   LINE      CODE     ---       #300
+      010005F3H   BLOCK     CODE     NEAR LAB  LVL=0
+      010005F3H   LINE      CODE     ---       #256
+      010005F6H   LINE      CODE     ---       #257
+      010005F9H   LINE      CODE     ---       #263
+      010005FAH   LINE      CODE     ---       #264
+      010005FCH   LINE      CODE     ---       #265
+      010005FEH   LINE      CODE     ---       #269
+      01000601H   LINE      CODE     ---       #272
+      01000604H   LINE      CODE     ---       #275
+      01000607H   LINE      CODE     ---       #278
+      0100060AH   LINE      CODE     ---       #281
+      0100060DH   LINE      CODE     ---       #284
+      01000610H   LINE      CODE     ---       #287
+      01000613H   LINE      CODE     ---       #290
+      01000616H   LINE      CODE     ---       #293
+      01000619H   LINE      CODE     ---       #296
+      0100061CH   LINE      CODE     ---       #299
       ---         BLOCKEND  ---      ---       LVL=0
 
-      01000253H   BLOCK     CODE     NEAR LAB  LVL=0
-      01000253H   LINE      CODE     ---       #317
-      01000255H   LINE      CODE     ---       #318
-      01000256H   LINE      CODE     ---       #319
-      01000257H   LINE      CODE     ---       #333
-      01000258H   LINE      CODE     ---       #334
-      0100025AH   LINE      CODE     ---       #335
-      0100025CH   LINE      CODE     ---       #341
-      0100025EH   LINE      CODE     ---       #342
-      01000260H   LINE      CODE     ---       #343
-      01000261H   LINE      CODE     ---       #344
-      01000262H   LINE      CODE     ---       #345
-      01000263H   LINE      CODE     ---       #346
-      01000264H   LINE      CODE     ---       #347
-      01000267H   LINE      CODE     ---       #348
-      01000268H   LINE      CODE     ---       #349
-      0100026BH   LINE      CODE     ---       #354
-      0100026DH   LINE      CODE     ---       #355
-      0100026FH   LINE      CODE     ---       #358
-      01000271H   LINE      CODE     ---       #364
-      01000273H   LINE      CODE     ---       #365
-      01000275H   LINE      CODE     ---       #366
-      01000277H   LINE      CODE     ---       #367
-      01000279H   LINE      CODE     ---       #369
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 19
+      0100024DH   BLOCK     CODE     NEAR LAB  LVL=0
+      0100024DH   LINE      CODE     ---       #316
+      0100024FH   LINE      CODE     ---       #317
+      01000250H   LINE      CODE     ---       #318
+      01000251H   LINE      CODE     ---       #332
+      01000252H   LINE      CODE     ---       #333
+      01000254H   LINE      CODE     ---       #334
+      01000256H   LINE      CODE     ---       #340
+      01000258H   LINE      CODE     ---       #341
+      0100025AH   LINE      CODE     ---       #342
+      0100025BH   LINE      CODE     ---       #343
+      0100025CH   LINE      CODE     ---       #344
+      0100025DH   LINE      CODE     ---       #345
+      0100025EH   LINE      CODE     ---       #346
+      01000261H   LINE      CODE     ---       #347
+      01000262H   LINE      CODE     ---       #348
+      01000265H   LINE      CODE     ---       #353
+      01000267H   LINE      CODE     ---       #354
+      01000269H   LINE      CODE     ---       #357
+      0100026BH   LINE      CODE     ---       #363
+      0100026DH   LINE      CODE     ---       #364
+      0100026FH   LINE      CODE     ---       #365
+      01000271H   LINE      CODE     ---       #366
+      01000273H   LINE      CODE     ---       #368
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 18
 
 
-      0100027BH   LINE      CODE     ---       #370
-      0100027DH   LINE      CODE     ---       #371
-      0100027FH   LINE      CODE     ---       #376
-      01000280H   LINE      CODE     ---       #377
-      01000281H   LINE      CODE     ---       #378
-      01000283H   LINE      CODE     ---       #379
-      01000284H   LINE      CODE     ---       #380
-      01000285H   LINE      CODE     ---       #382
-      01000287H   LINE      CODE     ---       #395
-      01000288H   LINE      CODE     ---       #396
-      0100028AH   LINE      CODE     ---       #397
-      0100028BH   LINE      CODE     ---       #398
-      0100028CH   LINE      CODE     ---       #399
-      0100028DH   LINE      CODE     ---       #400
-      0100028EH   LINE      CODE     ---       #401
-      01000291H   LINE      CODE     ---       #402
-      01000293H   LINE      CODE     ---       #405
-      01000296H   LINE      CODE     ---       #407
-      01000298H   LINE      CODE     ---       #408
-      01000299H   LINE      CODE     ---       #409
-      0100029AH   LINE      CODE     ---       #411
-      0100029CH   LINE      CODE     ---       #412
-      0100029DH   LINE      CODE     ---       #413
-      0100029EH   LINE      CODE     ---       #415
-      010002A0H   LINE      CODE     ---       #416
-      010002A1H   LINE      CODE     ---       #417
-      010002A2H   LINE      CODE     ---       #419
-      010002A4H   LINE      CODE     ---       #420
-      010002A5H   LINE      CODE     ---       #421
-      010002A6H   LINE      CODE     ---       #425
-      010002A9H   LINE      CODE     ---       #426
-      010002ACH   LINE      CODE     ---       #427
-      010002AFH   LINE      CODE     ---       #439
-      010002B2H   LINE      CODE     ---       #448
-      010002B4H   LINE      CODE     ---       #449
-      010002B6H   LINE      CODE     ---       #450
-      010002B7H   LINE      CODE     ---       #451
-      010002B8H   LINE      CODE     ---       #452
-      010002BAH   LINE      CODE     ---       #453
-      010002BBH   LINE      CODE     ---       #454
-      010002BDH   LINE      CODE     ---       #455
-      010002C0H   LINE      CODE     ---       #467
-      010002C3H   LINE      CODE     ---       #470
-      010002C4H   LINE      CODE     ---       #471
-      010002C6H   LINE      CODE     ---       #472
-      010002C8H   LINE      CODE     ---       #478
-      010002CAH   LINE      CODE     ---       #479
-      010002CCH   LINE      CODE     ---       #480
-      010002CDH   LINE      CODE     ---       #481
-      010002CEH   LINE      CODE     ---       #482
-      010002D0H   LINE      CODE     ---       #483
-      010002D1H   LINE      CODE     ---       #484
-      010002D3H   LINE      CODE     ---       #485
-      010002D4H   LINE      CODE     ---       #486
-      010002D6H   LINE      CODE     ---       #487
-      010002D7H   LINE      CODE     ---       #488
-      010002DAH   LINE      CODE     ---       #489
-      010002DCH   LINE      CODE     ---       #490
-      010002DEH   LINE      CODE     ---       #491
-      010002E0H   LINE      CODE     ---       #492
-      010002E2H   LINE      CODE     ---       #493
-      010002E4H   LINE      CODE     ---       #494
-      010002E6H   LINE      CODE     ---       #495
-      010002E7H   LINE      CODE     ---       #496
-      010002E8H   LINE      CODE     ---       #499
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 20
+      01000275H   LINE      CODE     ---       #369
+      01000277H   LINE      CODE     ---       #370
+      01000279H   LINE      CODE     ---       #375
+      0100027AH   LINE      CODE     ---       #376
+      0100027BH   LINE      CODE     ---       #377
+      0100027DH   LINE      CODE     ---       #378
+      0100027EH   LINE      CODE     ---       #379
+      0100027FH   LINE      CODE     ---       #381
+      01000281H   LINE      CODE     ---       #394
+      01000282H   LINE      CODE     ---       #395
+      01000284H   LINE      CODE     ---       #396
+      01000285H   LINE      CODE     ---       #397
+      01000286H   LINE      CODE     ---       #398
+      01000287H   LINE      CODE     ---       #399
+      01000288H   LINE      CODE     ---       #400
+      0100028BH   LINE      CODE     ---       #401
+      0100028DH   LINE      CODE     ---       #415
+      0100028FH   LINE      CODE     ---       #424
+      01000291H   LINE      CODE     ---       #425
+      01000293H   LINE      CODE     ---       #426
+      01000294H   LINE      CODE     ---       #427
+      01000295H   LINE      CODE     ---       #428
+      01000297H   LINE      CODE     ---       #429
+      01000298H   LINE      CODE     ---       #430
+      0100029AH   LINE      CODE     ---       #431
+      0100029DH   LINE      CODE     ---       #443
+      010002A0H   LINE      CODE     ---       #446
+      010002A1H   LINE      CODE     ---       #447
+      010002A3H   LINE      CODE     ---       #448
+      010002A5H   LINE      CODE     ---       #454
+      010002A7H   LINE      CODE     ---       #455
+      010002A9H   LINE      CODE     ---       #456
+      010002AAH   LINE      CODE     ---       #457
+      010002ABH   LINE      CODE     ---       #458
+      010002ADH   LINE      CODE     ---       #459
+      010002AEH   LINE      CODE     ---       #460
+      010002B0H   LINE      CODE     ---       #461
+      010002B1H   LINE      CODE     ---       #462
+      010002B3H   LINE      CODE     ---       #463
+      010002B4H   LINE      CODE     ---       #464
+      010002B7H   LINE      CODE     ---       #465
+      010002B9H   LINE      CODE     ---       #466
+      010002BBH   LINE      CODE     ---       #467
+      010002BDH   LINE      CODE     ---       #468
+      010002BFH   LINE      CODE     ---       #469
+      010002C1H   LINE      CODE     ---       #470
+      010002C3H   LINE      CODE     ---       #471
+      010002C4H   LINE      CODE     ---       #472
+      010002C5H   LINE      CODE     ---       #475
+      010002C7H   LINE      CODE     ---       #476
+      010002C9H   LINE      CODE     ---       #477
+      010002CBH   LINE      CODE     ---       #478
+      010002CDH   LINE      CODE     ---       #480
+      010002CEH   LINE      CODE     ---       #481
+      010002D0H   LINE      CODE     ---       #482
+      010002D2H   LINE      CODE     ---       #483
+      010002D4H   LINE      CODE     ---       #497
+      010002D6H   LINE      CODE     ---       #498
+      010002D7H   LINE      CODE     ---       #499
+      010002D9H   LINE      CODE     ---       #500
+      010002DBH   LINE      CODE     ---       #501
+      010002DCH   LINE      CODE     ---       #502
+      010002DEH   LINE      CODE     ---       #507
+      010002E0H   LINE      CODE     ---       #508
+      010002E2H   LINE      CODE     ---       #509
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 19
 
 
-      010002EAH   LINE      CODE     ---       #500
-      010002ECH   LINE      CODE     ---       #501
-      010002EEH   LINE      CODE     ---       #502
-      010002F0H   LINE      CODE     ---       #504
-      010002F1H   LINE      CODE     ---       #505
-      010002F3H   LINE      CODE     ---       #506
-      010002F5H   LINE      CODE     ---       #507
-      010002F7H   LINE      CODE     ---       #521
-      010002F9H   LINE      CODE     ---       #522
-      010002FAH   LINE      CODE     ---       #523
-      010002FCH   LINE      CODE     ---       #524
-      010002FEH   LINE      CODE     ---       #525
-      010002FFH   LINE      CODE     ---       #526
-      01000301H   LINE      CODE     ---       #531
-      01000303H   LINE      CODE     ---       #532
-      01000305H   LINE      CODE     ---       #533
-      01000306H   LINE      CODE     ---       #534
-      01000307H   LINE      CODE     ---       #535
-      01000309H   LINE      CODE     ---       #536
-      0100030AH   LINE      CODE     ---       #537
-      0100030DH   LINE      CODE     ---       #538
-      0100030FH   LINE      CODE     ---       #542
-      01000311H   LINE      CODE     ---       #543
-      01000313H   LINE      CODE     ---       #544
-      01000315H   LINE      CODE     ---       #545
-      01000317H   LINE      CODE     ---       #550
-      0100031AH   LINE      CODE     ---       #552
-      0100031CH   LINE      CODE     ---       #553
-      0100031DH   LINE      CODE     ---       #554
-      0100031EH   LINE      CODE     ---       #556
-      01000320H   LINE      CODE     ---       #557
-      01000321H   LINE      CODE     ---       #558
-      01000322H   LINE      CODE     ---       #560
-      01000324H   LINE      CODE     ---       #561
-      01000325H   LINE      CODE     ---       #562
-      01000326H   LINE      CODE     ---       #564
-      01000328H   LINE      CODE     ---       #565
-      01000329H   LINE      CODE     ---       #566
-      0100032AH   LINE      CODE     ---       #569
-      0100032DH   LINE      CODE     ---       #570
-      01000330H   LINE      CODE     ---       #571
-      01000333H   LINE      CODE     ---       #586
-      01000335H   LINE      CODE     ---       #587
-      01000337H   LINE      CODE     ---       #588
+      010002E3H   LINE      CODE     ---       #510
+      010002E4H   LINE      CODE     ---       #511
+      010002E6H   LINE      CODE     ---       #512
+      010002E7H   LINE      CODE     ---       #513
+      010002EAH   LINE      CODE     ---       #514
+      010002ECH   LINE      CODE     ---       #518
+      010002EEH   LINE      CODE     ---       #519
+      010002F0H   LINE      CODE     ---       #520
+      010002F2H   LINE      CODE     ---       #521
+      010002F4H   LINE      CODE     ---       #540
+      010002F6H   LINE      CODE     ---       #541
+      010002F8H   LINE      CODE     ---       #542
       ---         BLOCKEND  ---      ---       LVL=0
 
       ---         MODULE    ---      ---       ADC
-      01000709H   PUBLIC    CODE     NEAR LAB  _ADC_INIT
-      010006EEH   PUBLIC    CODE     NEAR LAB  _ADC_READ
+      010006B8H   PUBLIC    CODE     NEAR LAB  _ADC_INIT
+      0100069DH   PUBLIC    CODE     NEAR LAB  _ADC_READ
       000000D0H.6 SFRSYM    DATA     BIT       AC
       000000E0H   SFRSYM    DATA     BYTE      ACC
       000000A1H   SFRSYM    DATA     BYTE      ADCCON
@@ -1359,9 +1259,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000C8H   SFRSYM    DATA     BIT       CP_RL2
       000000C8H   SFRSYM    DATA     BIT       CPRL2
       000000A0H.3 SFRSYM    DATA     BIT       CS
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 21
-
-
       000000C8H.1 SFRSYM    DATA     BIT       CT2
       000000D0H.7 SFRSYM    DATA     BIT       CY
       000000A0H   SFRSYM    DATA     BIT       DATA?
@@ -1394,6 +1291,9 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000F8H   SFRSYM    DATA     BYTE      EIP
       000000A8H.4 SFRSYM    DATA     BIT       ES
       000000A8H.1 SFRSYM    DATA     BIT       ET0
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 20
+
+
       000000A8H.3 SFRSYM    DATA     BIT       ET1
       000000A8H.5 SFRSYM    DATA     BIT       ET2
       000000E8H.4 SFRSYM    DATA     BIT       EWDI
@@ -1427,9 +1327,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       00000080H.4 SFRSYM    DATA     BIT       P0_4
       00000080H.5 SFRSYM    DATA     BIT       P0_5
       00000080H.6 SFRSYM    DATA     BIT       P0_6
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 22
-
-
       00000080H.7 SFRSYM    DATA     BIT       P0_7
       00000095H   SFRSYM    DATA     BYTE      P0_ALT
       00000094H   SFRSYM    DATA     BYTE      P0_DIR
@@ -1462,6 +1359,9 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000CAH   SFRSYM    DATA     BYTE      RCAP2L
       000000C8H.5 SFRSYM    DATA     BIT       RCLK
       000000ADH   SFRSYM    DATA     BYTE      REGX_CTRL
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 21
+
+
       000000ACH   SFRSYM    DATA     BYTE      REGX_LSB
       000000ABH   SFRSYM    DATA     BYTE      REGX_MSB
       00000098H.4 SFRSYM    DATA     BIT       REN
@@ -1495,9 +1395,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000C8H.7 SFRSYM    DATA     BIT       TF2
       0000008CH   SFRSYM    DATA     BYTE      TH0
       0000008DH   SFRSYM    DATA     BYTE      TH1
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 23
-
-
       000000CDH   SFRSYM    DATA     BYTE      TH2
       00000098H.1 SFRSYM    DATA     BIT       TI
       000000B5H   SFRSYM    DATA     BYTE      TICK_DV
@@ -1515,22 +1412,25 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       01000023H   SYMBOL    CODE     NEAR LAB  ?C0005
       01000037H   SYMBOL    CODE     NEAR LAB  ?C0006
       0100004FH   SYMBOL    CODE     NEAR LAB  ?C0007
-      010006FDH   SYMBOL    CODE     NEAR LAB  ?C0011
-      01000702H   SYMBOL    CODE     NEAR LAB  ?C0012
-      01000708H   SYMBOL    CODE     NEAR LAB  ?C0013
+      010006ACH   SYMBOL    CODE     NEAR LAB  ?C0011
+      010006B1H   SYMBOL    CODE     NEAR LAB  ?C0012
+      010006B7H   SYMBOL    CODE     NEAR LAB  ?C0013
       01000003H   SYMBOL    CODE     NEAR LAB  P_ADC_READ
 
-      01000709H   BLOCK     CODE     NEAR LAB  LVL=0
-      01000709H   LINE      CODE     ---       #206
-      0100070CH   LINE      CODE     ---       #209
-      0100070DH   LINE      CODE     ---       #210
-      0100070FH   LINE      CODE     ---       #213
-      01000712H   LINE      CODE     ---       #216
-      01000713H   LINE      CODE     ---       #217
-      01000715H   LINE      CODE     ---       #220
-      01000718H   LINE      CODE     ---       #223
-      01000719H   LINE      CODE     ---       #224
-      0100071BH   LINE      CODE     ---       #227
+      010006B8H   BLOCK     CODE     NEAR LAB  LVL=0
+      010006B8H   LINE      CODE     ---       #206
+      010006BBH   LINE      CODE     ---       #209
+      010006BCH   LINE      CODE     ---       #210
+      010006BEH   LINE      CODE     ---       #213
+      010006C1H   LINE      CODE     ---       #216
+      010006C2H   LINE      CODE     ---       #217
+      010006C4H   LINE      CODE     ---       #220
+      010006C7H   LINE      CODE     ---       #223
+      010006C8H   LINE      CODE     ---       #224
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 22
+
+
+      010006CAH   LINE      CODE     ---       #227
       ---         BLOCKEND  ---      ---       LVL=0
 
       01000003H   BLOCK     CODE     NEAR LAB  LVL=0
@@ -1563,9 +1463,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       0100002DH   LINE      CODE     ---       #291
       0100002FH   LINE      CODE     ---       #292
       01000030H   LINE      CODE     ---       #293
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 24
-
-
       01000031H   LINE      CODE     ---       #294
       01000032H   LINE      CODE     ---       #295
       01000034H   LINE      CODE     ---       #296
@@ -1590,29 +1487,32 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       0100004FH   LINE      CODE     ---       #331
       ---         BLOCKEND  ---      ---       LVL=0
 
-      010006EEH   BLOCK     CODE     NEAR LAB  LVL=0
-      010006EEH   LINE      CODE     ---       #347
-      010006EFH   LINE      CODE     ---       #348
-      010006F0H   LINE      CODE     ---       #349
-      010006F1H   LINE      CODE     ---       #353
-      010006F4H   LINE      CODE     ---       #356
-      010006F5H   LINE      CODE     ---       #357
-      010006F7H   LINE      CODE     ---       #360
-      010006FAH   LINE      CODE     ---       #361
-      010006FDH   LINE      CODE     ---       #366
-      010006FFH   LINE      CODE     ---       #367
-      01000702H   LINE      CODE     ---       #373
-      01000705H   LINE      CODE     ---       #377
-      01000708H   LINE      CODE     ---       #383
+      0100069DH   BLOCK     CODE     NEAR LAB  LVL=0
+      0100069DH   LINE      CODE     ---       #347
+      0100069EH   LINE      CODE     ---       #348
+      0100069FH   LINE      CODE     ---       #349
+      010006A0H   LINE      CODE     ---       #353
+      010006A3H   LINE      CODE     ---       #356
+      010006A4H   LINE      CODE     ---       #357
+      010006A6H   LINE      CODE     ---       #360
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 23
+
+
+      010006A9H   LINE      CODE     ---       #361
+      010006ACH   LINE      CODE     ---       #366
+      010006AEH   LINE      CODE     ---       #367
+      010006B1H   LINE      CODE     ---       #373
+      010006B4H   LINE      CODE     ---       #377
+      010006B7H   LINE      CODE     ---       #383
       ---         BLOCKEND  ---      ---       LVL=0
 
       ---         MODULE    ---      ---       UTILS
-      00000055H   PUBLIC    DATA     BYTE      ?_STRNCPY?BYTE
-      010004A5H   PUBLIC    CODE     NEAR LAB  _MDELAY
-      0100074BH   PUBLIC    CODE     NEAR LAB  _STORE_CPU_RATE
-      010004EEH   PUBLIC    CODE     NEAR LAB  _STRNCPY
-      0100071CH   PUBLIC    CODE     NEAR LAB  _WDT_LOAD
-      00000066H   PUBLIC    DATA     BYTE      MHZ
+      00000039H   PUBLIC    DATA     BYTE      ?_STRNCPY?BYTE
+      01000452H   PUBLIC    CODE     NEAR LAB  _MDELAY
+      010006FAH   PUBLIC    CODE     NEAR LAB  _STORE_CPU_RATE
+      0100049BH   PUBLIC    CODE     NEAR LAB  _STRNCPY
+      010006CBH   PUBLIC    CODE     NEAR LAB  _WDT_LOAD
+      0000004AH   PUBLIC    DATA     BYTE      MHZ
       000000D0H.6 SFRSYM    DATA     BIT       AC
       000000E0H   SFRSYM    DATA     BYTE      ACC
       000000A1H   SFRSYM    DATA     BYTE      ADCCON
@@ -1631,9 +1531,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000A0H.3 SFRSYM    DATA     BIT       CS
       000000C8H.1 SFRSYM    DATA     BIT       CT2
       000000D0H.7 SFRSYM    DATA     BIT       CY
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 25
-
-
       000000A0H   SFRSYM    DATA     BIT       DATA?
       000000BEH   SFRSYM    DATA     BYTE      DEV_OFFSET
       00000090H.2 SFRSYM    DATA     BIT       DIN0
@@ -1666,6 +1563,9 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000A8H.1 SFRSYM    DATA     BIT       ET0
       000000A8H.3 SFRSYM    DATA     BIT       ET1
       000000A8H.5 SFRSYM    DATA     BIT       ET2
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 24
+
+
       000000E8H.4 SFRSYM    DATA     BIT       EWDI
       000000A8H   SFRSYM    DATA     BIT       EX0
       000000A8H.2 SFRSYM    DATA     BIT       EX1
@@ -1699,9 +1599,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       00000080H.6 SFRSYM    DATA     BIT       P0_6
       00000080H.7 SFRSYM    DATA     BIT       P0_7
       00000095H   SFRSYM    DATA     BYTE      P0_ALT
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 26
-
-
       00000094H   SFRSYM    DATA     BYTE      P0_DIR
       00000090H   SFRSYM    DATA     BYTE      P1
       00000090H   SFRSYM    DATA     BIT       P1_0
@@ -1734,6 +1631,9 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000ADH   SFRSYM    DATA     BYTE      REGX_CTRL
       000000ACH   SFRSYM    DATA     BYTE      REGX_LSB
       000000ABH   SFRSYM    DATA     BYTE      REGX_MSB
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 25
+
+
       00000098H.4 SFRSYM    DATA     BIT       REN
       00000098H   SFRSYM    DATA     BIT       RI
       000000D0H.3 SFRSYM    DATA     BIT       RS0
@@ -1767,9 +1667,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       0000008DH   SFRSYM    DATA     BYTE      TH1
       000000CDH   SFRSYM    DATA     BYTE      TH2
       00000098H.1 SFRSYM    DATA     BIT       TI
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 27
-
-
       000000B5H   SFRSYM    DATA     BYTE      TICK_DV
       0000008AH   SFRSYM    DATA     BYTE      TL0
       0000008BH   SFRSYM    DATA     BYTE      TL1
@@ -1780,156 +1677,156 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000C8H.2 SFRSYM    DATA     BIT       TR2
       00000080H.2 SFRSYM    DATA     BIT       TXD
       000000D8H.3 SFRSYM    DATA     BIT       WDTI
-      00000078H   SYMBOL    DATA     BYTE      ?_MDELAY?BYTE
-      010004C6H   SYMBOL    CODE     NEAR LAB  ?C0002
-      010004E6H   SYMBOL    CODE     NEAR LAB  ?C0004
-      010004D2H   SYMBOL    CODE     NEAR LAB  ?C0005
-      010004EDH   SYMBOL    CODE     NEAR LAB  ?C0008
-      01000720H   SYMBOL    CODE     NEAR LAB  ?C0009
-      01000725H   SYMBOL    CODE     NEAR LAB  ?C0010
-      010004F7H   SYMBOL    CODE     NEAR LAB  ?C0012
-      01000531H   SYMBOL    CODE     NEAR LAB  ?C0015
-      010004E4H   SYMBOL    CODE     NEAR LAB  ?C0016
-      010004EBH   SYMBOL    CODE     NEAR LAB  ?C0017
-      01000512H   SYMBOL    CODE     NEAR LAB  ?C0018
-      01000524H   SYMBOL    CODE     NEAR LAB  ?C0019
-      0100052FH   SYMBOL    CODE     NEAR LAB  ?C0020
-      00000058H   SYMBOL    DATA     BYTE      DST?347
-      00000078H   SYMBOL    DATA     BYTE      MSEC?141
-      0000005BH   SYMBOL    DATA     BYTE      N?348
-      00000055H   SYMBOL    DATA     BYTE      SRC?346
+      0000005BH   SYMBOL    DATA     BYTE      ?_MDELAY?BYTE
+      01000473H   SYMBOL    CODE     NEAR LAB  ?C0002
+      01000493H   SYMBOL    CODE     NEAR LAB  ?C0004
+      0100047FH   SYMBOL    CODE     NEAR LAB  ?C0005
+      0100049AH   SYMBOL    CODE     NEAR LAB  ?C0008
+      010006CFH   SYMBOL    CODE     NEAR LAB  ?C0009
+      010006D4H   SYMBOL    CODE     NEAR LAB  ?C0010
+      010004A4H   SYMBOL    CODE     NEAR LAB  ?C0012
+      010004DEH   SYMBOL    CODE     NEAR LAB  ?C0015
+      01000491H   SYMBOL    CODE     NEAR LAB  ?C0016
+      01000498H   SYMBOL    CODE     NEAR LAB  ?C0017
+      010004BFH   SYMBOL    CODE     NEAR LAB  ?C0018
+      010004D1H   SYMBOL    CODE     NEAR LAB  ?C0019
+      010004DCH   SYMBOL    CODE     NEAR LAB  ?C0020
+      0000003CH   SYMBOL    DATA     BYTE      DST?347
+      0000005BH   SYMBOL    DATA     BYTE      MSEC?141
+      0000003FH   SYMBOL    DATA     BYTE      N?348
+      00000039H   SYMBOL    DATA     BYTE      SRC?346
 
-      0100074BH   BLOCK     CODE     NEAR LAB  LVL=0
-      0100074BH   LINE      CODE     ---       #231
-      0100074CH   LINE      CODE     ---       #232
-      0100074DH   LINE      CODE     ---       #233
-      0100074FH   LINE      CODE     ---       #234
-      01000751H   LINE      CODE     ---       #235
-      01000753H   LINE      CODE     ---       #236
-      01000755H   LINE      CODE     ---       #237
-      01000757H   LINE      CODE     ---       #240
+      010006FAH   BLOCK     CODE     NEAR LAB  LVL=0
+      010006FAH   LINE      CODE     ---       #231
+      010006FBH   LINE      CODE     ---       #232
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 26
+
+
+      010006FCH   LINE      CODE     ---       #233
+      010006FEH   LINE      CODE     ---       #234
+      01000700H   LINE      CODE     ---       #235
+      01000702H   LINE      CODE     ---       #236
+      01000704H   LINE      CODE     ---       #237
+      01000706H   LINE      CODE     ---       #240
       ---         BLOCKEND  ---      ---       LVL=0
 
-      010004A5H   BLOCK     CODE     NEAR LAB  LVL=0
-      010004A5H   LINE      CODE     ---       #256
-      010004A7H   LINE      CODE     ---       #257
-      010004A9H   LINE      CODE     ---       #263
-      010004AAH   LINE      CODE     ---       #264
-      010004ACH   LINE      CODE     ---       #265
-      010004ADH   LINE      CODE     ---       #266
-      010004AEH   LINE      CODE     ---       #267
-      010004AFH   LINE      CODE     ---       #268
-      010004B1H   LINE      CODE     ---       #269
-      010004B3H   LINE      CODE     ---       #270
-      010004B5H   LINE      CODE     ---       #271
-      010004B7H   LINE      CODE     ---       #272
-      010004BAH   LINE      CODE     ---       #273
-      010004BBH   LINE      CODE     ---       #274
-      010004BDH   LINE      CODE     ---       #275
-      010004BEH   LINE      CODE     ---       #276
-      010004BFH   LINE      CODE     ---       #277
-      010004C0H   LINE      CODE     ---       #278
-      010004C3H   LINE      CODE     ---       #283
-      010004C4H   LINE      CODE     ---       #284
-      010004C5H   LINE      CODE     ---       #285
-      010004C6H   LINE      CODE     ---       #287
-      010004C7H   LINE      CODE     ---       #288
-      010004C8H   LINE      CODE     ---       #289
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 28
-
-
-      010004CAH   LINE      CODE     ---       #290
-      010004CBH   LINE      CODE     ---       #291
-      010004CDH   LINE      CODE     ---       #292
-      010004CFH   LINE      CODE     ---       #296
-      010004D0H   LINE      CODE     ---       #297
-      010004D1H   LINE      CODE     ---       #298
-      010004D2H   LINE      CODE     ---       #300
-      010004D3H   LINE      CODE     ---       #301
-      010004D4H   LINE      CODE     ---       #302
-      010004D5H   LINE      CODE     ---       #303
-      010004D6H   LINE      CODE     ---       #304
-      010004D8H   LINE      CODE     ---       #305
-      010004D9H   LINE      CODE     ---       #306
-      010004DAH   LINE      CODE     ---       #307
-      010004DCH   LINE      CODE     ---       #308
-      010004DDH   LINE      CODE     ---       #309
-      010004DFH   LINE      CODE     ---       #310
-      010004E0H   LINE      CODE     ---       #311
-      010004E3H   LINE      CODE     ---       #312
-      010004E4H   LINE      CODE     ---       #314
-      010004E6H   LINE      CODE     ---       #316
-      010004E7H   LINE      CODE     ---       #317
-      010004EAH   LINE      CODE     ---       #318
-      010004EBH   LINE      CODE     ---       #320
-      010004EDH   LINE      CODE     ---       #325
+      01000452H   BLOCK     CODE     NEAR LAB  LVL=0
+      01000452H   LINE      CODE     ---       #256
+      01000454H   LINE      CODE     ---       #257
+      01000456H   LINE      CODE     ---       #263
+      01000457H   LINE      CODE     ---       #264
+      01000459H   LINE      CODE     ---       #265
+      0100045AH   LINE      CODE     ---       #266
+      0100045BH   LINE      CODE     ---       #267
+      0100045CH   LINE      CODE     ---       #268
+      0100045EH   LINE      CODE     ---       #269
+      01000460H   LINE      CODE     ---       #270
+      01000462H   LINE      CODE     ---       #271
+      01000464H   LINE      CODE     ---       #272
+      01000467H   LINE      CODE     ---       #273
+      01000468H   LINE      CODE     ---       #274
+      0100046AH   LINE      CODE     ---       #275
+      0100046BH   LINE      CODE     ---       #276
+      0100046CH   LINE      CODE     ---       #277
+      0100046DH   LINE      CODE     ---       #278
+      01000470H   LINE      CODE     ---       #283
+      01000471H   LINE      CODE     ---       #284
+      01000472H   LINE      CODE     ---       #285
+      01000473H   LINE      CODE     ---       #287
+      01000474H   LINE      CODE     ---       #288
+      01000475H   LINE      CODE     ---       #289
+      01000477H   LINE      CODE     ---       #290
+      01000478H   LINE      CODE     ---       #291
+      0100047AH   LINE      CODE     ---       #292
+      0100047CH   LINE      CODE     ---       #296
+      0100047DH   LINE      CODE     ---       #297
+      0100047EH   LINE      CODE     ---       #298
+      0100047FH   LINE      CODE     ---       #300
+      01000480H   LINE      CODE     ---       #301
+      01000481H   LINE      CODE     ---       #302
+      01000482H   LINE      CODE     ---       #303
+      01000483H   LINE      CODE     ---       #304
+      01000485H   LINE      CODE     ---       #305
+      01000486H   LINE      CODE     ---       #306
+      01000487H   LINE      CODE     ---       #307
+      01000489H   LINE      CODE     ---       #308
+      0100048AH   LINE      CODE     ---       #309
+      0100048CH   LINE      CODE     ---       #310
+      0100048DH   LINE      CODE     ---       #311
+      01000490H   LINE      CODE     ---       #312
+      01000491H   LINE      CODE     ---       #314
+      01000493H   LINE      CODE     ---       #316
+      01000494H   LINE      CODE     ---       #317
+      01000497H   LINE      CODE     ---       #318
+      01000498H   LINE      CODE     ---       #320
+      0100049AH   LINE      CODE     ---       #325
       ---         BLOCKEND  ---      ---       LVL=0
 
-      0100071CH   BLOCK     CODE     NEAR LAB  LVL=0
-      0100071CH   LINE      CODE     ---       #341
-      0100071EH   LINE      CODE     ---       #342
-      01000720H   LINE      CODE     ---       #348
-      01000722H   LINE      CODE     ---       #349
-      01000725H   LINE      CODE     ---       #354
-      01000727H   LINE      CODE     ---       #357
-      01000728H   LINE      CODE     ---       #358
-      0100072AH   LINE      CODE     ---       #361
-      0100072DH   LINE      CODE     ---       #364
+      010006CBH   BLOCK     CODE     NEAR LAB  LVL=0
+      010006CBH   LINE      CODE     ---       #341
+      010006CDH   LINE      CODE     ---       #342
+      010006CFH   LINE      CODE     ---       #348
+      010006D1H   LINE      CODE     ---       #349
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 27
+
+
+      010006D4H   LINE      CODE     ---       #354
+      010006D6H   LINE      CODE     ---       #357
+      010006D7H   LINE      CODE     ---       #358
+      010006D9H   LINE      CODE     ---       #361
+      010006DCH   LINE      CODE     ---       #364
       ---         BLOCKEND  ---      ---       LVL=0
 
-      010004EEH   BLOCK     CODE     NEAR LAB  LVL=0
-      010004EEH   LINE      CODE     ---       #380
-      010004F0H   LINE      CODE     ---       #381
-      010004F2H   LINE      CODE     ---       #382
-      010004F4H   LINE      CODE     ---       #389
-      010004F5H   LINE      CODE     ---       #390
-      010004F6H   LINE      CODE     ---       #391
-      010004F7H   LINE      CODE     ---       #393
-      010004F8H   LINE      CODE     ---       #394
-      010004F9H   LINE      CODE     ---       #395
-      010004FBH   LINE      CODE     ---       #396
-      010004FDH   LINE      CODE     ---       #397
-      010004FFH   LINE      CODE     ---       #398
-      01000500H   LINE      CODE     ---       #399
-      01000501H   LINE      CODE     ---       #400
-      01000503H   LINE      CODE     ---       #401
-      01000504H   LINE      CODE     ---       #402
-      01000506H   LINE      CODE     ---       #405
-      01000508H   LINE      CODE     ---       #406
-      0100050AH   LINE      CODE     ---       #407
-      0100050CH   LINE      CODE     ---       #408
-      0100050EH   LINE      CODE     ---       #409
-      01000510H   LINE      CODE     ---       #410
-      01000512H   LINE      CODE     ---       #412
-      01000513H   LINE      CODE     ---       #413
-      01000514H   LINE      CODE     ---       #414
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 29
-
-
-      01000517H   LINE      CODE     ---       #415
-      01000518H   LINE      CODE     ---       #416
-      0100051AH   LINE      CODE     ---       #417
-      0100051CH   LINE      CODE     ---       #418
-      0100051EH   LINE      CODE     ---       #419
-      01000520H   LINE      CODE     ---       #420
-      01000522H   LINE      CODE     ---       #421
-      01000524H   LINE      CODE     ---       #423
-      01000525H   LINE      CODE     ---       #424
-      01000526H   LINE      CODE     ---       #425
-      01000527H   LINE      CODE     ---       #426
-      0100052AH   LINE      CODE     ---       #429
-      0100052BH   LINE      CODE     ---       #430
-      0100052EH   LINE      CODE     ---       #431
-      0100052FH   LINE      CODE     ---       #433
-      01000531H   LINE      CODE     ---       #437
+      0100049BH   BLOCK     CODE     NEAR LAB  LVL=0
+      0100049BH   LINE      CODE     ---       #380
+      0100049DH   LINE      CODE     ---       #381
+      0100049FH   LINE      CODE     ---       #382
+      010004A1H   LINE      CODE     ---       #389
+      010004A2H   LINE      CODE     ---       #390
+      010004A3H   LINE      CODE     ---       #391
+      010004A4H   LINE      CODE     ---       #393
+      010004A5H   LINE      CODE     ---       #394
+      010004A6H   LINE      CODE     ---       #395
+      010004A8H   LINE      CODE     ---       #396
+      010004AAH   LINE      CODE     ---       #397
+      010004ACH   LINE      CODE     ---       #398
+      010004ADH   LINE      CODE     ---       #399
+      010004AEH   LINE      CODE     ---       #400
+      010004B0H   LINE      CODE     ---       #401
+      010004B1H   LINE      CODE     ---       #402
+      010004B3H   LINE      CODE     ---       #405
+      010004B5H   LINE      CODE     ---       #406
+      010004B7H   LINE      CODE     ---       #407
+      010004B9H   LINE      CODE     ---       #408
+      010004BBH   LINE      CODE     ---       #409
+      010004BDH   LINE      CODE     ---       #410
+      010004BFH   LINE      CODE     ---       #412
+      010004C0H   LINE      CODE     ---       #413
+      010004C1H   LINE      CODE     ---       #414
+      010004C4H   LINE      CODE     ---       #415
+      010004C5H   LINE      CODE     ---       #416
+      010004C7H   LINE      CODE     ---       #417
+      010004C9H   LINE      CODE     ---       #418
+      010004CBH   LINE      CODE     ---       #419
+      010004CDH   LINE      CODE     ---       #420
+      010004CFH   LINE      CODE     ---       #421
+      010004D1H   LINE      CODE     ---       #423
+      010004D2H   LINE      CODE     ---       #424
+      010004D3H   LINE      CODE     ---       #425
+      010004D4H   LINE      CODE     ---       #426
+      010004D7H   LINE      CODE     ---       #429
+      010004D8H   LINE      CODE     ---       #430
+      010004DBH   LINE      CODE     ---       #431
+      010004DCH   LINE      CODE     ---       #433
+      010004DEH   LINE      CODE     ---       #437
       ---         BLOCKEND  ---      ---       LVL=0
 
       ---         MODULE    ---      ---       SERIAL
-      010005AAH   PUBLIC    CODE     NEAR LAB  _?INT_PRINT
+      01000557H   PUBLIC    CODE     NEAR LAB  _?INT_PRINT
       01000050H   PUBLIC    CODE     NEAR LAB  _PUTC
-      010006A6H   PUBLIC    CODE     NEAR LAB  _PUTS
-      01000770H   PUBLIC    CODE     NEAR LAB  _SERIAL_INIT
-      0100079CH   PUBLIC    CODE     NEAR LAB  GETC
+      0100061DH   PUBLIC    CODE     NEAR LAB  _PUTS
+      0100071FH   PUBLIC    CODE     NEAR LAB  _SERIAL_INIT
+      01000747H   PUBLIC    CODE     NEAR LAB  GETC
       000000D0H.6 SFRSYM    DATA     BIT       AC
       000000E0H   SFRSYM    DATA     BYTE      ACC
       000000A1H   SFRSYM    DATA     BYTE      ADCCON
@@ -1938,6 +1835,9 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000A4H   SFRSYM    DATA     BYTE      ADCSTATIC
       000000F0H   SFRSYM    DATA     BYTE      B
       000000C8H.1 SFRSYM    DATA     BIT       C_T2
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 28
+
+
       000000A0H.6 SFRSYM    DATA     BIT       CE
       000000B6H   SFRSYM    DATA     BYTE      CK_CTRL
       0000008EH   SFRSYM    DATA     BYTE      CKCON
@@ -1971,9 +1871,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       00000086H   SFRSYM    DATA     BYTE      DPS
       000000A0H.2 SFRSYM    DATA     BIT       DR1
       000000A0H.6 SFRSYM    DATA     BIT       DR2
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 30
-
-
       000000A0H.6 SFRSYM    DATA     BIT       DR2_CE
       000000A8H.7 SFRSYM    DATA     BIT       EA
       000000D8H   SFRSYM    DATA     BYTE      EICON
@@ -2006,6 +1903,9 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       00000092H   SFRSYM    DATA     BYTE      MPAGE
       000000D0H.2 SFRSYM    DATA     BIT       OV
       000000D0H   SFRSYM    DATA     BIT       P
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 29
+
+
       00000080H   SFRSYM    DATA     BYTE      P0
       00000080H   SFRSYM    DATA     BIT       P0_0
       00000080H.1 SFRSYM    DATA     BIT       P0_1
@@ -2039,9 +1939,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000F8H   SFRSYM    DATA     BIT       PX2
       000000F8H.1 SFRSYM    DATA     BIT       PX3
       000000F8H.2 SFRSYM    DATA     BIT       PX4
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 31
-
-
       000000F8H.3 SFRSYM    DATA     BIT       PX5
       000000A0H   SFRSYM    DATA     BYTE      RADIO
       00000098H.2 SFRSYM    DATA     BIT       RB8
@@ -2074,6 +1971,9 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000BDH   SFRSYM    DATA     BYTE      T2_1V2
       000000C8H   SFRSYM    DATA     BYTE      T2CON
       00000098H.3 SFRSYM    DATA     BIT       TB8
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 30
+
+
       000000C8H.4 SFRSYM    DATA     BIT       TCLK
       00000088H   SFRSYM    DATA     BYTE      TCON
       000000B7H   SFRSYM    DATA     BYTE      TEST_MODE
@@ -2094,158 +1994,155 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000C8H.2 SFRSYM    DATA     BIT       TR2
       00000080H.2 SFRSYM    DATA     BIT       TXD
       000000D8H.3 SFRSYM    DATA     BIT       WDTI
-      0000006DH   SYMBOL    DATA     BYTE      ?_PUTS?BYTE
-      0100056AH   SYMBOL    CODE     NEAR LAB  ?C0001
-      01000556H   SYMBOL    CODE     NEAR LAB  ?C0002
-      0100055EH   SYMBOL    CODE     NEAR LAB  ?C0003
-      01000566H   SYMBOL    CODE     NEAR LAB  ?C0004
-      0100056EH   SYMBOL    CODE     NEAR LAB  ?C0005
-      01000785H   SYMBOL    CODE     NEAR LAB  ?C0007
-      01000788H   SYMBOL    CODE     NEAR LAB  ?C0008
-      0100078BH   SYMBOL    CODE     NEAR LAB  ?C0010
-      0100078EH   SYMBOL    CODE     NEAR LAB  ?C0011
-      01000792H   SYMBOL    CODE     NEAR LAB  ?C0012
-      010006ACH   SYMBOL    CODE     NEAR LAB  ?C0014
-      010006CAH   SYMBOL    CODE     NEAR LAB  ?C0016
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 32
+      0000004EH   SYMBOL    DATA     BYTE      ?_PUTS?BYTE
+      01000517H   SYMBOL    CODE     NEAR LAB  ?C0001
+      01000503H   SYMBOL    CODE     NEAR LAB  ?C0002
+      0100050BH   SYMBOL    CODE     NEAR LAB  ?C0003
+      01000513H   SYMBOL    CODE     NEAR LAB  ?C0004
+      0100051BH   SYMBOL    CODE     NEAR LAB  ?C0005
+      01000734H   SYMBOL    CODE     NEAR LAB  ?C0007
+      01000737H   SYMBOL    CODE     NEAR LAB  ?C0008
+      0100073AH   SYMBOL    CODE     NEAR LAB  ?C0010
+      0100073DH   SYMBOL    CODE     NEAR LAB  ?C0011
+      01000741H   SYMBOL    CODE     NEAR LAB  ?C0012
+      01000623H   SYMBOL    CODE     NEAR LAB  ?C0014
+      01000641H   SYMBOL    CODE     NEAR LAB  ?C0016
+      0100074AH   SYMBOL    CODE     NEAR LAB  ?C0017
+      01000577H   SYMBOL    CODE     NEAR LAB  ?C0018
+      01000636H   SYMBOL    CODE     NEAR LAB  ?C0020
+      01000732H   SYMBOL    CODE     NEAR LAB  _SERIAL_WRITE
+      010004DFH   SYMBOL    CODE     NEAR LAB  _SETUP_BAUDRATE
+      0000004EH   SYMBOL    DATA     BYTE      S?544
+      0100073AH   SYMBOL    CODE     NEAR LAB  SERIAL_READ
+
+      010004DFH   BLOCK     CODE     NEAR LAB  LVL=0
+      010004DFH   LINE      CODE     ---       #221
+      010004E2H   LINE      CODE     ---       #224
+      010004E4H   LINE      CODE     ---       #227
+      010004E6H   LINE      CODE     ---       #230
+      010004E8H   LINE      CODE     ---       #233
+      010004EBH   LINE      CODE     ---       #237
+      010004EEH   LINE      CODE     ---       #240
+      010004F1H   LINE      CODE     ---       #244
+      010004F2H   LINE      CODE     ---       #245
+      010004F4H   LINE      CODE     ---       #246
+      01000503H   LINE      CODE     ---       #258
+      01000506H   LINE      CODE     ---       #261
+      01000509H   LINE      CODE     ---       #264
+      0100050BH   LINE      CODE     ---       #270
+      0100050EH   LINE      CODE     ---       #273
+      01000511H   LINE      CODE     ---       #276
+      01000513H   LINE      CODE     ---       #283
+      01000514H   LINE      CODE     ---       #284
+      01000515H   LINE      CODE     ---       #285
+      01000516H   LINE      CODE     ---       #286
+      01000517H   LINE      CODE     ---       #292
+      01000519H   LINE      CODE     ---       #293
+      0100051BH   LINE      CODE     ---       #297
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 31
 
 
-      0100079FH   SYMBOL    CODE     NEAR LAB  ?C0017
-      010005CAH   SYMBOL    CODE     NEAR LAB  ?C0018
-      010006BFH   SYMBOL    CODE     NEAR LAB  ?C0020
-      01000783H   SYMBOL    CODE     NEAR LAB  _SERIAL_WRITE
-      01000532H   SYMBOL    CODE     NEAR LAB  _SETUP_BAUDRATE
-      0000006DH   SYMBOL    DATA     BYTE      S?544
-      0100078BH   SYMBOL    CODE     NEAR LAB  SERIAL_READ
-
-      01000532H   BLOCK     CODE     NEAR LAB  LVL=0
-      01000532H   LINE      CODE     ---       #221
-      01000535H   LINE      CODE     ---       #224
-      01000537H   LINE      CODE     ---       #227
-      01000539H   LINE      CODE     ---       #230
-      0100053BH   LINE      CODE     ---       #233
-      0100053EH   LINE      CODE     ---       #237
-      01000541H   LINE      CODE     ---       #240
-      01000544H   LINE      CODE     ---       #244
-      01000545H   LINE      CODE     ---       #245
-      01000547H   LINE      CODE     ---       #246
-      01000556H   LINE      CODE     ---       #258
-      01000559H   LINE      CODE     ---       #261
-      0100055CH   LINE      CODE     ---       #264
-      0100055EH   LINE      CODE     ---       #270
-      01000561H   LINE      CODE     ---       #273
-      01000564H   LINE      CODE     ---       #276
-      01000566H   LINE      CODE     ---       #283
-      01000567H   LINE      CODE     ---       #284
-      01000568H   LINE      CODE     ---       #285
-      01000569H   LINE      CODE     ---       #286
-      0100056AH   LINE      CODE     ---       #292
-      0100056CH   LINE      CODE     ---       #293
-      0100056EH   LINE      CODE     ---       #297
       ---         BLOCKEND  ---      ---       LVL=0
 
-      01000770H   BLOCK     CODE     NEAR LAB  LVL=0
-      01000770H   LINE      CODE     ---       #319
-      01000773H   LINE      CODE     ---       #322
-      01000776H   LINE      CODE     ---       #325
-      01000779H   LINE      CODE     ---       #328
+      0100071FH   BLOCK     CODE     NEAR LAB  LVL=0
+      0100071FH   LINE      CODE     ---       #319
+      01000722H   LINE      CODE     ---       #322
+      01000725H   LINE      CODE     ---       #325
+      01000728H   LINE      CODE     ---       #328
       ---         BLOCKEND  ---      ---       LVL=0
 
-      01000783H   BLOCK     CODE     NEAR LAB  LVL=0
-      01000783H   LINE      CODE     ---       #345
-      01000785H   LINE      CODE     ---       #349
-      01000788H   LINE      CODE     ---       #354
-      0100078AH   LINE      CODE     ---       #357
+      01000732H   BLOCK     CODE     NEAR LAB  LVL=0
+      01000732H   LINE      CODE     ---       #345
+      01000734H   LINE      CODE     ---       #349
+      01000737H   LINE      CODE     ---       #354
+      01000739H   LINE      CODE     ---       #357
       ---         BLOCKEND  ---      ---       LVL=0
 
-      0100078BH   BLOCK     CODE     NEAR LAB  LVL=0
-      0100078BH   LINE      CODE     ---       #375
-      0100078EH   LINE      CODE     ---       #380
-      01000790H   LINE      CODE     ---       #383
-      01000792H   LINE      CODE     ---       #387
+      0100073AH   BLOCK     CODE     NEAR LAB  LVL=0
+      0100073AH   LINE      CODE     ---       #375
+      0100073DH   LINE      CODE     ---       #380
+      0100073FH   LINE      CODE     ---       #383
+      01000741H   LINE      CODE     ---       #387
       ---         BLOCKEND  ---      ---       LVL=0
 
       01000050H   BLOCK     CODE     NEAR LAB  LVL=0
       01000050H   LINE      CODE     ---       #402
       ---         BLOCKEND  ---      ---       LVL=0
 
-      010006A6H   BLOCK     CODE     NEAR LAB  LVL=0
-      010006A6H   LINE      CODE     ---       #413
-      010006A8H   LINE      CODE     ---       #414
-      010006AAH   LINE      CODE     ---       #415
-      010006ACH   LINE      CODE     ---       #421
-      010006AEH   LINE      CODE     ---       #422
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 33
-
-
-      010006B0H   LINE      CODE     ---       #423
-      010006B2H   LINE      CODE     ---       #424
-      010006B5H   LINE      CODE     ---       #425
-      010006B7H   LINE      CODE     ---       #428
-      010006B9H   LINE      CODE     ---       #429
-      010006BBH   LINE      CODE     ---       #430
-      010006BDH   LINE      CODE     ---       #431
-      010006BFH   LINE      CODE     ---       #433
-      010006C0H   LINE      CODE     ---       #434
-      010006C1H   LINE      CODE     ---       #435
-      010006C4H   LINE      CODE     ---       #436
-      010006C5H   LINE      CODE     ---       #437
-      010006C8H   LINE      CODE     ---       #438
-      010006CAH   LINE      CODE     ---       #442
+      0100061DH   BLOCK     CODE     NEAR LAB  LVL=0
+      0100061DH   LINE      CODE     ---       #413
+      0100061FH   LINE      CODE     ---       #414
+      01000621H   LINE      CODE     ---       #415
+      01000623H   LINE      CODE     ---       #421
+      01000625H   LINE      CODE     ---       #422
+      01000627H   LINE      CODE     ---       #423
+      01000629H   LINE      CODE     ---       #424
+      0100062CH   LINE      CODE     ---       #425
+      0100062EH   LINE      CODE     ---       #428
+      01000630H   LINE      CODE     ---       #429
+      01000632H   LINE      CODE     ---       #430
+      01000634H   LINE      CODE     ---       #431
+      01000636H   LINE      CODE     ---       #433
+      01000637H   LINE      CODE     ---       #434
+      01000638H   LINE      CODE     ---       #435
+      0100063BH   LINE      CODE     ---       #436
+      0100063CH   LINE      CODE     ---       #437
+      0100063FH   LINE      CODE     ---       #438
+      01000641H   LINE      CODE     ---       #442
       ---         BLOCKEND  ---      ---       LVL=0
 
-      0100079CH   BLOCK     CODE     NEAR LAB  LVL=0
-      0100079CH   LINE      CODE     ---       #456
-      0100079FH   LINE      CODE     ---       #460
+      01000747H   BLOCK     CODE     NEAR LAB  LVL=0
+      01000747H   LINE      CODE     ---       #456
+      0100074AH   LINE      CODE     ---       #460
       ---         BLOCKEND  ---      ---       LVL=0
 
-      010005AAH   BLOCK     CODE     NEAR LAB  LVL=0
-      010005AAH   LINE      CODE     ---       #474
-      010005ACH   LINE      CODE     ---       #475
-      010005AEH   LINE      CODE     ---       #476
-      010005B0H   LINE      CODE     ---       #477
-      010005B2H   LINE      CODE     ---       #478
-      010005B3H   LINE      CODE     ---       #479
-      010005B5H   LINE      CODE     ---       #483
-      010005B7H   LINE      CODE     ---       #484
-      010005B8H   LINE      CODE     ---       #485
-      010005B9H   LINE      CODE     ---       #486
-      010005BAH   LINE      CODE     ---       #487
-      010005BBH   LINE      CODE     ---       #488
-      010005BCH   LINE      CODE     ---       #489
-      010005BEH   LINE      CODE     ---       #490
-      010005C0H   LINE      CODE     ---       #491
-      010005C3H   LINE      CODE     ---       #492
-      010005C4H   LINE      CODE     ---       #493
-      010005C5H   LINE      CODE     ---       #494
-      010005C7H   LINE      CODE     ---       #497
-      010005CAH   LINE      CODE     ---       #501
-      010005CCH   LINE      CODE     ---       #502
-      010005CDH   LINE      CODE     ---       #503
-      010005CEH   LINE      CODE     ---       #504
-      010005CFH   LINE      CODE     ---       #505
-      010005D0H   LINE      CODE     ---       #506
-      010005D1H   LINE      CODE     ---       #507
-      010005D3H   LINE      CODE     ---       #508
-      010005D5H   LINE      CODE     ---       #509
-      010005D8H   LINE      CODE     ---       #510
-      010005D9H   LINE      CODE     ---       #511
-      010005DBH   LINE      CODE     ---       #512
-      010005DCH   LINE      CODE     ---       #513
-      010005DFH   LINE      CODE     ---       #516
-      010005E1H   LINE      CODE     ---       #517
-      010005E3H   LINE      CODE     ---       #518
+      01000557H   BLOCK     CODE     NEAR LAB  LVL=0
+      01000557H   LINE      CODE     ---       #474
+      01000559H   LINE      CODE     ---       #475
+      0100055BH   LINE      CODE     ---       #476
+      0100055DH   LINE      CODE     ---       #477
+      0100055FH   LINE      CODE     ---       #478
+      01000560H   LINE      CODE     ---       #479
+      01000562H   LINE      CODE     ---       #483
+      01000564H   LINE      CODE     ---       #484
+      01000565H   LINE      CODE     ---       #485
+      01000566H   LINE      CODE     ---       #486
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 32
+
+
+      01000567H   LINE      CODE     ---       #487
+      01000568H   LINE      CODE     ---       #488
+      01000569H   LINE      CODE     ---       #489
+      0100056BH   LINE      CODE     ---       #490
+      0100056DH   LINE      CODE     ---       #491
+      01000570H   LINE      CODE     ---       #492
+      01000571H   LINE      CODE     ---       #493
+      01000572H   LINE      CODE     ---       #494
+      01000574H   LINE      CODE     ---       #497
+      01000577H   LINE      CODE     ---       #501
+      01000579H   LINE      CODE     ---       #502
+      0100057AH   LINE      CODE     ---       #503
+      0100057BH   LINE      CODE     ---       #504
+      0100057CH   LINE      CODE     ---       #505
+      0100057DH   LINE      CODE     ---       #506
+      0100057EH   LINE      CODE     ---       #507
+      01000580H   LINE      CODE     ---       #508
+      01000582H   LINE      CODE     ---       #509
+      01000585H   LINE      CODE     ---       #510
+      01000586H   LINE      CODE     ---       #511
+      01000588H   LINE      CODE     ---       #512
+      01000589H   LINE      CODE     ---       #513
+      0100058CH   LINE      CODE     ---       #516
+      0100058EH   LINE      CODE     ---       #517
+      01000590H   LINE      CODE     ---       #518
       ---         BLOCKEND  ---      ---       LVL=0
 
       ---         MODULE    ---      ---       SPI
-      01000793H   PUBLIC    CODE     NEAR LAB  _SPI_INIT
-      01000758H   PUBLIC    CODE     NEAR LAB  _SPI_WRITE_THEN_READ
+      01000742H   PUBLIC    CODE     NEAR LAB  _SPI_INIT
+      01000707H   PUBLIC    CODE     NEAR LAB  _SPI_WRITE_THEN_READ
       000000D0H.6 SFRSYM    DATA     BIT       AC
       000000E0H   SFRSYM    DATA     BYTE      ACC
       000000A1H   SFRSYM    DATA     BYTE      ADCCON
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 34
-
-
       000000A2H   SFRSYM    DATA     BYTE      ADCDATAH
       000000A3H   SFRSYM    DATA     BYTE      ADCDATAL
       000000A4H   SFRSYM    DATA     BYTE      ADCSTATIC
@@ -2278,6 +2175,9 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       00000083H   SFRSYM    DATA     BYTE      DPH
       00000083H   SFRSYM    DATA     BYTE      DPH0
       00000085H   SFRSYM    DATA     BYTE      DPH1
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 33
+
+
       00000082H   SFRSYM    DATA     BYTE      DPL
       00000082H   SFRSYM    DATA     BYTE      DPL0
       00000084H   SFRSYM    DATA     BYTE      DPL1
@@ -2311,9 +2211,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       00000080H.3 SFRSYM    DATA     BIT       INT0_N
       00000080H.4 SFRSYM    DATA     BIT       INT1_N
       000000B8H   SFRSYM    DATA     BYTE      IP
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 35
-
-
       00000088H   SFRSYM    DATA     BIT       IT0
       00000088H.2 SFRSYM    DATA     BIT       IT1
       00000092H   SFRSYM    DATA     BYTE      MPAGE
@@ -2346,6 +2243,9 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       00000080H.7 SFRSYM    DATA     BIT       PWM
       000000A9H   SFRSYM    DATA     BYTE      PWMCON
       000000AAH   SFRSYM    DATA     BYTE      PWMDUTY
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 34
+
+
       000000A0H.7 SFRSYM    DATA     BIT       PWR_UP
       000000B8H   SFRSYM    DATA     BIT       PX0
       000000B8H.2 SFRSYM    DATA     BIT       PX1
@@ -2379,9 +2279,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000B4H   SFRSYM    DATA     BYTE      SPICLK
       00000080H.5 SFRSYM    DATA     BIT       T0
       00000080H.6 SFRSYM    DATA     BIT       T1
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 36
-
-
       000000BCH   SFRSYM    DATA     BYTE      T1_1V2
       00000090H   SFRSYM    DATA     BIT       T2
       000000BDH   SFRSYM    DATA     BYTE      T2_1V2
@@ -2407,31 +2304,34 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000C8H.2 SFRSYM    DATA     BIT       TR2
       00000080H.2 SFRSYM    DATA     BIT       TXD
       000000D8H.3 SFRSYM    DATA     BIT       WDTI
-      0100075DH   SYMBOL    CODE     NEAR LAB  ?C0002
-      01000762H   SYMBOL    CODE     NEAR LAB  ?C0003
-      01000764H   SYMBOL    CODE     NEAR LAB  ?C0004
+      0100070CH   SYMBOL    CODE     NEAR LAB  ?C0002
+      01000711H   SYMBOL    CODE     NEAR LAB  ?C0003
+      01000713H   SYMBOL    CODE     NEAR LAB  ?C0004
 
-      01000793H   BLOCK     CODE     NEAR LAB  LVL=0
-      01000793H   LINE      CODE     ---       #203
-      01000795H   LINE      CODE     ---       #206
-      01000797H   LINE      CODE     ---       #209
+      01000742H   BLOCK     CODE     NEAR LAB  LVL=0
+      01000742H   LINE      CODE     ---       #203
+      01000744H   LINE      CODE     ---       #206
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 35
+
+
+      01000746H   LINE      CODE     ---       #209
       ---         BLOCKEND  ---      ---       LVL=0
 
-      01000758H   BLOCK     CODE     NEAR LAB  LVL=0
-      01000758H   LINE      CODE     ---       #229
-      0100075BH   LINE      CODE     ---       #232
-      0100075DH   LINE      CODE     ---       #236
-      0100075FH   LINE      CODE     ---       #237
-      01000762H   LINE      CODE     ---       #242
-      01000764H   LINE      CODE     ---       #246
+      01000707H   BLOCK     CODE     NEAR LAB  LVL=0
+      01000707H   LINE      CODE     ---       #229
+      0100070AH   LINE      CODE     ---       #232
+      0100070CH   LINE      CODE     ---       #236
+      0100070EH   LINE      CODE     ---       #237
+      01000711H   LINE      CODE     ---       #242
+      01000713H   LINE      CODE     ---       #246
       ---         BLOCKEND  ---      ---       LVL=0
 
       ---         MODULE    ---      ---       EEPROM
-      01000650H   PUBLIC    CODE     NEAR LAB  _EEPROM_READ
-      0100056FH   PUBLIC    CODE     NEAR LAB  _EEPROM_WRITE
-      01000765H   PUBLIC    CODE     NEAR LAB  EEPROM_INIT
-      0100072EH   PUBLIC    CODE     NEAR LAB  EEPROM_STATUS
-      010006CBH   PUBLIC    CODE     NEAR LAB  FLASH_ERASE_ALL
+      010005C7H   PUBLIC    CODE     NEAR LAB  _EEPROM_READ
+      0100051CH   PUBLIC    CODE     NEAR LAB  _EEPROM_WRITE
+      01000714H   PUBLIC    CODE     NEAR LAB  EEPROM_INIT
+      010006DDH   PUBLIC    CODE     NEAR LAB  EEPROM_STATUS
+      01000642H   PUBLIC    CODE     NEAR LAB  FLASH_ERASE_ALL
       000000D0H.6 SFRSYM    DATA     BIT       AC
       000000E0H   SFRSYM    DATA     BYTE      ACC
       000000A1H   SFRSYM    DATA     BYTE      ADCCON
@@ -2447,9 +2347,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000A0H.5 SFRSYM    DATA     BIT       CLK2
       000000C8H   SFRSYM    DATA     BIT       CP_RL2
       000000C8H   SFRSYM    DATA     BIT       CPRL2
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 37
-
-
       000000A0H.3 SFRSYM    DATA     BIT       CS
       000000C8H.1 SFRSYM    DATA     BIT       CT2
       000000D0H.7 SFRSYM    DATA     BIT       CY
@@ -2482,6 +2379,9 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000E8H   SFRSYM    DATA     BYTE      EIE
       000000F8H   SFRSYM    DATA     BYTE      EIP
       000000A8H.4 SFRSYM    DATA     BIT       ES
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 36
+
+
       000000A8H.1 SFRSYM    DATA     BIT       ET0
       000000A8H.3 SFRSYM    DATA     BIT       ET1
       000000A8H.5 SFRSYM    DATA     BIT       ET2
@@ -2515,9 +2415,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       00000080H.3 SFRSYM    DATA     BIT       P0_3
       00000080H.4 SFRSYM    DATA     BIT       P0_4
       00000080H.5 SFRSYM    DATA     BIT       P0_5
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 38
-
-
       00000080H.6 SFRSYM    DATA     BIT       P0_6
       00000080H.7 SFRSYM    DATA     BIT       P0_7
       00000095H   SFRSYM    DATA     BYTE      P0_ALT
@@ -2550,6 +2447,9 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000CBH   SFRSYM    DATA     BYTE      RCAP2H
       000000CAH   SFRSYM    DATA     BYTE      RCAP2L
       000000C8H.5 SFRSYM    DATA     BIT       RCLK
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 37
+
+
       000000ADH   SFRSYM    DATA     BYTE      REGX_CTRL
       000000ACH   SFRSYM    DATA     BYTE      REGX_LSB
       000000ABH   SFRSYM    DATA     BYTE      REGX_MSB
@@ -2583,9 +2483,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       00000088H.7 SFRSYM    DATA     BIT       TF1
       000000C8H.7 SFRSYM    DATA     BIT       TF2
       0000008CH   SFRSYM    DATA     BYTE      TH0
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 39
-
-
       0000008DH   SFRSYM    DATA     BYTE      TH1
       000000CDH   SFRSYM    DATA     BYTE      TH2
       00000098H.1 SFRSYM    DATA     BIT       TI
@@ -2599,117 +2496,120 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       000000C8H.2 SFRSYM    DATA     BIT       TR2
       00000080H.2 SFRSYM    DATA     BIT       TXD
       000000D8H.3 SFRSYM    DATA     BIT       WDTI
-      00000073H   SYMBOL    DATA     BYTE      ?_EEPROM_READ?BYTE
-      00000070H   SYMBOL    DATA     BYTE      ?_EEPROM_WRITE?BYTE
-      0100073CH   SYMBOL    CODE     NEAR LAB  ?C0002
-      01000575H   SYMBOL    CODE     NEAR LAB  ?C0003
-      0100057CH   SYMBOL    CODE     NEAR LAB  ?C0004
-      01000657H   SYMBOL    CODE     NEAR LAB  ?C0006
-      0100065EH   SYMBOL    CODE     NEAR LAB  ?C0007
-      0100067BH   SYMBOL    CODE     NEAR LAB  ?C0008
-      010006CBH   SYMBOL    CODE     NEAR LAB  ?C0009
-      010006D2H   SYMBOL    CODE     NEAR LAB  ?C0010
-      010006E4H   SYMBOL    CODE     NEAR LAB  ?C0012
-      00000070H   SYMBOL    DATA     BYTE      ADDR?241
-      00000073H   SYMBOL    DATA     BYTE      ADDR?343
-      00000072H   SYMBOL    DATA     BYTE      BYTE?242
-      00000075H   SYMBOL    DATA     BYTE      BYTE?344
+      00000054H   SYMBOL    DATA     BYTE      ?_EEPROM_READ?BYTE
+      00000051H   SYMBOL    DATA     BYTE      ?_EEPROM_WRITE?BYTE
+      010006EBH   SYMBOL    CODE     NEAR LAB  ?C0002
+      01000522H   SYMBOL    CODE     NEAR LAB  ?C0003
+      01000529H   SYMBOL    CODE     NEAR LAB  ?C0004
+      010005CEH   SYMBOL    CODE     NEAR LAB  ?C0006
+      010005D5H   SYMBOL    CODE     NEAR LAB  ?C0007
+      010005F2H   SYMBOL    CODE     NEAR LAB  ?C0008
+      01000642H   SYMBOL    CODE     NEAR LAB  ?C0009
+      01000649H   SYMBOL    CODE     NEAR LAB  ?C0010
+      0100065BH   SYMBOL    CODE     NEAR LAB  ?C0012
+      00000051H   SYMBOL    DATA     BYTE      ADDR?241
+      00000054H   SYMBOL    DATA     BYTE      ADDR?343
+      00000053H   SYMBOL    DATA     BYTE      BYTE?242
+      00000056H   SYMBOL    DATA     BYTE      BYTE?344
 
-      01000765H   BLOCK     CODE     NEAR LAB  LVL=0
-      01000765H   LINE      CODE     ---       #244
-      01000766H   LINE      CODE     ---       #245
-      01000767H   LINE      CODE     ---       #246
-      01000769H   LINE      CODE     ---       #247
-      0100076CH   LINE      CODE     ---       #251
-      0100076FH   LINE      CODE     ---       #254
+      01000714H   BLOCK     CODE     NEAR LAB  LVL=0
+      01000714H   LINE      CODE     ---       #244
+      01000715H   LINE      CODE     ---       #245
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 38
+
+
+      01000716H   LINE      CODE     ---       #246
+      01000718H   LINE      CODE     ---       #247
+      0100071BH   LINE      CODE     ---       #251
+      0100071EH   LINE      CODE     ---       #254
       ---         BLOCKEND  ---      ---       LVL=0
 
-      0100072EH   BLOCK     CODE     NEAR LAB  LVL=0
-      0100072EH   LINE      CODE     ---       #270
-      01000730H   LINE      CODE     ---       #273
-      01000732H   LINE      CODE     ---       #274
-      01000735H   LINE      CODE     ---       #278
-      01000736H   LINE      CODE     ---       #279
-      01000737H   LINE      CODE     ---       #280
-      0100073AH   LINE      CODE     ---       #284
-      0100073CH   LINE      CODE     ---       #291
+      010006DDH   BLOCK     CODE     NEAR LAB  LVL=0
+      010006DDH   LINE      CODE     ---       #270
+      010006DFH   LINE      CODE     ---       #273
+      010006E1H   LINE      CODE     ---       #274
+      010006E4H   LINE      CODE     ---       #278
+      010006E5H   LINE      CODE     ---       #279
+      010006E6H   LINE      CODE     ---       #280
+      010006E9H   LINE      CODE     ---       #284
+      010006EBH   LINE      CODE     ---       #291
       ---         BLOCKEND  ---      ---       LVL=0
 
-      0100056FH   BLOCK     CODE     NEAR LAB  LVL=0
-      0100056FH   LINE      CODE     ---       #305
-      01000571H   LINE      CODE     ---       #306
-      01000573H   LINE      CODE     ---       #307
-      01000575H   LINE      CODE     ---       #313
-      01000578H   LINE      CODE     ---       #314
-      01000579H   LINE      CODE     ---       #315
-      0100057CH   LINE      CODE     ---       #320
-      0100057EH   LINE      CODE     ---       #323
-      01000580H   LINE      CODE     ---       #324
-      01000583H   LINE      CODE     ---       #327
-      01000585H   LINE      CODE     ---       #330
-      01000587H   LINE      CODE     ---       #333
-      01000589H   LINE      CODE     ---       #334
-      0100058CH   LINE      CODE     ---       #337
-      0100058EH   LINE      CODE     ---       #338
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 40
-
-
-      0100058FH   LINE      CODE     ---       #339
-      01000592H   LINE      CODE     ---       #342
-      01000594H   LINE      CODE     ---       #343
-      01000596H   LINE      CODE     ---       #344
-      01000599H   LINE      CODE     ---       #347
-      0100059BH   LINE      CODE     ---       #348
-      0100059EH   LINE      CODE     ---       #351
-      010005A0H   LINE      CODE     ---       #354
-      010005A2H   LINE      CODE     ---       #357
-      010005A4H   LINE      CODE     ---       #358
-      010005A7H   LINE      CODE     ---       #361
-      010005A9H   LINE      CODE     ---       #364
+      0100051CH   BLOCK     CODE     NEAR LAB  LVL=0
+      0100051CH   LINE      CODE     ---       #305
+      0100051EH   LINE      CODE     ---       #306
+      01000520H   LINE      CODE     ---       #307
+      01000522H   LINE      CODE     ---       #313
+      01000525H   LINE      CODE     ---       #314
+      01000526H   LINE      CODE     ---       #315
+      01000529H   LINE      CODE     ---       #320
+      0100052BH   LINE      CODE     ---       #323
+      0100052DH   LINE      CODE     ---       #324
+      01000530H   LINE      CODE     ---       #327
+      01000532H   LINE      CODE     ---       #330
+      01000534H   LINE      CODE     ---       #333
+      01000536H   LINE      CODE     ---       #334
+      01000539H   LINE      CODE     ---       #337
+      0100053BH   LINE      CODE     ---       #338
+      0100053CH   LINE      CODE     ---       #339
+      0100053FH   LINE      CODE     ---       #342
+      01000541H   LINE      CODE     ---       #343
+      01000543H   LINE      CODE     ---       #344
+      01000546H   LINE      CODE     ---       #347
+      01000548H   LINE      CODE     ---       #348
+      0100054BH   LINE      CODE     ---       #351
+      0100054DH   LINE      CODE     ---       #354
+      0100054FH   LINE      CODE     ---       #357
+      01000551H   LINE      CODE     ---       #358
+      01000554H   LINE      CODE     ---       #361
+      01000556H   LINE      CODE     ---       #364
       ---         BLOCKEND  ---      ---       LVL=0
 
-      01000650H   BLOCK     CODE     NEAR LAB  LVL=0
-      01000650H   LINE      CODE     ---       #377
-      01000652H   LINE      CODE     ---       #378
-      01000654H   LINE      CODE     ---       #383
-      01000655H   LINE      CODE     ---       #384
-      01000657H   LINE      CODE     ---       #388
-      0100065AH   LINE      CODE     ---       #389
-      0100065BH   LINE      CODE     ---       #390
-      0100065EH   LINE      CODE     ---       #395
-      01000660H   LINE      CODE     ---       #398
-      01000662H   LINE      CODE     ---       #399
-      01000665H   LINE      CODE     ---       #402
-      01000667H   LINE      CODE     ---       #403
-      01000668H   LINE      CODE     ---       #404
-      0100066BH   LINE      CODE     ---       #407
-      0100066DH   LINE      CODE     ---       #408
-      0100066FH   LINE      CODE     ---       #409
-      01000672H   LINE      CODE     ---       #412
-      01000673H   LINE      CODE     ---       #413
-      01000674H   LINE      CODE     ---       #414
-      01000677H   LINE      CODE     ---       #415
-      01000679H   LINE      CODE     ---       #418
-      0100067BH   LINE      CODE     ---       #424
+      010005C7H   BLOCK     CODE     NEAR LAB  LVL=0
+      010005C7H   LINE      CODE     ---       #377
+      010005C9H   LINE      CODE     ---       #378
+      010005CBH   LINE      CODE     ---       #383
+      010005CCH   LINE      CODE     ---       #384
+      010005CEH   LINE      CODE     ---       #388
+      010005D1H   LINE      CODE     ---       #389
+      010005D2H   LINE      CODE     ---       #390
+      010005D5H   LINE      CODE     ---       #395
+      010005D7H   LINE      CODE     ---       #398
+      010005D9H   LINE      CODE     ---       #399
+      010005DCH   LINE      CODE     ---       #402
+      010005DEH   LINE      CODE     ---       #403
+      010005DFH   LINE      CODE     ---       #404
+      010005E2H   LINE      CODE     ---       #407
+      010005E4H   LINE      CODE     ---       #408
+      010005E6H   LINE      CODE     ---       #409
+      010005E9H   LINE      CODE     ---       #412
+LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  20:19:45  PAGE 39
+
+
+      010005EAH   LINE      CODE     ---       #413
+      010005EBH   LINE      CODE     ---       #414
+      010005EEH   LINE      CODE     ---       #415
+      010005F0H   LINE      CODE     ---       #418
+      010005F2H   LINE      CODE     ---       #424
       ---         BLOCKEND  ---      ---       LVL=0
 
-      010006CBH   BLOCK     CODE     NEAR LAB  LVL=0
-      010006CBH   LINE      CODE     ---       #440
-      010006CEH   LINE      CODE     ---       #441
-      010006CFH   LINE      CODE     ---       #442
-      010006D2H   LINE      CODE     ---       #447
-      010006D4H   LINE      CODE     ---       #450
-      010006D6H   LINE      CODE     ---       #451
-      010006D9H   LINE      CODE     ---       #454
-      010006DBH   LINE      CODE     ---       #457
-      010006DDH   LINE      CODE     ---       #460
-      010006DFH   LINE      CODE     ---       #461
-      010006E2H   LINE      CODE     ---       #464
-      010006E4H   LINE      CODE     ---       #472
-      010006E6H   LINE      CODE     ---       #475
-      010006E8H   LINE      CODE     ---       #476
-      010006EBH   LINE      CODE     ---       #479
-      010006EDH   LINE      CODE     ---       #482
+      01000642H   BLOCK     CODE     NEAR LAB  LVL=0
+      01000642H   LINE      CODE     ---       #440
+      01000645H   LINE      CODE     ---       #441
+      01000646H   LINE      CODE     ---       #442
+      01000649H   LINE      CODE     ---       #447
+      0100064BH   LINE      CODE     ---       #450
+      0100064DH   LINE      CODE     ---       #451
+      01000650H   LINE      CODE     ---       #454
+      01000652H   LINE      CODE     ---       #457
+      01000654H   LINE      CODE     ---       #460
+      01000656H   LINE      CODE     ---       #461
+      01000659H   LINE      CODE     ---       #464
+      0100065BH   LINE      CODE     ---       #472
+      0100065DH   LINE      CODE     ---       #475
+      0100065FH   LINE      CODE     ---       #476
+      01000662H   LINE      CODE     ---       #479
+      01000664H   LINE      CODE     ---       #482
       ---         BLOCKEND  ---      ---       LVL=0
 
       ---         MODULE    ---      ---       ?C_STARTUP
@@ -2719,9 +2619,6 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       01000056H   PUBLIC    CODE     ---       ?C?CLDPTR
 
       ---         MODULE    ---      ---       ?C?CLDOPTR
-LX51 LINKER/LOCATER V4.34a                                                            03/04/2009  17:40:23  PAGE 41
-
-
       0100006FH   PUBLIC    CODE     ---       ?C?CLDOPTR
 
       ---         MODULE    ---      ---       ?C?CSTPTR
@@ -2739,15 +2636,11 @@ SYMBOL TABLE OF MODULE:  MAIN (MAIN)
       ---         MODULE    ---      ---       ?C?ICASE
       01000220H   PUBLIC    CODE     ---       ?C?ICASE
 
-      ---         MODULE    ---      ---       ?C?ICALL
-      0100024DH   PUBLIC    CODE     ---       ?C?ICALL
-      01000251H   PUBLIC    CODE     ---       ?C?ICALL2
-
       ---         MODULE    ---      ---       ?C_IBP
-      0000007AH   PUBLIC    DATA     ---       ?C_IBP
+      0000005DH   PUBLIC    DATA     ---       ?C_IBP
 
       ---         MODULE    ---      ---       ?C_INIT
-      01000381H   PUBLIC    CODE     ---       ?C_START
+      01000342H   PUBLIC    CODE     ---       ?C_START
 
-Program Size: data=131.0 xdata=0 const=0 code=2059
+Program Size: data=102.0 xdata=0 const=0 code=1867
 LX51 RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

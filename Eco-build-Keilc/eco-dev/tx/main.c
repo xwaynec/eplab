@@ -24,6 +24,10 @@ void rf_init();
 void rf_configure(struct rf_config);
 void rf_send(char *, unsigned char, char *, unsigned char);
 */
+void test()
+{
+	blink_led();
+}
 
 int main()
 {
@@ -36,7 +40,7 @@ int main()
 	rf_configure(cfg);
 	serial_init(19200);	
 	eco_page_init();
-
+	test();
 	msg[0] = 0x0A;
 	msg[1] = 0x00;
 	/* ADDR */

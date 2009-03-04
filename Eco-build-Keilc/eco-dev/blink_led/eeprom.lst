@@ -1,10 +1,10 @@
-C51 COMPILER V8.16   SERIAL                                                                03/04/2009 20:19:40 PAGE 1   
+C51 COMPILER V8.16   EEPROM                                                                03/04/2009 20:19:42 PAGE 1   
 
 
-C51 COMPILER V8.16, COMPILATION OF MODULE SERIAL
+C51 COMPILER V8.16, COMPILATION OF MODULE EEPROM
 NO OBJECT MODULE REQUESTED
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.exe .\..\..\include\serial\serial.c BROWSE DEBUG CODE LISTINCLUDE SYMBOLS PREPR
-                    -INT INCDIR(../../Include) SRC(./serial.src)
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.exe ..\..\include\eeprom\eeprom.c BROWSE DEBUG CODE LISTINCLUDE SYMBOLS PREPRIN
+                    -T INCDIR(../../Include) PRINT(./eeprom.lst) PREPRINT(./eeprom.i) SRC(./eeprom.src)
 
 line level    source
 
@@ -16,10 +16,10 @@ line level    source
    6           * notice are retained. All other uses require explicit written
    7           * permission from NTHU. 
    8           *
-   9           * serial port driver
-  10           *
-  11           * Min-Hua Chen <orca.chen@gmail.com>
-  12           * 2007/8/2
+   9           * eeprom driver
+  10           * Min-Hua Chen <orca.chen@gmail.com> 
+  11           * 2007/8/23
+  12           * 2008/3/6
   13           */
   14          
   15          #include "Eco/reg24e1.h"
@@ -62,7 +62,7 @@ line level    source
   37      =1  sfr IE                  = 0xA8 ;
   38      =1  sfr PWMCON              = 0xA9 ;
   39      =1  sfr PWMDUTY             = 0xAA ;
-C51 COMPILER V8.16   SERIAL                                                                03/04/2009 20:19:40 PAGE 2   
+C51 COMPILER V8.16   EEPROM                                                                03/04/2009 20:19:42 PAGE 2   
 
   40      =1  sfr REGX_MSB    = 0xAB ;
   41      =1  sfr REGX_LSB    = 0xAC ;
@@ -126,7 +126,7 @@ line level    source
   99      =1  sbit TF0        = 0x8D ;
  100      =1  sbit TR1        = 0x8E ;
  101      =1  sbit TF1        = 0x8F ;
-C51 COMPILER V8.16   SERIAL                                                                03/04/2009 20:19:40 PAGE 3   
+C51 COMPILER V8.16   EEPROM                                                                03/04/2009 20:19:42 PAGE 3   
 
  102      =1  
  103      =1  /* P1 */
@@ -190,7 +190,7 @@ line level    source
  161      =1  sbit TF2        = 0xCF ;
  162      =1  
  163      =1  /*  PSW   */
-C51 COMPILER V8.16   SERIAL                                                                03/04/2009 20:19:40 PAGE 4   
+C51 COMPILER V8.16   EEPROM                                                                03/04/2009 20:19:42 PAGE 4   
 
  164      =1  sbit P          = 0xD0 ;
  165      =1  sbit F1         = 0xD1 ;
@@ -248,44 +248,40 @@ line level    source
  217      =1  #define SI0_VECTOR      4       /* 0x23 serial port 0 */
  218      =1  
  219      =1  #endif
-  16          #include "serial.h"
+  16          #include "spi/spi.h"
    1      =1  /*
    2      =1   * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
    3      =1   * Copyright (c) 2008 National Tsing Hua University (NTHU) 
    4      =1   * Permission to copy, modify, and distribute this program is granted 
    5      =1   * for noncommercial purposes, provided the author(s) and copyright
-C51 COMPILER V8.16   SERIAL                                                                03/04/2009 20:19:40 PAGE 5   
+C51 COMPILER V8.16   EEPROM                                                                03/04/2009 20:19:42 PAGE 5   
 
    6      =1   * notice are retained. All other uses require explicit written
    7      =1   * permission from NTHU. 
    8      =1   */
-   9      =1  #ifndef _SERIAL_H_
-  10      =1  #define _SERIAL_H_
+   9      =1  #ifndef _SPI_H_
+  10      =1  #define _SPI_H_
   11      =1  
-  12      =1  /* for SCON register */
-  13      =1  #define SERIAL_MODE0    0x00    /* sync mode */
-  14      =1  #define SERIAL_MODE1    (1 << 6)        /* async, full duplex mode */
-  15      =1  #define SERIAL_MODE2    (2 << 6)        /* async, full duplex mode */ 
-  16      =1  #define SERIAL_MODE3    (3 << 6)        /* async, full duplex mode */ 
+  12      =1  /* for SPI_CTRL register */
+  13      =1  #define SPI_CONN_NONE   0x00
+  14      =1  #define SPI_CONN_EEPROM 0x01
+  15      =1  #define SPI_CONN_RADIO  0x02
+  16      =1  #define SPI_CONN_RADIO2 0x03
   17      =1  
-  18      =1  #define SERIAL_CLK_D4           (1 << 5)
-  19      =1  
-  20      =1  #define SERIAL_IO_PORT  (3 << 1)
-  21      =1  #define RECV_ENABLE     (1 << 4)
-  22      =1  #define TRAN_DONE       (1 << 1)
-  23      =1  #define RECV_DONE       1
-  24      =1  
-  25      =1  /* for PCON register */
-  26      =1  #define BAUD_DOUBLE     (1 << 7)
-  27      =1  
-  28      =1  void serial_init(unsigned int baud);
-  29      =1  void putc(char c);
-  30      =1  void puts(char *s);
-  31      =1  char getc();
-  32      =1  void int_print(unsigned int val) reentrant;
-  33      =1  
-  34      =1  #endif
-  17          #include "timer/timer.h"
+  18      =1  /* for SPICLK register */
+  19      =1  #define SPI_CLK_D8      0x00
+  20      =1  #define SPI_CLK_D16     0x01
+  21      =1  #define SPI_CLK_D32     0x02
+  22      =1  #define SPI_CLK_D64     0x03
+  23      =1  
+  24      =1  /* end of SPI read/write */
+  25      =1  #define SPI_READY       (1 << 5)
+  26      =1  
+  27      =1  void spi_init(char conn_dev, char clk);
+  28      =1  char spi_write_then_read(char byte);
+  29      =1  
+  30      =1  #endif 
+  17          #include "eeprom/eeprom.h"
    1      =1  /*
    2      =1   * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
    3      =1   * Copyright (c) 2008 National Tsing Hua University (NTHU) 
@@ -294,178 +290,160 @@ line level    source
    6      =1   * notice are retained. All other uses require explicit written
    7      =1   * permission from NTHU. 
    8      =1   */
-   9      =1  #ifndef _TIMER_H_
-  10      =1  #define _TIMER_H_
+   9      =1  #ifndef _EEPROM_H_
+  10      =1  #define _EEPROM_H_
   11      =1  
-  12      =1  /* for TMOD register */
-  13      =1  #define TIMER1_AS_CNTR  (1 << 6)
-  14      =1  
-  15      =1  #define TIMER0_AS_CNTR  (1 << 2)
-  16      =1  
-  17      =1  
-  18      =1  #define TIMER1_MODE0    (0 << 4)        /* 13-bit counter */
-  19      =1  #define TIMER1_MODE1    (1 << 4)        /* 16-bit counter */
-  20      =1  #define TIMER1_MODE2    (2 << 4)        /* 8-bit counter, auto-reload */
-  21      =1  #define TIMER1_MODE3    (3 << 4)        /* two 8-bit counters */
-  22      =1  
-  23      =1  #define TIMER0_MODE0    0x00    /* 13-bit counter */
-  24      =1  #define TIMER0_MODE1    0x01    /* 16-bit counter */
-  25      =1  #define TIMER0_MODE2    0x10    /* 8-bit counter, auto-reload */
-  26      =1  #define TIMER0_MODE3    0x11    /* two 8-bit counters */
-  27      =1  
-  28      =1  /* for TCON register */
-  29      =1  #define TIMER1_ENABLE   (1 << 6)
-  30      =1  #define TIMER0_ENABLE   (1 << 4)
-  31      =1  
-  32      =1  /* for T2CON register */
-C51 COMPILER V8.16   SERIAL                                                                03/04/2009 20:19:40 PAGE 6   
-
-  33      =1  #define TIMER2_ENABLE   (1 << 2)
-  34      =1  #define TIMER2_AUTO     ~0x01   /* auto-reload */
-  35      =1  
-  36      =1  /* for CKCON register */
-  37      =1  #define TIMER2_CLK_D4   (1 << 5)        /* 1/4 of CPU clock rate */
-  38      =1  #define TIMER1_CLK_D4   (1 << 4)
-  39      =1  #define TIMER0_CLK_D4   (1 << 3)
-  40      =1  
-  41      =1  #endif 
+  12      =1  /* instruction for eeprom AT25320A */
+  13      =1  #define EE_WREN         0x06
+  14      =1  #define EE_WRDI         0x04
+  15      =1  #define EE_RDSR         0x05
+  16      =1  #define EE_WRSR         0x01
+  17      =1  #define EE_READ         0x03
+  18      =1  #define EE_WRITE        0x02
+  19      =1  #define ERASE_ALL       0x62    /* erase all page for flash memory */
+  20      =1  /* the eeprom chip select is connected to P0_0, and
+  21      =1   * the eeprom is active when CS is set low */
+  22      =1  #define EE_CS           P0_0
+  23      =1  
+  24      =1  void eeprom_init();
+  25      =1  void eeprom_write(unsigned int addr, char byte);
+  26      =1  char eeprom_read(unsigned int addr);
+  27      =1  char eeprom_status();
+  28      =1  
+  29      =1  #endif 
   18          
-  19          /* setup_baudrate - note that the CPU is 16M Hz
-  20           * @baud: baudrate
-  21           */
-  22          static int setup_baudrate(unsigned int baud)
-  23          {
-  24   1              T2CON &= TIMER2_AUTO;   /* set auto-reload */
-  25   1              TCLK = 1;       /* set transmit clock */
-  26   1              RCLK = 1;       /* set receive clock */
-  27   1              C_T2 = 0;       /* select timer function */
-  28   1              T2CON |= TIMER2_ENABLE; /* enable timer2 */
-  29   1      
-  30   1              P0 &= ~0x06;    /* clean [1:2] bits */
-  31   1              P0_ALT |= SERIAL_IO_PORT;       /* select serial I/O port */
-  32   1      
-  33   1              switch (baud) {
-  34   2              case 57600:
-  35   2                      RCAP2H = 0xFF;
-  36   2                      RCAP2L = 0xF7;
-  37   2                      break;
-  38   2              case 19200:
-  39   2                      RCAP2H = 0xFF;
-  40   2                      RCAP2L = 0xE6;
-  41   2                      break;
-  42   2              default:
-  43   2                      /* baudrate not supported */
-  44   2                      return 0;
-  45   2              }
-  46   1              return 1;
+  19          
+  20          /* Eco programmer mode, issue output signal as EE_CS signal 
+  21           * to another Eco debugger board. With correct wire connection,
+  22           * we can write date to another debugging board, check the manual
+  23           * for the connection part
+  24           */
+C51 COMPILER V8.16   EEPROM                                                                03/04/2009 20:19:42 PAGE 6   
+
+  25          
+  26          
+  27          #ifdef ECO_PROG_MODE
+              #undef EE_CS
+              /* I/O port as CS for Eco sensor node*/
+              #define EE_CS INT0_N
+              #endif 
+  32          
+  33          #ifdef ECO_DEV_PROG_MODE
+              #undef EE_CS
+              /* I/O port as CS for new debugging boad */
+              #define EE_CS DIO7
+              #endif 
+  38          
+  39          /* eeproom_init - init the eeprom, connect eeprom to the SPI
+  40           * interface */
+  41          void eeprom_init()
+  42          {
+  43   1              /* connect spi to eeprom and setup clock rate to 1/8 of CPU */
+  44   1              spi_init(SPI_CONN_EEPROM, SPI_CLK_D8);
+  45   1              /* set p0.0(EEPROM CSN) to output mode */
+  46   1              P0_DIR &= ~0x01;
   47   1      }
   48          
-  49          /* serial_init - setup baudrate 
-  50           * NOTE: using timer 2 as baud generator @ CPU 16M Hz only 
-  51           * @baud: baud rate
-  52           */
-  53          void serial_init(unsigned int baud)
-  54          {
-  55   1              /* SCON initial value: 0x00 */
-  56   1              /* add more supported modes here */
-  57   1      
-  58   1              setup_baudrate(baud);
-  59   1              SCON |= SERIAL_MODE1;   /* enable serial port mode 1 */
-  60   1              SCON |= RECV_ENABLE;    /* enable receive */
-  61   1      }
-  62          
-  63          /* serial_write - transmit one byte by serial port
-  64           * @byte: writing byte
+  49          /* eeprom_status - read the status register */
+  50          char eeprom_status()
+  51          {
+  52   1              char byte;
+  53   1              EE_CS = 0;      /* active eeprom */
+  54   1              spi_write_then_read(EE_RDSR);   /* send read-status-register
+  55   1                                                 instruction to the eeprom */
+  56   1              byte = spi_write_then_read(0);
+  57   1              EE_CS = 1;      /* inactive eeprom */
+  58   1      
+  59   1              return byte;
+  60   1      }
+  61          
+  62          /* eeprom_write - write a single byte to specified address
+  63           * @addr: target address
+  64           * @byte: writting byte of data
   65           */
-  66          static void serial_write(char byte)
+  66          void eeprom_write(unsigned int addr, char byte)
   67          {
-  68   1              SBUF = byte;    /* write to serial buffer */
-  69   1              while (!TI)     /* wait until done */
-  70   1                      ;
-C51 COMPILER V8.16   SERIAL                                                                03/04/2009 20:19:40 PAGE 7   
+  68   1              while (eeprom_status() & 0x01)  /* wait until write cycle done */
+  69   1                      ;
+  70   1              EE_CS = 0;      /* active eeprom */
+  71   1              spi_write_then_read(EE_WREN);   /* write-enable instruction */
+  72   1              EE_CS = 1;      /* inactive eeprom */
+  73   1              EE_CS = 0;      /* active eeprom */
+  74   1              spi_write_then_read(EE_WRITE);  /* write instruction */
+  75   1              spi_write_then_read(addr >> 8); /* higher byte of addr */
+  76   1              spi_write_then_read(addr & 0xff);       /* lower byte */
+  77   1              spi_write_then_read(byte);      /* write data */
+  78   1              EE_CS = 1;      /* inactive eeprom */
+  79   1              EE_CS = 0;      /* active eeprom */
+  80   1              spi_write_then_read(EE_WRDI);   /* write-disable instruction */
+  81   1              EE_CS = 1;      /* inactive eeprom */
+  82   1      }
+  83          
+  84          /* eeprom_read - read single byte from specified address
+  85           * @addr: target address
+  86           */
+C51 COMPILER V8.16   EEPROM                                                                03/04/2009 20:19:42 PAGE 7   
 
-  71   1              TI = 0; /* clean transmit done bit */
-  72   1      }
-  73          
-  74          /* serial_read - read one byte from serial port
-  75           * @ret: read byte
-  76           */
-  77          static char serial_read()
-  78          {
-  79   1              while (!RI)     /* wait until done */
-  80   1                      ;
-  81   1              RI = 0; /* clean receive bit */
-  82   1              return SBUF;
-  83   1      }
-  84          
-  85          /* wrappers for serial read/write interface */
-  86          void putc(char c)
-  87          {
-  88   1              serial_write(c);
-  89   1      }
-  90          
-  91          void puts(char *s)
-  92          {
-  93   1              while (*s)
-  94   1                      serial_write(*s++);
-  95   1      }
-  96          
-  97          char getc()
-  98          {
-  99   1              return serial_read();
- 100   1      }
- 101          
- 102          /* int_print - convert an unsigned int to a string then print it
- 103           * max int is 65535
- 104           * @val: int for printing
- 105           */
- 106          void int_print(unsigned int val) reentrant
- 107          {
- 108   1              if (val / 10)
- 109   1                      int_print(val / 10);
- 110   1              putc((val % 10) + '0');
- 111   1      }
- 112          
-C51 COMPILER V8.16   SERIAL                                                                03/04/2009 20:19:40 PAGE 8   
+  87          char eeprom_read(unsigned int addr)
+  88          {
+  89   1              char byte = 0;
+  90   1              while (eeprom_status() & 0x01)  /* wait until write cycle done */
+  91   1                      ;
+  92   1              EE_CS = 0;      /* active eeprom */
+  93   1              spi_write_then_read(EE_READ);   /* read instruction */
+  94   1              spi_write_then_read(addr >> 8); /* higher byte of addr */
+  95   1              spi_write_then_read(addr & 0xff);       /* lower byte */
+  96   1              byte = spi_write_then_read(0); /* read data */
+  97   1              EE_CS = 1;      /* inactive eeprom */
+  98   1              return byte;
+  99   1      }
+ 100          
+ 101          /* flash_erase_all - erase all pages on flash memory */
+ 102          void flash_erase_all()
+ 103          {
+ 104   1              while (eeprom_status() & 0x01)  /* wait until write cycle done */
+ 105   1                      ;
+ 106   1              EE_CS = 0;      /* enable SPI slave */
+ 107   1              spi_write_then_read(EE_WREN);   /* write-enable instruction */
+ 108   1              EE_CS = 1;      /* start erase operation */
+ 109   1              EE_CS = 0;      /* start erase operation */
+ 110   1              spi_write_then_read(ERASE_ALL); /* read instruction */
+ 111   1              EE_CS = 1;      /* start erase operation */
+ 112   1              while (eeprom_status() & 0x00)  /* wait until erase done */
+ 113   1                      ;
+ 114   1              /* re-enable flash write operation */
+ 115   1              EE_CS = 0;      /* enable SPI slave */
+ 116   1              spi_write_then_read(EE_WREN);   /* write-enable instruction */
+ 117   1              EE_CS = 1;      /* start erase operation */
+ 118   1      }
+C51 COMPILER V8.16   EEPROM                                                                03/04/2009 20:19:42 PAGE 8   
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
 
 
-P0 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0080H  1
-serial_read. . . . . . . . . . . . . .  STATIC   CODE   PROC     0000H  -----
-_serial_write. . . . . . . . . . . . .  STATIC   CODE   PROC     0000H  -----
-  byte?242 . . . . . . . . . . . . . .  * REG *  DATA   CHAR     0007H  1
-_serial_init . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  baud?141 . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0006H  2
-RI . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0098H  1
-TI . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0099H  1
-RCAP2H . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CBH  1
-getc . . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-RCAP2L . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CAH  1
-C_T2 . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C9H  1
-RCLK . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CDH  1
-TCLK . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CCH  1
-SBUF . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0099H  1
-SCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
-_putc. . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  c?443. . . . . . . . . . . . . . . .  * REG *  DATA   CHAR     0007H  1
-P0_ALT . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0095H  1
-_puts. . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  s?544. . . . . . . . . . . . . . . .  AUTO     DATA   PTR      0000H  3
-_?int_print. . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  val. . . . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    0000H  2
-_setup_baudrate. . . . . . . . . . . .  STATIC   CODE   PROC     0000H  -----
-  baud?040 . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0006H  2
-T2CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C8H  1
+_eeprom_read . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  addr?343 . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
+  byte?344 . . . . . . . . . . . . . .  AUTO     DATA   CHAR     0002H  1
+P0_0 . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0080H  1
+eeprom_status. . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  byte?140 . . . . . . . . . . . . . .  * REG *  DATA   CHAR     0007H  1
+_eeprom_write. . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  addr?241 . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
+  byte?242 . . . . . . . . . . . . . .  AUTO     DATA   CHAR     0002H  1
+flash_erase_all. . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+eeprom_init. . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+P0_DIR . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0094H  1
+_spi_init. . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+_spi_write_then_read . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    189    ----
+   CODE SIZE        =    164    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----       3
+   DATA SIZE        =   ----       6
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

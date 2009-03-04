@@ -1,5 +1,40 @@
 
-#line 1 ".\main.c" /0
+#line 1 ".\eco_page.c" /0
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+  
+#line 1 "eco_page.h" /0
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
   
 #line 1 "../../INCLUDE\ECO/REG24E1.H" /0
  
@@ -221,7 +256,7 @@
  
  
  
-#line 1 ".\main.c" /0
+#line 19 "eco_page.h" /0
  
   
 #line 1 "../../INCLUDE\ECO/ECO_SYS.H" /0
@@ -469,415 +504,6 @@
  
  
  
-#line 2 ".\main.c" /0
- 
-  
-#line 1 "../../INCLUDE\UTILS/UTILS.H" /0
-
-
-
-
-
-
-
-
-
-
-
-
- 
- 
- void store_cpu_rate(int mhz);
- void mdelay(unsigned int msec);
- void wdt_load(unsigned int cnt);
- void strncpy(char *src, char *dst, int n);
-#line 3 ".\main.c" /0
- 
-  
-#line 1 "../../INCLUDE\SERIAL/SERIAL.H" /0
-
-
-
-
-
-
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- void serial_init(unsigned int baud);
- void putc(char c);
- void puts(char *s);
- char getc();
- void int_print(unsigned int val) reentrant;
- 
- 
-#line 4 ".\main.c" /0
- 
-  
-#line 1 "../../INCLUDE\ISR/ISR_RF.H" /0
-
-
-
-
-
-
-
- 
- 
- 
- 
- 
- 
- 
- struct rf_config {
- 
- unsigned char data2_width;
- unsigned char data1_width;
- 
- char addr2[5];
- char addr1[5];
- 
- char addr_and_crc;
- char rf_prog[2];	 
- };
- 
- 
- struct radio_buffer {
- unsigned char ready;
- unsigned char buffer[23];
- };
- 
- void rf_init();
- void rf_configure(struct rf_config *cfg);
- void rf_send(char *addr, unsigned char addr_len,
- char *payload, unsigned char pl_len);
- void rf_wait_msg();
- 
- extern struct radio_buffer rf_buf;
- 
- 
-#line 5 ".\main.c" /0
- 
-  
-#line 1 "../../INCLUDE\EEPROM/EEPROM.H" /0
-
-
-
-
-
-
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
- 
- 
- 
- void eeprom_init();
- void eeprom_write(unsigned int addr, char byte);
- char eeprom_read(unsigned int addr);
- char eeprom_status();
- 
- 
-#line 6 ".\main.c" /0
- 
-  
-#line 1 "eco_page.h" /0
-
-
-
-
-
-
-
-
-
-
-
-
- 
- 
- 
- 
- 
- 
-  
-#line 1 "../../INCLUDE\ECO/REG24E1.H" /0
- 
-#line 2 "../../INCLUDE\ECO/REG24E1.H" /1
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
- 
-#line 19 "eco_page.h" /0
-#line 19 "eco_page.h" /0
- 
-  
-#line 1 "../../INCLUDE\ECO/ECO_SYS.H" /0
-
-
-
-
-
-
-
-
-
- 
- 
-#line 12 "../../INCLUDE\ECO/ECO_SYS.H" /1
-  
- 
-  
- 
-  
- 
-  
- 
- 
-#line 20 "eco_page.h" /0
 #line 20 "eco_page.h" /0
  
   
@@ -913,6 +539,59 @@
 
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ void eeprom_init();
+ void eeprom_write(unsigned int addr, char byte);
+ char eeprom_read(unsigned int addr);
+ char eeprom_status();
+ 
+ 
+#line 22 "eco_page.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+ 
+ 
+ void eco_page_init();
+ void eco_page_manager();
+ 
+ 
+ 
+#line 16 ".\eco_page.c" /0
+ 
+  
+#line 1 "../../INCLUDE\EEPROM/EEPROM.H" /0
+
+
+
+
+
+
+
+ 
+ 
 #line 10 "../../INCLUDE\EEPROM/EEPROM.H" /1
   
  
@@ -934,87 +613,138 @@
  
  
  
-#line 22 "eco_page.h" /0
-#line 22 "eco_page.h" /0
+#line 17 ".\eco_page.c" /0
+#line 17 ".\eco_page.c" /0
+ 
+ 
+ unsigned char ECO_PAGE_TABLE[10];
+ unsigned int ECO_PAGE_TABLE_INDEX;
+ 
+ unsigned int ECO_PAGE_ADDR;
+ unsigned char ECO_PAGE_SPI_CONN;
  
  
  
+ unsigned char idata ECO_PAGE_REGISTER1;
+ unsigned char idata ECO_PAGE_REGISTER2;
+ unsigned char idata ECO_PAGE_REGISTER3;
+ unsigned char idata ECO_PAGE_REGISTER4;
+ unsigned char idata ECO_PAGE_REGISTER5;
+ unsigned char idata ECO_PAGE_REGISTER6;
+ unsigned char idata ECO_PAGE_REGISTER7;
  
  
- 
-
-
-
-
-
-
- 
- 
- void eco_page_init();
- void eco_page_manager();
- 
- 
- 
-#line 7 ".\main.c" /0
- 
- 
- 
- struct rf_config rf_data = { {0x00},  
- {0x38},  
- {0x00, 0x00, 0x00, 0x00, 0x00},  
- {0xF2, 0xF2, 0xF2, 0xF2, 0xF2},  
- {0x63},  
- {0x6f, 0xEC} };
- struct rf_config *cfg = &rf_data;
- char dst_addr[3] = {0xF1, 0xF1, 0xF1};
- char msg[7];
- 
- 
- extern unsigned char ECO_PAGE_SPI_CONN;
-
-
-
-
- 
- void test()
+ void eco_page_init()
  {
-  P0 ^= 0x20;
+ 
+ 
+ ECO_PAGE_TABLE_INDEX = 5;
+ 
+ 
+ 
+ ECO_PAGE_ADDR = 0;
+ 
+ ECO_PAGE_TABLE[0] = -1; 
+ ECO_PAGE_TABLE[1] = -1; 
+ ECO_PAGE_TABLE[2] = 8;
+ ECO_PAGE_TABLE[3] = -1; 
+ ECO_PAGE_TABLE[4] = -1; 
+ ECO_PAGE_TABLE[5] = -1; 
+ ECO_PAGE_TABLE[6] = -1; 
+ ECO_PAGE_TABLE[7] = -1; 
+ ECO_PAGE_TABLE[8] = -1; 
+ ECO_PAGE_TABLE[9] = -1; 
  }
  
- int main()
- {
- unsigned char idx;
- unsigned int i = 0;
- store_cpu_rate(16);
- P0_DIR &= ~0x28;
- P0_ALT &= ~0x28;
- rf_init();
- rf_configure(cfg);
- serial_init(19200);	
- eco_page_init();
- test();
- msg[0] = 0x0A;
- msg[1] = 0x00;
  
- msg[2] = 0x02;
- msg[3] = 0xA0;
- 
- msg[4] = 0x02;
- msg[5] = 0xDD;
- msg[6] = 0xCC;
- 
- for(idx = 4; idx > 0; idx--)
+ void eco_page_manager()
  {
-  P0 ^= 0x20;		
- mdelay(300);
- }
- mdelay(1000);	
- while(1)
- {
- rf_send(dst_addr, 3, msg, 7);
-  P0 ^= 0x20;
- mdelay(800);	
+ unsigned int i;
+ unsigned int page_index = -1; 
+ 
+ 
+
+
+
+
+
+
+
+ 
+ 
+ for(i=0;i<10;i++)
+ {   
+ if(ECO_PAGE_ADDR == (ECO_PAGE_TABLE[i] << 8)) 
+ {   
+ page_index = i;
+ break;    
+ }    
  }
  
- return 0;
+ if(page_index != -1) 
+ {   
+ 
+
+
+
+
+
+ 
+ 
+ ECO_PAGE_ADDR = (page_index + 6) << 8;
+ 
+ #pragma asm
+ 
+ 
+ 
+ 
+ #pragma endasm
+ }   
+ else
+ {
+ 
+ 
+ unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + 6)<<8);
+ 
+ 
+
+
+
+
+
+
+ 
+ eeprom_init();
+ for(i=0;i<256;i++)
+ {
+ *(seg+i) = eeprom_read(((unsigned int)(ECO_PAGE_ADDR) + 3) +i);
+ }
+ 
+ 
+
+
+
+
+ 
+ 
+ 
+ 
+ ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 8;
+ 
+ 
+ ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + 6) << 8);
+ 
+ ECO_PAGE_TABLE_INDEX++;
+ 
+ 
+ #pragma asm
+ 
+ 
+ 
+ #pragma endasm
+ 
+ }
+ 
+ mdelay(1);
+ 
  }
