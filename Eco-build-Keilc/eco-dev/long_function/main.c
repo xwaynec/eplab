@@ -15,7 +15,7 @@ struct rf_config rf_data = { {0x00}, /* data2 width */
 	{0x6f, 0xEC} };
 struct rf_config *cfg = &rf_data;
 char dst_addr[3] = {0xF1, 0xF1, 0xF1};
-char msg[7];
+idata char msg[7];
 
 
 extern unsigned char ECO_PAGE_SPI_CONN;
@@ -24,6 +24,91 @@ void rf_init();
 void rf_configure(struct rf_config);
 void rf_send(char *, unsigned char, char *, unsigned char);
 */
+
+int long_function(int time1,int time2,int time3,int time4)
+{
+	int i;
+
+	for(i=0;i<time1;i++)
+	{
+		blink_led();
+		mdelay(300);
+	}
+
+	for(i=0;i<time2;i++)
+	{
+		blink_led();
+		mdelay(300);
+	}
+
+	for(i=0;i<time3;i++)
+	{
+		blink_led();
+		mdelay(300);
+	}
+	
+	for(i=0;i<time4;i++)
+	{
+		blink_led();
+		mdelay(300);
+	}
+
+	msg[0] = 0x0A;
+	msg[1] = 0x00;
+	/* ADDR */
+	msg[2] = 0x02;
+	msg[3] = 0xA0;
+	/* LEN */
+	msg[4] = 0x02;
+	msg[5] = 0xDD;
+	msg[6] = 0xCC;
+	mdelay(1000);
+
+	for(i=0;i<time1;i++)
+	{
+		blink_led();
+		mdelay(300);
+	}
+
+	for(i=0;i<time2;i++)
+	{
+		blink_led();
+		mdelay(300);
+	}
+
+	for(i=0;i<time3;i++)
+	{
+		blink_led();
+		mdelay(300);
+	}
+	
+	for(i=0;i<time4;i++)
+	{
+		blink_led();
+		mdelay(300);
+	}
+
+	msg[0] = 0x0A;
+	msg[1] = 0x00;
+	/* ADDR */
+	msg[2] = 0x02;
+	msg[3] = 0xA0;
+	/* LEN */
+	msg[4] = 0x02;
+	msg[5] = 0xDD;
+	msg[6] = 0xCC;
+	mdelay(1000);
+}
+
+void test2()
+{
+	int i;
+	for(i=0;i<4;i++)
+	{
+		blink_led();
+		mdelay(300);
+	}
+}
 
 int main()
 {
@@ -36,7 +121,7 @@ int main()
 	rf_configure(cfg);
 	serial_init(19200);	
 	eco_page_init();
-
+	test2();
 	msg[0] = 0x0A;
 	msg[1] = 0x00;
 	/* ADDR */
