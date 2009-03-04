@@ -100,15 +100,6 @@ int long_function(int time1,int time2,int time3,int time4)
 	mdelay(1000);
 }
 
-void test2()
-{
-	int i;
-	for(i=0;i<4;i++)
-	{
-		blink_led();
-		mdelay(300);
-	}
-}
 
 int main()
 {
@@ -121,7 +112,7 @@ int main()
 	rf_configure(cfg);
 	serial_init(19200);	
 	eco_page_init();
-	test2();
+	
 	msg[0] = 0x0A;
 	msg[1] = 0x00;
 	/* ADDR */

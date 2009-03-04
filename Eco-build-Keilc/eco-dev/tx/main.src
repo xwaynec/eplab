@@ -169,6 +169,8 @@ REGX_MSB	DATA	0ABH
 ?DT?main?MAIN        SEGMENT DATA OVERLAYABLE 
 ?C_INITSEG           SEGMENT CODE 
 ?DT?MAIN             SEGMENT DATA 
+	EXTRN	CODE (eco_page_manager)
+	EXTRN	DATA (ECO_PAGE_ADDR)
 	EXTRN	CODE (_mdelay)
 	EXTRN	CODE (_rf_configure)
 	EXTRN	CODE (_serial_init)
@@ -178,6 +180,15 @@ REGX_MSB	DATA	0ABH
 	EXTRN	CODE (_store_cpu_rate)
 	EXTRN	CODE (rf_init)
 	EXTRN	CODE (?C_STARTUP)
+
+	EXTRN   IDATA(ECO_PAGE_REGISTER1)
+	EXTRN   IDATA(ECO_PAGE_REGISTER2)
+	EXTRN   IDATA(ECO_PAGE_REGISTER3)
+	EXTRN   IDATA(ECO_PAGE_REGISTER4)
+	EXTRN   IDATA(ECO_PAGE_REGISTER5)
+	EXTRN   IDATA(ECO_PAGE_REGISTER6)
+	EXTRN   IDATA(ECO_PAGE_REGISTER7)
+	EXTRN	DATA (ECO_PAGE_SPI_CONN)
 	PUBLIC	rf_data
 	PUBLIC	dst_addr
 	PUBLIC	msg
@@ -313,7 +324,11 @@ main:
 	LCALL	eco_page_init
 ; 	test();
 			; SOURCE LINE # 43
-	LCALL	test
+	;---------	LCALL	test start
+	;MOV	ECO_PAGE_ADDR,#HIGH (test)
+	;MOV	ECO_PAGE_ADDR+01H,#LOW (test)
+	;LCALL	eco_page_manager
+	;---------	LCALL	test end
 ; 	msg[0] = 0x0A;
 			; SOURCE LINE # 44
 	MOV  	msg,#0AH
@@ -377,11 +392,29 @@ main:
 	MOV  	?_rf_send?BYTE+05H,#HIGH (msg)
 	MOV  	?_rf_send?BYTE+06H,#LOW (msg)
 	MOV  	?_rf_send?BYTE+07H,#07H
-	MOV  	R3,#00H
-	MOV  	R2,#HIGH (dst_addr)
-	MOV  	R1,#LOW (dst_addr)
-	MOV  	R5,#03H
-	LCALL	_rf_send
+	;MOV  	R3,#00H
+	;MOV  	R2,#HIGH (dst_addr)
+	;MOV  	R1,#LOW (dst_addr)
+	;MOV  	R5,#03H
+	MOV     R0,#LOW (ECO_PAGE_REGISTER3)
+	MOV     @R0,#00H
+
+	MOV     R0,#LOW (ECO_PAGE_REGISTER2)
+	MOV     @R0,#HIGH (dst_addr)
+
+	MOV     R0,#LOW (ECO_PAGE_REGISTER1)
+	MOV     @R0,#LOW (dst_addr)
+
+	MOV     R0,#LOW (ECO_PAGE_REGISTER5)
+	MOV     @R0,#03H
+
+
+	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+	;---------	LCALL	_rf_send start
+	MOV	ECO_PAGE_ADDR,#HIGH (_rf_send)
+	MOV	ECO_PAGE_ADDR+01H,#LOW (_rf_send)
+	LCALL	eco_page_manager
+	;---------	LCALL	_rf_send end
 ; 		blink_led();
 			; SOURCE LINE # 63
 	XRL  	P0,#020H
