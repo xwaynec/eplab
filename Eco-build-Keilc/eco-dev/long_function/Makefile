@@ -38,7 +38,7 @@ vpath %.LIB /cygdrive/c/Keil/C51/LIB
 all: main
 main: main.obj isr_rf.obj utils.obj serial.obj spi.obj eeprom.obj adc.obj eco_page.obj 
 	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB TO $(TARGET) 
-	$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB TO $(TARGET) SEGMENTS\(?PR?_rf_send?ISR_RF\(C:0x1000\)\)
+	$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB TO $(TARGET) SEGMENTS\(?PR?_rf_send?ISR_RF\(C:0x1000\)\) SEGMENTS\(?PR?_long_function?MAIN\(C:0x1200\)\) SEGMENTS\(?PR?_long_function_2?MAIN\(C:0x1300\)\)
 
 #SEGMENTS\(?PR?blink_fast?PAGING\(C:0x1000\)\) SEGMENTS\(?PR?blink_fast2?PAGING\(C:0x800\)
 
