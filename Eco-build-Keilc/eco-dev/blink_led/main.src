@@ -178,49 +178,54 @@ REGX_MSB	DATA	0ABH
 ; #include "Eco/eco_sys.h"
 ; #include "utils/utils.h"
 ; 
+; /*void long_function()
+; {
+; 	blink_led();
+; 	mdelay(400);
+; }*/
 ; 
 ; int main()
 
 	RSEG  ?PR?main?MAIN
 main:
 	USING	0
-			; SOURCE LINE # 6
+			; SOURCE LINE # 11
 ; {
-			; SOURCE LINE # 7
+			; SOURCE LINE # 12
 ; 	unsigned int i = 0;
-			; SOURCE LINE # 8
+			; SOURCE LINE # 13
 	CLR  	A
 	MOV  	i?040,A
 	MOV  	i?040+01H,A
 ; 	store_cpu_rate(16);
-			; SOURCE LINE # 9
+			; SOURCE LINE # 14
 	MOV  	R7,#010H
 	MOV  	R6,A
 	LCALL	_store_cpu_rate
 ; 
 ; 	P0_DIR &= ~0x28;
-			; SOURCE LINE # 11
+			; SOURCE LINE # 16
 	ANL  	P0_DIR,#0D7H
 ; 	P0_ALT &= ~0x28;
-			; SOURCE LINE # 12
+			; SOURCE LINE # 17
 	ANL  	P0_ALT,#0D7H
 ?C0001:
 ; 
 ; 
 ; 	while(1)
-			; SOURCE LINE # 15
+			; SOURCE LINE # 20
 ; 	{
-			; SOURCE LINE # 16
+			; SOURCE LINE # 21
 ; 		blink_led();
-			; SOURCE LINE # 17
+			; SOURCE LINE # 22
 	XRL  	P0,#020H
 ; 		mdelay(300);
-			; SOURCE LINE # 18
+			; SOURCE LINE # 23
 	MOV  	R7,#02CH
 	MOV  	R6,#01H
 	LCALL	_mdelay
 ; 	}
-			; SOURCE LINE # 19
+			; SOURCE LINE # 24
 	SJMP 	?C0001
 ; END OF main
 

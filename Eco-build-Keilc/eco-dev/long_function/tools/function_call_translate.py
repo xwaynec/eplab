@@ -89,7 +89,7 @@ def function_translate():
                     print reg_code.group(1)
                     print '\tEXTRN\tCODE (eco_page_manager)\n'
                     f_out.writelines('\tEXTRN\tCODE (eco_page_manager)\n')
-                    print '\tEXTRN\tDATA (ECO_PAGE_MANAGER)\n'
+                    print '\tEXTRN\tDATA (ECO_PAGE_ADDR)\n'
                     f_out.writelines('\tEXTRN\tDATA (ECO_PAGE_ADDR)\n')
                     flag = False
 

@@ -1,4 +1,4 @@
-AX51 MACRO ASSEMBLER  MAIN                                                                  03/04/09 20:19:37 PAGE     1
+AX51 MACRO ASSEMBLER  MAIN                                                                  03/05/09 17:14:19 PAGE     1
 
 
 MACRO ASSEMBLER AX51 V3.06a
@@ -65,7 +65,7 @@ LOC    OBJ             LINE     SOURCE
  0098.0                  55     RI      BIT     098H.0
  00D0.7                  56     CY      BIT     0D0H.7
  0098.1                  57     TI      BIT     098H.1
-AX51 MACRO ASSEMBLER  MAIN                                                                  03/04/09 20:19:37 PAGE     2
+AX51 MACRO ASSEMBLER  MAIN                                                                  03/05/09 17:14:19 PAGE     2
 
  00BC                    58     T1_1V2  DATA    0BCH
  008F                    59     SPC_FNC DATA    08FH
@@ -133,7 +133,7 @@ LOC    OBJ             LINE     SOURCE
  0098.7                 121     SM0     BIT     098H.7
  008A                   122     TL0     DATA    08AH
  00E8.2                 123     EX4     BIT     0E8H.2
-AX51 MACRO ASSEMBLER  MAIN                                                                  03/04/09 20:19:37 PAGE     3
+AX51 MACRO ASSEMBLER  MAIN                                                                  03/05/09 17:14:19 PAGE     3
 
  0098.6                 124     SM1     BIT     098H.6
  008B                   125     TL1     DATA    08BH
@@ -192,56 +192,61 @@ LOC    OBJ             LINE     SOURCE
                         178     ; #include "Eco/eco_sys.h"
                         179     ; #include "utils/utils.h"
                         180     ; 
-                        181     ; 
-                        182     ; int main()
-                        183     
-------                  184             RSEG  ?PR?main?MAIN
-000000                  185     main:
-                        186             USING   0
-                        187                             ; SOURCE LINE # 6
-                        188     ; {
-                        189                             ; SOURCE LINE # 7
-AX51 MACRO ASSEMBLER  MAIN                                                                  03/04/09 20:19:37 PAGE     4
+                        181     ; /*void long_function()
+                        182     ; {
+                        183     ;       blink_led();
+                        184     ;       mdelay(400);
+                        185     ; }*/
+                        186     ; 
+                        187     ; int main()
+                        188     
+------                  189             RSEG  ?PR?main?MAIN
+AX51 MACRO ASSEMBLER  MAIN                                                                  03/05/09 17:14:19 PAGE     4
 
-                        190     ;       unsigned int i = 0;
-                        191                             ; SOURCE LINE # 8
-000000 E4               192             CLR     A
-000001 F500       F     193             MOV     i?040,A
-000003 F500       F     194             MOV     i?040+01H,A
-                        195     ;       store_cpu_rate(16);
-                        196                             ; SOURCE LINE # 9
-000005 7F10             197             MOV     R7,#010H
-000007 FE               198             MOV     R6,A
-000008 120000     E     199             LCALL   _store_cpu_rate
-                        200     ; 
-                        201     ;       P0_DIR &= ~0x28;
-                        202                             ; SOURCE LINE # 11
-00000B 5394D7           203             ANL     P0_DIR,#0D7H
-                        204     ;       P0_ALT &= ~0x28;
-                        205                             ; SOURCE LINE # 12
-00000E 5395D7           206             ANL     P0_ALT,#0D7H
-000011                  207     ?C0001:
-                        208     ; 
-                        209     ; 
-                        210     ;       while(1)
-                        211                             ; SOURCE LINE # 15
-                        212     ;       {
-                        213                             ; SOURCE LINE # 16
-                        214     ;               blink_led();
-                        215                             ; SOURCE LINE # 17
-000011 638020           216             XRL     P0,#020H
-                        217     ;               mdelay(300);
-                        218                             ; SOURCE LINE # 18
-000014 7F2C             219             MOV     R7,#02CH
-000016 7E01             220             MOV     R6,#01H
-000018 120000     E     221             LCALL   _mdelay
-                        222     ;       }
-                        223                             ; SOURCE LINE # 19
-00001B 80F4             224             SJMP    ?C0001
-                        225     ; END OF main
-                        226     
-                        227             END
-AX51 MACRO ASSEMBLER  MAIN                                                                  03/04/09 20:19:37 PAGE     5
+000000                  190     main:
+                        191             USING   0
+                        192                             ; SOURCE LINE # 11
+                        193     ; {
+                        194                             ; SOURCE LINE # 12
+                        195     ;       unsigned int i = 0;
+                        196                             ; SOURCE LINE # 13
+000000 E4               197             CLR     A
+000001 F500       F     198             MOV     i?040,A
+000003 F500       F     199             MOV     i?040+01H,A
+                        200     ;       store_cpu_rate(16);
+                        201                             ; SOURCE LINE # 14
+000005 7F10             202             MOV     R7,#010H
+000007 FE               203             MOV     R6,A
+000008 120000     E     204             LCALL   _store_cpu_rate
+                        205     ; 
+                        206     ;       P0_DIR &= ~0x28;
+                        207                             ; SOURCE LINE # 16
+00000B 5394D7           208             ANL     P0_DIR,#0D7H
+                        209     ;       P0_ALT &= ~0x28;
+                        210                             ; SOURCE LINE # 17
+00000E 5395D7           211             ANL     P0_ALT,#0D7H
+000011                  212     ?C0001:
+                        213     ; 
+                        214     ; 
+                        215     ;       while(1)
+                        216                             ; SOURCE LINE # 20
+                        217     ;       {
+                        218                             ; SOURCE LINE # 21
+                        219     ;               blink_led();
+                        220                             ; SOURCE LINE # 22
+000011 638020           221             XRL     P0,#020H
+                        222     ;               mdelay(300);
+                        223                             ; SOURCE LINE # 23
+000014 7F2C             224             MOV     R7,#02CH
+000016 7E01             225             MOV     R6,#01H
+000018 120000     E     226             LCALL   _mdelay
+                        227     ;       }
+                        228                             ; SOURCE LINE # 24
+00001B 80F4             229             SJMP    ?C0001
+                        230     ; END OF main
+                        231     
+                        232             END
+AX51 MACRO ASSEMBLER  MAIN                                                                  03/05/09 17:14:19 PAGE     5
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -309,7 +314,7 @@ ET2 . . . . . . . . . . . . .  B  ADDR  00A8H.5   A
 EWDI. . . . . . . . . . . . .  B  ADDR  00E8H.4   A   
 EX0 . . . . . . . . . . . . .  B  ADDR  00A8H.0   A   
 EX1 . . . . . . . . . . . . .  B  ADDR  00A8H.2   A   
-AX51 MACRO ASSEMBLER  MAIN                                                                  03/04/09 20:19:37 PAGE     6
+AX51 MACRO ASSEMBLER  MAIN                                                                  03/05/09 17:14:19 PAGE     6
 
 EX2 . . . . . . . . . . . . .  B  ADDR  00E8H.0   A   
 EX3 . . . . . . . . . . . . .  B  ADDR  00E8H.1   A   
@@ -377,7 +382,7 @@ REGX_LSB. . . . . . . . . . .  D  ADDR  00ACH     A
 REGX_MSB. . . . . . . . . . .  D  ADDR  00ABH     A   
 REN . . . . . . . . . . . . .  B  ADDR  0098H.4   A   
 RI. . . . . . . . . . . . . .  B  ADDR  0098H.0   A   
-AX51 MACRO ASSEMBLER  MAIN                                                                  03/04/09 20:19:37 PAGE     7
+AX51 MACRO ASSEMBLER  MAIN                                                                  03/05/09 17:14:19 PAGE     7
 
 RS0 . . . . . . . . . . . . .  B  ADDR  00D0H.3   A   
 RS1 . . . . . . . . . . . . .  B  ADDR  00D0H.4   A   

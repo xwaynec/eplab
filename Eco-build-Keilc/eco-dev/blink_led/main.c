@@ -2,6 +2,11 @@
 #include "Eco/eco_sys.h"
 #include "utils/utils.h"
 
+/*void long_function()
+{
+	blink_led();
+	mdelay(400);
+}*/
 
 int main()
 {
