@@ -110,20 +110,37 @@ def function_translate():
             asm_valid_funcs.append(comment_template.substitute(func = ECO_ASM_FUNCTION[i]))
     
     f = open(INPUT_FILE,'r')
-    f_out = open(OUTPUT_FILE,'w')
+    f_out = open(OUTPUT_FILE+'.tmp','w')
+    
     #extern only one time 
     extern_code_flag = True
-    
     for asm_line in f:
-
+        f_out.writelines(asm_line)
         reg_extern_code = re.search(pattern_src_extern_code,asm_line)
         if reg_extern_code and extern_code_flag:
             print reg_extern_code.group(0)
             print '\tEXTRN\tCODE (eco_page_manager)\n'
             print '\tEXTRN\tDATA (ECO_PAGE_ADDR)\n'
+            f_out.writelines('\tEXTRN\tCODE (eco_page_manager)\n')
+            f_out.writelines('\tEXTRN\tDATA (ECO_PAGE_ADDR)\n')
             
             extern_code_flag = False
-        
+
+    f.close()
+    f_out.close()
+    
+
+
+
+
+    f = open(OUTPUT_FILE+'.tmp','r')
+    f_out = open(OUTPUT_FILE,'w')
+    
+    for asm_line in f:
+       
+        #initialize the output line
+        output_line = asm_line 
+
         for valid_func in asm_valid_funcs:
 
             #print 'template is ',s
@@ -132,44 +149,81 @@ def function_translate():
             #find c function
             if reg_func_test:
                 print '\nfind c function ',reg_func_test.group(0)
-                
                 if reg_func_test.group(1):
                     print 'this function has parameter ',reg_func_test.group(0)
                     for asm_func_line in f:
                         #print asm_func_line
                         #regex for asm register parameter
+                        
                         reg_func_para = re.search(pattern_func_parameter,asm_func_line)
                         if reg_func_para:
                             print reg_func_para.group(0)
+                            
+                            #comment the line like 'MOV R0,#LOW (msg)'
+                            output_line += ';' + asm_func_line + '\n'
+                            output_line += ';--------------------------\n'
+                            output_line += '\tMOV\tR0,#LOW (ECO_PAGE_REGISTER%s)\n' %reg_func_para.group(1)
+                            output_line += '\tMOV\t@R0,%s\n' %reg_func_para.group(2)
+                            output_line += ';--------------------------\n'
 
                             print '--------------------------'
                             print 'MOV  R0,#LOW (ECO_PAGE_REGISTER%d)' %int(reg_func_para.group(1))
                             print 'MOV  @R0,%s' %(reg_func_para.group(2)) 
                             print '--------------------------'
+                            
                         elif asm_func_line.find('LCALL') != -1:
                             reg_lcall = re.search('\s+LCALL\s+([\w]+)',asm_func_line)
+                            
+                            output_line += '\t;----------'+reg_lcall.group(0)+' start----------\n'
+                            output_line += '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)\n' %reg_lcall.group(1)
+                            output_line += '\tMOV\tECO_PAGE_ADDR,#LOW (%s)\n' %reg_lcall.group(1)
+                            output_line += '\tLCALL\teco_page_manager\n'
+                            output_line += '\t;----------'+reg_lcall.group(0)+' end----------\n'
+                            
+
                             if reg_lcall:
                                 print '\t;----------'+reg_lcall.group(0)+' start----------'
-                                print '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)\n' %reg_lcall.group(1)
-                                print '\tMOV\tECO_PAGE_ADDR,#LOW (%s)\n' %reg_lcall.group(1)
-                                print '\tLCALL\teco_page_manager\n'
+                                print '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)' %reg_lcall.group(1)
+                                print '\tMOV\tECO_PAGE_ADDR,#LOW (%s)' %reg_lcall.group(1)
+                                print '\tLCALL\teco_page_manager'
                                 print '\t;----------'+reg_lcall.group(0)+' end----------'
                             print valid_func,' is over'
+                            
+                            #f_out.writelines(output_line)
                             break 
+                            #continue
+                        else:
+                            print asm_func_line
+                            output_line += asm_func_line + '\n'
 
                 else:
                     print 'this function is no parameter'
                     for asm_func_line in f:
                         reg_lcall = re.search('\s+LCALL\s+([\w]+)',asm_func_line) 
                         if reg_lcall:
-                            print '\t;----------'+reg_lcall.group(0)+' start----------'
-                            print '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)\n' %reg_lcall.group(1)
-                            print '\tMOV\tECO_PAGE_ADDR,#LOW (%s)\n' %reg_lcall.group(1)
-                            print '\tLCALL\teco_page_manager\n'
-                            print '\t;----------'+reg_lcall.group(0)+' end----------'
-                            break 
-    f.close()
+                            output_line = '\t;----------'+reg_lcall.group(0)+' start----------\n'
+                            output_line +='\tMOV\tECO_PAGE_ADDR,#HIGH (%s)\n' %reg_lcall.group(1)
+                            output_line += '\tMOV\tECO_PAGE_ADDR,#LOW (%s)\n' %reg_lcall.group(1)
+                            output_line += '\tLCALL\teco_page_manager\n'
+                            output_line += '\t;----------'+reg_lcall.group(0)+' end----------\n'
+                            
 
+
+                            print '\t;----------'+reg_lcall.group(0)+' start----------'
+                            print '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)' %reg_lcall.group(1)
+                            print '\tMOV\tECO_PAGE_ADDR,#LOW (%s)' %reg_lcall.group(1)
+                            print '\tLCALL\teco_page_manager'
+                            print '\t;----------'+reg_lcall.group(0)+' end----------'
+                            
+                            #f_out.writelines(output_line)
+                            
+                            break
+                            #continue
+        
+        print 'write out\n'
+        f_out.writelines(output_line)
+    f.close()
+    f_out.close()
 
 #######################################
 #   
