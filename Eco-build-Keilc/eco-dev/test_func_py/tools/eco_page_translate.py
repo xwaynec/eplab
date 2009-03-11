@@ -43,6 +43,21 @@ def eco_page_translate():
 
         reg_pragma = re.search(pattern_PRAGMA,line)
         if reg_pragma:
+            
+            #f2.writelines('MOV\tR0,#LOW (ECO_PAGE_REGISTER3)\n')
+            for i in range(7):
+                line1 = '\tMOV\tR0,#LOW (ECO_PAGE_REGISTER%s)\n' %(i+1)
+                line2 = '\tMOV\tA,@R0\n'
+                line3 = '\tMOV\tR%s,A\n' %(i+1)
+                print line1
+                print line2
+                print line3
+                f2.writelines(line1)
+                f2.writelines(line2)
+                f2.writelines(line3)
+
+            print '\tMOV\tSPI_CTRL,ECO_PAGE_SPI_CONN'
+            f2.writelines('\tMOV\tSPI_CTRL,ECO_PAGE_SPI_CONN\n')
             print reg_pragma.group(0)
             f2.writelines('\tMOV\tDPH,ECO_PAGE_ADDR\n')
             print '\tMOV\tDPH,ECO_PAGE_ADDR\n'

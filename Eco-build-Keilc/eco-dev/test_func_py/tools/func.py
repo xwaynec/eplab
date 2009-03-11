@@ -18,7 +18,7 @@ OUTPUT_FILE = ''
 
 SRC_FILE_NAME = ''
 
-ECO_UTILIY_FUNCTION = ['mdelay','eeprom_init','?C?IMUL','?C_STARTUP','store_cpu_rate','eco_page_init','rf_configure','serial_init','main']
+ECO_UTILIY_FUNCTION = ['mdelay','eeprom_init','?C?IMUL','?C_STARTUP','store_cpu_rate','eco_page_init','rf_configure','serial_init','main','rf_init']
 
 
 ECO_ASM_FUNCTION = []
@@ -123,7 +123,14 @@ def function_translate():
             print '\tEXTRN\tDATA (ECO_PAGE_ADDR)\n'
             f_out.writelines('\tEXTRN\tCODE (eco_page_manager)\n')
             f_out.writelines('\tEXTRN\tDATA (ECO_PAGE_ADDR)\n')
-            
+            f_out.writelines('\tEXTRN\tDATA (ECO_PAGE_SPI_CONN)\n')
+            f_out.writelines('\tEXTRN\tIDATA (ECO_PAGE_REGISTER1)\n')        
+            f_out.writelines('\tEXTRN\tIDATA (ECO_PAGE_REGISTER2)\n')        
+            f_out.writelines('\tEXTRN\tIDATA (ECO_PAGE_REGISTER3)\n')        
+            f_out.writelines('\tEXTRN\tIDATA (ECO_PAGE_REGISTER4)\n')        
+            f_out.writelines('\tEXTRN\tIDATA (ECO_PAGE_REGISTER5)\n')        
+            f_out.writelines('\tEXTRN\tIDATA (ECO_PAGE_REGISTER6)\n')        
+            f_out.writelines('\tEXTRN\tIDATA (ECO_PAGE_REGISTER7)\n')        
             extern_code_flag = False
 
     f.close()
@@ -174,19 +181,19 @@ def function_translate():
                         elif asm_func_line.find('LCALL') != -1:
                             reg_lcall = re.search('\s+LCALL\s+([\w]+)',asm_func_line)
                             
-                            output_line += '\t;----------'+reg_lcall.group(0)+' start----------\n'
-                            output_line += '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)\n' %reg_lcall.group(1)
-                            output_line += '\tMOV\tECO_PAGE_ADDR,#LOW (%s)\n' %reg_lcall.group(1)
-                            output_line += '\tLCALL\teco_page_manager\n'
-                            output_line += '\t;----------'+reg_lcall.group(0)+' end----------\n'
-                            
 
                             if reg_lcall:
                                 print '\t;----------'+reg_lcall.group(0)+' start----------'
                                 print '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)' %reg_lcall.group(1)
-                                print '\tMOV\tECO_PAGE_ADDR,#LOW (%s)' %reg_lcall.group(1)
+                                print '\tMOV\tECO_PAGE_ADDR+01H,#LOW (%s)' %reg_lcall.group(1)
                                 print '\tLCALL\teco_page_manager'
                                 print '\t;----------'+reg_lcall.group(0)+' end----------'
+                                output_line += '\t;----------'+reg_lcall.group(0)+' start----------\n'
+                                output_line += '\tMOV\tECO_PAGE_SPI_CONN,SPI_CTRL\n'
+                                output_line += '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)\n' %reg_lcall.group(1)
+                                output_line += '\tMOV\tECO_PAGE_ADDR+01H,#LOW (%s)\n' %reg_lcall.group(1)
+                                output_line += '\tLCALL\teco_page_manager\n'
+                                output_line += '\t;----------'+reg_lcall.group(0)+' end----------\n'
                             print valid_func,' is over'
                             
                             #f_out.writelines(output_line)
@@ -202,8 +209,9 @@ def function_translate():
                         reg_lcall = re.search('\s+LCALL\s+([\w]+)',asm_func_line) 
                         if reg_lcall:
                             output_line = '\t;----------'+reg_lcall.group(0)+' start----------\n'
-                            output_line +='\tMOV\tECO_PAGE_ADDR,#HIGH (%s)\n' %reg_lcall.group(1)
-                            output_line += '\tMOV\tECO_PAGE_ADDR,#LOW (%s)\n' %reg_lcall.group(1)
+                            output_line += '\tMOV\tECO_PAGE_SPI_CONN,SPI_CTRL\n'
+                            output_line += '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)\n' %reg_lcall.group(1)
+                            output_line += '\tMOV\tECO_PAGE_ADDR+01H,#LOW (%s)\n' %reg_lcall.group(1)
                             output_line += '\tLCALL\teco_page_manager\n'
                             output_line += '\t;----------'+reg_lcall.group(0)+' end----------\n'
                             
@@ -211,7 +219,7 @@ def function_translate():
 
                             print '\t;----------'+reg_lcall.group(0)+' start----------'
                             print '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)' %reg_lcall.group(1)
-                            print '\tMOV\tECO_PAGE_ADDR,#LOW (%s)' %reg_lcall.group(1)
+                            print '\tMOV\tECO_PAGE_ADDR+01H,#LOW (%s)' %reg_lcall.group(1)
                             print '\tLCALL\teco_page_manager'
                             print '\t;----------'+reg_lcall.group(0)+' end----------'
                             
