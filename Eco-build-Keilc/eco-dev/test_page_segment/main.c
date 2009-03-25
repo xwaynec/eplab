@@ -97,6 +97,37 @@ void rf_send(char *, unsigned char, char *, unsigned char);
 }
 */
 
+void blink2()
+{
+	int i;
+	for(i=0;i<4;i++)
+	{
+		blink_led();
+		mdelay(400);
+	}
+	mdelay(1000);	
+}
+void blink4()
+{
+	int i;
+	for(i=0;i<8;i++)
+	{
+		blink_led();
+		mdelay(400);
+	}	
+	mdelay(1000);	
+}
+void blink6()
+{
+	int i;
+	for(i=0;i<12;i++)
+	{
+		blink_led();
+		mdelay(400);
+	}	
+	mdelay(1000);	
+}
+
 int main()
 {
 	unsigned char idx;
@@ -129,9 +160,11 @@ int main()
 	mdelay(1000);	
 	while(1)
 	{
+		blink2();
 		rf_send(dst_addr, 3, msg, 7);
-		blink_led();
-		mdelay(800);	
+		blink4();
+		mdelay(200);	
+		blink6();
 	}
 
 	return 0;

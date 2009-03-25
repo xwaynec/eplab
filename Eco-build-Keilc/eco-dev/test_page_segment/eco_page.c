@@ -67,29 +67,26 @@ void eco_page_manager()
 		blink_led();
 		mdelay(200);
 	}    
-
 	mdelay(1000);
 	*/
 	//Check Table   
 	for(i=0;i<10;i++)
 	{   
-		if(ECO_PAGE_ADDR == (ECO_PAGE_TABLE[i] << 8)) 
-		{   
+		//if(ECO_PAGE_ADDR == (ECO_PAGE_TABLE[i] << 8)) 
+		//{   
+		//	page_index = i;
+		//	break;    
+		//} 
+		if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_TABLE[i] & 0x7F))
+		{
 			page_index = i;
-			break;    
-		}    
+			break;
+		}
 	}
 
 	if(page_index != -1) 
 	{   
 		//memory page is in ram
-		/*for(i=0;i<4;i++)
-		{   
-			blink_led();
-			mdelay(400);
-		} 
-		*/
-
 		ECO_PAGE_ADDR = (page_index + ECO_PAGE_ADDR_OFFSET) << 8;
 	
 		#pragma asm
@@ -106,13 +103,6 @@ void eco_page_manager()
 		unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET)<<8);
 		
 		//memory page is in ram
-		/*for(i=0;i<4;i++)
-		{   
-			blink_led();
-			mdelay(400);
-		}
-		mdelay(1000);
-*/
 		eeprom_init();
 		for(i=0;i<256;i++)
 		{
@@ -120,12 +110,6 @@ void eco_page_manager()
 		}
 		
 		//memory page is in ram
-		/*for(i=0;i<4;i++)
-		{   
-			blink_led();
-			mdelay(300);
-		}*/
-		//mdelay(1000);
 
 		//Update Page Table
 		ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 8;
