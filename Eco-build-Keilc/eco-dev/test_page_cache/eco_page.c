@@ -79,8 +79,8 @@ void eco_page_manager()
 	//if page id is the same with the last page id
 	if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_PREV_PID & 0x7F))
 	{
-		//ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << 8) + (ECO_PAGE_ADDR & 0x00ff)
-		ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << 8) + (ECO_PAGE_ADDR & 0x00FF)
+		//virtual address id + function offset
+		ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << 8) + (ECO_PAGE_ADDR & 0x00FF);
 		#pragma asm
 		//eco_page_function_call	
 		#pragma endasm
@@ -131,18 +131,19 @@ void eco_page_manager()
 		//memory page is in ram
 		eeprom_init();
 
+		//mov code from eeprom to external ram
 		for(i=0;i<256;i++)
 		{
 			*(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR) +i);
 		}
 		
-		//Update Page Table
+		//update page table to connect this physical address id with virtual address id 
 		ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 8;
 
 		//store physical address id
 		ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX];
 
-		//Update Page Address
+		//update page address
 		ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8);
 
 		//store virtual address id 
@@ -151,7 +152,7 @@ void eco_page_manager()
 		//mov to the next index
 		ECO_PAGE_TABLE_INDEX++;
 
-		//Jump  to Function Address
+		//jump  to function address
 		#pragma asm
 		//MOV     DPH,ECO_PAGE_ADDR
 		//MOV     DPL,ECO_PAGE_ADDR+01H

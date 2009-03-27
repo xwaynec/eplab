@@ -623,7 +623,10 @@
  unsigned int ECO_PAGE_ADDR;
  unsigned char ECO_PAGE_SPI_CONN;
  
+ 
  unsigned char ECO_PAGE_PREV_VID;
+ 
+ 
  unsigned char ECO_PAGE_PREV_PID;
  
  
@@ -639,8 +642,6 @@
  
  void eco_page_init()
  {
- 
- 
  ECO_PAGE_TABLE_INDEX = 5;
  
  
@@ -675,9 +676,12 @@
 
 
  
- if((ECO_PAGE_ADDR >> 8) == ECO_PAGE_PREV_PID)
+ 
+ 
+ if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_PREV_PID & 0x7F))
  {
  
+ ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << 8) + (ECO_PAGE_ADDR & 0x00FF);
  #pragma asm
  
  #pragma endasm
@@ -704,10 +708,13 @@
  if(page_index != -1) 
  {  
  
+ ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 8;
+ 
+ 
  ECO_PAGE_ADDR = (page_index + 6) << 8;
  
  
- 
+ ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;
  
  #pragma asm
  
@@ -724,18 +731,25 @@
  
  
  eeprom_init();
+ 
+ 
  for(i=0;i<256;i++)
  {
  *(seg+i) = eeprom_read(((unsigned int)(ECO_PAGE_ADDR) + 3) +i);
  }
  
  
- 
- 
  ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 8;
  
  
+ ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX];
+ 
+ 
  ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + 6) << 8);
+ 
+ 
+ ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;	
+ 
  
  ECO_PAGE_TABLE_INDEX++;
  
