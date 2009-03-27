@@ -110,7 +110,7 @@ void eco_page_manager()
 		ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 8;
 	
 		//memory page is in ram
-		ECO_PAGE_ADDR = (page_index + ECO_PAGE_ADDR_OFFSET) << 8;
+		ECO_PAGE_ADDR = ((page_index + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_ADDR & 0x00FF);
 
 		//cache the virtual address id
 		ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;
@@ -144,7 +144,7 @@ void eco_page_manager()
 		ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX];
 
 		//update page address
-		ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8);
+		ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_ADDR &0x00FF);
 
 		//store virtual address id 
 		ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;	
