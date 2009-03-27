@@ -623,6 +623,9 @@
  unsigned int ECO_PAGE_ADDR;
  unsigned char ECO_PAGE_SPI_CONN;
  
+ unsigned char ECO_PAGE_PREV_VID;
+ unsigned char ECO_PAGE_PREV_PID;
+ 
  
  
  unsigned char idata ECO_PAGE_REGISTER1;
@@ -643,6 +646,8 @@
  
  
  ECO_PAGE_ADDR = 0;
+ ECO_PAGE_PREV_VID = 0;
+ ECO_PAGE_PREV_PID = 0;
  
  ECO_PAGE_TABLE[0] = -1; 
  ECO_PAGE_TABLE[1] = -1; 
@@ -670,9 +675,20 @@
 
 
  
+ if((ECO_PAGE_ADDR >> 8) == ECO_PAGE_PREV_PID)
+ {
+ 
+ #pragma asm
+ 
+ #pragma endasm
+ return ;
+ }	
+ 
+ 
  
  for(i=0;i<10;i++)
  {   
+ 
  
  
  
@@ -686,9 +702,12 @@
  }
  
  if(page_index != -1) 
- {   
+ {  
  
  ECO_PAGE_ADDR = (page_index + 6) << 8;
+ 
+ 
+ 
  
  #pragma asm
  

@@ -18,7 +18,9 @@ OUTPUT_FILE = ''
 
 SRC_FILE_NAME = ''
 
-ECO_UTILIY_FUNCTION = ['mdelay','eeprom_init','?C?IMUL','?C_STARTUP','store_cpu_rate','eco_page_init','rf_configure','serial_init','main','rf_init','blink2','blink4','blink6']
+#ECO_UTILIY_FUNCTION = ['mdelay','eeprom_init','?C?IMUL','?C_STARTUP','store_cpu_rate','eco_page_init','rf_configure','serial_init','main','rf_init','blink2','blink4','blink6']
+
+ECO_UTILIY_FUNCTION = ['mdelay','eeprom_init','?C?IMUL','?C_STARTUP','store_cpu_rate','eco_page_init','rf_configure','serial_init','main','rf_init']
 
 
 ECO_ASM_FUNCTION = []

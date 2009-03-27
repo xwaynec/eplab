@@ -339,8 +339,9 @@ eco_page_manager:
 ; 		//	page_index = i;
 ; 		//	break;    
 ; 		//} 
+; 		//MSB is LRU bit
 ; 		if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_TABLE[i] & 0x7F))
-			; SOURCE LINE # 80
+			; SOURCE LINE # 81
 	MOV  	A,#LOW (ECO_PAGE_TABLE)
 	ADD  	A,i?141+01H
 	MOV  	R0,A
@@ -351,18 +352,18 @@ eco_page_manager:
 	ANL  	A,#07FH
 	CJNE 	A,AR3,?C0004
 ; 		{
-			; SOURCE LINE # 81
-; 			page_index = i;
 			; SOURCE LINE # 82
+; 			page_index = i;
+			; SOURCE LINE # 83
 	MOV  	R4,i?141
 	MOV  	R5,i?141+01H
 ; 			break;
-			; SOURCE LINE # 83
+			; SOURCE LINE # 84
 	SJMP 	?C0003
 ; 		}
-			; SOURCE LINE # 84
-; 	}
 			; SOURCE LINE # 85
+; 	}
+			; SOURCE LINE # 86
 ?C0004:
 	INC  	i?141+01H
 	MOV  	A,i?141+01H
@@ -375,7 +376,7 @@ eco_page_manager:
 ?C0003:
 ; 
 ; 	if(page_index != -1) 
-			; SOURCE LINE # 87
+			; SOURCE LINE # 88
 	MOV  	A,R5
 	CPL  	A
 	JNZ  	?C0014
@@ -384,10 +385,10 @@ eco_page_manager:
 ?C0014:
 	JZ   	?C0006
 ; 	{   
-			; SOURCE LINE # 88
+			; SOURCE LINE # 89
 ; 		//memory page is in ram
 ; 		ECO_PAGE_ADDR = (page_index + ECO_PAGE_ADDR_OFFSET) << 8;
-			; SOURCE LINE # 90
+			; SOURCE LINE # 91
 	MOV  	A,R5
 	ADD  	A,#06H
 	MOV  	R7,A
@@ -408,16 +409,16 @@ eco_page_manager:
 	  
 ; 		#pragma endasm
 ; 	}   
-			; SOURCE LINE # 98
+			; SOURCE LINE # 99
 	SJMP 	?C0007
 ?C0006:
 ; 	else
 ; 	{
-			; SOURCE LINE # 100
+			; SOURCE LINE # 101
 ; 		//page fault
 ; 		/* Move Data from EEPROM to iRAM */
 ; 		unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET)<<8);
-			; SOURCE LINE # 103
+			; SOURCE LINE # 104
 	MOV  	A,ECO_PAGE_TABLE_INDEX+01H
 	ADD  	A,#06H
 	MOV  	R7,A
@@ -429,18 +430,18 @@ eco_page_manager:
 ; 		
 ; 		//memory page is in ram
 ; 		eeprom_init();
-			; SOURCE LINE # 106
+			; SOURCE LINE # 107
 	LCALL	eeprom_init
 ; 		for(i=0;i<256;i++)
-			; SOURCE LINE # 107
+			; SOURCE LINE # 108
 	CLR  	A
 	MOV  	i?141,A
 	MOV  	i?141+01H,A
 ?C0008:
 ; 		{
-			; SOURCE LINE # 108
-; 			*(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR) +i);
 			; SOURCE LINE # 109
+; 			*(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR) +i);
+			; SOURCE LINE # 110
 	MOV  	A,ECO_PAGE_ADDR+01H
 	ADD  	A,#03H
 	XCH  	A,R7
@@ -461,7 +462,7 @@ eco_page_manager:
 	MOV  	A,R7
 	MOVX 	@DPTR,A
 ; 		}
-			; SOURCE LINE # 110
+			; SOURCE LINE # 111
 	INC  	i?141+01H
 	MOV  	A,i?141+01H
 	JNZ  	?C0015
@@ -477,7 +478,7 @@ eco_page_manager:
 ; 
 ; 		//Update Page Table
 ; 		ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 8;
-			; SOURCE LINE # 115
+			; SOURCE LINE # 116
 	MOV  	A,ECO_PAGE_ADDR
 	MOV  	R7,A
 	MOV  	A,#LOW (ECO_PAGE_TABLE)
@@ -487,7 +488,7 @@ eco_page_manager:
 ; 
 ; 		//Update Page Address
 ; 		ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8);
-			; SOURCE LINE # 118
+			; SOURCE LINE # 119
 	MOV  	A,ECO_PAGE_TABLE_INDEX+01H
 	ADD  	A,#06H
 	MOV  	R7,A
@@ -498,7 +499,7 @@ eco_page_manager:
 	MOV  	ECO_PAGE_ADDR,A
 ; 
 ; 		ECO_PAGE_TABLE_INDEX++;
-			; SOURCE LINE # 120
+			; SOURCE LINE # 121
 	INC  	ECO_PAGE_TABLE_INDEX+01H
 	MOV  	A,ECO_PAGE_TABLE_INDEX+01H
 	JNZ  	?C0016
@@ -516,11 +517,11 @@ eco_page_manager:
 ; 		#pragma endasm
 ; 
 ; 	}
-			; SOURCE LINE # 129
+			; SOURCE LINE # 130
 ?C0007:
 ; 
 ; 	mdelay(1);
-			; SOURCE LINE # 131
+			; SOURCE LINE # 132
 	MOV  	R7,#01H
 	MOV  	R6,#00H
 	LJMP 	_mdelay
