@@ -61,20 +61,134 @@ void eco_page_init()
 	ECO_PAGE_TABLE[9] = -1; 
 }
 
+//LRU page replacement
+void eco_page_manager()
+{
+	unsigned int i;
+	unsigned int page_index = -1;
 
+	//check page table
+	for(i=0;i<10;i++)
+	{
+		if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_TABLE[i] & 0x7F))
+		{
+			page_index = i;
+			//set LRU bit is 1
+			ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] | 0x80;
+			break;
+		}
+	}
+
+	if(page_index != -1)
+	{
+		//store function physical addres id 
+		ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 8;
+	
+		//memory page is in ram
+		ECO_PAGE_ADDR = ((page_index + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_ADDR & 0x00FF);
+
+		//cache the virtual address id
+		ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;
+
+		#pragma asm
+		//eco_page_function_call
+		//MOV     DPH,ECO_PAGE_ADDR
+		//MOV     DPL,ECO_PAGE_ADDR+01H
+		//LCALL	?C?ICALL2
+		#pragma endasm
+				
+	}	
+	else
+	{
+		//printf("page fault");
+
+		for(i=ECO_PAGE_TABLE_INDEX+1; ;(i++)%10)
+		{
+			if((ECO_PAGE_TABLE[i] & 0x80) == 0x80)
+			{
+				//lru bit is 1
+				ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] & 0x7F;
+				
+				//store function physical addres id 
+				ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 8;
+	
+				//memory page is in ram
+				ECO_PAGE_ADDR = ((i + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_ADDR & 0x00FF);
+
+				//cache the virtual address id
+				ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;
+
+				ECO_PAGE_TABLE_INDEX = i;
+
+				#pragma asm
+				//eco_page_function_call
+				//MOV     DPH,ECO_PAGE_ADDR
+				//MOV     DPL,ECO_PAGE_ADDR+01H
+				//LCALL	?C?ICALL2
+				#pragma endasm
+
+				break;
+				
+			}
+			else
+			{
+				unsigned char xdata *seg = (unsigned char xdata *)((i + ECO_PAGE_ADDR_OFFSET)<<8);
+				unsigned int j;
+				
+				//memory page is in ram
+				eeprom_init();
+
+				//mov code from eeprom to external ram
+				for(j=0;j<256;j++)
+				{
+					*(seg+j) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR) +j);
+				}
+				
+				//update page table to connect this physical address id with virtual address id 
+				ECO_PAGE_TABLE[i] = ECO_PAGE_ADDR >> 8;
+
+				//store physical address id
+				ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[i];
+
+				//update page address e.g.  (page_id<<8) + page_offset
+				ECO_PAGE_ADDR = ((i + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_ADDR &0x00FF);
+
+				//store virtual address id 
+				ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;	
+
+				//mov to the next index
+				ECO_PAGE_TABLE_INDEX = i;
+
+				//jump  to function address
+				#pragma asm
+				//MOV     DPH,ECO_PAGE_ADDR
+				//MOV     DPL,ECO_PAGE_ADDR+01H
+				//LCALL        ?C?ICALL2               
+				#pragma endasm
+				
+				break;
+				
+			}
+		}
+			
+	}
+				
+}
+
+/*
 void eco_page_manager()
 {
 	unsigned int i;
 	unsigned int page_index = -1; 
 
 	//Check POP instruction 
-	/*for(i=0;i<10;i++)
+	for(i=0;i<10;i++)
 	{    
 		blink_led();
 		mdelay(200);
 	}    
 	mdelay(1000);
-	*/
+	
 
 	//if page id is the same with the last page id
 	if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_PREV_PID & 0x7F))
@@ -125,7 +239,7 @@ void eco_page_manager()
 	else
 	{
 		//page fault
-		/* Move Data from EEPROM to iRAM */
+		// Move Data from EEPROM to iRAM 
 		unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET)<<8);
 		
 		//memory page is in ram
@@ -164,3 +278,4 @@ void eco_page_manager()
 	mdelay(1);
 
 }
+*/
