@@ -160,9 +160,9 @@ int main()
 	mdelay(1000);	
 	while(1)
 	{
-		blink2();
-		rf_send(dst_addr, 3, msg, 7);
 		blink4();
+		rf_send(dst_addr, 3, msg, 7);
+		blink2();
 		mdelay(200);	
 		blink6();
 	}
