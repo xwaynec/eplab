@@ -62,7 +62,7 @@ void eco_page_init()
 }
 
 //LRU page replacement
-void eco_page_manager()
+/*void eco_page_manager()
 {
 	unsigned int i;
 	unsigned int page_index = -1;
@@ -84,7 +84,6 @@ void eco_page_manager()
 		//MOV     DPL,ECO_PAGE_ADDR+01H
 		//LCALL	?C?ICALL2
 		#pragma endasm
-		return ;
 	}	
 	
 	//check page table
@@ -133,7 +132,7 @@ void eco_page_manager()
 		for(i=0;i<4;i++)
 		{
 			blink_led();
-			mdelay(300);
+			mdelay(33300);
 		}
 		mdelay(1000);
 
@@ -155,7 +154,7 @@ void eco_page_manager()
 				//mov code from eeprom to external ram
 				for(j=0;j<256;j++)
 				{
-					*(seg+j) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR & 0xFF00 ) +j);
+					*(seg+j) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR) +j);
 				}
 				
 				//update page table to connect this physical address id with virtual address id 
@@ -189,8 +188,8 @@ void eco_page_manager()
 	}
 				
 }
+*/
 
-/*
 void eco_page_manager()
 {
 	unsigned int i;
@@ -263,7 +262,7 @@ void eco_page_manager()
 		//mov code from eeprom to external ram
 		for(i=0;i<256;i++)
 		{
-			*(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR & 0xFF00) +i);
+			*(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR) +i);
 		}
 		
 		//update page table to connect this physical address id with virtual address id 
@@ -273,7 +272,7 @@ void eco_page_manager()
 		ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX];
 
 		//update page address
-		ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_ADDR & 0x00FF);
+		ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_ADDR &0x00FF);
 
 		//store virtual address id 
 		ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;	
@@ -294,4 +293,4 @@ void eco_page_manager()
 	mdelay(1);
 
 }
-*/
+

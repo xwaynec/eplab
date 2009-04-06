@@ -650,16 +650,16 @@
  ECO_PAGE_PREV_VID = 0;
  ECO_PAGE_PREV_PID = 0;
  
- ECO_PAGE_TABLE[0] = -1; 
- ECO_PAGE_TABLE[1] = -1; 
- ECO_PAGE_TABLE[2] = 8;
- ECO_PAGE_TABLE[3] = -1; 
- ECO_PAGE_TABLE[4] = -1; 
- ECO_PAGE_TABLE[5] = -1; 
- ECO_PAGE_TABLE[6] = -1; 
- ECO_PAGE_TABLE[7] = -1; 
- ECO_PAGE_TABLE[8] = -1; 
- ECO_PAGE_TABLE[9] = -1; 
+ ECO_PAGE_TABLE[0] = 0; 
+ ECO_PAGE_TABLE[1] = 0; 
+ ECO_PAGE_TABLE[2] = 0;
+ ECO_PAGE_TABLE[3] = 0; 
+ ECO_PAGE_TABLE[4] = 0; 
+ ECO_PAGE_TABLE[5] = 0; 
+ ECO_PAGE_TABLE[6] = 0; 
+ ECO_PAGE_TABLE[7] = 0; 
+ ECO_PAGE_TABLE[8] = 0; 
+ ECO_PAGE_TABLE[9] = 0; 
  }
  
  
@@ -667,6 +667,26 @@
  {
  unsigned int i;
  unsigned int page_index = -1;
+ 
+ 
+ if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_PREV_PID & 0x7F))
+ {
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << 8) + (ECO_PAGE_ADDR & 0x00FF);
+ #pragma asm
+ 
+ 
+ 
+ 
+ #pragma endasm
+ return ;
+ }	
  
  
  for(i=0;i<10;i++)
@@ -683,6 +703,14 @@
  if(page_index != -1)
  {
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 8;
  
  
@@ -698,38 +726,24 @@
  
  #pragma endasm
  
+ return ;
  }	
  else
  {
  
+ for(i=0;i<4;i++)
+ {
+  P0 ^= 0x20;
+ mdelay(300);
+ }
+ mdelay(1000);
  
- for(i=ECO_PAGE_TABLE_INDEX+1; ;(i++)%10)
+ for(i=ECO_PAGE_TABLE_INDEX+1; ;i=(i+1)%10)
  {
  if((ECO_PAGE_TABLE[i] & 0x80) == 0x80)
  {
  
  ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] & 0x7F;
- 
- 
- ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 8;
- 
- 
- ECO_PAGE_ADDR = ((i + 6) << 8) + (ECO_PAGE_ADDR & 0x00FF);
- 
- 
- ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;
- 
- ECO_PAGE_TABLE_INDEX = i;
- 
- #pragma asm
- 
- 
- 
- 
- #pragma endasm
- 
- break;
- 
  }
  else
  {
@@ -742,7 +756,7 @@
  
  for(j=0;j<256;j++)
  {
- *(seg+j) = eeprom_read(((unsigned int)(ECO_PAGE_ADDR) + 3) +j);
+ *(seg+j) = eeprom_read(((unsigned int)(ECO_PAGE_ADDR & 0xFF00) + 3) +j);
  }
  
  
@@ -752,7 +766,7 @@
  ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[i];
  
  
- ECO_PAGE_ADDR = ((i + 6) << 8) + (ECO_PAGE_ADDR &0x00FF);
+ ECO_PAGE_ADDR = ((i + 6) << 8) + (ECO_PAGE_ADDR & 0x00FF);
  
  
  ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;	
@@ -765,9 +779,10 @@
  
  
  
+ 
  #pragma endasm
  
- break;
+ return ;
  
  }
  }
@@ -776,6 +791,7 @@
  
  }
  
+
 
 
 

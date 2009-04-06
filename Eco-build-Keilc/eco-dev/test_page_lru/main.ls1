@@ -1,4 +1,4 @@
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE     1
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE     1
 
 
 MACRO ASSEMBLER AX51 V3.06a
@@ -65,7 +65,7 @@ LOC    OBJ             LINE     SOURCE
  0098.0                  55     RI      BIT     098H.0
  00D0.7                  56     CY      BIT     0D0H.7
  0098.1                  57     TI      BIT     098H.1
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE     2
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE     2
 
  00BC                    58     T1_1V2  DATA    0BCH
  008F                    59     SPC_FNC DATA    08FH
@@ -133,7 +133,7 @@ LOC    OBJ             LINE     SOURCE
  0098.7                 121     SM0     BIT     098H.7
  008A                   122     TL0     DATA    08AH
  00E8.2                 123     EX4     BIT     0E8H.2
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE     3
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE     3
 
  0098.6                 124     SM1     BIT     098H.6
  008B                   125     TL1     DATA    08BH
@@ -190,475 +190,526 @@ LOC    OBJ             LINE     SOURCE
 ------                  176     ?DT?MAIN             SEGMENT DATA 
 ------                  177     ?ID?MAIN             SEGMENT IDATA 
                         178             EXTRN   CODE (_mdelay)
-                        179             EXTRN   CODE (_rf_configure)
-                        180             EXTRN   CODE (_serial_init)
-                        181             EXTRN   CODE (eco_page_init)
-                        182             EXTRN   CODE (_rf_send)
-                        183             EXTRN   DATA (?_rf_send?BYTE)
-                        184             EXTRN   CODE (_store_cpu_rate)
-                        185             EXTRN   CODE (rf_init)
-                        186             EXTRN   CODE (?C_STARTUP)
-                        187             PUBLIC  rf_data
-                        188             PUBLIC  dst_addr
-                        189             PUBLIC  msg
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE     4
+                        179             EXTRN   CODE (eco_page_manager)
+                        180             EXTRN   DATA (ECO_PAGE_ADDR)
+                        181             EXTRN   DATA (ECO_PAGE_SPI_CONN)
+                        182             EXTRN   IDATA (ECO_PAGE_REGISTER1)
+                        183             EXTRN   IDATA (ECO_PAGE_REGISTER2)
+                        184             EXTRN   IDATA (ECO_PAGE_REGISTER3)
+                        185             EXTRN   IDATA (ECO_PAGE_REGISTER4)
+                        186             EXTRN   IDATA (ECO_PAGE_REGISTER5)
+                        187             EXTRN   IDATA (ECO_PAGE_REGISTER6)
+                        188             EXTRN   IDATA (ECO_PAGE_REGISTER7)
+                        189             EXTRN   CODE (_rf_configure)
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE     4
 
-                        190             PUBLIC  cfg
-                        191             PUBLIC  main
-                        192             PUBLIC  blink6
-                        193             PUBLIC  blink4
-                        194             PUBLIC  blink2
-                        195     
-------                  196             RSEG  ?DT?main?MAIN
-000000                  197     ?main?BYTE:
-000000                  198             idx?343:   DS   1
-000001                  199             ORG  1
-000001                  200               i?344:   DS   2
-                        201     
-------                  202             RSEG  ?DT?blink2?MAIN
-000000                  203     ?blink2?BYTE:
-000000                  204               i?040:   DS   2
+                        190             EXTRN   CODE (_serial_init)
+                        191             EXTRN   CODE (eco_page_init)
+                        192             EXTRN   CODE (_rf_send)
+                        193             EXTRN   DATA (?_rf_send?BYTE)
+                        194             EXTRN   CODE (_store_cpu_rate)
+                        195             EXTRN   CODE (rf_init)
+                        196             EXTRN   CODE (?C_STARTUP)
+                        197             PUBLIC  rf_data
+                        198             PUBLIC  dst_addr
+                        199             PUBLIC  msg
+                        200             PUBLIC  cfg
+                        201             PUBLIC  main
+                        202             PUBLIC  blink6
+                        203             PUBLIC  blink4
+                        204             PUBLIC  blink2
                         205     
-------                  206             RSEG  ?DT?blink4?MAIN
-000000                  207     ?blink4?BYTE:
-000000                  208               i?141:   DS   2
-                        209     
-------                  210             RSEG  ?DT?blink6?MAIN
-000000                  211     ?blink6?BYTE:
-000000                  212               i?242:   DS   2
-                        213     
-------                  214             RSEG  ?DT?MAIN
-000000                  215                 cfg:   DS   3
-000003                  216            dst_addr:   DS   3
-000006                  217             rf_data:   DS   15
-                        218     
-------                  219             RSEG  ?ID?MAIN
-000000                  220                 msg:   DS   7
-                        221     
-------                  222             RSEG  ?C_INITSEG
-000000 0F               223             DB      00FH
-000001 00         F     224             DB      rf_data
-000002 00               225             DB      000H
-000003 38               226             DB      038H
-000004 00               227             DB      000H
-000005 00               228             DB      000H
-000006 00               229             DB      000H
-000007 00               230             DB      000H
-000008 00               231             DB      000H
-000009 F2               232             DB      0F2H
-00000A F2               233             DB      0F2H
-00000B F2               234             DB      0F2H
-00000C F2               235             DB      0F2H
-00000D F2               236             DB      0F2H
-00000E 63               237             DB      063H
-00000F 6F               238             DB      06FH
-000010 EC               239             DB      0ECH
-                        240     
-000011 03               241             DB      003H
-000012 00         F     242             DB      cfg
-000013 00               243             DB      000H
-000014 0000       F     244             DW      rf_data + 0
-                        245     
-000016 03               246             DB      003H
-000017 00         F     247             DB      dst_addr
-000018 F1               248             DB      0F1H
-000019 F1               249             DB      0F1H
-00001A F1               250             DB      0F1H
-                        251     
-                        252     ; #include "Eco/reg24e1.h"
-                        253     ; #include "Eco/eco_sys.h"
-                        254     ; #include "utils/utils.h"
-                        255     ; #include "serial/serial.h"
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE     5
+------                  206             RSEG  ?DT?main?MAIN
+000000                  207     ?main?BYTE:
+000000                  208             idx?343:   DS   1
+000001                  209             ORG  1
+000001                  210               i?344:   DS   2
+                        211     
+------                  212             RSEG  ?DT?blink2?MAIN
+000000                  213     ?blink2?BYTE:
+000000                  214               i?040:   DS   2
+                        215     
+------                  216             RSEG  ?DT?blink4?MAIN
+000000                  217     ?blink4?BYTE:
+000000                  218               i?141:   DS   2
+                        219     
+------                  220             RSEG  ?DT?blink6?MAIN
+000000                  221     ?blink6?BYTE:
+000000                  222               i?242:   DS   2
+                        223     
+------                  224             RSEG  ?DT?MAIN
+000000                  225                 cfg:   DS   3
+000003                  226            dst_addr:   DS   3
+000006                  227             rf_data:   DS   15
+                        228     
+------                  229             RSEG  ?ID?MAIN
+000000                  230                 msg:   DS   7
+                        231     
+------                  232             RSEG  ?C_INITSEG
+000000 0F               233             DB      00FH
+000001 00         F     234             DB      rf_data
+000002 00               235             DB      000H
+000003 38               236             DB      038H
+000004 00               237             DB      000H
+000005 00               238             DB      000H
+000006 00               239             DB      000H
+000007 00               240             DB      000H
+000008 00               241             DB      000H
+000009 F2               242             DB      0F2H
+00000A F2               243             DB      0F2H
+00000B F2               244             DB      0F2H
+00000C F2               245             DB      0F2H
+00000D F2               246             DB      0F2H
+00000E 63               247             DB      063H
+00000F 6F               248             DB      06FH
+000010 EC               249             DB      0ECH
+                        250     
+000011 03               251             DB      003H
+000012 00         F     252             DB      cfg
+000013 00               253             DB      000H
+000014 0000       F     254             DW      rf_data + 0
+                        255     
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE     5
 
-                        256     ; #include "isr/isr_rf.h"
-                        257     ; #include "eeprom/eeprom.h"
-                        258     ; #include "eco_page.h"
-                        259     ; 
-                        260     ; 
-                        261     ; struct rf_config rf_data = { {0x00}, /* data2 width */
-                        262     ;       {0x38}, /* data1 width */ 
-                        263     ;       {0x00, 0x00, 0x00, 0x00, 0x00}, /* addr2 */
-                        264     ;       {0xF2, 0xF2, 0xF2, 0xF2, 0xF2}, /* addr1, host addr */
-                        265     ;       {0x63}, /* 24-bit address, 16-bit CRC */
-                        266     ;       {0x6f, 0xEC} };
-                        267     ; struct rf_config *cfg = &rf_data;
-                        268     ; char dst_addr[3] = {0xF1, 0xF1, 0xF1};
-                        269     ; idata char msg[7];
+000016 03               256             DB      003H
+000017 00         F     257             DB      dst_addr
+000018 F1               258             DB      0F1H
+000019 F1               259             DB      0F1H
+00001A F1               260             DB      0F1H
+                        261     
+                        262     ; #include "Eco/reg24e1.h"
+                        263     ; #include "Eco/eco_sys.h"
+                        264     ; #include "utils/utils.h"
+                        265     ; #include "serial/serial.h"
+                        266     ; #include "isr/isr_rf.h"
+                        267     ; #include "eeprom/eeprom.h"
+                        268     ; #include "eco_page.h"
+                        269     ; 
                         270     ; 
-                        271     ; 
-                        272     ; extern unsigned char ECO_PAGE_SPI_CONN;
-                        273     ; /* rf.c
-                        274     ; void rf_init();
-                        275     ; void rf_configure(struct rf_config);
-                        276     ; void rf_send(char *, unsigned char, char *, unsigned char);
-                        277     ; */
-                        278     ; 
-                        279     ; /*int long_function(int time1,int time2,int time3,int time4)
-                        280     ; {
-                        281     ;       int i;
-                        282     ; 
-                        283     ;       for(i=0;i<time1;i++)
-                        284     ;       {
-                        285     ;               blink_led();
-                        286     ;               mdelay(300);
-                        287     ;       }
+                        271     ; struct rf_config rf_data = { {0x00}, /* data2 width */
+                        272     ;       {0x38}, /* data1 width */ 
+                        273     ;       {0x00, 0x00, 0x00, 0x00, 0x00}, /* addr2 */
+                        274     ;       {0xF2, 0xF2, 0xF2, 0xF2, 0xF2}, /* addr1, host addr */
+                        275     ;       {0x63}, /* 24-bit address, 16-bit CRC */
+                        276     ;       {0x6f, 0xEC} };
+                        277     ; struct rf_config *cfg = &rf_data;
+                        278     ; char dst_addr[3] = {0xF1, 0xF1, 0xF1};
+                        279     ; idata char msg[7];
+                        280     ; 
+                        281     ; 
+                        282     ; extern unsigned char ECO_PAGE_SPI_CONN;
+                        283     ; /* rf.c
+                        284     ; void rf_init();
+                        285     ; void rf_configure(struct rf_config);
+                        286     ; void rf_send(char *, unsigned char, char *, unsigned char);
+                        287     ; */
                         288     ; 
-                        289     ;       for(i=0;i<time2;i++)
-                        290     ;       {
-                        291     ;               blink_led();
-                        292     ;               mdelay(300);
-                        293     ;       }
-                        294     ; 
-                        295     ;       for(i=0;i<time3;i++)
-                        296     ;       {
-                        297     ;               blink_led();
-                        298     ;               mdelay(300);
-                        299     ;       }
-                        300     ;       
-                        301     ;       for(i=0;i<time4;i++)
-                        302     ;       {
-                        303     ;               blink_led();
-                        304     ;               mdelay(300);
-                        305     ;       }
-                        306     ; 
-                        307     ;       msg[0] = 0x0A;
-                        308     ;       msg[1] = 0x00;
-                        309     ;       msg[2] = 0x02;
-                        310     ;       msg[3] = 0xA0;
-                        311     ;       msg[4] = 0x02;
-                        312     ;       msg[5] = 0xDD;
-                        313     ;       msg[6] = 0xCC;
-                        314     ;       mdelay(1000);
-                        315     ; 
-                        316     ;       for(i=0;i<time1;i++)
-                        317     ;       {
-                        318     ;               blink_led();
-                        319     ;               mdelay(300);
-                        320     ;       }
-                        321     ; 
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE     6
+                        289     ; /*int long_function(int time1,int time2,int time3,int time4)
+                        290     ; {
+                        291     ;       int i;
+                        292     ; 
+                        293     ;       for(i=0;i<time1;i++)
+                        294     ;       {
+                        295     ;               blink_led();
+                        296     ;               mdelay(300);
+                        297     ;       }
+                        298     ; 
+                        299     ;       for(i=0;i<time2;i++)
+                        300     ;       {
+                        301     ;               blink_led();
+                        302     ;               mdelay(300);
+                        303     ;       }
+                        304     ; 
+                        305     ;       for(i=0;i<time3;i++)
+                        306     ;       {
+                        307     ;               blink_led();
+                        308     ;               mdelay(300);
+                        309     ;       }
+                        310     ;       
+                        311     ;       for(i=0;i<time4;i++)
+                        312     ;       {
+                        313     ;               blink_led();
+                        314     ;               mdelay(300);
+                        315     ;       }
+                        316     ; 
+                        317     ;       msg[0] = 0x0A;
+                        318     ;       msg[1] = 0x00;
+                        319     ;       msg[2] = 0x02;
+                        320     ;       msg[3] = 0xA0;
+                        321     ;       msg[4] = 0x02;
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE     6
 
-                        322     ;       for(i=0;i<time2;i++)
-                        323     ;       {
-                        324     ;               blink_led();
-                        325     ;               mdelay(300);
-                        326     ;       }
-                        327     ; 
-                        328     ;       for(i=0;i<time3;i++)
-                        329     ;       {
-                        330     ;               blink_led();
-                        331     ;               mdelay(300);
-                        332     ;       }
-                        333     ;       
-                        334     ;       for(i=0;i<time4;i++)
-                        335     ;       {
-                        336     ;               blink_led();
-                        337     ;               mdelay(300);
-                        338     ;       }
-                        339     ; 
-                        340     ;       msg[0] = 0x0A;
-                        341     ;       msg[1] = 0x00;
-                        342     ;       msg[2] = 0x02;
-                        343     ;       msg[3] = 0xA0;
-                        344     ;       msg[4] = 0x02;
-                        345     ;       msg[5] = 0xDD;
-                        346     ;       msg[6] = 0xCC;
-                        347     ;       mdelay(1000);
-                        348     ; }
-                        349     ; */
-                        350     ; 
-                        351     ; void blink2()
-                        352     
-------                  353             RSEG  ?PR?blink2?MAIN
-000000                  354     blink2:
-                        355             USING   0
-                        356                             ; SOURCE LINE # 100
-                        357     ; {
-                        358                             ; SOURCE LINE # 101
-                        359     ;       int i;
-                        360     ;       for(i=0;i<4;i++)
-                        361                             ; SOURCE LINE # 103
-000000 E4               362             CLR     A
-000001 F500       F     363             MOV     i?040,A
-000003 F500       F     364             MOV     i?040+01H,A
-000005                  365     ?C0001:
-                        366     ;       {
-                        367                             ; SOURCE LINE # 104
-                        368     ;               blink_led();
-                        369                             ; SOURCE LINE # 105
-000005 638020           370             XRL     P0,#020H
-                        371     ;               mdelay(400);
-                        372                             ; SOURCE LINE # 106
-000008 7F90             373             MOV     R7,#090H
-00000A 7E01             374             MOV     R6,#01H
-00000C 120000     E     375             LCALL   _mdelay
-                        376     ;       }
-                        377                             ; SOURCE LINE # 107
-00000F 0500       F     378             INC     i?040+01H
-000011 E500       F     379             MOV     A,i?040+01H
-000013 7002             380             JNZ     ?C0019
-000015 0500       F     381             INC     i?040
-000017                  382     ?C0019:
-000017 C3               383             CLR     C
-000018 9404             384             SUBB    A,#04H
-00001A E500       F     385             MOV     A,i?040
-00001C 6480             386             XRL     A,#080H
-00001E 9480             387             SUBB    A,#080H
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE     7
+                        322     ;       msg[5] = 0xDD;
+                        323     ;       msg[6] = 0xCC;
+                        324     ;       mdelay(1000);
+                        325     ; 
+                        326     ;       for(i=0;i<time1;i++)
+                        327     ;       {
+                        328     ;               blink_led();
+                        329     ;               mdelay(300);
+                        330     ;       }
+                        331     ; 
+                        332     ;       for(i=0;i<time2;i++)
+                        333     ;       {
+                        334     ;               blink_led();
+                        335     ;               mdelay(300);
+                        336     ;       }
+                        337     ; 
+                        338     ;       for(i=0;i<time3;i++)
+                        339     ;       {
+                        340     ;               blink_led();
+                        341     ;               mdelay(300);
+                        342     ;       }
+                        343     ;       
+                        344     ;       for(i=0;i<time4;i++)
+                        345     ;       {
+                        346     ;               blink_led();
+                        347     ;               mdelay(300);
+                        348     ;       }
+                        349     ; 
+                        350     ;       msg[0] = 0x0A;
+                        351     ;       msg[1] = 0x00;
+                        352     ;       msg[2] = 0x02;
+                        353     ;       msg[3] = 0xA0;
+                        354     ;       msg[4] = 0x02;
+                        355     ;       msg[5] = 0xDD;
+                        356     ;       msg[6] = 0xCC;
+                        357     ;       mdelay(1000);
+                        358     ; }
+                        359     ; */
+                        360     ; 
+                        361     ; void blink2()
+                        362     
+------                  363             RSEG  ?PR?blink2?MAIN
+000000                  364     blink2:
+                        365             USING   0
+                        366                             ; SOURCE LINE # 100
+                        367     ; {
+                        368                             ; SOURCE LINE # 101
+                        369     ;       int i;
+                        370     ;       for(i=0;i<4;i++)
+                        371                             ; SOURCE LINE # 103
+000000 E4               372             CLR     A
+000001 F500       F     373             MOV     i?040,A
+000003 F500       F     374             MOV     i?040+01H,A
+000005                  375     ?C0001:
+                        376     ;       {
+                        377                             ; SOURCE LINE # 104
+                        378     ;               blink_led();
+                        379                             ; SOURCE LINE # 105
+000005 638020           380             XRL     P0,#020H
+                        381     ;               mdelay(400);
+                        382                             ; SOURCE LINE # 106
+000008 7F90             383             MOV     R7,#090H
+00000A 7E01             384             MOV     R6,#01H
+00000C 120000     E     385             LCALL   _mdelay
+                        386     ;       }
+                        387                             ; SOURCE LINE # 107
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE     7
 
-000020 40E3             388             JC      ?C0001
-000022                  389     ?C0002:
-                        390     ;       mdelay(1000);   
-                        391                             ; SOURCE LINE # 108
-000022 7FE8             392             MOV     R7,#0E8H
-000024 7E03             393             MOV     R6,#03H
-000026 020000     E     394             LJMP    _mdelay
-                        395     ; END OF blink2
-                        396     
-                        397     ; }
-                        398     ; void blink4()
-                        399     
-------                  400             RSEG  ?PR?blink4?MAIN
-000000                  401     blink4:
-                        402             USING   0
-                        403                             ; SOURCE LINE # 110
-                        404     ; {
-                        405                             ; SOURCE LINE # 111
-                        406     ;       int i;
-                        407     ;       for(i=0;i<8;i++)
-                        408                             ; SOURCE LINE # 113
-000000 E4               409             CLR     A
-000001 F500       F     410             MOV     i?141,A
-000003 F500       F     411             MOV     i?141+01H,A
-000005                  412     ?C0005:
-                        413     ;       {
-                        414                             ; SOURCE LINE # 114
-                        415     ;               blink_led();
-                        416                             ; SOURCE LINE # 115
-000005 638020           417             XRL     P0,#020H
-                        418     ;               mdelay(400);
-                        419                             ; SOURCE LINE # 116
-000008 7F90             420             MOV     R7,#090H
-00000A 7E01             421             MOV     R6,#01H
-00000C 120000     E     422             LCALL   _mdelay
-                        423     ;       }       
-                        424                             ; SOURCE LINE # 117
-00000F 0500       F     425             INC     i?141+01H
-000011 E500       F     426             MOV     A,i?141+01H
-000013 7002             427             JNZ     ?C0020
-000015 0500       F     428             INC     i?141
-000017                  429     ?C0020:
-000017 C3               430             CLR     C
-000018 9408             431             SUBB    A,#08H
-00001A E500       F     432             MOV     A,i?141
-00001C 6480             433             XRL     A,#080H
-00001E 9480             434             SUBB    A,#080H
-000020 40E3             435             JC      ?C0005
-000022                  436     ?C0006:
-                        437     ;       mdelay(1000);   
-                        438                             ; SOURCE LINE # 118
-000022 7FE8             439             MOV     R7,#0E8H
-000024 7E03             440             MOV     R6,#03H
-000026 020000     E     441             LJMP    _mdelay
-                        442     ; END OF blink4
-                        443     
-                        444     ; }
-                        445     ; void blink6()
-                        446     
-------                  447             RSEG  ?PR?blink6?MAIN
-000000                  448     blink6:
-                        449             USING   0
-                        450                             ; SOURCE LINE # 120
-                        451     ; {
-                        452                             ; SOURCE LINE # 121
-                        453     ;       int i;
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE     8
+00000F 0500       F     388             INC     i?040+01H
+000011 E500       F     389             MOV     A,i?040+01H
+000013 7002             390             JNZ     ?C0019
+000015 0500       F     391             INC     i?040
+000017                  392     ?C0019:
+000017 C3               393             CLR     C
+000018 9404             394             SUBB    A,#04H
+00001A E500       F     395             MOV     A,i?040
+00001C 6480             396             XRL     A,#080H
+00001E 9480             397             SUBB    A,#080H
+000020 40E3             398             JC      ?C0001
+000022                  399     ?C0002:
+                        400     ;       mdelay(1000);   
+                        401                             ; SOURCE LINE # 108
+000022 7FE8             402             MOV     R7,#0E8H
+000024 7E03             403             MOV     R6,#03H
+000026 020000     E     404             LJMP    _mdelay
+                        405     ; END OF blink2
+                        406     
+                        407     ; }
+                        408     ; void blink4()
+                        409     
+------                  410             RSEG  ?PR?blink4?MAIN
+000000                  411     blink4:
+                        412             USING   0
+                        413                             ; SOURCE LINE # 110
+                        414     ; {
+                        415                             ; SOURCE LINE # 111
+                        416     ;       int i;
+                        417     ;       for(i=0;i<8;i++)
+                        418                             ; SOURCE LINE # 113
+000000 E4               419             CLR     A
+000001 F500       F     420             MOV     i?141,A
+000003 F500       F     421             MOV     i?141+01H,A
+000005                  422     ?C0005:
+                        423     ;       {
+                        424                             ; SOURCE LINE # 114
+                        425     ;               blink_led();
+                        426                             ; SOURCE LINE # 115
+000005 638020           427             XRL     P0,#020H
+                        428     ;               mdelay(400);
+                        429                             ; SOURCE LINE # 116
+000008 7F90             430             MOV     R7,#090H
+00000A 7E01             431             MOV     R6,#01H
+00000C 120000     E     432             LCALL   _mdelay
+                        433     ;       }       
+                        434                             ; SOURCE LINE # 117
+00000F 0500       F     435             INC     i?141+01H
+000011 E500       F     436             MOV     A,i?141+01H
+000013 7002             437             JNZ     ?C0020
+000015 0500       F     438             INC     i?141
+000017                  439     ?C0020:
+000017 C3               440             CLR     C
+000018 9408             441             SUBB    A,#08H
+00001A E500       F     442             MOV     A,i?141
+00001C 6480             443             XRL     A,#080H
+00001E 9480             444             SUBB    A,#080H
+000020 40E3             445             JC      ?C0005
+000022                  446     ?C0006:
+                        447     ;       mdelay(1000);   
+                        448                             ; SOURCE LINE # 118
+000022 7FE8             449             MOV     R7,#0E8H
+000024 7E03             450             MOV     R6,#03H
+000026 020000     E     451             LJMP    _mdelay
+                        452     ; END OF blink4
+                        453     
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE     8
 
-                        454     ;       for(i=0;i<12;i++)
-                        455                             ; SOURCE LINE # 123
-000000 E4               456             CLR     A
-000001 F500       F     457             MOV     i?242,A
-000003 F500       F     458             MOV     i?242+01H,A
-000005                  459     ?C0009:
-                        460     ;       {
-                        461                             ; SOURCE LINE # 124
-                        462     ;               blink_led();
-                        463                             ; SOURCE LINE # 125
-000005 638020           464             XRL     P0,#020H
-                        465     ;               mdelay(400);
-                        466                             ; SOURCE LINE # 126
-000008 7F90             467             MOV     R7,#090H
-00000A 7E01             468             MOV     R6,#01H
-00000C 120000     E     469             LCALL   _mdelay
-                        470     ;       }       
-                        471                             ; SOURCE LINE # 127
-00000F 0500       F     472             INC     i?242+01H
-000011 E500       F     473             MOV     A,i?242+01H
-000013 7002             474             JNZ     ?C0021
-000015 0500       F     475             INC     i?242
-000017                  476     ?C0021:
-000017 C3               477             CLR     C
-000018 940C             478             SUBB    A,#0CH
-00001A E500       F     479             MOV     A,i?242
-00001C 6480             480             XRL     A,#080H
-00001E 9480             481             SUBB    A,#080H
-000020 40E3             482             JC      ?C0009
-000022                  483     ?C0010:
-                        484     ;       mdelay(1000);   
-                        485                             ; SOURCE LINE # 128
-000022 7FE8             486             MOV     R7,#0E8H
-000024 7E03             487             MOV     R6,#03H
-000026 020000     E     488             LJMP    _mdelay
-                        489     ; END OF blink6
-                        490     
-                        491     ; }
-                        492     ; 
-                        493     ; int main()
-                        494     
-------                  495             RSEG  ?PR?main?MAIN
-000000                  496     main:
-                        497             USING   0
-                        498                             ; SOURCE LINE # 131
-                        499     ; {
-                        500                             ; SOURCE LINE # 132
-                        501     ;       unsigned char idx;
-                        502     ;       unsigned int i = 0;
-                        503                             ; SOURCE LINE # 134
-000000 E4               504             CLR     A
-000001 F500       F     505             MOV     i?344,A
-000003 F500       F     506             MOV     i?344+01H,A
-                        507     ;       store_cpu_rate(16);
-                        508                             ; SOURCE LINE # 135
-000005 7F10             509             MOV     R7,#010H
-000007 FE               510             MOV     R6,A
-000008 120000     E     511             LCALL   _store_cpu_rate
-                        512     ;       P0_DIR &= ~0x28;
-                        513                             ; SOURCE LINE # 136
-00000B 5394D7           514             ANL     P0_DIR,#0D7H
-                        515     ;       P0_ALT &= ~0x28;
-                        516                             ; SOURCE LINE # 137
-00000E 5395D7           517             ANL     P0_ALT,#0D7H
-                        518     ;       rf_init();
-                        519                             ; SOURCE LINE # 138
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE     9
+                        454     ; }
+                        455     ; void blink6()
+                        456     
+------                  457             RSEG  ?PR?blink6?MAIN
+000000                  458     blink6:
+                        459             USING   0
+                        460                             ; SOURCE LINE # 120
+                        461     ; {
+                        462                             ; SOURCE LINE # 121
+                        463     ;       int i;
+                        464     ;       for(i=0;i<12;i++)
+                        465                             ; SOURCE LINE # 123
+000000 E4               466             CLR     A
+000001 F500       F     467             MOV     i?242,A
+000003 F500       F     468             MOV     i?242+01H,A
+000005                  469     ?C0009:
+                        470     ;       {
+                        471                             ; SOURCE LINE # 124
+                        472     ;               blink_led();
+                        473                             ; SOURCE LINE # 125
+000005 638020           474             XRL     P0,#020H
+                        475     ;               mdelay(400);
+                        476                             ; SOURCE LINE # 126
+000008 7F90             477             MOV     R7,#090H
+00000A 7E01             478             MOV     R6,#01H
+00000C 120000     E     479             LCALL   _mdelay
+                        480     ;       }       
+                        481                             ; SOURCE LINE # 127
+00000F 0500       F     482             INC     i?242+01H
+000011 E500       F     483             MOV     A,i?242+01H
+000013 7002             484             JNZ     ?C0021
+000015 0500       F     485             INC     i?242
+000017                  486     ?C0021:
+000017 C3               487             CLR     C
+000018 940C             488             SUBB    A,#0CH
+00001A E500       F     489             MOV     A,i?242
+00001C 6480             490             XRL     A,#080H
+00001E 9480             491             SUBB    A,#080H
+000020 40E3             492             JC      ?C0009
+000022                  493     ?C0010:
+                        494     ;       mdelay(1000);   
+                        495                             ; SOURCE LINE # 128
+000022 7FE8             496             MOV     R7,#0E8H
+000024 7E03             497             MOV     R6,#03H
+000026 020000     E     498             LJMP    _mdelay
+                        499     ; END OF blink6
+                        500     
+                        501     ; }
+                        502     ; 
+                        503     ; int main()
+                        504     
+------                  505             RSEG  ?PR?main?MAIN
+000000                  506     main:
+                        507             USING   0
+                        508                             ; SOURCE LINE # 131
+                        509     ; {
+                        510                             ; SOURCE LINE # 132
+                        511     ;       unsigned char idx;
+                        512     ;       unsigned int i = 0;
+                        513                             ; SOURCE LINE # 134
+000000 E4               514             CLR     A
+000001 F500       F     515             MOV     i?344,A
+000003 F500       F     516             MOV     i?344+01H,A
+                        517     ;       store_cpu_rate(16);
+                        518                             ; SOURCE LINE # 135
+000005 7F10             519             MOV     R7,#010H
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE     9
 
-000011 120000     E     520             LCALL   rf_init
-                        521     ;       rf_configure(cfg);
-                        522                             ; SOURCE LINE # 139
-000014 AB00       F     523             MOV     R3,cfg
-000016 AA00       F     524             MOV     R2,cfg+01H
-000018 A900       F     525             MOV     R1,cfg+02H
-00001A 120000     E     526             LCALL   _rf_configure
-                        527     ;       serial_init(19200);     
-                        528                             ; SOURCE LINE # 140
-00001D 7F00             529             MOV     R7,#00H
-00001F 7E4B             530             MOV     R6,#04BH
-000021 120000     E     531             LCALL   _serial_init
-                        532     ;       eco_page_init();
-                        533                             ; SOURCE LINE # 141
-000024 120000     E     534             LCALL   eco_page_init
-                        535     ;       
-                        536     ;       //long_function(4,6,8,4);
-                        537     ; 
-                        538     ;       msg[0] = 0x0A;
-                        539                             ; SOURCE LINE # 145
-000027 7800       F     540             MOV     R0,#LOW (msg)
-000029 760A             541             MOV     @R0,#0AH
-                        542     ;       msg[1] = 0x00;
-                        543                             ; SOURCE LINE # 146
-00002B E4               544             CLR     A
-00002C 08               545             INC     R0
-00002D F6               546             MOV     @R0,A
-                        547     ;       /* ADDR */
-                        548     ;       msg[2] = 0x02;
-                        549                             ; SOURCE LINE # 148
-00002E 08               550             INC     R0
-00002F 7602             551             MOV     @R0,#02H
-                        552     ;       msg[3] = 0xA0;
-                        553                             ; SOURCE LINE # 149
-000031 08               554             INC     R0
-000032 76A0             555             MOV     @R0,#0A0H
-                        556     ;       /* LEN */
-                        557     ;       msg[4] = 0x02;
-                        558                             ; SOURCE LINE # 151
-000034 08               559             INC     R0
-000035 7602             560             MOV     @R0,#02H
-                        561     ;       msg[5] = 0xDD;
-                        562                             ; SOURCE LINE # 152
-000037 08               563             INC     R0
-000038 76DD             564             MOV     @R0,#0DDH
-                        565     ;       msg[6] = 0xCC;
-                        566                             ; SOURCE LINE # 153
-00003A 08               567             INC     R0
-00003B 76CC             568             MOV     @R0,#0CCH
-                        569     ;       
-                        570     ;       for(idx = 4; idx > 0; idx--)
-                        571                             ; SOURCE LINE # 155
-00003D 750004     F     572             MOV     idx?343,#04H
-000040                  573     ?C0013:
-                        574     ;       {
-                        575                             ; SOURCE LINE # 156
-                        576     ;               blink_led();            
-                        577                             ; SOURCE LINE # 157
-000040 638020           578             XRL     P0,#020H
-                        579     ;               mdelay(300);
-                        580                             ; SOURCE LINE # 158
-000043 7F2C             581             MOV     R7,#02CH
-000045 7E01             582             MOV     R6,#01H
-000047 120000     E     583             LCALL   _mdelay
-                        584     ;       }
-                        585                             ; SOURCE LINE # 159
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE    10
+000007 FE               520             MOV     R6,A
+000008 120000     E     521             LCALL   _store_cpu_rate
+                        522     ;       P0_DIR &= ~0x28;
+                        523                             ; SOURCE LINE # 136
+00000B 5394D7           524             ANL     P0_DIR,#0D7H
+                        525     ;       P0_ALT &= ~0x28;
+                        526                             ; SOURCE LINE # 137
+00000E 5395D7           527             ANL     P0_ALT,#0D7H
+                        528     ;       rf_init();
+                        529                             ; SOURCE LINE # 138
+000011 120000     E     530             LCALL   rf_init
+                        531     ;       rf_configure(cfg);
+                        532                             ; SOURCE LINE # 139
+000014 AB00       F     533             MOV     R3,cfg
+000016 AA00       F     534             MOV     R2,cfg+01H
+000018 A900       F     535             MOV     R1,cfg+02H
+00001A 120000     E     536             LCALL   _rf_configure
+                        537     ;       serial_init(19200);     
+                        538                             ; SOURCE LINE # 140
+00001D 7F00             539             MOV     R7,#00H
+00001F 7E4B             540             MOV     R6,#04BH
+000021 120000     E     541             LCALL   _serial_init
+                        542     ;       eco_page_init();
+                        543                             ; SOURCE LINE # 141
+000024 120000     E     544             LCALL   eco_page_init
+                        545     ;       
+                        546     ;       //long_function(4,6,8,4);
+                        547     ; 
+                        548     ;       msg[0] = 0x0A;
+                        549                             ; SOURCE LINE # 145
+000027 7800       F     550             MOV     R0,#LOW (msg)
+000029 760A             551             MOV     @R0,#0AH
+                        552     ;       msg[1] = 0x00;
+                        553                             ; SOURCE LINE # 146
+00002B E4               554             CLR     A
+00002C 08               555             INC     R0
+00002D F6               556             MOV     @R0,A
+                        557     ;       /* ADDR */
+                        558     ;       msg[2] = 0x02;
+                        559                             ; SOURCE LINE # 148
+00002E 08               560             INC     R0
+00002F 7602             561             MOV     @R0,#02H
+                        562     ;       msg[3] = 0xA0;
+                        563                             ; SOURCE LINE # 149
+000031 08               564             INC     R0
+000032 76A0             565             MOV     @R0,#0A0H
+                        566     ;       /* LEN */
+                        567     ;       msg[4] = 0x02;
+                        568                             ; SOURCE LINE # 151
+000034 08               569             INC     R0
+000035 7602             570             MOV     @R0,#02H
+                        571     ;       msg[5] = 0xDD;
+                        572                             ; SOURCE LINE # 152
+000037 08               573             INC     R0
+000038 76DD             574             MOV     @R0,#0DDH
+                        575     ;       msg[6] = 0xCC;
+                        576                             ; SOURCE LINE # 153
+00003A 08               577             INC     R0
+00003B 76CC             578             MOV     @R0,#0CCH
+                        579     ;       
+                        580     ;       for(idx = 4; idx > 0; idx--)
+                        581                             ; SOURCE LINE # 155
+00003D 750004     F     582             MOV     idx?343,#04H
+000040                  583     ?C0013:
+                        584     ;       {
+                        585                             ; SOURCE LINE # 156
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE    10
 
-00004A 1500       F     586             DEC     idx?343
-00004C E500       F     587             MOV     A,idx?343
-00004E D3               588             SETB    C
-00004F 9400             589             SUBB    A,#00H
-000051 50ED             590             JNC     ?C0013
-000053                  591     ?C0014:
-                        592     ;       mdelay(1000);   
-                        593                             ; SOURCE LINE # 160
-000053 7FE8             594             MOV     R7,#0E8H
-000055 7E03             595             MOV     R6,#03H
-000057 120000     E     596             LCALL   _mdelay
-00005A                  597     ?C0016:
-                        598     ;       while(1)
-                        599                             ; SOURCE LINE # 161
-                        600     ;       {
-                        601                             ; SOURCE LINE # 162
-                        602     ;               blink2();
-                        603                             ; SOURCE LINE # 163
-00005A 120000     F     604             LCALL   blink2
-                        605     ;               rf_send(dst_addr, 3, msg, 7);
-                        606                             ; SOURCE LINE # 164
-00005D 750000     E     607             MOV     ?_rf_send?BYTE+04H,#00H
-000060 750000     F     608             MOV     ?_rf_send?BYTE+05H,#HIGH (msg)
-000063 750000     F     609             MOV     ?_rf_send?BYTE+06H,#LOW (msg)
-000066 750007     E     610             MOV     ?_rf_send?BYTE+07H,#07H
-000069 7B00             611             MOV     R3,#00H
-00006B 7A00       F     612             MOV     R2,#HIGH (dst_addr)
-00006D 7900       F     613             MOV     R1,#LOW (dst_addr)
-00006F 7D03             614             MOV     R5,#03H
-000071 120000     E     615             LCALL   _rf_send
-                        616     ;               blink4();
-                        617                             ; SOURCE LINE # 165
-000074 120000     F     618             LCALL   blink4
-                        619     ;               mdelay(200);    
-                        620                             ; SOURCE LINE # 166
-000077 7FC8             621             MOV     R7,#0C8H
-000079 7E00             622             MOV     R6,#00H
-00007B 120000     E     623             LCALL   _mdelay
-                        624     ;               blink6();
-                        625                             ; SOURCE LINE # 167
-00007E 120000     F     626             LCALL   blink6
-                        627     ;       }
-                        628                             ; SOURCE LINE # 168
-000081 80D7             629             SJMP    ?C0016
-                        630     ; END OF main
-                        631     
-                        632             END
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE    11
+                        586     ;               blink_led();            
+                        587                             ; SOURCE LINE # 157
+000040 638020           588             XRL     P0,#020H
+                        589     ;               mdelay(300);
+                        590                             ; SOURCE LINE # 158
+000043 7F2C             591             MOV     R7,#02CH
+000045 7E01             592             MOV     R6,#01H
+000047 120000     E     593             LCALL   _mdelay
+                        594     ;       }
+                        595                             ; SOURCE LINE # 159
+00004A 1500       F     596             DEC     idx?343
+00004C E500       F     597             MOV     A,idx?343
+00004E D3               598             SETB    C
+00004F 9400             599             SUBB    A,#00H
+000051 50ED             600             JNC     ?C0013
+000053                  601     ?C0014:
+                        602     ;       mdelay(1000);   
+                        603                             ; SOURCE LINE # 160
+000053 7FE8             604             MOV     R7,#0E8H
+000055 7E03             605             MOV     R6,#03H
+000057 120000     E     606             LCALL   _mdelay
+00005A                  607     ?C0016:
+                        608     ;       while(1)
+                        609                             ; SOURCE LINE # 161
+                        610     ;       {
+                        611                             ; SOURCE LINE # 162
+                        612             ;----------     LCALL   blink4 start----------
+00005A 85B300     E     613             MOV     ECO_PAGE_SPI_CONN,SPI_CTRL
+00005D 750000     F     614             MOV     ECO_PAGE_ADDR,#HIGH (blink4)
+000060 750000     F     615             MOV     ECO_PAGE_ADDR+01H,#LOW (blink4)
+000063 120000     E     616             LCALL   eco_page_manager
+                        617             ;----------     LCALL   blink4 end----------
+                        618     ;               rf_send(dst_addr, 3, msg, 7);
+                        619                             ; SOURCE LINE # 164
+                        620     
+000066 750000     E     621             MOV     ?_rf_send?BYTE+04H,#00H
+                        622     
+000069 750000     F     623             MOV     ?_rf_send?BYTE+05H,#HIGH (msg)
+                        624     
+00006C 750000     F     625             MOV     ?_rf_send?BYTE+06H,#LOW (msg)
+                        626     
+00006F 750007     E     627             MOV     ?_rf_send?BYTE+07H,#07H
+                        628     
+                        629     ;       MOV     R3,#00H
+                        630     
+                        631     ;--------------------------
+000072 7800       E     632             MOV     R0,#LOW (ECO_PAGE_REGISTER3)
+000074 7600             633             MOV     @R0,#00H
+                        634     ;--------------------------
+                        635     ;       MOV     R2,#HIGH (dst_addr)
+                        636     
+                        637     ;--------------------------
+000076 7800       E     638             MOV     R0,#LOW (ECO_PAGE_REGISTER2)
+000078 7600       F     639             MOV     @R0,#HIGH (dst_addr)
+                        640     ;--------------------------
+                        641     ;       MOV     R1,#LOW (dst_addr)
+                        642     
+                        643     ;--------------------------
+00007A 7800       E     644             MOV     R0,#LOW (ECO_PAGE_REGISTER1)
+00007C 7600       F     645             MOV     @R0,#LOW (dst_addr)
+                        646     ;--------------------------
+                        647     ;       MOV     R5,#03H
+                        648     
+                        649     ;--------------------------
+00007E 7800       E     650             MOV     R0,#LOW (ECO_PAGE_REGISTER5)
+000080 7603             651             MOV     @R0,#03H
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE    11
+
+                        652     ;--------------------------
+                        653             ;----------     LCALL   _rf_send start----------
+000082 85B300     E     654             MOV     ECO_PAGE_SPI_CONN,SPI_CTRL
+000085 750000     E     655             MOV     ECO_PAGE_ADDR,#HIGH (_rf_send)
+000088 750000     E     656             MOV     ECO_PAGE_ADDR+01H,#LOW (_rf_send)
+00008B 120000     E     657             LCALL   eco_page_manager
+                        658             ;----------     LCALL   _rf_send end----------
+                        659             ;----------     LCALL   blink2 start----------
+00008E 85B300     E     660             MOV     ECO_PAGE_SPI_CONN,SPI_CTRL
+000091 750000     F     661             MOV     ECO_PAGE_ADDR,#HIGH (blink2)
+000094 750000     F     662             MOV     ECO_PAGE_ADDR+01H,#LOW (blink2)
+000097 120000     E     663             LCALL   eco_page_manager
+                        664             ;----------     LCALL   blink2 end----------
+                        665     ;               mdelay(200);    
+                        666                             ; SOURCE LINE # 166
+00009A 7FC8             667             MOV     R7,#0C8H
+00009C 7E00             668             MOV     R6,#00H
+00009E 120000     E     669             LCALL   _mdelay
+                        670             ;----------     LCALL   blink6 start----------
+0000A1 85B300     E     671             MOV     ECO_PAGE_SPI_CONN,SPI_CTRL
+0000A4 750000     F     672             MOV     ECO_PAGE_ADDR,#HIGH (blink6)
+0000A7 750000     F     673             MOV     ECO_PAGE_ADDR+01H,#LOW (blink6)
+0000AA 120000     E     674             LCALL   eco_page_manager
+                        675             ;----------     LCALL   blink6 end----------
+                        676     ;       }
+                        677                             ; SOURCE LINE # 168
+0000AD 80AB             678             SJMP    ?C0016
+                        679     ; END OF main
+                        680     
+                        681             END
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE    12
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -694,7 +745,7 @@ N A M E                          T Y P E  V A L U E     ATTRIBUTES
 ?PR?BLINK2?MAIN . . . . . . . .  C  SEG   000029H       REL=UNIT, ALN=BYTE
 ?PR?BLINK4?MAIN . . . . . . . .  C  SEG   000029H       REL=UNIT, ALN=BYTE
 ?PR?BLINK6?MAIN . . . . . . . .  C  SEG   000029H       REL=UNIT, ALN=BYTE
-?PR?MAIN?MAIN . . . . . . . . .  C  SEG   000083H       REL=UNIT, ALN=BYTE
+?PR?MAIN?MAIN . . . . . . . . .  C  SEG   0000AFH       REL=UNIT, ALN=BYTE
 _MDELAY . . . . . . . . . . . .  C  ADDR  -------       EXT
 _RF_CONFIGURE . . . . . . . . .  C  ADDR  -------       EXT
 _RF_SEND. . . . . . . . . . . .  C  ADDR  -------       EXT
@@ -726,7 +777,7 @@ DATA? . . . . . . . . . . . . .  B  ADDR  00A0H.0   A
 DEV_OFFSET. . . . . . . . . . .  D  ADDR  00BEH     A   
 DIN0. . . . . . . . . . . . . .  B  ADDR  0090H.2   A   
 DIO0. . . . . . . . . . . . . .  B  ADDR  0090H.0   A   
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE    12
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE    13
 
 DIO1. . . . . . . . . . . . . .  B  ADDR  0090H.1   A   
 DIO2. . . . . . . . . . . . . .  B  ADDR  0080H.0   A   
@@ -750,7 +801,17 @@ DR2 . . . . . . . . . . . . . .  B  ADDR  00A0H.6   A
 DR2_CE. . . . . . . . . . . . .  B  ADDR  00A0H.6   A   
 DST_ADDR. . . . . . . . . . . .  D  ADDR  0003H     R   SEG=?DT?MAIN
 EA. . . . . . . . . . . . . . .  B  ADDR  00A8H.7   A   
+ECO_PAGE_ADDR . . . . . . . . .  D  ADDR  -------       EXT
 ECO_PAGE_INIT . . . . . . . . .  C  ADDR  -------       EXT
+ECO_PAGE_MANAGER. . . . . . . .  C  ADDR  -------       EXT
+ECO_PAGE_REGISTER1. . . . . . .  I  ADDR  -------       EXT
+ECO_PAGE_REGISTER2. . . . . . .  I  ADDR  -------       EXT
+ECO_PAGE_REGISTER3. . . . . . .  I  ADDR  -------       EXT
+ECO_PAGE_REGISTER4. . . . . . .  I  ADDR  -------       EXT
+ECO_PAGE_REGISTER5. . . . . . .  I  ADDR  -------       EXT
+ECO_PAGE_REGISTER6. . . . . . .  I  ADDR  -------       EXT
+ECO_PAGE_REGISTER7. . . . . . .  I  ADDR  -------       EXT
+ECO_PAGE_SPI_CONN . . . . . . .  D  ADDR  -------       EXT
 EICON . . . . . . . . . . . . .  D  ADDR  00D8H     A   
 EIE . . . . . . . . . . . . . .  D  ADDR  00E8H     A   
 EIP . . . . . . . . . . . . . .  D  ADDR  00F8H     A   
@@ -784,6 +845,8 @@ IP. . . . . . . . . . . . . . .  D  ADDR  00B8H     A
 IT0 . . . . . . . . . . . . . .  B  ADDR  0088H.0   A   
 IT1 . . . . . . . . . . . . . .  B  ADDR  0088H.2   A   
 MAIN. . . . . . . . . . . . . .  C  ADDR  0000H     R   SEG=?PR?MAIN?MAIN
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE    14
+
 MPAGE . . . . . . . . . . . . .  D  ADDR  0092H     A   
 MSG . . . . . . . . . . . . . .  I  ADDR  0000H     R   SEG=?ID?MAIN
 OV. . . . . . . . . . . . . . .  B  ADDR  00D0H.2   A   
@@ -794,8 +857,6 @@ P0_1. . . . . . . . . . . . . .  B  ADDR  0080H.1   A
 P0_2. . . . . . . . . . . . . .  B  ADDR  0080H.2   A   
 P0_3. . . . . . . . . . . . . .  B  ADDR  0080H.3   A   
 P0_4. . . . . . . . . . . . . .  B  ADDR  0080H.4   A   
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE    13
-
 P0_5. . . . . . . . . . . . . .  B  ADDR  0080H.5   A   
 P0_6. . . . . . . . . . . . . .  B  ADDR  0080H.6   A   
 P0_7. . . . . . . . . . . . . .  B  ADDR  0080H.7   A   
@@ -852,6 +913,8 @@ SPI_DATA. . . . . . . . . . . .  D  ADDR  00B2H     A
 SPICLK. . . . . . . . . . . . .  D  ADDR  00B4H     A   
 T0. . . . . . . . . . . . . . .  B  ADDR  0080H.5   A   
 T1. . . . . . . . . . . . . . .  B  ADDR  0080H.6   A   
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/06/09 21:10:59 PAGE    15
+
 T1_1V2. . . . . . . . . . . . .  D  ADDR  00BCH     A   
 T2. . . . . . . . . . . . . . .  B  ADDR  0090H.0   A   
 T2_1V2. . . . . . . . . . . . .  D  ADDR  00BDH     A   
@@ -862,8 +925,6 @@ TCON. . . . . . . . . . . . . .  D  ADDR  0088H     A
 TEST_MODE . . . . . . . . . . .  D  ADDR  00B7H     A   
 TF0 . . . . . . . . . . . . . .  B  ADDR  0088H.5   A   
 TF1 . . . . . . . . . . . . . .  B  ADDR  0088H.7   A   
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/05/09 23:31:19 PAGE    14
-
 TF2 . . . . . . . . . . . . . .  B  ADDR  00C8H.7   A   
 TH0 . . . . . . . . . . . . . .  D  ADDR  008CH     A   
 TH1 . . . . . . . . . . . . . .  D  ADDR  008DH     A   

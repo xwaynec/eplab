@@ -1,4 +1,4 @@
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE     1
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE     1
 
 
 MACRO ASSEMBLER AX51 V3.06a
@@ -65,7 +65,7 @@ LOC    OBJ             LINE     SOURCE
  0098.0                  55     RI      BIT     098H.0
  00D0.7                  56     CY      BIT     0D0H.7
  0098.1                  57     TI      BIT     098H.1
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE     2
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE     2
 
  00BC                    58     T1_1V2  DATA    0BCH
  008F                    59     SPC_FNC DATA    08FH
@@ -133,7 +133,7 @@ LOC    OBJ             LINE     SOURCE
  0098.7                 121     SM0     BIT     098H.7
  008A                   122     TL0     DATA    08AH
  00E8.2                 123     EX4     BIT     0E8H.2
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE     3
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE     3
 
  0098.6                 124     SM1     BIT     098H.6
  008B                   125     TL1     DATA    08BH
@@ -183,506 +183,649 @@ LOC    OBJ             LINE     SOURCE
 ------                  169     ?DT?eco_page_manager?ECO_PAGE            SEGMENT DATA OVERLAYABLE 
 ------                  170     ?DT?ECO_PAGE         SEGMENT DATA 
 ------                  171     ?ID?ECO_PAGE         SEGMENT IDATA 
-                        172             EXTRN   CODE (_eeprom_read)
-                        173             EXTRN   CODE (eeprom_init)
-                        174             PUBLIC  ECO_PAGE_TABLE_INDEX
-                        175             PUBLIC  ECO_PAGE_REGISTER7
-                        176             PUBLIC  ECO_PAGE_REGISTER6
-                        177             PUBLIC  ECO_PAGE_REGISTER5
-                        178             PUBLIC  ECO_PAGE_REGISTER4
-                        179             PUBLIC  ECO_PAGE_ADDR
-                        180             PUBLIC  ECO_PAGE_REGISTER3
-                        181             PUBLIC  ECO_PAGE_REGISTER2
-                        182             PUBLIC  ECO_PAGE_REGISTER1
-                        183             PUBLIC  ECO_PAGE_PREV_VID
-                        184             PUBLIC  ECO_PAGE_SPI_CONN
-                        185             PUBLIC  ECO_PAGE_PREV_PID
-                        186             PUBLIC  ECO_PAGE_TABLE
-                        187             PUBLIC  eco_page_manager
-                        188             PUBLIC  eco_page_init
-                        189     
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE     4
+                        172             EXTRN   CODE (_mdelay)
+                        173             EXTRN   CODE (?C?ICALL2)
+                        174             EXTRN   CODE (_eeprom_read)
+                        175             EXTRN   CODE (eeprom_init)
+                        176             EXTRN   CODE (?C?UIDIV)
+                        177             PUBLIC  ECO_PAGE_TABLE_INDEX
+                        178             PUBLIC  ECO_PAGE_REGISTER7
+                        179             PUBLIC  ECO_PAGE_REGISTER6
+                        180             PUBLIC  ECO_PAGE_REGISTER5
+                        181             PUBLIC  ECO_PAGE_REGISTER4
+                        182             PUBLIC  ECO_PAGE_ADDR
+                        183             PUBLIC  ECO_PAGE_REGISTER3
+                        184             PUBLIC  ECO_PAGE_REGISTER2
+                        185             PUBLIC  ECO_PAGE_REGISTER1
+                        186             PUBLIC  ECO_PAGE_PREV_VID
+                        187             PUBLIC  ECO_PAGE_SPI_CONN
+                        188             PUBLIC  ECO_PAGE_PREV_PID
+                        189             PUBLIC  ECO_PAGE_TABLE
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE     4
 
-------                  190             RSEG  ?DT?eco_page_manager?ECO_PAGE
-000000                  191     ?eco_page_manager?BYTE:
-000002                  192             ORG  2
-000002                  193             seg?140:   DS   2
-000004                  194             ORG  4
-000004                  195               j?141:   DS   2
-000000                  196             ORG  0
-000000                  197               i?142:   DS   2
-                        198     
-------                  199             RSEG  ?DT?ECO_PAGE
-000000                  200      ECO_PAGE_TABLE:   DS   10
-00000A                  201     ECO_PAGE_PREV_PID:   DS   1
-00000B                  202     ECO_PAGE_SPI_CONN:   DS   1
-00000C                  203     ECO_PAGE_PREV_VID:   DS   1
-00000D                  204       ECO_PAGE_ADDR:   DS   2
-00000F                  205     ECO_PAGE_TABLE_INDEX:   DS   2
-                        206     
-------                  207             RSEG  ?ID?ECO_PAGE
-000000                  208     ECO_PAGE_REGISTER1:   DS   1
-000001                  209     ECO_PAGE_REGISTER2:   DS   1
-000002                  210     ECO_PAGE_REGISTER3:   DS   1
-000003                  211     ECO_PAGE_REGISTER4:   DS   1
-000004                  212     ECO_PAGE_REGISTER5:   DS   1
-000005                  213     ECO_PAGE_REGISTER6:   DS   1
-000006                  214     ECO_PAGE_REGISTER7:   DS   1
-                        215     ; /*
-                        216     ;  * Author(s): Wei-Han Chen (Embedded Platform Lab, NTHU)
-                        217     ;  * Copyright (c) 2009 National Tsing Hua University (NTHU) 
-                        218     ;  * Permission to copy, modify, and distribute this program is granted 
-                        219     ;  * for noncommercial purposes, provided the author(s) and copyright
-                        220     ;  * notice are retained. All other uses require explicit written
-                        221     ;  * permission from NTHU. 
-                        222     ;  *
-                        223     ;  * Eco Paging Library 
-                        224     ;  *
-                        225     ;  * Wei-Han Chen <xwaynec@gmail.com> 
-                        226     ;  * 2009/2/13
-                        227     ;  */
-                        228     ; 
-                        229     ; 
-                        230     ; #include "eco_page.h"
-                        231     ; #include "eeprom/eeprom.h"
-                        232     ; 
-                        233     ; unsigned char ECO_PAGE_TABLE[10];
-                        234     ; unsigned int ECO_PAGE_TABLE_INDEX;
-                        235     ; 
-                        236     ; unsigned int ECO_PAGE_ADDR;
-                        237     ; unsigned char ECO_PAGE_SPI_CONN;
-                        238     ; 
-                        239     ; //Eco page virtual address id
-                        240     ; unsigned char ECO_PAGE_PREV_VID;
-                        241     ; 
-                        242     ; //Eco page physical address id 
-                        243     ; unsigned char ECO_PAGE_PREV_PID;
-                        244     ; 
-                        245     ; //unsigned char ECO_PAGE_REGISTER[7];
+                        190             PUBLIC  eco_page_manager
+                        191             PUBLIC  eco_page_init
+                        192     
+------                  193             RSEG  ?DT?eco_page_manager?ECO_PAGE
+000000                  194     ?eco_page_manager?BYTE:
+000004                  195             ORG  4
+000004                  196             seg?140:   DS   2
+000006                  197             ORG  6
+000006                  198               j?141:   DS   2
+000000                  199             ORG  0
+000000                  200               i?142:   DS   2
+000002                  201             ORG  2
+000002                  202      page_index?143:   DS   2
+                        203     
+------                  204             RSEG  ?DT?ECO_PAGE
+000000                  205      ECO_PAGE_TABLE:   DS   10
+00000A                  206     ECO_PAGE_PREV_PID:   DS   1
+00000B                  207     ECO_PAGE_SPI_CONN:   DS   1
+00000C                  208     ECO_PAGE_PREV_VID:   DS   1
+00000D                  209       ECO_PAGE_ADDR:   DS   2
+00000F                  210     ECO_PAGE_TABLE_INDEX:   DS   2
+                        211     
+------                  212             RSEG  ?ID?ECO_PAGE
+000000                  213     ECO_PAGE_REGISTER1:   DS   1
+000001                  214     ECO_PAGE_REGISTER2:   DS   1
+000002                  215     ECO_PAGE_REGISTER3:   DS   1
+000003                  216     ECO_PAGE_REGISTER4:   DS   1
+000004                  217     ECO_PAGE_REGISTER5:   DS   1
+000005                  218     ECO_PAGE_REGISTER6:   DS   1
+000006                  219     ECO_PAGE_REGISTER7:   DS   1
+                        220     ; /*
+                        221     ;  * Author(s): Wei-Han Chen (Embedded Platform Lab, NTHU)
+                        222     ;  * Copyright (c) 2009 National Tsing Hua University (NTHU) 
+                        223     ;  * Permission to copy, modify, and distribute this program is granted 
+                        224     ;  * for noncommercial purposes, provided the author(s) and copyright
+                        225     ;  * notice are retained. All other uses require explicit written
+                        226     ;  * permission from NTHU. 
+                        227     ;  *
+                        228     ;  * Eco Paging Library 
+                        229     ;  *
+                        230     ;  * Wei-Han Chen <xwaynec@gmail.com> 
+                        231     ;  * 2009/2/13
+                        232     ;  */
+                        233     ; 
+                        234     ; 
+                        235     ; #include "eco_page.h"
+                        236     ; #include "eeprom/eeprom.h"
+                        237     ; 
+                        238     ; unsigned char ECO_PAGE_TABLE[10];
+                        239     ; unsigned int ECO_PAGE_TABLE_INDEX;
+                        240     ; 
+                        241     ; unsigned int ECO_PAGE_ADDR;
+                        242     ; unsigned char ECO_PAGE_SPI_CONN;
+                        243     ; 
+                        244     ; //Eco page virtual address id
+                        245     ; unsigned char ECO_PAGE_PREV_VID;
                         246     ; 
-                        247     ; unsigned char idata ECO_PAGE_REGISTER1;
-                        248     ; unsigned char idata ECO_PAGE_REGISTER2;
-                        249     ; unsigned char idata ECO_PAGE_REGISTER3;
-                        250     ; unsigned char idata ECO_PAGE_REGISTER4;
-                        251     ; unsigned char idata ECO_PAGE_REGISTER5;
-                        252     ; unsigned char idata ECO_PAGE_REGISTER6;
-                        253     ; unsigned char idata ECO_PAGE_REGISTER7;
-                        254     ; 
-                        255     ; 
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE     5
+                        247     ; //Eco page physical address id 
+                        248     ; unsigned char ECO_PAGE_PREV_PID;
+                        249     ; 
+                        250     ; //unsigned char ECO_PAGE_REGISTER[7];
+                        251     ; 
+                        252     ; unsigned char idata ECO_PAGE_REGISTER1;
+                        253     ; unsigned char idata ECO_PAGE_REGISTER2;
+                        254     ; unsigned char idata ECO_PAGE_REGISTER3;
+                        255     ; unsigned char idata ECO_PAGE_REGISTER4;
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE     5
 
-                        256     ; void eco_page_init()
-                        257     
-------                  258             RSEG  ?PR?eco_page_init?ECO_PAGE
-000000                  259     eco_page_init:
-                        260                             ; SOURCE LINE # 42
-                        261     ; {
-                        262                             ; SOURCE LINE # 43
-                        263     ;       ECO_PAGE_TABLE_INDEX = 5;
-                        264                             ; SOURCE LINE # 44
-000000 750000     F     265             MOV     ECO_PAGE_TABLE_INDEX,#00H
-000003 750005     F     266             MOV     ECO_PAGE_TABLE_INDEX+01H,#05H
-                        267     ;       //ECO_PAGE_TABLE_INDEX++;       
-                        268     ;       //ECO_PAGE_REGISTER5 = 0xA7;
-                        269     ;       //ECO_PAGE_REGISTER3 = ECO_PAGE_TABLE_INDEX;
-                        270     ;       ECO_PAGE_ADDR = 0;
-                        271                             ; SOURCE LINE # 48
-000006 E4               272             CLR     A
-000007 F500       F     273             MOV     ECO_PAGE_ADDR,A
-000009 F500       F     274             MOV     ECO_PAGE_ADDR+01H,A
-                        275     ;       ECO_PAGE_PREV_VID = 0;
-                        276                             ; SOURCE LINE # 49
-00000B F500       F     277             MOV     ECO_PAGE_PREV_VID,A
-                        278     ;       ECO_PAGE_PREV_PID = 0;
-                        279                             ; SOURCE LINE # 50
-00000D F500       F     280             MOV     ECO_PAGE_PREV_PID,A
-                        281     ; 
-                        282     ;       ECO_PAGE_TABLE[0] = -1; 
-                        283                             ; SOURCE LINE # 52
-00000F 7500FF     F     284             MOV     ECO_PAGE_TABLE,#0FFH
-                        285     ;       ECO_PAGE_TABLE[1] = -1; 
-                        286                             ; SOURCE LINE # 53
-000012 7500FF     F     287             MOV     ECO_PAGE_TABLE+01H,#0FFH
-                        288     ;       ECO_PAGE_TABLE[2] = 8;
-                        289                             ; SOURCE LINE # 54
-000015 750008     F     290             MOV     ECO_PAGE_TABLE+02H,#08H
-                        291     ;       ECO_PAGE_TABLE[3] = -1; 
-                        292                             ; SOURCE LINE # 55
-000018 7500FF     F     293             MOV     ECO_PAGE_TABLE+03H,#0FFH
-                        294     ;       ECO_PAGE_TABLE[4] = -1; 
-                        295                             ; SOURCE LINE # 56
-00001B 7500FF     F     296             MOV     ECO_PAGE_TABLE+04H,#0FFH
-                        297     ;       ECO_PAGE_TABLE[5] = -1; 
-                        298                             ; SOURCE LINE # 57
-00001E 7500FF     F     299             MOV     ECO_PAGE_TABLE+05H,#0FFH
-                        300     ;       ECO_PAGE_TABLE[6] = -1; 
-                        301                             ; SOURCE LINE # 58
-000021 7500FF     F     302             MOV     ECO_PAGE_TABLE+06H,#0FFH
-                        303     ;       ECO_PAGE_TABLE[7] = -1; 
-                        304                             ; SOURCE LINE # 59
-000024 7500FF     F     305             MOV     ECO_PAGE_TABLE+07H,#0FFH
-                        306     ;       ECO_PAGE_TABLE[8] = -1; 
-                        307                             ; SOURCE LINE # 60
-000027 7500FF     F     308             MOV     ECO_PAGE_TABLE+08H,#0FFH
-                        309     ;       ECO_PAGE_TABLE[9] = -1; 
-                        310                             ; SOURCE LINE # 61
-00002A 7500FF     F     311             MOV     ECO_PAGE_TABLE+09H,#0FFH
-                        312     ; }
-                        313                             ; SOURCE LINE # 62
-00002D 22               314             RET     
-                        315     ; END OF eco_page_init
-                        316     
-                        317     ; 
-                        318     ; //LRU page replacement
-                        319     ; void eco_page_manager()
-                        320     
-------                  321             RSEG  ?PR?eco_page_manager?ECO_PAGE
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE     6
+                        256     ; unsigned char idata ECO_PAGE_REGISTER5;
+                        257     ; unsigned char idata ECO_PAGE_REGISTER6;
+                        258     ; unsigned char idata ECO_PAGE_REGISTER7;
+                        259     ; 
+                        260     ; 
+                        261     ; void eco_page_init()
+                        262     
+------                  263             RSEG  ?PR?eco_page_init?ECO_PAGE
+000000                  264     eco_page_init:
+                        265                             ; SOURCE LINE # 42
+                        266     ; {
+                        267                             ; SOURCE LINE # 43
+                        268     ;       ECO_PAGE_TABLE_INDEX = 5;
+                        269                             ; SOURCE LINE # 44
+000000 750000     F     270             MOV     ECO_PAGE_TABLE_INDEX,#00H
+000003 750005     F     271             MOV     ECO_PAGE_TABLE_INDEX+01H,#05H
+                        272     ;       //ECO_PAGE_TABLE_INDEX++;       
+                        273     ;       //ECO_PAGE_REGISTER5 = 0xA7;
+                        274     ;       //ECO_PAGE_REGISTER3 = ECO_PAGE_TABLE_INDEX;
+                        275     ;       ECO_PAGE_ADDR = 0;
+                        276                             ; SOURCE LINE # 48
+000006 E4               277             CLR     A
+000007 F500       F     278             MOV     ECO_PAGE_ADDR,A
+000009 F500       F     279             MOV     ECO_PAGE_ADDR+01H,A
+                        280     ;       ECO_PAGE_PREV_VID = 0;
+                        281                             ; SOURCE LINE # 49
+00000B F500       F     282             MOV     ECO_PAGE_PREV_VID,A
+                        283     ;       ECO_PAGE_PREV_PID = 0;
+                        284                             ; SOURCE LINE # 50
+00000D F500       F     285             MOV     ECO_PAGE_PREV_PID,A
+                        286     ; 
+                        287     ;       ECO_PAGE_TABLE[0] = 0; 
+                        288                             ; SOURCE LINE # 52
+00000F F500       F     289             MOV     ECO_PAGE_TABLE,A
+                        290     ;       ECO_PAGE_TABLE[1] = 0; 
+                        291                             ; SOURCE LINE # 53
+000011 F500       F     292             MOV     ECO_PAGE_TABLE+01H,A
+                        293     ;       ECO_PAGE_TABLE[2] = 0;
+                        294                             ; SOURCE LINE # 54
+000013 F500       F     295             MOV     ECO_PAGE_TABLE+02H,A
+                        296     ;       ECO_PAGE_TABLE[3] = 0; 
+                        297                             ; SOURCE LINE # 55
+000015 F500       F     298             MOV     ECO_PAGE_TABLE+03H,A
+                        299     ;       ECO_PAGE_TABLE[4] = 0; 
+                        300                             ; SOURCE LINE # 56
+000017 F500       F     301             MOV     ECO_PAGE_TABLE+04H,A
+                        302     ;       ECO_PAGE_TABLE[5] = 0; 
+                        303                             ; SOURCE LINE # 57
+000019 F500       F     304             MOV     ECO_PAGE_TABLE+05H,A
+                        305     ;       ECO_PAGE_TABLE[6] = 0; 
+                        306                             ; SOURCE LINE # 58
+00001B F500       F     307             MOV     ECO_PAGE_TABLE+06H,A
+                        308     ;       ECO_PAGE_TABLE[7] = 0; 
+                        309                             ; SOURCE LINE # 59
+00001D F500       F     310             MOV     ECO_PAGE_TABLE+07H,A
+                        311     ;       ECO_PAGE_TABLE[8] = 0; 
+                        312                             ; SOURCE LINE # 60
+00001F F500       F     313             MOV     ECO_PAGE_TABLE+08H,A
+                        314     ;       ECO_PAGE_TABLE[9] = 0; 
+                        315                             ; SOURCE LINE # 61
+000021 F500       F     316             MOV     ECO_PAGE_TABLE+09H,A
+                        317     ; }
+                        318                             ; SOURCE LINE # 62
+000023 22               319             RET     
+                        320     ; END OF eco_page_init
+                        321     
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE     6
 
-000000                  322     eco_page_manager:
-                        323             USING   0
-                        324                             ; SOURCE LINE # 65
-                        325     ; {
-                        326                             ; SOURCE LINE # 66
-                        327     ;       unsigned int i;
-                        328     ;       unsigned int page_index = -1;
-                        329                             ; SOURCE LINE # 68
-                        330     ;---- Variable 'page_index?143' assigned to Register 'R4/R5' ----
-000000 74FF             331             MOV     A,#0FFH
-000002 FD               332             MOV     R5,A
-000003 FC               333             MOV     R4,A
-                        334     ; 
-                        335     ;       //check page table
-                        336     ;       for(i=0;i<10;i++)
-                        337                             ; SOURCE LINE # 71
-000004 E4               338             CLR     A
-000005 F500       F     339             MOV     i?142,A
-000007 F500       F     340             MOV     i?142+01H,A
-000009                  341     ?C0002:
-                        342     ;       {
-                        343                             ; SOURCE LINE # 72
-                        344     ;               if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_TABLE[i] & 0x7F))
-                        345                             ; SOURCE LINE # 73
-000009 7400       F     346             MOV     A,#LOW (ECO_PAGE_TABLE)
-00000B 2500       F     347             ADD     A,i?142+01H
-00000D F8               348             MOV     R0,A
-00000E E6               349             MOV     A,@R0
-00000F F9               350             MOV     R1,A
-000010 547F             351             ANL     A,#07FH
-000012 FB               352             MOV     R3,A
-000013 E500       F     353             MOV     A,ECO_PAGE_ADDR
-000015 547F             354             ANL     A,#07FH
-000017 B5030F           355             CJNE    A,AR3,?C0004
-                        356     ;               {
-                        357                             ; SOURCE LINE # 74
-                        358     ;                       page_index = i;
-                        359                             ; SOURCE LINE # 75
-00001A AC00       F     360             MOV     R4,i?142
-00001C AD00       F     361             MOV     R5,i?142+01H
-                        362     ;                       //set LRU bit is 1
-                        363     ;                       ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] | 0x80;
-                        364                             ; SOURCE LINE # 77
-00001E 7400       F     365             MOV     A,#LOW (ECO_PAGE_TABLE)
-000020 2500       F     366             ADD     A,i?142+01H
-000022 F8               367             MOV     R0,A
-000023 E9               368             MOV     A,R1
-000024 4480             369             ORL     A,#080H
-000026 F6               370             MOV     @R0,A
-                        371     ;                       break;
-                        372                             ; SOURCE LINE # 78
-000027 800E             373             SJMP    ?C0003
-                        374     ;               }
-                        375                             ; SOURCE LINE # 79
-                        376     ;       }
-                        377                             ; SOURCE LINE # 80
-000029                  378     ?C0004:
-000029 0500       F     379             INC     i?142+01H
-00002B E500       F     380             MOV     A,i?142+01H
-00002D 7002             381             JNZ     ?C0018
-00002F 0500       F     382             INC     i?142
-000031                  383     ?C0018:
-000031 640A             384             XRL     A,#0AH
-000033 4500       F     385             ORL     A,i?142
-000035 70D2             386             JNZ     ?C0002
-000037                  387     ?C0003:
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE     7
+                        322     ; 
+                        323     ; //LRU page replacement
+                        324     ; void eco_page_manager()
+                        325     
+------                  326             RSEG  ?PR?eco_page_manager?ECO_PAGE
+000000                  327     eco_page_manager:
+                        328             USING   0
+                        329                             ; SOURCE LINE # 65
+                        330     ; {
+                        331                             ; SOURCE LINE # 66
+                        332     ;       unsigned int i;
+                        333     ;       unsigned int page_index = -1;
+                        334                             ; SOURCE LINE # 68
+000000 74FF             335             MOV     A,#0FFH
+000002 F500       F     336             MOV     page_index?143,A
+000004 F500       F     337             MOV     page_index?143+01H,A
+                        338     ; 
+                        339     ;       //if page id is the same with the last page id
+                        340     ;       if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_PREV_PID & 0x7F))
+                        341                             ; SOURCE LINE # 71
+000006 E500       F     342             MOV     A,ECO_PAGE_ADDR
+000008 547F             343             ANL     A,#07FH
+00000A FF               344             MOV     R7,A
+00000B E500       F     345             MOV     A,ECO_PAGE_PREV_PID
+00000D 547F             346             ANL     A,#07FH
+00000F B50737           347             CJNE    A,AR7,?C0002
+                        348     ;       {
+                        349                             ; SOURCE LINE # 72
+                        350     ;               //for(i=0;i<4;i++)
+                        351     ;               //{    
+                        352     ;               //      blink_led();
+                        353     ;               //      mdelay(200);
+                        354     ;               //}    
+                        355     ;               //mdelay(1000);
+                        356     ;               //virtual address id + function offset
+                        357     ;               ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << 8) + (ECO_PAGE_ADDR & 0x00FF);
+                        358                             ; SOURCE LINE # 80
+000012 E500       F     359             MOV     A,ECO_PAGE_PREV_VID
+000014 FE               360             MOV     R6,A
+000015 7C00             361             MOV     R4,#00H
+000017 E4               362             CLR     A
+000018 2500       F     363             ADD     A,ECO_PAGE_ADDR+01H
+00001A F500       F     364             MOV     ECO_PAGE_ADDR+01H,A
+00001C EC               365             MOV     A,R4
+00001D 3E               366             ADDC    A,R6
+00001E F500       F     367             MOV     ECO_PAGE_ADDR,A
+                        368     ;               #pragma asm
+000020 7800       F     369             MOV     R0,#LOW (ECO_PAGE_REGISTER1)
+000022 E6               370             MOV     A,@R0
+000023 F9               371             MOV     R1,A
+000024 7800       F     372             MOV     R0,#LOW (ECO_PAGE_REGISTER2)
+000026 E6               373             MOV     A,@R0
+000027 FA               374             MOV     R2,A
+000028 7800       F     375             MOV     R0,#LOW (ECO_PAGE_REGISTER3)
+00002A E6               376             MOV     A,@R0
+00002B FB               377             MOV     R3,A
+00002C 7800       F     378             MOV     R0,#LOW (ECO_PAGE_REGISTER4)
+00002E E6               379             MOV     A,@R0
+00002F FC               380             MOV     R4,A
+000030 7800       F     381             MOV     R0,#LOW (ECO_PAGE_REGISTER5)
+000032 E6               382             MOV     A,@R0
+000033 FD               383             MOV     R5,A
+000034 7800       F     384             MOV     R0,#LOW (ECO_PAGE_REGISTER6)
+000036 E6               385             MOV     A,@R0
+000037 FE               386             MOV     R6,A
+000038 7800       F     387             MOV     R0,#LOW (ECO_PAGE_REGISTER7)
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE     7
 
-                        388     ; 
-                        389     ;       if(page_index != -1)
-                        390                             ; SOURCE LINE # 82
-000037 ED               391             MOV     A,R5
-000038 F4               392             CPL     A
-000039 7002             393             JNZ     ?C0019
-00003B EC               394             MOV     A,R4
-00003C F4               395             CPL     A
-00003D                  396     ?C0019:
-00003D 6018             397             JZ      ?C0006
-                        398     ;       {
-                        399                             ; SOURCE LINE # 83
-                        400     ;               //store function physical addres id 
-                        401     ;               ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 8;
-                        402                             ; SOURCE LINE # 85
-00003F E500       F     403             MOV     A,ECO_PAGE_ADDR
-000041 F500       F     404             MOV     ECO_PAGE_PREV_PID,A
-                        405     ;       
-                        406     ;               //memory page is in ram
-                        407     ;               ECO_PAGE_ADDR = ((page_index + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_A
+00003A E6               388             MOV     A,@R0
+00003B FF               389             MOV     R7,A
+00003C 8500B3     F     390             MOV     SPI_CTRL,ECO_PAGE_SPI_CONN
+00003F 850083     F     391             MOV     DPH,ECO_PAGE_ADDR
+000042 850082     F     392             MOV     DPL,ECO_PAGE_ADDR+01H
+000045 120000     E     393             LCALL   ?C?ICALL2
+                        394     ;               //eco_page_function_call        
+                        395               
+                        396     ;               //MOV     DPH,ECO_PAGE_ADDR
+                        397               
+                        398     ;               //MOV     DPL,ECO_PAGE_ADDR+01H
+                        399               
+                        400     ;               //LCALL ?C?ICALL2
+                        401               
+000048 22               402             RET     
+                        403     ;               #pragma endasm
+                        404     ;               return ;
+                        405     ;       }       
+                        406                             ; SOURCE LINE # 88
+000049                  407     ?C0002:
+                        408     ;       
+                        409     ;       //check page table
+                        410     ;       for(i=0;i<10;i++)
+                        411                             ; SOURCE LINE # 91
+000049 E4               412             CLR     A
+00004A F500       F     413             MOV     i?142,A
+00004C F500       F     414             MOV     i?142+01H,A
+00004E                  415     ?C0004:
+                        416     ;       {
+                        417                             ; SOURCE LINE # 92
+                        418     ;               if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_TABLE[i] & 0x7F))
+                        419                             ; SOURCE LINE # 93
+00004E AD00       F     420             MOV     R5,i?142+01H
+000050 7400       F     421             MOV     A,#LOW (ECO_PAGE_TABLE)
+000052 2D               422             ADD     A,R5
+000053 F8               423             MOV     R0,A
+000054 E6               424             MOV     A,@R0
+000055 FC               425             MOV     R4,A
+000056 547F             426             ANL     A,#07FH
+000058 FB               427             MOV     R3,A
+000059 E500       F     428             MOV     A,ECO_PAGE_ADDR
+00005B 547F             429             ANL     A,#07FH
+00005D B50310           430             CJNE    A,AR3,?C0006
+                        431     ;               {
+                        432                             ; SOURCE LINE # 94
+                        433     ;                       page_index = i;
+                        434                             ; SOURCE LINE # 95
+000060 850000     F     435             MOV     page_index?143,i?142
+000063 850000     F     436             MOV     page_index?143+01H,i?142+01H
+                        437     ;                       //set LRU bit is 1
+                        438     ;                       ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] | 0x80;
+                        439                             ; SOURCE LINE # 97
+000066 7400       F     440             MOV     A,#LOW (ECO_PAGE_TABLE)
+000068 2D               441             ADD     A,R5
+000069 F8               442             MOV     R0,A
+00006A EC               443             MOV     A,R4
+00006B 4480             444             ORL     A,#080H
+00006D F6               445             MOV     @R0,A
+                        446     ;                       break;
+                        447                             ; SOURCE LINE # 98
+00006E 800E             448             SJMP    ?C0005
+                        449     ;               }
+                        450                             ; SOURCE LINE # 99
+                        451     ;       }
+                        452                             ; SOURCE LINE # 100
+000070                  453     ?C0006:
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE     8
+
+000070 0500       F     454             INC     i?142+01H
+000072 E500       F     455             MOV     A,i?142+01H
+000074 7002             456             JNZ     ?C0023
+000076 0500       F     457             INC     i?142
+000078                  458     ?C0023:
+000078 640A             459             XRL     A,#0AH
+00007A 4500       F     460             ORL     A,i?142
+00007C 70D0             461             JNZ     ?C0004
+00007E                  462     ?C0005:
+                        463     ; 
+                        464     ;       if(page_index != -1)
+                        465                             ; SOURCE LINE # 102
+00007E E500       F     466             MOV     A,page_index?143+01H
+000080 F4               467             CPL     A
+000081 7003             468             JNZ     ?C0024
+000083 E500       F     469             MOV     A,page_index?143
+000085 F4               470             CPL     A
+000086                  471     ?C0024:
+000086 6041             472             JZ      ?C0008
+                        473     ;       {
+                        474                             ; SOURCE LINE # 103
+                        475     ;               //Check POP instruction 
+                        476     ;               //for(i=0;i<4;i++)
+                        477     ;               //{    
+                        478     ;               //      blink_led();
+                        479     ;               //      mdelay(200);
+                        480     ;               //}    
+                        481     ;               //mdelay(1000);
+                        482     ; 
+                        483     ;               //store function physical addres id 
+                        484     ;               ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 8;
+                        485                             ; SOURCE LINE # 113
+000088 E500       F     486             MOV     A,ECO_PAGE_ADDR
+00008A F500       F     487             MOV     ECO_PAGE_PREV_PID,A
+                        488     ;       
+                        489     ;               //memory page is in ram
+                        490     ;               ECO_PAGE_ADDR = ((page_index + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_A
                                DDR & 0x00FF);
-                        408                             ; SOURCE LINE # 88
-000043 ED               409             MOV     A,R5
-000044 2406             410             ADD     A,#06H
-000046 FF               411             MOV     R7,A
-000047 EF               412             MOV     A,R7
-000048 FE               413             MOV     R6,A
-000049 7C00             414             MOV     R4,#00H
-00004B E4               415             CLR     A
-00004C 2500       F     416             ADD     A,ECO_PAGE_ADDR+01H
-00004E F500       F     417             MOV     ECO_PAGE_ADDR+01H,A
-000050 EC               418             MOV     A,R4
-000051 3E               419             ADDC    A,R6
-000052 F500       F     420             MOV     ECO_PAGE_ADDR,A
-                        421     ; 
-                        422     ;               //cache the virtual address id
-                        423     ;               ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;
-                        424                             ; SOURCE LINE # 91
-000054 F500       F     425             MOV     ECO_PAGE_PREV_VID,A
-                        426     ; 
-                        427     ;               #pragma asm
-                        428     ;               //eco_page_function_call
-                        429               
-                        430     ;               //MOV     DPH,ECO_PAGE_ADDR
-                        431               
-                        432     ;               //MOV     DPL,ECO_PAGE_ADDR+01H
-                        433               
-                        434     ;               //LCALL ?C?ICALL2
-                        435               
-                        436     ;               #pragma endasm
-                        437     ;                               
-                        438     ;       }       
-                        439                             ; SOURCE LINE # 100
-000056 22               440             RET     
-000057                  441     ?C0006:
-                        442     ;       else
-                        443     ;       {
-                        444                             ; SOURCE LINE # 102
-                        445     ;               //printf("page fault");
-                        446     ; 
-                        447     ;               for(i=ECO_PAGE_TABLE_INDEX+1; ;(i++)%10)
-                        448                             ; SOURCE LINE # 105
-000057 E500       F     449             MOV     A,ECO_PAGE_TABLE_INDEX+01H
-000059 2401             450             ADD     A,#01H
-00005B F500       F     451             MOV     i?142+01H,A
-00005D E4               452             CLR     A
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE     8
-
-00005E 3500       F     453             ADDC    A,ECO_PAGE_TABLE_INDEX
-000060 F500       F     454             MOV     i?142,A
-000062                  455     ?C0008:
-                        456     ;               {
-                        457                             ; SOURCE LINE # 106
-                        458     ;                       if((ECO_PAGE_TABLE[i] & 0x80) == 0x80)
-                        459                             ; SOURCE LINE # 107
-000062 7400       F     460             MOV     A,#LOW (ECO_PAGE_TABLE)
-000064 2500       F     461             ADD     A,i?142+01H
-000066 F8               462             MOV     R0,A
-000067 E6               463             MOV     A,@R0
-000068 30E722           464             JNB     ACC.7,?C0011
-                        465     ;                       {
-                        466                             ; SOURCE LINE # 108
-                        467     ;                               //lru bit is 1
-                        468     ;                               ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] & 0x7F;
-                        469                             ; SOURCE LINE # 110
-00006B 547F             470             ANL     A,#07FH
-00006D F6               471             MOV     @R0,A
-                        472     ;                               
-                        473     ;                               //store function physical addres id 
-                        474     ;                               ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 8;
-                        475                             ; SOURCE LINE # 113
-00006E E500       F     476             MOV     A,ECO_PAGE_ADDR
-000070 F500       F     477             MOV     ECO_PAGE_PREV_PID,A
-                        478     ;       
-                        479     ;                               //memory page is in ram
-                        480     ;                               ECO_PAGE_ADDR = ((i + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO
-                               _PAGE_ADDR & 0x00FF);
-                        481                             ; SOURCE LINE # 116
-000072 E500       F     482             MOV     A,i?142+01H
-000074 2406             483             ADD     A,#06H
-000076 FF               484             MOV     R7,A
-000077 EF               485             MOV     A,R7
-000078 FE               486             MOV     R6,A
-000079 7C00             487             MOV     R4,#00H
-00007B E4               488             CLR     A
-00007C 2500       F     489             ADD     A,ECO_PAGE_ADDR+01H
-00007E F500       F     490             MOV     ECO_PAGE_ADDR+01H,A
-000080 EC               491             MOV     A,R4
-000081 3E               492             ADDC    A,R6
-000082 F500       F     493             MOV     ECO_PAGE_ADDR,A
-                        494     ; 
-                        495     ;                               //cache the virtual address id
-                        496     ;                               ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;
-                        497                             ; SOURCE LINE # 119
-000084 F500       F     498             MOV     ECO_PAGE_PREV_VID,A
-                        499     ; 
-                        500     ;                               ECO_PAGE_TABLE_INDEX = i;
-                        501                             ; SOURCE LINE # 121
-000086 850000     F     502             MOV     ECO_PAGE_TABLE_INDEX,i?142
-000089 850000     F     503             MOV     ECO_PAGE_TABLE_INDEX+01H,i?142+01H
+                        491                             ; SOURCE LINE # 116
+00008C E500       F     492             MOV     A,page_index?143+01H
+00008E 2406             493             ADD     A,#06H
+000090 FF               494             MOV     R7,A
+000091 EF               495             MOV     A,R7
+000092 FE               496             MOV     R6,A
+000093 7C00             497             MOV     R4,#00H
+000095 E4               498             CLR     A
+000096 2500       F     499             ADD     A,ECO_PAGE_ADDR+01H
+000098 F500       F     500             MOV     ECO_PAGE_ADDR+01H,A
+00009A EC               501             MOV     A,R4
+00009B 3E               502             ADDC    A,R6
+00009C F500       F     503             MOV     ECO_PAGE_ADDR,A
                         504     ; 
-                        505     ;                               #pragma asm
-                        506     ;                               //eco_page_function_call
-                        507               
-                        508     ;                               //MOV     DPH,ECO_PAGE_ADDR
-                        509               
-                        510     ;                               //MOV     DPL,ECO_PAGE_ADDR+01H
-                        511               
-                        512     ;                               //LCALL ?C?ICALL2
-                        513               
-                        514     ;                               #pragma endasm
-                        515     ; 
-                        516     ;                               break;
-                        517                             ; SOURCE LINE # 130
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE     9
+                        505     ;               //cache the virtual address id
+                        506     ;               ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;
+                        507                             ; SOURCE LINE # 119
+00009E F500       F     508             MOV     ECO_PAGE_PREV_VID,A
+                        509     ; 
+                        510     ;               #pragma asm
+0000A0 7800       F     511             MOV     R0,#LOW (ECO_PAGE_REGISTER1)
+0000A2 E6               512             MOV     A,@R0
+0000A3 F9               513             MOV     R1,A
+0000A4 7800       F     514             MOV     R0,#LOW (ECO_PAGE_REGISTER2)
+0000A6 E6               515             MOV     A,@R0
+0000A7 FA               516             MOV     R2,A
+0000A8 7800       F     517             MOV     R0,#LOW (ECO_PAGE_REGISTER3)
+0000AA E6               518             MOV     A,@R0
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE     9
 
-00008C 22               518             RET     
-                        519     ;                               
-                        520     ;                       }
-                        521                             ; SOURCE LINE # 132
-00008D                  522     ?C0011:
-                        523     ;                       else
-                        524     ;                       {
-                        525                             ; SOURCE LINE # 134
-                        526     ;                               unsigned char xdata *seg = (unsigned char xdata *)((i + 
+0000AB FB               519             MOV     R3,A
+0000AC 7800       F     520             MOV     R0,#LOW (ECO_PAGE_REGISTER4)
+0000AE E6               521             MOV     A,@R0
+0000AF FC               522             MOV     R4,A
+0000B0 7800       F     523             MOV     R0,#LOW (ECO_PAGE_REGISTER5)
+0000B2 E6               524             MOV     A,@R0
+0000B3 FD               525             MOV     R5,A
+0000B4 7800       F     526             MOV     R0,#LOW (ECO_PAGE_REGISTER6)
+0000B6 E6               527             MOV     A,@R0
+0000B7 FE               528             MOV     R6,A
+0000B8 7800       F     529             MOV     R0,#LOW (ECO_PAGE_REGISTER7)
+0000BA E6               530             MOV     A,@R0
+0000BB FF               531             MOV     R7,A
+0000BC 8500B3     F     532             MOV     SPI_CTRL,ECO_PAGE_SPI_CONN
+0000BF 850083     F     533             MOV     DPH,ECO_PAGE_ADDR
+0000C2 850082     F     534             MOV     DPL,ECO_PAGE_ADDR+01H
+0000C5 120000     E     535             LCALL   ?C?ICALL2
+                        536     ;               //eco_page_function_call
+                        537               
+                        538     ;               //MOV     DPH,ECO_PAGE_ADDR
+                        539               
+                        540     ;               //MOV     DPL,ECO_PAGE_ADDR+01H
+                        541               
+                        542     ;               //LCALL ?C?ICALL2
+                        543               
+0000C8 22               544             RET     
+                        545     ;               #pragma endasm
+                        546     ; 
+                        547     ;               return ;
+                        548     ;       }       
+                        549                             ; SOURCE LINE # 129
+0000C9                  550     ?C0008:
+                        551     ;       else
+                        552     ;       {
+                        553                             ; SOURCE LINE # 131
+                        554     ;               //printf("page fault");
+                        555     ;               for(i=0;i<4;i++)
+                        556                             ; SOURCE LINE # 133
+0000C9 E4               557             CLR     A
+0000CA F500       F     558             MOV     i?142,A
+0000CC F500       F     559             MOV     i?142+01H,A
+0000CE                  560     ?C0010:
+                        561     ;               {
+                        562                             ; SOURCE LINE # 134
+                        563     ;                       blink_led();
+                        564                             ; SOURCE LINE # 135
+0000CE 638020           565             XRL     P0,#020H
+                        566     ;                       mdelay(300);
+                        567                             ; SOURCE LINE # 136
+0000D1 7F2C             568             MOV     R7,#02CH
+0000D3 7E01             569             MOV     R6,#01H
+0000D5 120000     E     570             LCALL   _mdelay
+                        571     ;               }
+                        572                             ; SOURCE LINE # 137
+0000D8 0500       F     573             INC     i?142+01H
+0000DA E500       F     574             MOV     A,i?142+01H
+0000DC 7002             575             JNZ     ?C0025
+0000DE 0500       F     576             INC     i?142
+0000E0                  577     ?C0025:
+0000E0 C3               578             CLR     C
+0000E1 9404             579             SUBB    A,#04H
+0000E3 E500       F     580             MOV     A,i?142
+0000E5 9400             581             SUBB    A,#00H
+0000E7 40E5             582             JC      ?C0010
+0000E9                  583     ?C0011:
+                        584     ;               mdelay(1000);
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE    10
+
+                        585                             ; SOURCE LINE # 138
+0000E9 7FE8             586             MOV     R7,#0E8H
+0000EB 7E03             587             MOV     R6,#03H
+0000ED 120000     E     588             LCALL   _mdelay
+                        589     ; 
+                        590     ;               for(i=ECO_PAGE_TABLE_INDEX+1; ;i=(i+1)%10)
+                        591                             ; SOURCE LINE # 140
+0000F0 E500       F     592             MOV     A,ECO_PAGE_TABLE_INDEX+01H
+0000F2 2401             593             ADD     A,#01H
+0000F4 F500       F     594             MOV     i?142+01H,A
+0000F6 E4               595             CLR     A
+0000F7 3500       F     596             ADDC    A,ECO_PAGE_TABLE_INDEX
+0000F9 F500       F     597             MOV     i?142,A
+0000FB                  598     ?C0013:
+                        599     ;               {
+                        600                             ; SOURCE LINE # 141
+                        601     ;                       if((ECO_PAGE_TABLE[i] & 0x80) == 0x80)
+                        602                             ; SOURCE LINE # 142
+0000FB 7400       F     603             MOV     A,#LOW (ECO_PAGE_TABLE)
+0000FD 2500       F     604             ADD     A,i?142+01H
+0000FF F8               605             MOV     R0,A
+000100 E6               606             MOV     A,@R0
+000101 30E706           607             JNB     ACC.7,?C0016
+                        608     ;                       {
+                        609                             ; SOURCE LINE # 143
+                        610     ;                               //LRU bit is 1 and then set this bit is 0
+                        611     ;                               ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] & 0x7F;
+                        612                             ; SOURCE LINE # 145
+000104 547F             613             ANL     A,#07FH
+000106 F6               614             MOV     @R0,A
+                        615     ;                       }
+                        616                             ; SOURCE LINE # 146
+000107 020000     F     617             LJMP    ?C0015
+00010A                  618     ?C0016:
+                        619     ;                       else
+                        620     ;                       {
+                        621                             ; SOURCE LINE # 148
+                        622     ;                               unsigned char xdata *seg = (unsigned char xdata *)((i + 
                                ECO_PAGE_ADDR_OFFSET)<<8);
-                        527                             ; SOURCE LINE # 135
-00008D E500       F     528             MOV     A,i?142+01H
-00008F 2406             529             ADD     A,#06H
-000091 FF               530             MOV     R7,A
-000092 E4               531             CLR     A
-000093 3500       F     532             ADDC    A,i?142
-000095 EF               533             MOV     A,R7
-000096 F500       F     534             MOV     seg?140,A
-000098 750000     F     535             MOV     seg?140+01H,#00H
-                        536     ;                               unsigned int j;
-                        537     ;                               
-                        538     ;                               //memory page is in ram
-                        539     ;                               eeprom_init();
-                        540                             ; SOURCE LINE # 139
-00009B 120000     E     541             LCALL   eeprom_init
-                        542     ; 
-                        543     ;                               //mov code from eeprom to external ram
-                        544     ;                               for(j=0;j<256;j++)
-                        545                             ; SOURCE LINE # 142
-00009E E4               546             CLR     A
-00009F F500       F     547             MOV     j?141,A
-0000A1 F500       F     548             MOV     j?141+01H,A
-0000A3                  549     ?C0013:
-                        550     ;                               {
-                        551                             ; SOURCE LINE # 143
-                        552     ;                                       *(seg+j) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_A
-                               DDR) +j);
-                        553                             ; SOURCE LINE # 144
-0000A3 E500       F     554             MOV     A,ECO_PAGE_ADDR+01H
-0000A5 2403             555             ADD     A,#03H
-0000A7 CF               556             XCH     A,R7
-0000A8 E4               557             CLR     A
-0000A9 3500       F     558             ADDC    A,ECO_PAGE_ADDR
-0000AB CF               559             XCH     A,R7
-0000AC 2500       F     560             ADD     A,j?141+01H
-0000AE CF               561             XCH     A,R7
-0000AF 3500       F     562             ADDC    A,j?141
-0000B1 FE               563             MOV     R6,A
-0000B2 120000     E     564             LCALL   _eeprom_read
-0000B5 E500       F     565             MOV     A,seg?140+01H
-0000B7 2500       F     566             ADD     A,j?141+01H
-0000B9 F582             567             MOV     DPL,A
-0000BB E500       F     568             MOV     A,seg?140
-0000BD 3500       F     569             ADDC    A,j?141
-0000BF F583             570             MOV     DPH,A
-0000C1 EF               571             MOV     A,R7
-0000C2 F0               572             MOVX    @DPTR,A
-                        573     ;                               }
-                        574                             ; SOURCE LINE # 145
-0000C3 0500       F     575             INC     j?141+01H
-0000C5 E500       F     576             MOV     A,j?141+01H
-0000C7 7002             577             JNZ     ?C0020
-0000C9 0500       F     578             INC     j?141
-0000CB                  579     ?C0020:
-0000CB C3               580             CLR     C
-0000CC E500       F     581             MOV     A,j?141
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE    10
+                        623                             ; SOURCE LINE # 149
+00010A E500       F     624             MOV     A,i?142+01H
+00010C 2406             625             ADD     A,#06H
+00010E FF               626             MOV     R7,A
+00010F E4               627             CLR     A
+000110 3500       F     628             ADDC    A,i?142
+000112 EF               629             MOV     A,R7
+000113 F500       F     630             MOV     seg?140,A
+000115 750000     F     631             MOV     seg?140+01H,#00H
+                        632     ;                               unsigned int j;
+                        633     ;                               
+                        634     ;                               //memory page is in ram
+                        635     ;                               eeprom_init();
+                        636                             ; SOURCE LINE # 153
+000118 120000     E     637             LCALL   eeprom_init
+                        638     ; 
+                        639     ;                               //mov code from eeprom to external ram
+                        640     ;                               for(j=0;j<256;j++)
+                        641                             ; SOURCE LINE # 156
+00011B E4               642             CLR     A
+00011C F500       F     643             MOV     j?141,A
+00011E F500       F     644             MOV     j?141+01H,A
+000120                  645     ?C0018:
+                        646     ;                               {
+                        647                             ; SOURCE LINE # 157
+                        648     ;                                       *(seg+j) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_A
+                               DDR & 0xFF00 ) +j);
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE    11
 
-0000CE 9401             582             SUBB    A,#01H
-0000D0 40D1             583             JC      ?C0013
-0000D2                  584     ?C0014:
-                        585     ;                               
-                        586     ;                               //update page table to connect this physical address id 
+                        649                             ; SOURCE LINE # 158
+000120 E4               650             CLR     A
+000121 2403             651             ADD     A,#03H
+000123 FF               652             MOV     R7,A
+000124 E4               653             CLR     A
+000125 3500       F     654             ADDC    A,ECO_PAGE_ADDR
+000127 CF               655             XCH     A,R7
+000128 2500       F     656             ADD     A,j?141+01H
+00012A CF               657             XCH     A,R7
+00012B 3500       F     658             ADDC    A,j?141
+00012D FE               659             MOV     R6,A
+00012E 120000     E     660             LCALL   _eeprom_read
+000131 E500       F     661             MOV     A,seg?140+01H
+000133 2500       F     662             ADD     A,j?141+01H
+000135 F582             663             MOV     DPL,A
+000137 E500       F     664             MOV     A,seg?140
+000139 3500       F     665             ADDC    A,j?141
+00013B F583             666             MOV     DPH,A
+00013D EF               667             MOV     A,R7
+00013E F0               668             MOVX    @DPTR,A
+                        669     ;                               }
+                        670                             ; SOURCE LINE # 159
+00013F 0500       F     671             INC     j?141+01H
+000141 E500       F     672             MOV     A,j?141+01H
+000143 7002             673             JNZ     ?C0026
+000145 0500       F     674             INC     j?141
+000147                  675     ?C0026:
+000147 C3               676             CLR     C
+000148 E500       F     677             MOV     A,j?141
+00014A 9401             678             SUBB    A,#01H
+00014C 40D2             679             JC      ?C0018
+00014E                  680     ?C0019:
+                        681     ;                               
+                        682     ;                               //update page table to connect this physical address id 
                                with virtual address id 
-                        587     ;                               ECO_PAGE_TABLE[i] = ECO_PAGE_ADDR >> 8;
-                        588                             ; SOURCE LINE # 148
-0000D2 E500       F     589             MOV     A,ECO_PAGE_ADDR
-0000D4 FF               590             MOV     R7,A
-0000D5 AE00       F     591             MOV     R6,i?142+01H
-0000D7 7400       F     592             MOV     A,#LOW (ECO_PAGE_TABLE)
-0000D9 2E               593             ADD     A,R6
-0000DA F8               594             MOV     R0,A
-0000DB A607             595             MOV     @R0,AR7
-                        596     ; 
-                        597     ;                               //store physical address id
-                        598     ;                               ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[i];
-                        599                             ; SOURCE LINE # 151
-0000DD 7400       F     600             MOV     A,#LOW (ECO_PAGE_TABLE)
-0000DF 2E               601             ADD     A,R6
-0000E0 F8               602             MOV     R0,A
-0000E1 E6               603             MOV     A,@R0
-0000E2 F500       F     604             MOV     ECO_PAGE_PREV_PID,A
-                        605     ; 
-                        606     ;                               //update page address e.g.  (page_id<<8) + page_offset
-                        607     ;                               ECO_PAGE_ADDR = ((i + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO
-                               _PAGE_ADDR &0x00FF);
-                        608                             ; SOURCE LINE # 154
-0000E4 E500       F     609             MOV     A,i?142+01H
-0000E6 2406             610             ADD     A,#06H
-0000E8 FF               611             MOV     R7,A
-0000E9 EF               612             MOV     A,R7
-0000EA FE               613             MOV     R6,A
-0000EB 7C00             614             MOV     R4,#00H
-0000ED E4               615             CLR     A
-0000EE 2500       F     616             ADD     A,ECO_PAGE_ADDR+01H
-0000F0 F500       F     617             MOV     ECO_PAGE_ADDR+01H,A
-0000F2 EC               618             MOV     A,R4
-0000F3 3E               619             ADDC    A,R6
-0000F4 F500       F     620             MOV     ECO_PAGE_ADDR,A
-                        621     ; 
-                        622     ;                               //store virtual address id 
-                        623     ;                               ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8; 
-                        624                             ; SOURCE LINE # 157
-0000F6 F500       F     625             MOV     ECO_PAGE_PREV_VID,A
-                        626     ; 
-                        627     ;                               //mov to the next index
-                        628     ;                               ECO_PAGE_TABLE_INDEX = i;
-                        629                             ; SOURCE LINE # 160
-0000F8 850000     F     630             MOV     ECO_PAGE_TABLE_INDEX,i?142
-0000FB 850000     F     631             MOV     ECO_PAGE_TABLE_INDEX+01H,i?142+01H
-                        632     ; 
-                        633     ;                               //jump  to function address
-                        634     ;                               #pragma asm
-                        635     ;                               //MOV     DPH,ECO_PAGE_ADDR
-                        636               
-                        637     ;                               //MOV     DPL,ECO_PAGE_ADDR+01H
-                        638               
-                        639     ;                               //LCALL        ?C?ICALL2               
-                        640               
-                        641     ;                               #pragma endasm
-                        642     ;                               
-                        643     ;                               break;
-                        644                             ; SOURCE LINE # 169
-0000FE 22               645             RET     
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE    11
+                        683     ;                               ECO_PAGE_TABLE[i] = ECO_PAGE_ADDR >> 8;
+                        684                             ; SOURCE LINE # 162
+00014E E500       F     685             MOV     A,ECO_PAGE_ADDR
+000150 FF               686             MOV     R7,A
+000151 AE00       F     687             MOV     R6,i?142+01H
+000153 7400       F     688             MOV     A,#LOW (ECO_PAGE_TABLE)
+000155 2E               689             ADD     A,R6
+000156 F8               690             MOV     R0,A
+000157 A607             691             MOV     @R0,AR7
+                        692     ; 
+                        693     ;                               //store physical address id
+                        694     ;                               ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[i];
+                        695                             ; SOURCE LINE # 165
+000159 7400       F     696             MOV     A,#LOW (ECO_PAGE_TABLE)
+00015B 2E               697             ADD     A,R6
+00015C F8               698             MOV     R0,A
+00015D E6               699             MOV     A,@R0
+00015E F500       F     700             MOV     ECO_PAGE_PREV_PID,A
+                        701     ; 
+                        702     ;                               //update page address e.g.  (page_id<<8) + page_offset
+                        703     ;                               ECO_PAGE_ADDR = ((i + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO
+                               _PAGE_ADDR & 0x00FF);
+                        704                             ; SOURCE LINE # 168
+000160 E500       F     705             MOV     A,i?142+01H
+000162 2406             706             ADD     A,#06H
+000164 FF               707             MOV     R7,A
+000165 EF               708             MOV     A,R7
+000166 FE               709             MOV     R6,A
+000167 7C00             710             MOV     R4,#00H
+000169 E4               711             CLR     A
+00016A 2500       F     712             ADD     A,ECO_PAGE_ADDR+01H
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE    12
 
-                        646     ; END OF eco_page_manager
-                        647     
-                        648             END
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE    12
+00016C F500       F     713             MOV     ECO_PAGE_ADDR+01H,A
+00016E EC               714             MOV     A,R4
+00016F 3E               715             ADDC    A,R6
+000170 F500       F     716             MOV     ECO_PAGE_ADDR,A
+                        717     ; 
+                        718     ;                               //store virtual address id 
+                        719     ;                               ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8; 
+                        720                             ; SOURCE LINE # 171
+000172 F500       F     721             MOV     ECO_PAGE_PREV_VID,A
+                        722     ; 
+                        723     ;                               //mov to the next index
+                        724     ;                               ECO_PAGE_TABLE_INDEX = i;
+                        725                             ; SOURCE LINE # 174
+000174 850000     F     726             MOV     ECO_PAGE_TABLE_INDEX,i?142
+000177 850000     F     727             MOV     ECO_PAGE_TABLE_INDEX+01H,i?142+01H
+                        728     ; 
+                        729     ;                               //jump  to function address
+                        730     ;                               #pragma asm
+00017A 7800       F     731             MOV     R0,#LOW (ECO_PAGE_REGISTER1)
+00017C E6               732             MOV     A,@R0
+00017D F9               733             MOV     R1,A
+00017E 7800       F     734             MOV     R0,#LOW (ECO_PAGE_REGISTER2)
+000180 E6               735             MOV     A,@R0
+000181 FA               736             MOV     R2,A
+000182 7800       F     737             MOV     R0,#LOW (ECO_PAGE_REGISTER3)
+000184 E6               738             MOV     A,@R0
+000185 FB               739             MOV     R3,A
+000186 7800       F     740             MOV     R0,#LOW (ECO_PAGE_REGISTER4)
+000188 E6               741             MOV     A,@R0
+000189 FC               742             MOV     R4,A
+00018A 7800       F     743             MOV     R0,#LOW (ECO_PAGE_REGISTER5)
+00018C E6               744             MOV     A,@R0
+00018D FD               745             MOV     R5,A
+00018E 7800       F     746             MOV     R0,#LOW (ECO_PAGE_REGISTER6)
+000190 E6               747             MOV     A,@R0
+000191 FE               748             MOV     R6,A
+000192 7800       F     749             MOV     R0,#LOW (ECO_PAGE_REGISTER7)
+000194 E6               750             MOV     A,@R0
+000195 FF               751             MOV     R7,A
+000196 8500B3     F     752             MOV     SPI_CTRL,ECO_PAGE_SPI_CONN
+000199 850083     F     753             MOV     DPH,ECO_PAGE_ADDR
+00019C 850082     F     754             MOV     DPL,ECO_PAGE_ADDR+01H
+00019F 120000     E     755             LCALL   ?C?ICALL2
+                        756     ;                               //eco_page_function_call
+                        757               
+                        758     ;                               //MOV     DPH,ECO_PAGE_ADDR
+                        759               
+                        760     ;                               //MOV     DPL,ECO_PAGE_ADDR+01H
+                        761               
+                        762     ;                               //LCALL        ?C?ICALL2               
+                        763               
+0001A2 22               764             RET     
+                        765     ;                               #pragma endasm
+                        766     ;                               
+                        767     ;                               return ;
+                        768     ;                               
+                        769     ;                       }
+                        770                             ; SOURCE LINE # 186
+                        771     ;               }
+                        772                             ; SOURCE LINE # 187
+0001A3                  773     ?C0015:
+0001A3 E500       F     774             MOV     A,i?142+01H
+0001A5 2401             775             ADD     A,#01H
+0001A7 FF               776             MOV     R7,A
+0001A8 E4               777             CLR     A
+0001A9 3500       F     778             ADDC    A,i?142
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE    13
+
+0001AB FE               779             MOV     R6,A
+0001AC 7C00             780             MOV     R4,#00H
+0001AE 7D0A             781             MOV     R5,#0AH
+0001B0 120000     E     782             LCALL   ?C?UIDIV
+0001B3 8C00       F     783             MOV     i?142,R4
+0001B5 8D00       F     784             MOV     i?142+01H,R5
+0001B7 020000     F     785             LJMP    ?C0013
+                        786     ; END OF eco_page_manager
+                        787     
+                        788             END
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE    14
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -690,24 +833,32 @@ SYMBOL TABLE LISTING
 
 N A M E                                    T Y P E  V A L U E     ATTRIBUTES
 
-?C0002. . . . . . . . . . . . . . . . .    C  ADDR  0009H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
-?C0003. . . . . . . . . . . . . . . . .    C  ADDR  0037H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
-?C0004. . . . . . . . . . . . . . . . .    C  ADDR  0029H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
-?C0006. . . . . . . . . . . . . . . . .    C  ADDR  0057H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
-?C0008. . . . . . . . . . . . . . . . .    C  ADDR  0062H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
-?C0011. . . . . . . . . . . . . . . . .    C  ADDR  008DH     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
-?C0013. . . . . . . . . . . . . . . . .    C  ADDR  00A3H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
-?C0014. . . . . . . . . . . . . . . . .    C  ADDR  00D2H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
-?C0018. . . . . . . . . . . . . . . . .    C  ADDR  0031H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
-?C0019. . . . . . . . . . . . . . . . .    C  ADDR  003DH     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
-?C0020. . . . . . . . . . . . . . . . .    C  ADDR  00CBH     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0002. . . . . . . . . . . . . . . . .    C  ADDR  0049H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0004. . . . . . . . . . . . . . . . .    C  ADDR  004EH     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0005. . . . . . . . . . . . . . . . .    C  ADDR  007EH     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0006. . . . . . . . . . . . . . . . .    C  ADDR  0070H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0008. . . . . . . . . . . . . . . . .    C  ADDR  00C9H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0010. . . . . . . . . . . . . . . . .    C  ADDR  00CEH     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0011. . . . . . . . . . . . . . . . .    C  ADDR  00E9H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0013. . . . . . . . . . . . . . . . .    C  ADDR  00FBH     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0015. . . . . . . . . . . . . . . . .    C  ADDR  01A3H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0016. . . . . . . . . . . . . . . . .    C  ADDR  010AH     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0018. . . . . . . . . . . . . . . . .    C  ADDR  0120H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0019. . . . . . . . . . . . . . . . .    C  ADDR  014EH     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0023. . . . . . . . . . . . . . . . .    C  ADDR  0078H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0024. . . . . . . . . . . . . . . . .    C  ADDR  0086H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0025. . . . . . . . . . . . . . . . .    C  ADDR  00E0H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C0026. . . . . . . . . . . . . . . . .    C  ADDR  0147H     R   SEG=?PR?ECO_PAGE_MANAGER?ECO_PAGE
+?C?ICALL2 . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C?UIDIV. . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
 ?DT?ECO_PAGE. . . . . . . . . . . . . .    D  SEG   000011H       REL=UNIT, ALN=BYTE
-?DT?ECO_PAGE_MANAGER?ECO_PAGE . . . . .    D  SEG   000006H       REL=UNIT, ALN=BYTE
+?DT?ECO_PAGE_MANAGER?ECO_PAGE . . . . .    D  SEG   000008H       REL=UNIT, ALN=BYTE
 ?ECO_PAGE_MANAGER?BYTE. . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?ECO_PAGE_MANAGER?ECO_PAGE
 ?ID?ECO_PAGE. . . . . . . . . . . . . .    I  SEG   000007H       REL=UNIT, ALN=BYTE
-?PR?ECO_PAGE_INIT?ECO_PAGE. . . . . . .    C  SEG   00002EH       REL=UNIT, ALN=BYTE
-?PR?ECO_PAGE_MANAGER?ECO_PAGE . . . . .    C  SEG   0000FFH       REL=UNIT, ALN=BYTE
+?PR?ECO_PAGE_INIT?ECO_PAGE. . . . . . .    C  SEG   000024H       REL=UNIT, ALN=BYTE
+?PR?ECO_PAGE_MANAGER?ECO_PAGE . . . . .    C  SEG   0001BAH       REL=UNIT, ALN=BYTE
 _EEPROM_READ. . . . . . . . . . . . . .    C  ADDR  -------       EXT
+_MDELAY . . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
 AC. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.6   A   
 ACC . . . . . . . . . . . . . . . . . .    D  ADDR  00E0H     A   
 ADCCON. . . . . . . . . . . . . . . . .    D  ADDR  00A1H     A   
@@ -742,6 +893,8 @@ DIO7. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A
 DIO8. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
 DIO9. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
 DOUT2 . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.4   A   
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE    15
+
 DPH . . . . . . . . . . . . . . . . . .    D  ADDR  0083H     A   
 DPH0. . . . . . . . . . . . . . . . . .    D  ADDR  0083H     A   
 DPH1. . . . . . . . . . . . . . . . . .    D  ADDR  0085H     A   
@@ -750,8 +903,6 @@ DPL0. . . . . . . . . . . . . . . . . .    D  ADDR  0082H     A
 DPL1. . . . . . . . . . . . . . . . . .    D  ADDR  0084H     A   
 DPS . . . . . . . . . . . . . . . . . .    D  ADDR  0086H     A   
 DR1 . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.2   A   
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE    13
-
 DR2 . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
 DR2_CE. . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
 EA. . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.7   A   
@@ -800,7 +951,7 @@ INT1_N. . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A
 IP. . . . . . . . . . . . . . . . . . .    D  ADDR  00B8H     A   
 IT0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.0   A   
 IT1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.2   A   
-J?141 . . . . . . . . . . . . . . . . .    D  ADDR  0004H     R   SEG=?DT?ECO_PAGE_MANAGER?ECO_PAGE
+J?141 . . . . . . . . . . . . . . . . .    D  ADDR  0006H     R   SEG=?DT?ECO_PAGE_MANAGER?ECO_PAGE
 MPAGE . . . . . . . . . . . . . . . . .    D  ADDR  0092H     A   
 OV. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.2   A   
 P . . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.0   A   
@@ -810,6 +961,8 @@ P0_1. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A
 P0_2. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
 P0_3. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
 P0_4. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE    16
+
 P0_5. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
 P0_6. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
 P0_7. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
@@ -818,11 +971,10 @@ P0_DIR. . . . . . . . . . . . . . . . .    D  ADDR  0094H     A
 P1. . . . . . . . . . . . . . . . . . .    D  ADDR  0090H     A   
 P1_0. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
 P1_1. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.1   A   
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE    14
-
 P1_2. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.2   A   
 P1_ALT. . . . . . . . . . . . . . . . .    D  ADDR  0097H     A   
 P1_DIR. . . . . . . . . . . . . . . . .    D  ADDR  0096H     A   
+PAGE_INDEX?143. . . . . . . . . . . . .    D  ADDR  0002H     R   SEG=?DT?ECO_PAGE_MANAGER?ECO_PAGE
 PCON. . . . . . . . . . . . . . . . . .    D  ADDR  0087H     A   
 PS. . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.4   A   
 PSW . . . . . . . . . . . . . . . . . .    D  ADDR  00D0H     A   
@@ -856,7 +1008,7 @@ RSTREAS . . . . . . . . . . . . . . . .    D  ADDR  00B1H     A
 RXD . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
 SBUF. . . . . . . . . . . . . . . . . .    D  ADDR  0099H     A   
 SCON. . . . . . . . . . . . . . . . . .    D  ADDR  0098H     A   
-SEG?140 . . . . . . . . . . . . . . . .    D  ADDR  0002H     R   SEG=?DT?ECO_PAGE_MANAGER?ECO_PAGE
+SEG?140 . . . . . . . . . . . . . . . .    D  ADDR  0004H     R   SEG=?DT?ECO_PAGE_MANAGER?ECO_PAGE
 SM0 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.7   A   
 SM1 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.6   A   
 SM2 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.5   A   
@@ -877,6 +1029,8 @@ TCON. . . . . . . . . . . . . . . . . .    D  ADDR  0088H     A
 TEST_MODE . . . . . . . . . . . . . . .    D  ADDR  00B7H     A   
 TF0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.5   A   
 TF1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.7   A   
+AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/06/09 21:10:59 PAGE    17
+
 TF2 . . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.7   A   
 TH0 . . . . . . . . . . . . . . . . . .    D  ADDR  008CH     A   
 TH1 . . . . . . . . . . . . . . . . . .    D  ADDR  008DH     A   
@@ -886,8 +1040,6 @@ TICK_DV . . . . . . . . . . . . . . . .    D  ADDR  00B5H     A
 TL0 . . . . . . . . . . . . . . . . . .    D  ADDR  008AH     A   
 TL1 . . . . . . . . . . . . . . . . . .    D  ADDR  008BH     A   
 TL2 . . . . . . . . . . . . . . . . . .    D  ADDR  00CCH     A   
-AX51 MACRO ASSEMBLER  ECO_PAGE                                                              04/05/09 23:31:27 PAGE    15
-
 TMOD. . . . . . . . . . . . . . . . . .    D  ADDR  0089H     A   
 TR0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.4   A   
 TR1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.6   A   
