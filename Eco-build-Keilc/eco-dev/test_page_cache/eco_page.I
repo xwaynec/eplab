@@ -729,13 +729,19 @@
  
  unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + 6)<<8);
  
+ for(i=0;i<6;i++)
+ {
+  P0 ^= 0x20;
+ mdelay(200);
+ }
+ mdelay(1000);	
  
  eeprom_init();
  
  
  for(i=0;i<256;i++)
  {
- *(seg+i) = eeprom_read(((unsigned int)(ECO_PAGE_ADDR) + 3) +i);
+ *(seg+i) = eeprom_read(((unsigned int)(ECO_PAGE_ADDR & 0xFF00) + 3) +i);
  }
  
  
@@ -745,7 +751,7 @@
  ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX];
  
  
- ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + 6) << 8) + (ECO_PAGE_ADDR &0x00FF);
+ ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + 6) << 8) + (ECO_PAGE_ADDR & 0x00FF);
  
  
  ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;	
@@ -755,6 +761,7 @@
  
  
  #pragma asm
+ 
  
  
  

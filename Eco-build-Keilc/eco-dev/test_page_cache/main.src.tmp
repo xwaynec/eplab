@@ -599,21 +599,23 @@ main:
 	SUBB 	A,#00H
 	JNC  	?C0013
 ?C0014:
+; 
 ; 	mdelay(1000);	
-			; SOURCE LINE # 160
+			; SOURCE LINE # 161
 	MOV  	R7,#0E8H
 	MOV  	R6,#03H
 	LCALL	_mdelay
 ?C0016:
+; 
 ; 	while(1)
-			; SOURCE LINE # 161
-; 	{
-			; SOURCE LINE # 162
-; 		blink2();
 			; SOURCE LINE # 163
-	LCALL	blink2
-; 		rf_send(dst_addr, 3, msg, 7);
+; 	{
 			; SOURCE LINE # 164
+; 		blink4();
+			; SOURCE LINE # 165
+	LCALL	blink4
+; 		rf_send(dst_addr, 3, msg, 7);
+			; SOURCE LINE # 166
 	MOV  	?_rf_send?BYTE+04H,#00H
 	MOV  	?_rf_send?BYTE+05H,#HIGH (msg)
 	MOV  	?_rf_send?BYTE+06H,#LOW (msg)
@@ -623,19 +625,19 @@ main:
 	MOV  	R1,#LOW (dst_addr)
 	MOV  	R5,#03H
 	LCALL	_rf_send
-; 		blink4();
-			; SOURCE LINE # 165
-	LCALL	blink4
+; 		blink2();
+			; SOURCE LINE # 167
+	LCALL	blink2
 ; 		mdelay(200);	
-			; SOURCE LINE # 166
+			; SOURCE LINE # 168
 	MOV  	R7,#0C8H
 	MOV  	R6,#00H
 	LCALL	_mdelay
 ; 		blink6();
-			; SOURCE LINE # 167
+			; SOURCE LINE # 169
 	LCALL	blink6
 ; 	}
-			; SOURCE LINE # 168
+			; SOURCE LINE # 170
 	SJMP 	?C0016
 ; END OF main
 

@@ -127,14 +127,20 @@ void eco_page_manager()
 		//page fault
 		/* Move Data from EEPROM to iRAM */
 		unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET)<<8);
-		
+	
+		for(i=0;i<6;i++)
+		{
+			blink_led();
+			mdelay(200);
+		}
+		mdelay(1000);	
 		//memory page is in ram
 		eeprom_init();
 
 		//mov code from eeprom to external ram
 		for(i=0;i<256;i++)
 		{
-			*(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR) +i);
+			*(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR & 0xFF00) +i);
 		}
 		
 		//update page table to connect this physical address id with virtual address id 
@@ -144,7 +150,7 @@ void eco_page_manager()
 		ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX];
 
 		//update page address
-		ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_ADDR &0x00FF);
+		ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_ADDR & 0x00FF);
 
 		//store virtual address id 
 		ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;	
@@ -154,6 +160,7 @@ void eco_page_manager()
 
 		//jump  to function address
 		#pragma asm
+		//eco_page_function_call
 		//MOV     DPH,ECO_PAGE_ADDR
 		//MOV     DPL,ECO_PAGE_ADDR+01H
 		//LCALL        ?C?ICALL2               

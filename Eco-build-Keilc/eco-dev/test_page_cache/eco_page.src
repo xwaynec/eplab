@@ -443,9 +443,9 @@ eco_page_manager:
 ?C0006:
 	INC  	i?141+01H
 	MOV  	A,i?141+01H
-	JNZ  	?C0015
+	JNZ  	?C0018
 	INC  	i?141
-?C0015:
+?C0018:
 	XRL  	A,#0AH
 	ORL  	A,i?141
 	JNZ  	?C0004
@@ -455,10 +455,10 @@ eco_page_manager:
 			; SOURCE LINE # 107
 	MOV  	A,page_index?142+01H
 	CPL  	A
-	JNZ  	?C0016
+	JNZ  	?C0019
 	MOV  	A,page_index?142
 	CPL  	A
-?C0016:
+?C0019:
 	JZ   	?C0008
 ; 	{  
 			; SOURCE LINE # 108
@@ -543,26 +543,60 @@ eco_page_manager:
 	MOV  	A,R7
 	MOV  	seg?140,A
 	MOV  	seg?140+01H,#00H
-; 		
-; 		//memory page is in ram
-; 		eeprom_init();
-			; SOURCE LINE # 132
-	LCALL	eeprom_init
-; 
-; 		//mov code from eeprom to external ram
-; 		for(i=0;i<256;i++)
-			; SOURCE LINE # 135
+; 	
+; 		for(i=0;i<6;i++)
+			; SOURCE LINE # 131
 	CLR  	A
 	MOV  	i?141,A
 	MOV  	i?141+01H,A
 ?C0010:
 ; 		{
+			; SOURCE LINE # 132
+; 			blink_led();
+			; SOURCE LINE # 133
+	XRL  	P0,#020H
+; 			mdelay(200);
+			; SOURCE LINE # 134
+	MOV  	R7,#0C8H
+	MOV  	R6,#00H
+	LCALL	_mdelay
+; 		}
+			; SOURCE LINE # 135
+	INC  	i?141+01H
+	MOV  	A,i?141+01H
+	JNZ  	?C0020
+	INC  	i?141
+?C0020:
+	CLR  	C
+	SUBB 	A,#06H
+	MOV  	A,i?141
+	SUBB 	A,#00H
+	JC   	?C0010
+?C0011:
+; 		mdelay(1000);	
 			; SOURCE LINE # 136
-; 			*(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR) +i);
-			; SOURCE LINE # 137
-	MOV  	A,ECO_PAGE_ADDR+01H
+	MOV  	R7,#0E8H
+	MOV  	R6,#03H
+	LCALL	_mdelay
+; 		//memory page is in ram
+; 		eeprom_init();
+			; SOURCE LINE # 138
+	LCALL	eeprom_init
+; 
+; 		//mov code from eeprom to external ram
+; 		for(i=0;i<256;i++)
+			; SOURCE LINE # 141
+	CLR  	A
+	MOV  	i?141,A
+	MOV  	i?141+01H,A
+?C0013:
+; 		{
+			; SOURCE LINE # 142
+; 			*(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR & 0xFF00) +i);
+			; SOURCE LINE # 143
+	CLR  	A
 	ADD  	A,#03H
-	XCH  	A,R7
+	MOV  	R7,A
 	CLR  	A
 	ADDC 	A,ECO_PAGE_ADDR
 	XCH  	A,R7
@@ -580,21 +614,21 @@ eco_page_manager:
 	MOV  	A,R7
 	MOVX 	@DPTR,A
 ; 		}
-			; SOURCE LINE # 138
+			; SOURCE LINE # 144
 	INC  	i?141+01H
 	MOV  	A,i?141+01H
-	JNZ  	?C0017
+	JNZ  	?C0021
 	INC  	i?141
-?C0017:
+?C0021:
 	CLR  	C
 	MOV  	A,i?141
 	SUBB 	A,#01H
-	JC   	?C0010
-?C0011:
+	JC   	?C0013
+?C0014:
 ; 		
 ; 		//update page table to connect this physical address id with virtual address id 
 ; 		ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 8;
-			; SOURCE LINE # 141
+			; SOURCE LINE # 147
 	MOV  	A,ECO_PAGE_ADDR
 	MOV  	R7,A
 	MOV  	R6,ECO_PAGE_TABLE_INDEX+01H
@@ -605,7 +639,7 @@ eco_page_manager:
 ; 
 ; 		//store physical address id
 ; 		ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX];
-			; SOURCE LINE # 144
+			; SOURCE LINE # 150
 	MOV  	A,#LOW (ECO_PAGE_TABLE)
 	ADD  	A,R6
 	MOV  	R0,A
@@ -613,8 +647,8 @@ eco_page_manager:
 	MOV  	ECO_PAGE_PREV_PID,A
 ; 
 ; 		//update page address
-; 		ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_ADDR &0x00FF);
-			; SOURCE LINE # 147
+; 		ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_ADDR & 0x00FF);
+			; SOURCE LINE # 153
 	MOV  	A,ECO_PAGE_TABLE_INDEX+01H
 	ADD  	A,#06H
 	MOV  	R7,A
@@ -630,17 +664,17 @@ eco_page_manager:
 ; 
 ; 		//store virtual address id 
 ; 		ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;	
-			; SOURCE LINE # 150
+			; SOURCE LINE # 156
 	MOV  	ECO_PAGE_PREV_VID,A
 ; 
 ; 		//mov to the next index
 ; 		ECO_PAGE_TABLE_INDEX++;
-			; SOURCE LINE # 153
+			; SOURCE LINE # 159
 	INC  	ECO_PAGE_TABLE_INDEX+01H
 	MOV  	A,ECO_PAGE_TABLE_INDEX+01H
-	JNZ  	?C0018
+	JNZ  	?C0022
 	INC  	ECO_PAGE_TABLE_INDEX
-?C0018:
+?C0022:
 ; 
 ; 		//jump  to function address
 ; 		#pragma asm
@@ -669,6 +703,8 @@ eco_page_manager:
 	MOV	DPH,ECO_PAGE_ADDR
 	MOV	DPL,ECO_PAGE_ADDR+01H
 	LCALL	?C?ICALL2
+; 		//eco_page_function_call
+	  
 ; 		//MOV     DPH,ECO_PAGE_ADDR
 	  
 ; 		//MOV     DPL,ECO_PAGE_ADDR+01H
@@ -678,17 +714,17 @@ eco_page_manager:
 ; 		#pragma endasm
 ; 
 ; 	}
-			; SOURCE LINE # 162
+			; SOURCE LINE # 169
 ?C0009:
 ; 
 ; 	mdelay(1);
-			; SOURCE LINE # 164
+			; SOURCE LINE # 171
 	MOV  	R7,#01H
 	MOV  	R6,#00H
 	LCALL	_mdelay
 ; 
 ; }
-			; SOURCE LINE # 166
+			; SOURCE LINE # 173
 ?C0003:
 	RET  	
 ; END OF eco_page_manager
