@@ -81,7 +81,7 @@ def function_parse():
                 print reg_src_extern_code.group(1)
     f.close()
 
-
+    print ECO_ASM_FUNCTION
 
 #######################################
 #   
