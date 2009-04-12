@@ -18,7 +18,6 @@ char dst_addr[3] = {0xF1, 0xF1, 0xF1};
 idata char msg[7];
 
 
-extern unsigned char ECO_PAGE_SPI_CONN;
 /* rf.c
 void rf_init();
 void rf_configure(struct rf_config);
