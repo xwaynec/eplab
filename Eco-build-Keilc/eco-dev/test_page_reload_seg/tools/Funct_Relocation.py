@@ -25,8 +25,13 @@ class FunctRelocation:
         self.code_memory_end = []
         self.code_memory_length = []
         self.code_memory_segment_name = []
-        self.ECO_PAGE_SIZE = 128
-
+        
+        #eco page size
+        self.ECO_PAGE_SIZE = 128 
+        #eco reserved memory size
+        self.ECO_RESERVED_SIZE = 1024
+        
+        self.SEG_DIRECTIVE = ''
 
     def parse_code_memory(self):
         print '---------------------------'
@@ -70,14 +75,56 @@ class FunctRelocation:
         print '---------------------------'
         print 'relocate code memory'
         print '---------------------------' 
-        for l in self.code_memory_list:
-            print l
+        
+        #start from reserved size 
+        code_start_address = self.ECO_RESERVED_SIZE 
+        
+        #print self.code_memory_start
+        #print self.code_memory_end 
+        #print self.code_memory_length
+        #print self.code_memory_segment_name
 
-        print self.code_memory_start
-        print self.code_memory_end 
-        print self.code_memory_length
+        for i in range(len(self.code_memory_list)):
+            if self._check_segment(self.code_memory_segment_name[i]):
+                print '----------------------------------------'
+                print '%s can be relocated' %self.code_memory_segment_name[i]
+                if (code_start_address/self.ECO_PAGE_SIZE) != ((code_start_address + int(self.code_memory_length[i][0:-1],16))/self.ECO_PAGE_SIZE):
+                    print 'cross page line'
+                    code_start_address = (((code_start_address + int(self.code_memory_length[i][0:-1],16))/self.ECO_PAGE_SIZE) * self.ECO_PAGE_SIZE)
+                    
+                    #print 'SEGMENTS\\(' + self.code_memory_segment_name[i] + '\\(C:' + hex(code_start_address) + '\\)\\)'
+                    self.SEG_DIRECTIVE += ' SEGMENTS\\(' + self.code_memory_segment_name[i] + '\\(C:' + hex(code_start_address) + '\\)\\)'
 
-        print self.code_memory_segment_name
+                    print '%s is located at %X' %(self.code_memory_segment_name[i],code_start_address) 
+                      
+                else:
+                    print 'still in page size'
+                    
+                    #print 'SEGMENTS\\(' + self.code_memory_segment_name[i] + '\\(C:' + hex(code_start_address) + '\\)\\)'
+                    self.SEG_DIRECTIVE += ' SEGMENTS\\(' + self.code_memory_segment_name[i] + '\\(C:' + hex(code_start_address) + '\\)\\)'
+                    
+                    print '%s is located at %X' %(self.code_memory_segment_name[i],code_start_address) 
+                code_start_address = code_start_address + int(self.code_memory_length[i][0:-1],16)                 
+                 
+                print '----------------------------------------'
+ 
+        print self.SEG_DIRECTIVE
+ 
+    def _check_segment(self,s_name):
+        #print s_name 
+        if s_name.find('?C_') != -1:
+            #print '\t\t%s is system c library' %s_name
+            return False
+        elif s_name.find('?CO?') != -1:
+            #print '\t\t%s is constant data memory' %s_name
+            return False
+        else:
+            reg_int = re.search('[\?][$\d]',s_name)
+            if reg_int:
+                return False
+            elif s_name.find('ECO_PAGE') != -1:
+                return False
+            return True           
 
 if __name__ == "__main__":
     print '__main__'
