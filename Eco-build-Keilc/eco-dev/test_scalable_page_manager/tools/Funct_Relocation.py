@@ -13,10 +13,10 @@ import sys
 import os
 import re
 import shutil
-
+import math
 
 class FunctRelocation:
-    def __init__(self,lines):
+    def __init__(self,lines,page_size):
         self.lines = lines
         
         self.PATTERN_CODE = '(\w+)[\s]+(\w+)[\s]+(\w+)[\s]+([\w-]+)[\s]+([\w\.-]+)[\s]+([\w\.-]+)[\s]+([\w\.\?-]+)'
@@ -27,9 +27,12 @@ class FunctRelocation:
         self.code_memory_segment_name = []
         
         #eco page size
-        self.ECO_PAGE_SIZE = 128 
+        self.ECO_PAGE_SIZE = page_size 
+        print 'Eco page size is %d bytes' % self.ECO_PAGE_SIZE
+
         #eco reserved memory size
-        self.ECO_RESERVED_SIZE = 1280
+        #self.ECO_RESERVED_SIZE = 1280
+        self.ECO_RESERVED_SIZE = 0
         
         self.SEG_DIRECTIVE = ''
 
@@ -126,17 +129,43 @@ class FunctRelocation:
                 return False
             return True           
 
+
+
+    def calculate_reserved_space(self):
+        print 'calculate reserved space'
+        
+        temp_code_memory = 0
+ 
+        for i in range(len(self.code_memory_list)):
+            if not self._check_segment(self.code_memory_segment_name[i]):
+                print self.code_memory_segment_name[i] 
+                temp_code_memory += int(self.code_memory_length[i][0:-1],16)
+
+        
+        print 'reserved code_memory = ',temp_code_memory   
+ 
+        self.ECO_RESERVED_SIZE = int(math.ceil(temp_code_memory / float(self.ECO_PAGE_SIZE)) * self.ECO_PAGE_SIZE)
+
+        print 'self.ECO_RESERVED_SIZE = ',self.ECO_RESERVED_SIZE
+
+
+    def get_eco_page_offset(self):
+        print 'eco_page offset is %d' %(self.ECO_RESERVED_SIZE / self.ECO_PAGE_SIZE)
+        
+        
 if __name__ == "__main__":
     print '__main__'
-    
-    path = '/Users/waynec/Desktop/EPLab/Eco-build-Keilc/eco-dev/test_page_reload_seg/'
     
     file = open(sys.argv[1],'r')
     lines = file.readlines()
 
-    func_relocate = FunctRelocation(lines)
+    func_relocate = FunctRelocation(lines,int(sys.argv[2]))
 
     func_relocate.parse_code_memory()
  
-    func_relocate.relocate_code_memory() 
+    func_relocate.calculate_reserved_space()
+
+    func_relocate.get_eco_page_offset()
+
+    #func_relocate.relocate_code_memory() 
     

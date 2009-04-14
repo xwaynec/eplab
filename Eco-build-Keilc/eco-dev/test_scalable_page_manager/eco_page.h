@@ -22,7 +22,6 @@
 #include "eeprom/eeprom.h"
 
 #define EEPROM_HEADER 3
-#define ECO_PAGE_ADDR_OFFSET        6
 #define ECO_ADDR_SHIFT(x)       ((unsigned int)(x) + 3)
 
 

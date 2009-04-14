@@ -16,6 +16,7 @@
 #include "eeprom/eeprom.h"
 
 #define ECO_PAGE_SIZE 128
+#define ECO_PAGE_ADDR_OFFSET	10 
 
 #if ECO_PAGE_SIZE == 64
 	
@@ -55,7 +56,7 @@
 
 #endif
 
-unsigned int ECO_PAGE_TABLE_INDEX;
+unsigned char ECO_PAGE_TABLE_INDEX;
 
 unsigned int ECO_PAGE_ADDR;
 
@@ -219,15 +220,15 @@ void eco_page_manager()
 	//mdelay(1000);
 	
 	//if page id is the same with the last page id
-	/*if((ECO_PAGE_ADDR >> ECO_PAGE_SHIFT) == ECO_PAGE_PREV_PID)
+	if((ECO_PAGE_ADDR >> ECO_PAGE_SHIFT) == ECO_PAGE_PREV_PID)
 	{
 		//virtual address id + function offset
 		ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << 8) + (ECO_PAGE_ADDR & 0x00FF);
 		#pragma asm
-		//eco_page_function_call	
+		//eco_page_function_call
 		#pragma endasm
 		return ;
-	}*/	
+	}	
 				
 	//Check Table   
 	for(i=0;i<ECO_PAGE_ENTRY;i++)
@@ -286,7 +287,7 @@ void eco_page_manager()
 
 		//mov to the next index
 		ECO_PAGE_TABLE_INDEX++;
-
+			
 		//jump  to function address
 		#pragma asm
 		//eco_page_function_call
