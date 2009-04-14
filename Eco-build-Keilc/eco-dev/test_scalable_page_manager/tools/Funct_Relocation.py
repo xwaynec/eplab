@@ -29,7 +29,7 @@ class FunctRelocation:
         #eco page size
         self.ECO_PAGE_SIZE = 128 
         #eco reserved memory size
-        self.ECO_RESERVED_SIZE = 1024
+        self.ECO_RESERVED_SIZE = 1280
         
         self.SEG_DIRECTIVE = ''
 
@@ -112,7 +112,7 @@ class FunctRelocation:
  
     def _check_segment(self,s_name):
         #print s_name 
-        if s_name.find('?C_') != -1:
+        if s_name.find('?C_') != -1 or s_name.find('?C?') != -1:
             #print '\t\t%s is system c library' %s_name
             return False
         elif s_name.find('?CO?') != -1:
