@@ -970,7 +970,6 @@
  idata char msg[7];
  
  
- extern unsigned char ECO_PAGE_SPI_CONN;
 
 
 
