@@ -160,6 +160,11 @@ class FunctCall_Relocation:
         f.close()
         f_out.close()
                
+    #######################################
+    #   
+    #   translate function call
+    #
+    #######################################
     def translate_function_call(self):
         print '---------------------------'
         print 'translate function call'

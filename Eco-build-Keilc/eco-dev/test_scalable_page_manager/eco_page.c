@@ -16,7 +16,7 @@
 #include "eeprom/eeprom.h"
 
 #define ECO_PAGE_SIZE 128
-#define ECO_PAGE_ADDR_OFFSET	10 
+#define ECO_PAGE_ADDR_OFFSET	12	
 
 #if ECO_PAGE_SIZE == 64
 	
@@ -24,7 +24,7 @@
 	#define ECO_PAGE_SHIFT	6
 	#define ECO_PAGE_MASK	0x003F
 
-	unsigned int idata ECO_PAGE_TABLE[48] = {0};
+	unsigned int idata ECO_PAGE_TABLE[64-ECO_PAGE_ADDR_OFFSET] = {0};
 	//Eco page virtual address id
 	unsigned int ECO_PAGE_PREV_VID;
 	//Eco page physical address id 
@@ -36,7 +36,8 @@
 	#define ECO_PAGE_SHIFT	7
 	#define ECO_PAGE_MASK	0x007F
 
-	unsigned int idata ECO_PAGE_TABLE[24] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
+	//unsigned int idata ECO_PAGE_TABLE[32-ECO_PAGE_ADDR_OFFSET] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
+	unsigned int idata ECO_PAGE_TABLE[32-ECO_PAGE_ADDR_OFFSET];
 	//Eco page virtual address id
 	unsigned int ECO_PAGE_PREV_VID;
 	//Eco page physical address id 
@@ -48,7 +49,7 @@
 	#define ECO_PAGE_SHIFT	8	
 	#define ECO_PAGE_MASK	0x00FF
 
-	unsigned int ECO_PAGE_TABLE[12] = {1,2,3,4,5,6,7,8,9,10,11,12};
+	unsigned int ECO_PAGE_TABLE[16-ECO_PAGE_ADDR_OFFSET];
 	//Eco page virtual address id
 	unsigned char ECO_PAGE_PREV_VID;
 	//Eco page physical address id 
