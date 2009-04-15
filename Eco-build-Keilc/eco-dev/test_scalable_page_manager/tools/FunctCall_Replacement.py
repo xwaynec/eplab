@@ -18,14 +18,12 @@ import shutil
 
 
 class FunctCall_Relocation:
-   
- 
     def __init__(self,src_file):
         self.src_file = src_file 
         self.out_file = src_file
 
-
-        self.ECO_UTILITY_FUNC = ['mdelay','eeprom_init','?C?IMUL','?C_STARTUP','store_cpu_rate','eco_page_init','rf_configure','serial_init','main','rf_init']
+        #self.ECO_UTILITY_FUNC = ['mdelay','eeprom_init','?C?IMUL','?C_STARTUP','store_cpu_rate','eco_page_init','rf_configure','serial_init','main','rf_init']
+        self.ECO_UTILITY_FUNC = ['eeprom_init','?C?IMUL','?C_STARTUP','store_cpu_rate','eco_page_init','rf_configure','serial_init','main','rf_init']
 
         #get source file name
         self.PATTERN_SRC_NAME = 'NAME\s([\w]+)'
@@ -39,7 +37,6 @@ class FunctCall_Relocation:
         #translate function call
         self.PATTERN_FUNC_PARAMETER = '\s+MOV[\s]+R([\d]),(.+)'
         
-
         self.asm_valid_funcs = []
     
     #######################################
@@ -77,7 +74,6 @@ class FunctCall_Relocation:
         print 'self.SRC_NAME = ',self.SRC_NAME       
          
     
-
     def _make_asm_function(self):
         for i in range(len(self.ECO_UTILITY_FUNC)):
             self.ECO_UTILITY_FUNC.append('_' + self.ECO_UTILITY_FUNC[i])
