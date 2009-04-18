@@ -20,6 +20,7 @@ import shutil
 class SRCCall_Relocation:
     def __init__(self,src_file):
         self.src_file = src_file
+        self.out_file = src_file
         
         #self.ECO_UTILITY_FUNC = ['mdelay','eeprom_init','?C?IMUL','?C_STARTUP','store_cpu_rate','eco_page_init','rf_configure','serial_init','main','rf_init']
         self.ECO_UTILITY_FUNC = []
@@ -131,7 +132,7 @@ class SRCCall_Relocation:
         #comment_template = string.Template('${func}\(([\w\s,]*)\);')
         #comment_template = string.Template('[\s]${func}\(([\w\s,]*)\);')
         #comment_template = string.Template(';[=\(\w\s]*${func}\(([\w\s,]*)\)')
-        comment_template = string.Template(';[=\(\w\s]*${func}\(([\w\s\>\<&,]*)\)')
+        comment_template = string.Template(';[=\(\w\s]*${func}\(([\+\*\w\s\>\<&,]*)\)')
         
         lcall_template = string.Template('LCALL[\s]+(${func})')
 
@@ -169,11 +170,13 @@ class SRCCall_Relocation:
  
         #for line in asm_lines:
         for line_index in range(len(asm_lines)):
+            #find valid LCALL function
             for valid_func in self.asm_valid_lcall:
 
                 reg_lcall_function = re.search(valid_func,asm_lines[line_index])
 
                 if reg_lcall_function and asm_lines[line_index].find('?C?') == -1:
+                    
                     #print 'reg_lcall_function.group(1) = ',reg_lcall_function.group(1)
                     modify_end_index = line_index
                     for i in range(line_index,0,-1):
@@ -185,14 +188,20 @@ class SRCCall_Relocation:
                                 parameter_flag = False
                             modify_start_index = i
                             break
- 
+                    
+                    #intern_lcall_flag = false
+                     
                     if parameter_flag:
                         print 'YES modify_start_index = %d and modify_end_index = %d' %(modify_start_index,modify_end_index)
                         parameter_index = 0
-                        for index in range(modify_start_index,modify_end_index+1):
+                        for index in range(modify_end_index,modify_start_index,-1):
                             
                             #self.PATTERN_FUNC_PARAMETER = '\s+MOV[\s]+R([\d]),(.+)'
                             reg_func_para = re.search(self.PATTERN_FUNC_PARAMETER,asm_lines[index])
+
+                            if str(asm_lines[index]).find('LCALL'):
+                                print ' \n\n556655665566',asm_lines[index]  
+                                break 
                             if reg_func_para:
                                 #print '\t;' + asm_lines[index]
                                 #print '\tMOV\tR0,#LOW (ECO_PAGE_REGISTER%s)\n' %reg_func_para.group(1)
@@ -205,34 +214,46 @@ class SRCCall_Relocation:
                                 asm_lines.pop(index)
                                 asm_lines.insert(index,temp)
                                 
-                        temp = '\t;YES----------start----------\r\n' 
-                        temp += ';' + asm_lines[modify_end_index] + '\r\n'
-                        temp += '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)\r\n' %reg_lcall_function.group(1)
-                        temp += '\tMOV\tECO_PAGE_ADDR,#LOW (%s)\r\n' %reg_lcall_function.group(1)
-                        temp += '\tLCALL\teco_page_manager\r\n'
-                        temp += '\t;YES----------end----------\n\n'
-                        asm_lines.pop(modify_end_index) 
-                        asm_lines.insert(modify_end_index,temp)
+                        #temp = '\t;YES----------start----------\r\n' 
+                        #temp += ';' + asm_lines[modify_end_index] + '\r\n'
+                        #temp += '\tMOV\tECO_PAGE_SPI_CONN,SPI_CTRL\r\n'
+                        #temp += '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)\r\n' %reg_lcall_function.group(1)
+                        #temp += '\tMOV\tECO_PAGE_ADDR,#LOW (%s)\r\n' %reg_lcall_function.group(1)
+                        #temp += '\tLCALL\teco_page_manager\r\n'
+                        #temp += '\t;YES----------end----------\n\n'
+                        #asm_lines.pop(modify_end_index) 
+                        #asm_lines.insert(modify_end_index,temp)
 
-                        for index in range(modify_start_index,modify_end_index+1):
-                            print asm_lines[index] 
+                        #for index in range(modify_start_index,modify_end_index+1):
+                        #    print asm_lines[index] 
 
                         parameter_flag = False
                     
-                    else:
-                        print 'NO modify_start_index = %d and modify_end_index = %d' %(modify_start_index,modify_end_index)
-                        temp = '\t;NO----------start----------\r\n' 
-                        temp += ';' + asm_lines[modify_end_index] + '\r\n'
-                        temp += '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)\r\n' %reg_lcall_function.group(1)
-                        temp += '\tMOV\tECO_PAGE_ADDR,#LOW (%s)\r\n' %reg_lcall_function.group(1)
-                        temp += '\tLCALL\teco_page_manager\r\n'
-                        temp += '\t;NO----------end----------\n\n'
-                        asm_lines.pop(modify_end_index) 
-                        asm_lines.insert(modify_end_index,temp)
+                    #else:
+                    #    print 'NO modify_start_index = %d and modify_end_index = %d' %(modify_start_index,modify_end_index)
+                    #    temp = '\t;NO----------start----------\r\n' 
+                    #    temp += ';' + asm_lines[modify_end_index] + '\r\n'
+                    #    temp += '\tMOV\tECO_PAGE_SPI_CONN,SPI_CTRL\r\n'
+                    #    temp += '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)\r\n' %reg_lcall_function.group(1)
+                    #    temp += '\tMOV\tECO_PAGE_ADDR,#LOW (%s)\r\n' %reg_lcall_function.group(1)
+                    #    temp += '\tLCALL\teco_page_manager\r\n'
+                    #    temp += '\t;NO----------end----------\n\n'
+                    #    asm_lines.pop(modify_end_index) 
+                    #    asm_lines.insert(modify_end_index,temp)
                         
-                        for index in range(modify_start_index,modify_end_index+1):
-                            print asm_lines[index] 
+                        #for index in range(modify_start_index,modify_end_index+1):
+                        #    print asm_lines[index] 
                         
+                    temp = '\t;LCALL----------start----------\r\n' 
+                    temp += ';' + asm_lines[modify_end_index] + '\r\n'
+                    temp += '\tMOV\tECO_PAGE_SPI_CONN,SPI_CTRL\r\n'
+                    temp += '\tMOV\tECO_PAGE_ADDR,#HIGH (%s)\r\n' %reg_lcall_function.group(1)
+                    temp += '\tMOV\tECO_PAGE_ADDR,#LOW (%s)\r\n' %reg_lcall_function.group(1)
+                    temp += '\tLCALL\teco_page_manager\r\n'
+                    temp += '\t;LCALL----------end----------\n\n'
+                    asm_lines.pop(modify_end_index) 
+                    asm_lines.insert(modify_end_index,temp)
+
         self.src_lines = asm_lines
 
     #######################################
@@ -247,6 +268,17 @@ class SRCCall_Relocation:
         for line in self.src_lines:
             print line
 
+    #######################################
+    #
+    #   store asm source code 
+    #
+    #######################################
+    def save_asm_source(self):
+        f = open(self.out_file,'w')       
+        for line in self.src_lines:
+            f.writelines(line)
+        
+        f.close()
 
 if __name__ == '__main__':
     src_file = sys.argv[1]
@@ -263,4 +295,6 @@ if __name__ == '__main__':
 
     src.parse_lcall_function()
     
-    #src.print_asm_source() 
+    src.print_asm_source() 
+   
+    #src.save_asm_source()

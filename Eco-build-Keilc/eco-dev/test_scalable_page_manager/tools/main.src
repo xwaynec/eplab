@@ -192,6 +192,16 @@ REGX_MSB	DATA	0ABH
 	PUBLIC	blink6
 	PUBLIC	blink4
 	PUBLIC	blink2
+	EXTRN   CODE (eco_page_manager)
+    EXTRN   DATA (ECO_PAGE_ADDR)
+    EXTRN   DATA (ECO_PAGE_SPI_CONN)
+    EXTRN   IDATA (ECO_PAGE_REGISTER1)
+    EXTRN   IDATA (ECO_PAGE_REGISTER2)
+    EXTRN   IDATA (ECO_PAGE_REGISTER3)
+    EXTRN   IDATA (ECO_PAGE_REGISTER4)
+    EXTRN   IDATA (ECO_PAGE_REGISTER5)
+    EXTRN   IDATA (ECO_PAGE_REGISTER6)
+    EXTRN   IDATA (ECO_PAGE_REGISTER7)
 
 	RSEG  ?DT?main?MAIN
 ?main?BYTE:
@@ -370,9 +380,27 @@ blink2:
 	XRL  	P0,#020H
 ; 		mdelay(400);
 			; SOURCE LINE # 106
-	MOV  	R7,#090H
-	MOV  	R6,#01H
-	LCALL	_mdelay
+	;----------start----------
+	;	MOV  	R7,#090H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
+	MOV	@R0,#090H
+	;----------end----------
+	;----------start----------
+	;	MOV  	R6,#01H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER6)
+	MOV	@R0,#01H
+	;----------end----------
+	;YES----------start----------
+;	LCALL	_mdelay
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (_mdelay)
+	MOV	ECO_PAGE_ADDR,#LOW (_mdelay)
+	LCALL	eco_page_manager
+	;YES----------end----------
+
 ; 	}
 			; SOURCE LINE # 107
 	INC  	i?040+01H
@@ -417,9 +445,27 @@ blink4:
 	XRL  	P0,#020H
 ; 		mdelay(400);
 			; SOURCE LINE # 116
-	MOV  	R7,#090H
-	MOV  	R6,#01H
-	LCALL	_mdelay
+	;----------start----------
+	;	MOV  	R7,#090H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
+	MOV	@R0,#090H
+	;----------end----------
+	;----------start----------
+	;	MOV  	R6,#01H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER6)
+	MOV	@R0,#01H
+	;----------end----------
+	;YES----------start----------
+;	LCALL	_mdelay
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (_mdelay)
+	MOV	ECO_PAGE_ADDR,#LOW (_mdelay)
+	LCALL	eco_page_manager
+	;YES----------end----------
+
 ; 	}	
 			; SOURCE LINE # 117
 	INC  	i?141+01H
@@ -464,9 +510,27 @@ blink6:
 	XRL  	P0,#020H
 ; 		mdelay(400);
 			; SOURCE LINE # 126
-	MOV  	R7,#090H
-	MOV  	R6,#01H
-	LCALL	_mdelay
+	;----------start----------
+	;	MOV  	R7,#090H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
+	MOV	@R0,#090H
+	;----------end----------
+	;----------start----------
+	;	MOV  	R6,#01H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER6)
+	MOV	@R0,#01H
+	;----------end----------
+	;YES----------start----------
+;	LCALL	_mdelay
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (_mdelay)
+	MOV	ECO_PAGE_ADDR,#LOW (_mdelay)
+	LCALL	eco_page_manager
+	;YES----------end----------
+
 ; 	}	
 			; SOURCE LINE # 127
 	INC  	i?242+01H
@@ -506,9 +570,27 @@ main:
 	MOV  	i?344+01H,A
 ; 	store_cpu_rate(16);
 			; SOURCE LINE # 135
-	MOV  	R7,#010H
-	MOV  	R6,A
-	LCALL	_store_cpu_rate
+	;----------start----------
+	;	MOV  	R7,#010H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
+	MOV	@R0,#010H
+	;----------end----------
+	;----------start----------
+	;	MOV  	R6,A
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER6)
+	MOV	@R0,A
+	;----------end----------
+	;YES----------start----------
+;	LCALL	_store_cpu_rate
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (_store_cpu_rate)
+	MOV	ECO_PAGE_ADDR,#LOW (_store_cpu_rate)
+	LCALL	eco_page_manager
+	;YES----------end----------
+
 ; 	P0_DIR &= ~0x28;
 			; SOURCE LINE # 136
 	ANL  	P0_DIR,#0D7H
@@ -517,21 +599,78 @@ main:
 	ANL  	P0_ALT,#0D7H
 ; 	rf_init();
 			; SOURCE LINE # 138
-	LCALL	rf_init
+	;NO----------start----------
+;	LCALL	rf_init
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (rf_init)
+	MOV	ECO_PAGE_ADDR,#LOW (rf_init)
+	LCALL	eco_page_manager
+	;NO----------end----------
+
 ; 	rf_configure(cfg);
 			; SOURCE LINE # 139
-	MOV  	R3,cfg
-	MOV  	R2,cfg+01H
-	MOV  	R1,cfg+02H
-	LCALL	_rf_configure
+	;----------start----------
+	;	MOV  	R3,cfg
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER3)
+	MOV	@R0,cfg
+	;----------end----------
+	;----------start----------
+	;	MOV  	R2,cfg+01H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER2)
+	MOV	@R0,cfg+01H
+	;----------end----------
+	;----------start----------
+	;	MOV  	R1,cfg+02H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER1)
+	MOV	@R0,cfg+02H
+	;----------end----------
+	;YES----------start----------
+;	LCALL	_rf_configure
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (_rf_configure)
+	MOV	ECO_PAGE_ADDR,#LOW (_rf_configure)
+	LCALL	eco_page_manager
+	;YES----------end----------
+
 ; 	serial_init(19200);	
 			; SOURCE LINE # 140
-	MOV  	R7,#00H
-	MOV  	R6,#04BH
-	LCALL	_serial_init
+	;----------start----------
+	;	MOV  	R7,#00H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
+	MOV	@R0,#00H
+	;----------end----------
+	;----------start----------
+	;	MOV  	R6,#04BH
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER6)
+	MOV	@R0,#04BH
+	;----------end----------
+	;YES----------start----------
+;	LCALL	_serial_init
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (_serial_init)
+	MOV	ECO_PAGE_ADDR,#LOW (_serial_init)
+	LCALL	eco_page_manager
+	;YES----------end----------
+
 ; 	eco_page_init();
 			; SOURCE LINE # 141
-	LCALL	eco_page_init
+	;NO----------start----------
+;	LCALL	eco_page_init
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (eco_page_init)
+	MOV	ECO_PAGE_ADDR,#LOW (eco_page_init)
+	LCALL	eco_page_manager
+	;NO----------end----------
+
 ; 	
 ; 	//long_function(4,6,8,4);
 ; 
@@ -578,9 +717,27 @@ main:
 	XRL  	P0,#020H
 ; 		mdelay(300);
 			; SOURCE LINE # 158
-	MOV  	R7,#02CH
-	MOV  	R6,#01H
-	LCALL	_mdelay
+	;----------start----------
+	;	MOV  	R7,#02CH
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
+	MOV	@R0,#02CH
+	;----------end----------
+	;----------start----------
+	;	MOV  	R6,#01H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER6)
+	MOV	@R0,#01H
+	;----------end----------
+	;YES----------start----------
+;	LCALL	_mdelay
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (_mdelay)
+	MOV	ECO_PAGE_ADDR,#LOW (_mdelay)
+	LCALL	eco_page_manager
+	;YES----------end----------
+
 ; 	}
 			; SOURCE LINE # 159
 	DEC  	idx?343
@@ -592,9 +749,27 @@ main:
 ; 
 ; 	mdelay(1000);
 			; SOURCE LINE # 161
-	MOV  	R7,#0E8H
-	MOV  	R6,#03H
-	LCALL	_mdelay
+	;----------start----------
+	;	MOV  	R7,#0E8H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
+	MOV	@R0,#0E8H
+	;----------end----------
+	;----------start----------
+	;	MOV  	R6,#03H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER6)
+	MOV	@R0,#03H
+	;----------end----------
+	;YES----------start----------
+;	LCALL	_mdelay
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (_mdelay)
+	MOV	ECO_PAGE_ADDR,#LOW (_mdelay)
+	LCALL	eco_page_manager
+	;YES----------end----------
+
 ?C0016:
 ; 
 ; 	while(1)
@@ -603,29 +778,99 @@ main:
 			; SOURCE LINE # 164
 ; 		blink4();
 			; SOURCE LINE # 165
-	LCALL	blink4
+	;NO----------start----------
+;	LCALL	blink4
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (blink4)
+	MOV	ECO_PAGE_ADDR,#LOW (blink4)
+	LCALL	eco_page_manager
+	;NO----------end----------
+
 ; 		rf_send(dst_addr, 3, msg, 7);
 			; SOURCE LINE # 166
 	MOV  	?_rf_send?BYTE+04H,#00H
 	MOV  	?_rf_send?BYTE+05H,#HIGH (msg)
 	MOV  	?_rf_send?BYTE+06H,#LOW (msg)
 	MOV  	?_rf_send?BYTE+07H,#07H
-	MOV  	R3,#00H
-	MOV  	R2,#HIGH (dst_addr)
-	MOV  	R1,#LOW (dst_addr)
-	MOV  	R5,#03H
-	LCALL	_rf_send
+	;----------start----------
+	;	MOV  	R3,#00H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER3)
+	MOV	@R0,#00H
+	;----------end----------
+	;----------start----------
+	;	MOV  	R2,#HIGH (dst_addr)
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER2)
+	MOV	@R0,#HIGH (dst_addr)
+	;----------end----------
+	;----------start----------
+	;	MOV  	R1,#LOW (dst_addr)
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER1)
+	MOV	@R0,#LOW (dst_addr)
+	;----------end----------
+	;----------start----------
+	;	MOV  	R5,#03H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER5)
+	MOV	@R0,#03H
+	;----------end----------
+	;YES----------start----------
+;	LCALL	_rf_send
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (_rf_send)
+	MOV	ECO_PAGE_ADDR,#LOW (_rf_send)
+	LCALL	eco_page_manager
+	;YES----------end----------
+
 ; 		blink2();
 			; SOURCE LINE # 167
-	LCALL	blink2
+	;NO----------start----------
+;	LCALL	blink2
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (blink2)
+	MOV	ECO_PAGE_ADDR,#LOW (blink2)
+	LCALL	eco_page_manager
+	;NO----------end----------
+
 ; 		mdelay(200);	
 			; SOURCE LINE # 168
-	MOV  	R7,#0C8H
-	MOV  	R6,#00H
-	LCALL	_mdelay
+	;----------start----------
+	;	MOV  	R7,#0C8H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
+	MOV	@R0,#0C8H
+	;----------end----------
+	;----------start----------
+	;	MOV  	R6,#00H
+
+	MOV	R0,#LOW (ECO_PAGE_REGISTER6)
+	MOV	@R0,#00H
+	;----------end----------
+	;YES----------start----------
+;	LCALL	_mdelay
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (_mdelay)
+	MOV	ECO_PAGE_ADDR,#LOW (_mdelay)
+	LCALL	eco_page_manager
+	;YES----------end----------
+
 ; 		blink6();
 			; SOURCE LINE # 169
-	LCALL	blink6
+	;NO----------start----------
+;	LCALL	blink6
+
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (blink6)
+	MOV	ECO_PAGE_ADDR,#LOW (blink6)
+	LCALL	eco_page_manager
+	;NO----------end----------
+
 ; 	}
 			; SOURCE LINE # 170
 	SJMP 	?C0016
