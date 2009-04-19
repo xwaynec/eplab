@@ -31,6 +31,7 @@ class SRCCall_Relocation:
 
         #parse function call
         self.PATTERN_SRC_FUNC = '[\?]PR[\?]([\w]+)[\?]([\w]+)[\s]+SEGMENT[\s]+CODE'
+        self.PATTERN_SRC_REENTRANT_FUNC = '[\?]PR[\?][_][\?]([\w]+)[\?]([\w]+)[\s]+SEGMENT[\s]+CODE'
         self.PATTERN_SRC_EXTERN_CODE = 'EXTRN[\s]+CODE[\s]+\(([\?\w]+)\)'
         self.ECO_ASM_FUNC = []
     
@@ -111,6 +112,12 @@ class SRCCall_Relocation:
                 if not reg_src_extern_code.group(1) in self.ECO_UTILITY_FUNC:
                     self.ECO_ASM_FUNC.append(str(reg_src_extern_code.group(1)).replace('?','\?'))
                     print reg_src_extern_code.group(1)
+            
+            reg_src_reentrant_func = re.search(self.PATTERN_SRC_REENTRANT_FUNC,asm_line)
+            if reg_src_reentrant_func:
+                if not reg_src_reentrant_func.group(1) in self.ECO_UTILITY_FUNC:
+                    self.ECO_ASM_FUNC.append('_\?' + reg_src_reentrant_func.group(1))
+                    print '_\?' + reg_src_reentrant_func.group(1)
 
         f.close()
 
@@ -194,14 +201,14 @@ class SRCCall_Relocation:
                     if parameter_flag:
                         print 'YES modify_start_index = %d and modify_end_index = %d' %(modify_start_index,modify_end_index)
                         parameter_index = 0
-                        for index in range(modify_end_index,modify_start_index,-1):
+                        for index in range(modify_end_index-1,modify_start_index-1,-1):
                             
                             #self.PATTERN_FUNC_PARAMETER = '\s+MOV[\s]+R([\d]),(.+)'
                             reg_func_para = re.search(self.PATTERN_FUNC_PARAMETER,asm_lines[index])
 
-                            if str(asm_lines[index]).find('LCALL'):
-                                print ' \n\n556655665566',asm_lines[index]  
+                            if str(asm_lines[index]).find('LCALL') != -1:
                                 break 
+
                             if reg_func_para:
                                 #print '\t;' + asm_lines[index]
                                 #print '\tMOV\tR0,#LOW (ECO_PAGE_REGISTER%s)\n' %reg_func_para.group(1)
