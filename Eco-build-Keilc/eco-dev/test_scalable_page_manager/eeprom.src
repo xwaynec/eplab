@@ -242,27 +242,9 @@ eeprom_init:
 ; 	spi_init(SPI_CONN_EEPROM, SPI_CLK_D8);
 			; SOURCE LINE # 44
 	CLR  	A
-	;----------start----------
-	;	MOV  	R5,A
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER5)
-	MOV	@R0,A
-	;----------end----------
-	;----------start----------
-	;	MOV  	R7,#01H
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,#01H
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_init
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_init)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_init)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R5,A
+	MOV  	R7,#01H
+	LCALL	_spi_init
 ; 	/* set p0.0(EEPROM CSN) to output mode */
 ; 	P0_DIR &= ~0x01;
 			; SOURCE LINE # 46
@@ -288,40 +270,14 @@ eeprom_status:
 	CLR  	P0_0
 ; 	spi_write_then_read(EE_RDSR);	/* send read-status-register
 			; SOURCE LINE # 54
-	;----------start----------
-	;	MOV  	R7,#05H
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,#05H
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,#05H
+	LCALL	_spi_write_then_read
 ; 					   instruction to the eeprom */
 ; 	byte = spi_write_then_read(0);
 			; SOURCE LINE # 56
 	CLR  	A
-	;----------start----------
-	;	MOV  	R7,A
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,A
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,A
+	LCALL	_spi_write_then_read
 ;---- Variable 'byte?140' assigned to Register 'R7' ----
 ; 	EE_CS = 1;	/* inactive eeprom */
 			; SOURCE LINE # 57
@@ -354,15 +310,7 @@ _eeprom_write:
 ?C0003:
 ; 	while (eeprom_status() & 0x01)	/* wait until write cycle done */
 			; SOURCE LINE # 68
-	;LCALL----------start----------
-;	LCALL	eeprom_status
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (eeprom_status)
-	MOV	ECO_PAGE_ADDR,#LOW (eeprom_status)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	LCALL	eeprom_status
 	MOV  	A,R7
 	JB   	ACC.0,?C0003
 ?C0004:
@@ -372,21 +320,8 @@ _eeprom_write:
 	CLR  	P0_0
 ; 	spi_write_then_read(EE_WREN);	/* write-enable instruction */
 			; SOURCE LINE # 71
-	;----------start----------
-	;	MOV  	R7,#06H
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,#06H
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,#06H
+	LCALL	_spi_write_then_read
 ; 	EE_CS = 1;	/* inactive eeprom */
 			; SOURCE LINE # 72
 	SETB 	P0_0
@@ -395,74 +330,22 @@ _eeprom_write:
 	CLR  	P0_0
 ; 	spi_write_then_read(EE_WRITE);	/* write instruction */
 			; SOURCE LINE # 74
-	;----------start----------
-	;	MOV  	R7,#02H
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,#02H
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,#02H
+	LCALL	_spi_write_then_read
 ; 	spi_write_then_read(addr >> 8);	/* higher byte of addr */
 			; SOURCE LINE # 75
 	MOV  	A,addr?241
-	;----------start----------
-	;	MOV  	R7,A
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,A
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,A
+	LCALL	_spi_write_then_read
 ; 	spi_write_then_read(addr & 0xff);	/* lower byte */
 			; SOURCE LINE # 76
-	;----------start----------
-	;	MOV  	R7,addr?241+01H
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,addr?241+01H
-	;----------end----------
+	MOV  	R7,addr?241+01H
 	MOV  	A,addr?241+01H
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	LCALL	_spi_write_then_read
 ; 	spi_write_then_read(byte);	/* write data */
 			; SOURCE LINE # 77
-	;----------start----------
-	;	MOV  	R7,byte?242
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,byte?242
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,byte?242
+	LCALL	_spi_write_then_read
 ; 	EE_CS = 1;	/* inactive eeprom */
 			; SOURCE LINE # 78
 	SETB 	P0_0
@@ -471,21 +354,8 @@ _eeprom_write:
 	CLR  	P0_0
 ; 	spi_write_then_read(EE_WRDI);	/* write-disable instruction */
 			; SOURCE LINE # 80
-	;----------start----------
-	;	MOV  	R7,#04H
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,#04H
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,#04H
+	LCALL	_spi_write_then_read
 ; 	EE_CS = 1;	/* inactive eeprom */
 			; SOURCE LINE # 81
 	SETB 	P0_0
@@ -515,15 +385,7 @@ _eeprom_read:
 ?C0006:
 ; 	while (eeprom_status() & 0x01)	/* wait until write cycle done */
 			; SOURCE LINE # 90
-	;LCALL----------start----------
-;	LCALL	eeprom_status
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (eeprom_status)
-	MOV	ECO_PAGE_ADDR,#LOW (eeprom_status)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	LCALL	eeprom_status
 	MOV  	A,R7
 	JB   	ACC.0,?C0006
 ?C0007:
@@ -533,75 +395,23 @@ _eeprom_read:
 	CLR  	P0_0
 ; 	spi_write_then_read(EE_READ);	/* read instruction */
 			; SOURCE LINE # 93
-	;----------start----------
-	;	MOV  	R7,#03H
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,#03H
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,#03H
+	LCALL	_spi_write_then_read
 ; 	spi_write_then_read(addr >> 8);	/* higher byte of addr */
 			; SOURCE LINE # 94
 	MOV  	A,addr?343
-	;----------start----------
-	;	MOV  	R7,A
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,A
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,A
+	LCALL	_spi_write_then_read
 ; 	spi_write_then_read(addr & 0xff);	/* lower byte */
 			; SOURCE LINE # 95
-	;----------start----------
-	;	MOV  	R7,addr?343+01H
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,addr?343+01H
-	;----------end----------
+	MOV  	R7,addr?343+01H
 	MOV  	A,addr?343+01H
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	LCALL	_spi_write_then_read
 ; 	byte = spi_write_then_read(0); /* read data */
 			; SOURCE LINE # 96
 	CLR  	A
-	;----------start----------
-	;	MOV  	R7,A
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,A
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,A
+	LCALL	_spi_write_then_read
 	MOV  	byte?344,R7
 ; 	EE_CS = 1;	/* inactive eeprom */
 			; SOURCE LINE # 97
@@ -627,15 +437,7 @@ flash_erase_all:
 ?C0009:
 ; 	while (eeprom_status() & 0x01)	/* wait until write cycle done */
 			; SOURCE LINE # 104
-	;LCALL----------start----------
-;	LCALL	eeprom_status
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (eeprom_status)
-	MOV	ECO_PAGE_ADDR,#LOW (eeprom_status)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	LCALL	eeprom_status
 	MOV  	A,R7
 	JB   	ACC.0,?C0009
 ?C0010:
@@ -645,21 +447,8 @@ flash_erase_all:
 	CLR  	P0_0
 ; 	spi_write_then_read(EE_WREN);	/* write-enable instruction */
 			; SOURCE LINE # 107
-	;----------start----------
-	;	MOV  	R7,#06H
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,#06H
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,#06H
+	LCALL	_spi_write_then_read
 ; 	EE_CS = 1;	/* start erase operation */
 			; SOURCE LINE # 108
 	SETB 	P0_0
@@ -668,21 +457,8 @@ flash_erase_all:
 	CLR  	P0_0
 ; 	spi_write_then_read(ERASE_ALL);	/* read instruction */
 			; SOURCE LINE # 110
-	;----------start----------
-	;	MOV  	R7,#062H
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,#062H
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,#062H
+	LCALL	_spi_write_then_read
 ; 	EE_CS = 1;	/* start erase operation */
 			; SOURCE LINE # 111
 	SETB 	P0_0
@@ -696,21 +472,8 @@ flash_erase_all:
 	CLR  	P0_0
 ; 	spi_write_then_read(EE_WREN);	/* write-enable instruction */
 			; SOURCE LINE # 116
-	;----------start----------
-	;	MOV  	R7,#06H
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,#06H
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,#06H
+	LCALL	_spi_write_then_read
 ; 	EE_CS = 1;	/* start erase operation */
 			; SOURCE LINE # 117
 	SETB 	P0_0

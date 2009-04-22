@@ -267,27 +267,9 @@ rf_init:
 ; 	spi_init(SPI_CONN_RADIO, SPI_CLK_D8);
 			; SOURCE LINE # 37
 	CLR  	A
-	;----------start----------
-	;	MOV  	R5,A
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER5)
-	MOV	@R0,A
-	;----------end----------
-	;----------start----------
-	;	MOV  	R7,#02H
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,#02H
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_init
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_init)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_init)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R5,A
+	MOV  	R7,#02H
+	LCALL	_spi_init
 ; 	EA = 1;	/* enable global interrupt */
 			; SOURCE LINE # 38
 	SETB 	EA
@@ -341,21 +323,8 @@ _rf_configure:
 	MOV  	DPL,i?142+01H
 	MOV  	DPH,i?142
 	LCALL	?C?CLDOPTR
-	;----------start----------
-	;	MOV  	R7,A
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,A
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,A
+	LCALL	_spi_write_then_read
 ; 	}
 			; SOURCE LINE # 58
 	INC  	i?142+01H
@@ -429,21 +398,8 @@ _rf_send:
 	MOV  	DPL,i?247+01H
 	MOV  	DPH,i?247
 	LCALL	?C?CLDOPTR
-	;----------start----------
-	;	MOV  	R7,A
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,A
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,A
+	LCALL	_spi_write_then_read
 	INC  	i?247+01H
 	MOV  	A,i?247+01H
 	JNZ  	?C0006
@@ -474,21 +430,8 @@ _rf_send:
 	MOV  	DPL,i?247+01H
 	MOV  	DPH,i?247
 	LCALL	?C?CLDOPTR
-	;----------start----------
-	;	MOV  	R7,A
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,A
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,A
+	LCALL	_spi_write_then_read
 	INC  	i?247+01H
 	MOV  	A,i?247+01H
 	JNZ  	?C0009
@@ -553,21 +496,8 @@ rf_ch1_recv:
 ; 		rf_buf.buffer[i++] = spi_write_then_read(0);
 			; SOURCE LINE # 98
 	CLR  	A
-	;----------start----------
-	;	MOV  	R7,A
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,A
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_spi_write_then_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_spi_write_then_read)
-	MOV	ECO_PAGE_ADDR,#LOW (_spi_write_then_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,A
+	LCALL	_spi_write_then_read
 	INC  	i?348+01H
 	MOV  	A,i?348+01H
 	JNZ  	?C0024

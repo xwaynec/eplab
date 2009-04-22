@@ -139,7 +139,7 @@ class SRCCall_Relocation:
         #comment_template = string.Template('${func}\(([\w\s,]*)\);')
         #comment_template = string.Template('[\s]${func}\(([\w\s,]*)\);')
         #comment_template = string.Template(';[=\(\w\s]*${func}\(([\w\s,]*)\)')
-        comment_template = string.Template(';[=\(\w\s]*${func}\(([\+\*\w\s\>\<&,]*)\)')
+        comment_template = string.Template(';[=\(\w\s]*${func}\(([\(\)\+\*\w\s\>\<&,]*)\)')
         
         lcall_template = string.Template('LCALL[\s]+(${func})')
 
@@ -207,6 +207,8 @@ class SRCCall_Relocation:
                             reg_func_para = re.search(self.PATTERN_FUNC_PARAMETER,asm_lines[index])
 
                             if str(asm_lines[index]).find('LCALL') != -1:
+                                #print asm_lines[index]
+                                #raw_input()
                                 break 
 
                             if reg_func_para:
@@ -304,4 +306,4 @@ if __name__ == '__main__':
     
     src.print_asm_source() 
    
-    #src.save_asm_source()
+    src.save_asm_source()

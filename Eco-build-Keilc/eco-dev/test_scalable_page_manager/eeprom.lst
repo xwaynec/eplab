@@ -1,0 +1,452 @@
+C51 COMPILER V8.16   EEPROM                                                                04/22/2009 16:10:30 PAGE 1   
+
+
+C51 COMPILER V8.16, COMPILATION OF MODULE EEPROM
+NO OBJECT MODULE REQUESTED
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.exe ..\..\include\eeprom\eeprom.c BROWSE DEBUG CODE LISTINCLUDE SYMBOLS PREPRIN
+                    -T INCDIR(../../Include) PRINT(./eeprom.lst) PREPRINT(./eeprom.i) SRC(./eeprom.src)
+
+line level    source
+
+   1          /*
+   2           * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+   3           * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+   4           * Permission to copy, modify, and distribute this program is granted 
+   5           * for noncommercial purposes, provided the author(s) and copyright
+   6           * notice are retained. All other uses require explicit written
+   7           * permission from NTHU. 
+   8           *
+   9           * eeprom driver
+  10           * Min-Hua Chen <orca.chen@gmail.com> 
+  11           * 2007/8/23
+  12           * 2008/3/6
+  13           */
+  14          
+  15          #include "Eco/reg24e1.h"
+   1      =1  #ifndef REGnRF24E1_H
+   2      =1  #define REGnRF24E1_H
+   3      =1  
+   4      =1  /*  BYTE Registers  */
+   5      =1  sfr P0                  = 0x80 ;
+   6      =1  sfr SP                  = 0x81 ;
+   7      =1  sfr DPL                 = 0x82 ;
+   8      =1  sfr DPL0                = 0x82 ;
+   9      =1  sfr DPH                 = 0x83 ;
+  10      =1  sfr DPH0                = 0x83 ;
+  11      =1  sfr DPL1                = 0x84 ;
+  12      =1  sfr DPH1                = 0x85 ;
+  13      =1  sfr DPS                 = 0x86 ;
+  14      =1  sfr PCON                = 0x87 ;
+  15      =1  sfr TCON                = 0x88 ;
+  16      =1  sfr TMOD                = 0x89 ;
+  17      =1  sfr TL0                 = 0x8A ;
+  18      =1  sfr TL1                 = 0x8B ;
+  19      =1  sfr TH0                 = 0x8C ;
+  20      =1  sfr TH1                 = 0x8D ;
+  21      =1  sfr CKCON               = 0x8E ;
+  22      =1  sfr SPC_FNC             = 0x8F ;
+  23      =1  sfr P1          = 0x90 ;
+  24      =1  sfr EXIF                = 0x91 ;
+  25      =1  sfr MPAGE               = 0x92 ;
+  26      =1  sfr P0_DIR              = 0x94 ;
+  27      =1  sfr P0_ALT              = 0x95 ;
+  28      =1  sfr P1_DIR              = 0x96 ;
+  29      =1  sfr P1_ALT              = 0x97 ;
+  30      =1  sfr SCON                = 0x98 ;
+  31      =1  sfr SBUF                = 0x99 ;
+  32      =1  sfr RADIO               = 0xA0 ;
+  33      =1  sfr ADCCON              = 0xA1 ;
+  34      =1  sfr ADCDATAH    = 0xA2 ;
+  35      =1  sfr ADCDATAL    = 0xA3 ;
+  36      =1  sfr ADCSTATIC   = 0xA4 ;
+  37      =1  sfr IE                  = 0xA8 ;
+  38      =1  sfr PWMCON              = 0xA9 ;
+  39      =1  sfr PWMDUTY             = 0xAA ;
+C51 COMPILER V8.16   EEPROM                                                                04/22/2009 16:10:30 PAGE 2   
+
+  40      =1  sfr REGX_MSB    = 0xAB ;
+  41      =1  sfr REGX_LSB    = 0xAC ;
+  42      =1  sfr REGX_CTRL   = 0xAD ;
+  43      =1  sfr RSTREAS             = 0xB1 ;
+  44      =1  sfr SPI_DATA    = 0xB2 ;
+  45      =1  sfr SPI_CTRL    = 0xB3 ;
+  46      =1  sfr SPICLK              = 0xB4 ;
+  47      =1  sfr TICK_DV             = 0xB5 ;
+  48      =1  sfr CK_CTRL             = 0xB6 ;
+  49      =1  sfr TEST_MODE   = 0xB7 ;
+  50      =1  sfr IP                  = 0xB8 ;
+  51      =1  sfr T1_1V2              = 0xBC ;
+  52      =1  sfr T2_1V2              = 0xBD ;
+  53      =1  sfr DEV_OFFSET  = 0xBE ;
+  54      =1  sfr T2CON               = 0xC8 ;
+  55      =1  sfr RCAP2L              = 0xCA ;
+  56      =1  sfr RCAP2H              = 0xCB ;
+  57      =1  sfr TL2                 = 0xCC ;
+  58      =1  sfr TH2                 = 0xCD ;
+  59      =1  sfr PSW                 = 0xD0 ;
+  60      =1  sfr EICON               = 0xD8 ;
+  61      =1  sfr ACC                 = 0xE0 ;
+  62      =1  sfr EIE                 = 0xE8 ;
+  63      =1  sfr B                   = 0xF0 ;
+  64      =1  sfr EIP                 = 0xF8 ;
+  65      =1  
+  66      =1  
+  67      =1  /*  BIT Registers  */
+  68      =1  /* P0 */
+  69      =1  sbit P0_0       = 0x80  ;
+  70      =1  sbit DIO2       = 0x80  ;
+  71      =1  sbit P0_1       = 0x81  ;
+  72      =1  sbit RXD        = 0x81  ;
+  73      =1  sbit DIO3       = 0x81  ;
+  74      =1  sbit P0_2       = 0x82  ;
+  75      =1  sbit TXD        = 0x82  ;
+  76      =1  sbit DIO4       = 0x82  ;
+  77      =1  sbit P0_3       = 0x83  ;
+  78      =1  sbit INT0_N     = 0x83  ;
+  79      =1  sbit DIO5       = 0x83  ;
+  80      =1  sbit P0_4       = 0x84  ;
+  81      =1  sbit INT1_N     = 0x84  ;
+  82      =1  sbit DIO6       = 0x84  ;
+  83      =1  sbit P0_5       = 0x85  ;
+  84      =1  sbit T0         = 0x85  ;
+  85      =1  sbit DIO7       = 0x85  ;
+  86      =1  sbit P0_6       = 0x86  ;
+  87      =1  sbit T1         = 0x86  ;
+  88      =1  sbit DIO8       = 0x86  ;
+  89      =1  sbit P0_7       = 0x87  ;
+  90      =1  sbit PWM        = 0x87  ;
+  91      =1  sbit DIO9       = 0x87  ;
+  92      =1  
+  93      =1  /*  TCON  */
+  94      =1  sbit IT0        = 0x88 ;
+  95      =1  sbit IE0        = 0x89 ;
+  96      =1  sbit IT1        = 0x8A ;
+  97      =1  sbit IE1        = 0x8B ;
+  98      =1  sbit TR0        = 0x8C ;
+  99      =1  sbit TF0        = 0x8D ;
+ 100      =1  sbit TR1        = 0x8E ;
+ 101      =1  sbit TF1        = 0x8F ;
+C51 COMPILER V8.16   EEPROM                                                                04/22/2009 16:10:30 PAGE 3   
+
+ 102      =1  
+ 103      =1  /* P1 */
+ 104      =1  sbit P1_0       = 0x90 ;
+ 105      =1  sbit T2         = 0x90 ;
+ 106      =1  sbit DIO0       = 0x90 ;
+ 107      =1  sbit P1_1       = 0x91 ;
+ 108      =1  sbit DIO1       = 0x91 ;
+ 109      =1  sbit P1_2       = 0x92 ;
+ 110      =1  sbit DIN0       = 0x92 ;
+ 111      =1  
+ 112      =1  /*  SCON  */
+ 113      =1  sbit RI         = 0x98 ;
+ 114      =1  sbit TI         = 0x99 ;
+ 115      =1  sbit RB8        = 0x9A ;
+ 116      =1  sbit TB8        = 0x9B ;
+ 117      =1  sbit REN        = 0x9C ;
+ 118      =1  sbit SM2        = 0x9D ;
+ 119      =1  sbit SM1        = 0x9E ;
+ 120      =1  sbit SM0        = 0x9F ;
+ 121      =1  
+ 122      =1  /* P2 */
+ 123      =1  sbit DATA       = 0xA0 ;
+ 124      =1  sbit CLK1       = 0xA1 ;
+ 125      =1  sbit DR1        = 0xA2 ;
+ 126      =1  sbit CS         = 0xA3 ;
+ 127      =1  sbit DOUT2      = 0xA4 ;
+ 128      =1  sbit CLK2       = 0xA5 ;
+ 129      =1  sbit DR2_CE     = 0xA6 ;
+ 130      =1  sbit DR2        = 0xA6 ;
+ 131      =1  sbit CE         = 0xA6 ;
+ 132      =1  sbit PWR_UP     = 0xA7 ;
+ 133      =1  
+ 134      =1  /*  IE   */
+ 135      =1  sbit EX0        = 0xA8 ;
+ 136      =1  sbit ET0        = 0xA9 ;
+ 137      =1  sbit EX1        = 0xAA ;
+ 138      =1  sbit ET1        = 0xAB ;
+ 139      =1  sbit ES         = 0xAC ;
+ 140      =1  sbit ET2        = 0xAD ;
+ 141      =1  sbit EA         = 0xAF ;
+ 142      =1  
+ 143      =1  /*  IP   */
+ 144      =1  sbit PX0        = 0xB8 ;
+ 145      =1  sbit PT0        = 0xB9 ;
+ 146      =1  sbit PX1        = 0xBA ;
+ 147      =1  sbit PT1        = 0xBB ;
+ 148      =1  sbit PS         = 0xBC ;
+ 149      =1  sbit PT2        = 0xBD ;
+ 150      =1  
+ 151      =1  /*  T2CON  */
+ 152      =1  sbit CP_RL2     = 0xC8 ;
+ 153      =1  sbit CPRL2      = 0xC8 ;
+ 154      =1  sbit C_T2       = 0xC9 ;
+ 155      =1  sbit CT2        = 0xC9 ;
+ 156      =1  sbit TR2        = 0xCA ;
+ 157      =1  sbit EXEN2      = 0xCB ;
+ 158      =1  sbit TCLK       = 0xCC ;
+ 159      =1  sbit RCLK       = 0xCD ;
+ 160      =1  sbit EXF2       = 0xCE ;
+ 161      =1  sbit TF2        = 0xCF ;
+ 162      =1  
+ 163      =1  /*  PSW   */
+C51 COMPILER V8.16   EEPROM                                                                04/22/2009 16:10:30 PAGE 4   
+
+ 164      =1  sbit P          = 0xD0 ;
+ 165      =1  sbit F1         = 0xD1 ;
+ 166      =1  sbit OV         = 0xD2 ;
+ 167      =1  sbit RS0        = 0xD3 ;
+ 168      =1  sbit RS1        = 0xD4 ;
+ 169      =1  sbit F0         = 0xD5 ;
+ 170      =1  sbit AC         = 0xD6 ;
+ 171      =1  sbit CY         = 0xD7 ;
+ 172      =1  
+ 173      =1  /*  EICON  */
+ 174      =1  sbit WDTI       = 0xDB ;
+ 175      =1  
+ 176      =1  /*  EIE  */
+ 177      =1  sbit EX2        = 0xE8 ;
+ 178      =1  sbit EX3        = 0xE9 ;
+ 179      =1  sbit EX4        = 0xEA ;
+ 180      =1  sbit EX5        = 0xEB ;
+ 181      =1  sbit EWDI       = 0xEC ;
+ 182      =1  
+ 183      =1  /*  EIP  */
+ 184      =1  sbit PX2        = 0xF8 ;
+ 185      =1  sbit PX3        = 0xF9 ;
+ 186      =1  sbit PX4        = 0xFA ;
+ 187      =1  sbit PX5        = 0xFB ;
+ 188      =1  sbit PWDI       = 0xFC ;
+ 189      =1  
+ 190      =1  
+ 191      =1  /* BIT definitions for bits that are not directly accessible */
+ 192      =1  /* PCON bits */
+ 193      =1  #define IDL             0x01
+ 194      =1  #define PD              0x02
+ 195      =1  #define GF0             0x04
+ 196      =1  #define GF1             0x08
+ 197      =1  #define SMOD            0x80
+ 198      =1  
+ 199      =1  /* TMOD bits */
+ 200      =1  #define T0_M0           0x01
+ 201      =1  #define T0_M1           0x02
+ 202      =1  #define T0_CT           0x04
+ 203      =1  #define T0_GATE         0x08
+ 204      =1  #define T1_M0           0x10
+ 205      =1  #define T1_M1           0x20
+ 206      =1  #define T1_CT           0x40
+ 207      =1  #define T1_GATE         0x80
+ 208      =1  
+ 209      =1  #define T0_MASK         0x0F
+ 210      =1  #define T1_MASK         0xF0
+ 211      =1  
+ 212      =1  /* Interrupt numbers: address = (number * 8) + 3 */
+ 213      =1  #define IE0_VECTOR      0       /* 0x03 external interrupt 0 */
+ 214      =1  #define TF0_VECTOR      1       /* 0x0b timer 0 */
+ 215      =1  #define IE1_VECTOR      2       /* 0x13 external interrupt 1 */
+ 216      =1  #define TF1_VECTOR      3       /* 0x1b timer 1 */
+ 217      =1  #define SI0_VECTOR      4       /* 0x23 serial port 0 */
+ 218      =1  
+ 219      =1  #endif
+  16          #include "spi/spi.h"
+   1      =1  /*
+   2      =1   * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+   3      =1   * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+   4      =1   * Permission to copy, modify, and distribute this program is granted 
+   5      =1   * for noncommercial purposes, provided the author(s) and copyright
+C51 COMPILER V8.16   EEPROM                                                                04/22/2009 16:10:30 PAGE 5   
+
+   6      =1   * notice are retained. All other uses require explicit written
+   7      =1   * permission from NTHU. 
+   8      =1   */
+   9      =1  #ifndef _SPI_H_
+  10      =1  #define _SPI_H_
+  11      =1  
+  12      =1  /* for SPI_CTRL register */
+  13      =1  #define SPI_CONN_NONE   0x00
+  14      =1  #define SPI_CONN_EEPROM 0x01
+  15      =1  #define SPI_CONN_RADIO  0x02
+  16      =1  #define SPI_CONN_RADIO2 0x03
+  17      =1  
+  18      =1  /* for SPICLK register */
+  19      =1  #define SPI_CLK_D8      0x00
+  20      =1  #define SPI_CLK_D16     0x01
+  21      =1  #define SPI_CLK_D32     0x02
+  22      =1  #define SPI_CLK_D64     0x03
+  23      =1  
+  24      =1  /* end of SPI read/write */
+  25      =1  #define SPI_READY       (1 << 5)
+  26      =1  
+  27      =1  void spi_init(char conn_dev, char clk);
+  28      =1  char spi_write_then_read(char byte);
+  29      =1  
+  30      =1  #endif 
+  17          #include "eeprom/eeprom.h"
+   1      =1  /*
+   2      =1   * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+   3      =1   * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+   4      =1   * Permission to copy, modify, and distribute this program is granted 
+   5      =1   * for noncommercial purposes, provided the author(s) and copyright
+   6      =1   * notice are retained. All other uses require explicit written
+   7      =1   * permission from NTHU. 
+   8      =1   */
+   9      =1  #ifndef _EEPROM_H_
+  10      =1  #define _EEPROM_H_
+  11      =1  
+  12      =1  /* instruction for eeprom AT25320A */
+  13      =1  #define EE_WREN         0x06
+  14      =1  #define EE_WRDI         0x04
+  15      =1  #define EE_RDSR         0x05
+  16      =1  #define EE_WRSR         0x01
+  17      =1  #define EE_READ         0x03
+  18      =1  #define EE_WRITE        0x02
+  19      =1  #define ERASE_ALL       0x62    /* erase all page for flash memory */
+  20      =1  /* the eeprom chip select is connected to P0_0, and
+  21      =1   * the eeprom is active when CS is set low */
+  22      =1  #define EE_CS           P0_0
+  23      =1  
+  24      =1  void eeprom_init();
+  25      =1  void eeprom_write(unsigned int addr, char byte);
+  26      =1  char eeprom_read(unsigned int addr);
+  27      =1  char eeprom_status();
+  28      =1  
+  29      =1  #endif 
+  18          
+  19          
+  20          /* Eco programmer mode, issue output signal as EE_CS signal 
+  21           * to another Eco debugger board. With correct wire connection,
+  22           * we can write date to another debugging board, check the manual
+  23           * for the connection part
+  24           */
+C51 COMPILER V8.16   EEPROM                                                                04/22/2009 16:10:30 PAGE 6   
+
+  25          
+  26          
+  27          #ifdef ECO_PROG_MODE
+              #undef EE_CS
+              /* I/O port as CS for Eco sensor node*/
+              #define EE_CS INT0_N
+              #endif 
+  32          
+  33          #ifdef ECO_DEV_PROG_MODE
+              #undef EE_CS
+              /* I/O port as CS for new debugging boad */
+              #define EE_CS DIO7
+              #endif 
+  38          
+  39          /* eeproom_init - init the eeprom, connect eeprom to the SPI
+  40           * interface */
+  41          void eeprom_init()
+  42          {
+  43   1              /* connect spi to eeprom and setup clock rate to 1/8 of CPU */
+  44   1              spi_init(SPI_CONN_EEPROM, SPI_CLK_D8);
+  45   1              /* set p0.0(EEPROM CSN) to output mode */
+  46   1              P0_DIR &= ~0x01;
+  47   1      }
+  48          
+  49          /* eeprom_status - read the status register */
+  50          char eeprom_status()
+  51          {
+  52   1              char byte;
+  53   1              EE_CS = 0;      /* active eeprom */
+  54   1              spi_write_then_read(EE_RDSR);   /* send read-status-register
+  55   1                                                 instruction to the eeprom */
+  56   1              byte = spi_write_then_read(0);
+  57   1              EE_CS = 1;      /* inactive eeprom */
+  58   1      
+  59   1              return byte;
+  60   1      }
+  61          
+  62          /* eeprom_write - write a single byte to specified address
+  63           * @addr: target address
+  64           * @byte: writting byte of data
+  65           */
+  66          void eeprom_write(unsigned int addr, char byte)
+  67          {
+  68   1              while (eeprom_status() & 0x01)  /* wait until write cycle done */
+  69   1                      ;
+  70   1              EE_CS = 0;      /* active eeprom */
+  71   1              spi_write_then_read(EE_WREN);   /* write-enable instruction */
+  72   1              EE_CS = 1;      /* inactive eeprom */
+  73   1              EE_CS = 0;      /* active eeprom */
+  74   1              spi_write_then_read(EE_WRITE);  /* write instruction */
+  75   1              spi_write_then_read(addr >> 8); /* higher byte of addr */
+  76   1              spi_write_then_read(addr & 0xff);       /* lower byte */
+  77   1              spi_write_then_read(byte);      /* write data */
+  78   1              EE_CS = 1;      /* inactive eeprom */
+  79   1              EE_CS = 0;      /* active eeprom */
+  80   1              spi_write_then_read(EE_WRDI);   /* write-disable instruction */
+  81   1              EE_CS = 1;      /* inactive eeprom */
+  82   1      }
+  83          
+  84          /* eeprom_read - read single byte from specified address
+  85           * @addr: target address
+  86           */
+C51 COMPILER V8.16   EEPROM                                                                04/22/2009 16:10:30 PAGE 7   
+
+  87          char eeprom_read(unsigned int addr)
+  88          {
+  89   1              char byte = 0;
+  90   1              while (eeprom_status() & 0x01)  /* wait until write cycle done */
+  91   1                      ;
+  92   1              EE_CS = 0;      /* active eeprom */
+  93   1              spi_write_then_read(EE_READ);   /* read instruction */
+  94   1              spi_write_then_read(addr >> 8); /* higher byte of addr */
+  95   1              spi_write_then_read(addr & 0xff);       /* lower byte */
+  96   1              byte = spi_write_then_read(0); /* read data */
+  97   1              EE_CS = 1;      /* inactive eeprom */
+  98   1              return byte;
+  99   1      }
+ 100          
+ 101          /* flash_erase_all - erase all pages on flash memory */
+ 102          void flash_erase_all()
+ 103          {
+ 104   1              while (eeprom_status() & 0x01)  /* wait until write cycle done */
+ 105   1                      ;
+ 106   1              EE_CS = 0;      /* enable SPI slave */
+ 107   1              spi_write_then_read(EE_WREN);   /* write-enable instruction */
+ 108   1              EE_CS = 1;      /* start erase operation */
+ 109   1              EE_CS = 0;      /* start erase operation */
+ 110   1              spi_write_then_read(ERASE_ALL); /* read instruction */
+ 111   1              EE_CS = 1;      /* start erase operation */
+ 112   1              while (eeprom_status() & 0x00)  /* wait until erase done */
+ 113   1                      ;
+ 114   1              /* re-enable flash write operation */
+ 115   1              EE_CS = 0;      /* enable SPI slave */
+ 116   1              spi_write_then_read(EE_WREN);   /* write-enable instruction */
+ 117   1              EE_CS = 1;      /* start erase operation */
+ 118   1      }
+C51 COMPILER V8.16   EEPROM                                                                04/22/2009 16:10:30 PAGE 8   
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+_eeprom_read . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  addr?343 . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
+  byte?344 . . . . . . . . . . . . . .  AUTO     DATA   CHAR     0002H  1
+P0_0 . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0080H  1
+eeprom_status. . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  byte?140 . . . . . . . . . . . . . .  * REG *  DATA   CHAR     0007H  1
+_eeprom_write. . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  addr?241 . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
+  byte?242 . . . . . . . . . . . . . .  AUTO     DATA   CHAR     0002H  1
+flash_erase_all. . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+eeprom_init. . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+P0_DIR . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0094H  1
+_spi_init. . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+_spi_write_then_read . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    164    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

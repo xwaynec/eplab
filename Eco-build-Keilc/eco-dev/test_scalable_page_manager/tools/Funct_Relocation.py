@@ -30,7 +30,7 @@ class FunctRelocation:
         self.ECO_PAGE_SIZE = page_size 
         self.ECO_PAGE_MASK = int(math.log(page_size,2))
         self.eco_page_vid = []
-        print 'Eco page size is %d bytes and mask is %d' % (self.ECO_PAGE_SIZE,self.ECO_PAGE_MASK)
+        #print 'Eco page size is %d bytes and mask is %d' % (self.ECO_PAGE_SIZE,self.ECO_PAGE_MASK)
 
         #eco reserved memory size
         #self.ECO_RESERVED_SIZE = 1280
@@ -44,9 +44,9 @@ class FunctRelocation:
     #
     #######################################
     def parse_code_memory(self):
-        print '---------------------------'
-        print 'parse code memory'
-        print '---------------------------' 
+        #print '---------------------------'
+        #print 'parse code memory'
+        #print '---------------------------' 
         #print self.lines
 
         code_memory_flag = False
@@ -61,7 +61,7 @@ class FunctRelocation:
                 continue
 
             if code_memory_counter >= 3:
-                print 'code memory is over'
+                #print 'code memory is over'
                 code_memory_flag = False 
                 break
 
@@ -87,9 +87,9 @@ class FunctRelocation:
     #
     #######################################
     def relocate_code_memory(self):
-        print '---------------------------'
-        print 'relocate code memory'
-        print '---------------------------' 
+        #print '---------------------------'
+        #print 'relocate code memory'
+        #print '---------------------------' 
         
         #start from reserved size 
         code_start_address = self.ECO_RESERVED_SIZE 
@@ -101,10 +101,10 @@ class FunctRelocation:
 
         for i in range(len(self.code_memory_list)):
             if self._check_segment(self.code_memory_segment_name[i]):
-                print '----------------------------------------'
-                print '%s can be relocated' %self.code_memory_segment_name[i]
+                #print '----------------------------------------'
+                #print '%s can be relocated' %self.code_memory_segment_name[i]
                 if (code_start_address/self.ECO_PAGE_SIZE) != ((code_start_address + int(self.code_memory_length[i][0:-1],16))/self.ECO_PAGE_SIZE):
-                    print 'cross page line'
+                    #print 'cross page line'
                     code_start_address = (((code_start_address + int(self.code_memory_length[i][0:-1],16))/self.ECO_PAGE_SIZE) * self.ECO_PAGE_SIZE)
                     
                     if (code_start_address >> self.ECO_PAGE_MASK) not in self.eco_page_vid:
@@ -113,10 +113,10 @@ class FunctRelocation:
                     #print 'SEGMENTS\\(' + self.code_memory_segment_name[i] + '\\(C:' + hex(code_start_address) + '\\)\\)'
                     self.SEG_DIRECTIVE += ' SEGMENTS\\(' + self.code_memory_segment_name[i] + '\\(C:' + hex(code_start_address) + '\\)\\)'
 
-                    print '%s is located at %X' %(self.code_memory_segment_name[i],code_start_address) 
+                    #print '%s is located at %X' %(self.code_memory_segment_name[i],code_start_address) 
                       
                 else:
-                    print 'still in page size'
+                    #print 'still in page size'
                     
                     if (code_start_address >> self.ECO_PAGE_MASK) not in self.eco_page_vid:
                         self.eco_page_vid.append(code_start_address >> self.ECO_PAGE_MASK)
@@ -124,15 +124,15 @@ class FunctRelocation:
                     #print 'SEGMENTS\\(' + self.code_memory_segment_name[i] + '\\(C:' + hex(code_start_address) + '\\)\\)'
                     self.SEG_DIRECTIVE += ' SEGMENTS\\(' + self.code_memory_segment_name[i] + '\\(C:' + hex(code_start_address) + '\\)\\)'
                     
-                    print '%s is located at %X' %(self.code_memory_segment_name[i],code_start_address) 
+                    #print '%s is located at %X' %(self.code_memory_segment_name[i],code_start_address) 
 
                 code_start_address = code_start_address + int(self.code_memory_length[i][0:-1],16)                 
                  
-                print '----------------------------------------'
+                #print '----------------------------------------'
  
-        print self.SEG_DIRECTIVE
-        print 'self.eco_page_vid len = %d' %(len(self.eco_page_vid))
-        print 'self.eco_page_vid = ', self.eco_page_vid  
+        #print self.SEG_DIRECTIVE
+        #print 'self.eco_page_vid len = %d' %(len(self.eco_page_vid))
+        #print 'self.eco_page_vid = ', self.eco_page_vid  
 
     #######################################
     #   
@@ -166,21 +166,21 @@ class FunctRelocation:
     #
     #######################################
     def calculate_reserved_space(self):
-        print 'calculate reserved space'
+        #print 'calculate reserved space'
         
         temp_code_memory = 0
  
         for i in range(len(self.code_memory_list)):
             if not self._check_segment(self.code_memory_segment_name[i]):
-                print self.code_memory_segment_name[i] 
+                #print self.code_memory_segment_name[i] 
                 temp_code_memory += int(self.code_memory_length[i][0:-1],16)
 
         
-        print 'reserved code_memory = ',temp_code_memory   
+        #print 'reserved code_memory = ',temp_code_memory   
  
         self.ECO_RESERVED_SIZE = int(math.ceil(temp_code_memory / float(self.ECO_PAGE_SIZE)) * self.ECO_PAGE_SIZE)
 
-        print 'self.ECO_RESERVED_SIZE = ',self.ECO_RESERVED_SIZE
+        #print 'self.ECO_RESERVED_SIZE = ',self.ECO_RESERVED_SIZE
 
 
     #######################################
@@ -199,16 +199,46 @@ class FunctRelocation:
     #
     #######################################
     def get_all_relocation_info(self):
-        print '#######################################'
+        print '\033[1;34m---------------------------------------\033[1;m'
+        print '\033[1;34m-\033[1;m'
+        print '\033[1;34m-\033[1;m    \033[1;34mMakefile link srcipt\033[1;m'
+        print '\033[1;34m-\033[1;m'
+        print '\033[1;34m---------------------------------------\033[1;m'
         self.get_page_relocation_script()
-       
-        print 'ECO_PAGE_SIZE is %d' %self.ECO_PAGE_SIZE 
+
+
+        print '\033[1;34m---------------------------------------\033[1;m'
+        print '\033[1;34m-\033[1;m'
+        print '\033[1;34m-\033[1;m    \033[1;34mECO_PAGE_SIZE\033[1;m'
+        print '\033[1;34m-\033[1;m'
+        print '\033[1;34m---------------------------------------\033[1;m'
+        print '\033[1;31mECO_PAGE_SIZE is \033[1;33m%d\033[1;m' %self.ECO_PAGE_SIZE 
         #print 'ECO_PAGE_OFFSET is %d' %(self.ECO_RESERVED_SIZE / self.ECO_PAGE_SIZE)
-        print 'ECO_PAGE_OFFSET is %d' %self.get_eco_page_offset()
-        print 'ECO_PAGE_TABLE initial value ' , self.eco_page_vid
+
+
+        print '\033[1;34m---------------------------------------\033[1;m'
+        print '\033[1;34m-\033[1;m'
+        print '\033[1;34m-\033[1;m    \033[1;34mECO_PAGE_OFFSET\033[1;m'
+        print '\033[1;34m-\033[1;m'
+        print '\033[1;34m---------------------------------------\033[1;m'
+        print '\033[1;31mECO_PAGE_OFFSET is \033[1;33m%d\033[1;m' %self.get_eco_page_offset()
+
+
+        print '\033[1;34m---------------------------------------\033[1;m'
+        print '\033[1;34m-\033[1;m'
+        print '\033[1;34m-\033[1;m    \033[1;34mECO_PAGE_TABLE initial value\033[1;m'
+        print '\033[1;34m-\033[1;m'
+        print '\033[1;34m---------------------------------------\033[1;m'
+        print '\033[1;31mECO_PAGE_TABLE initial value \033[1;33m%s\033[1;m' %self.eco_page_vid
+
+
+        print '\033[1;34m---------------------------------------\033[1;m'
+        print '\033[1;34m-\033[1;m'
+        print '\033[1;34m-\033[1;m    \033[1;34mECO_PAGE_TABLE initial value in hex format\033[1;m'
+        print '\033[1;34m-\033[1;m'
+        print '\033[1;34m---------------------------------------\033[1;m'
         for i in range(len(self.eco_page_vid)):
             print '%05X' %self.eco_page_vid[i]
-        print '#######################################'
 
     #######################################
     #   

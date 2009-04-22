@@ -370,15 +370,7 @@ _adc_read:
 ; 
 ; 	ret = p_adc_read();	/* read ADCDATAH/L register */
 			; SOURCE LINE # 66
-	;LCALL----------start----------
-;	LCALL	p_adc_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (p_adc_read)
-	MOV	ECO_PAGE_ADDR,#LOW (p_adc_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	LCALL	p_adc_read
 ; 
 ; 	EXIF &= ~ADC_EOC;	/* clear EXIF.4 */
 			; SOURCE LINE # 68

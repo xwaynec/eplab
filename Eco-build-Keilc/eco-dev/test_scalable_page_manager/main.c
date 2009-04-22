@@ -18,7 +18,7 @@ char dst_addr[3] = {0xF1, 0xF1, 0xF1};
 idata char msg[7];
 
 
-extern unsigned char ECO_PAGE_SPI_CONN;
+//extern unsigned char ECO_PAGE_SPI_CONN;
 /* rf.c
 void rf_init();
 void rf_configure(struct rf_config);
@@ -135,6 +135,9 @@ int main()
 	store_cpu_rate(16);
 	P0_DIR &= ~0x28;
 	P0_ALT &= ~0x28;
+
+	
+
 	rf_init();
 	rf_configure(cfg);
 	serial_init(19200);	

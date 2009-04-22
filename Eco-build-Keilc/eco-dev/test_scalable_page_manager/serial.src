@@ -316,15 +316,7 @@ _serial_init:
 ; 
 ; 	setup_baudrate(baud);
 			; SOURCE LINE # 58
-	;LCALL----------start----------
-;	LCALL	_setup_baudrate
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_setup_baudrate)
-	MOV	ECO_PAGE_ADDR,#LOW (_setup_baudrate)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	LCALL	_setup_baudrate
 ; 	SCON |= SERIAL_MODE1;	/* enable serial port mode 1 */
 			; SOURCE LINE # 59
 	ORL  	SCON,#040H
@@ -441,21 +433,8 @@ _puts:
 	DEC  	A
 	MOV  	R1,A
 	LCALL	?C?CLDPTR
-	;----------start----------
-	;	MOV  	R7,A
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,A
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_serial_write
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_serial_write)
-	MOV	ECO_PAGE_ADDR,#LOW (_serial_write)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,A
+	LCALL	_serial_write
 	SJMP 	?C0014
 ; }
 			; SOURCE LINE # 95
@@ -474,15 +453,7 @@ getc:
 			; SOURCE LINE # 98
 ; 	return serial_read();
 			; SOURCE LINE # 99
-	;LCALL----------start----------
-;	LCALL	serial_read
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (serial_read)
-	MOV	ECO_PAGE_ADDR,#LOW (serial_read)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	LCALL	serial_read
 ; }
 			; SOURCE LINE # 100
 ?C0017:
@@ -523,15 +494,7 @@ _?int_print:
 	JZ   	?C0018
 ; 		int_print(val / 10);
 			; SOURCE LINE # 109
-	;LCALL----------start----------
 	LCALL	_?int_print
-
-	;MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	;MOV	ECO_PAGE_ADDR,#HIGH (_?int_print)
-	;MOV	ECO_PAGE_ADDR,#LOW (_?int_print)
-	;LCALL	eco_page_manager
-	;LCALL----------end----------
-
 ?C0018:
 ; 	putc((val % 10) + '0');
 			; SOURCE LINE # 110
@@ -546,21 +509,8 @@ _?int_print:
 	LCALL	?C?UIDIV
 	MOV  	A,R5
 	ADD  	A,#030H
-	;----------start----------
-	;	MOV  	R7,A
-
-	MOV	R0,#LOW (ECO_PAGE_REGISTER7)
-	MOV	@R0,A
-	;----------end----------
-	;LCALL----------start----------
-;	LCALL	_putc
-
-	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
-	MOV	ECO_PAGE_ADDR,#HIGH (_putc)
-	MOV	ECO_PAGE_ADDR,#LOW (_putc)
-	LCALL	eco_page_manager
-	;LCALL----------end----------
-
+	MOV  	R7,A
+	LCALL	_putc
 ; }
 			; SOURCE LINE # 111
 	INC  	?C_IBP
