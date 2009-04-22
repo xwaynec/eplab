@@ -39,7 +39,15 @@ all: main
 main: main.obj isr_rf.obj utils.obj serial.obj spi.obj eeprom.obj adc.obj eco_page.obj 
 	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB TO $(TARGET) SEGMENTS\(?PR?P_ADC_READ?ADC\(C:0x700\)\) SEGMENTS\(?PR?_PUTC?SERIAL\(C:0x74d\)\) SEGMENTS\(?PR?_MDELAY?UTILS\(C:0x750\)\) SEGMENTS\(?PR?_STRNCPY?UTILS\(C:0x799\)\) SEGMENTS\(?PR?_SETUP_BAUDRATE?SERIAL\(C:0x800\)\) SEGMENTS\(?PR?_EEPROM_WRITE?EEPROM\(C:0x83d\)\) SEGMENTS\(?PR?_?INT_PRINT?SERIAL\(C:0x900\)\) SEGMENTS\(?PR?_RF_CONFIGURE?ISR_RF\(C:0x945\)\) SEGMENTS\(?PR?_EEPROM_READ?EEPROM\(C:0x986\)\) SEGMENTS\(?PR?_PUTS?SERIAL\(C:0xa00\)\) SEGMENTS\(?PR?FLASH_ERASE_ALL?EEPROM\(C:0xa30\)\) SEGMENTS\(?PR?_ADC_READ?ADC\(C:0xa7d\)\) SEGMENTS\(?PR?_ADC_INIT?ADC\(C:0xaa1\)\) SEGMENTS\(?PR?_WDT_LOAD?UTILS\(C:0xab4\)\) SEGMENTS\(?PR?EEPROM_STATUS?EEPROM\(C:0xac6\)\) SEGMENTS\(?PR?RF_INIT?ISR_RF\(C:0xb00\)\) SEGMENTS\(?PR?_STORE_CPU_RATE?UTILS\(C:0xb1b\)\) SEGMENTS\(?PR?_SPI_WRITE_THEN_READ?SPI\(C:0xb28\)\) SEGMENTS\(?PR?EEPROM_INIT?EEPROM\(C:0xb35\)\) SEGMENTS\(?PR?_SERIAL_INIT?SERIAL\(C:0xb4d\)\) SEGMENTS\(?PR?RF_WAIT_MSG?ISR_RF\(C:0xb60\)\) SEGMENTS\(?PR?_SERIAL_WRITE?SERIAL\(C:0xb69\)\) SEGMENTS\(?PR?SERIAL_READ?SERIAL\(C:0xb71\)\) SEGMENTS\(?PR?_SPI_INIT?SPI\(C:0xb79\)\) SEGMENTS\(?PR?GETC?SERIAL\(C:0xb7e\)\) SEGMENTS\(?PR?_RF_SEND?ISR_RF\(C:0xc00\)\) SEGMENTS\(?PR?BLINK2?MAIN\(C:0xc81\)\) SEGMENTS\(?PR?BLINK4?MAIN\(C:0xcb7\)\) SEGMENTS\(?PR?BLINK6?MAIN\(C:0xd00\)\)
 	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB TO $(TARGET) 
-	$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB TO $(TARGET) SEGMENTS\(?PR?_rf_send?ISR_RF\(C:0x1000\)\) SEGMENTS\(?PR?BLINK2?MAIN\(C:0x1100\)\) SEGMENTS\(?PR?BLINK4?MAIN\(C:0x1155\)\) SEGMENTS\(?PR?BLINK6?MAIN\(C:0x11AA\)\)
+	
+	#page size is 256
+	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB TO $(TARGET) SEGMENTS\(?PR?_rf_send?ISR_RF\(C:0x1000\)\) SEGMENTS\(?PR?BLINK2?MAIN\(C:0x1100\)\) SEGMENTS\(?PR?BLINK4?MAIN\(C:0x1155\)\) SEGMENTS\(?PR?BLINK6?MAIN\(C:0x11AA\)\)
+	
+	#page size is 128
+	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB TO $(TARGET) SEGMENTS\(?PR?_rf_send?ISR_RF\(C:0x1000\)\) SEGMENTS\(?PR?BLINK2?MAIN\(C:0x1080\)\) SEGMENTS\(?PR?BLINK4?MAIN\(C:0x10A9\)\) SEGMENTS\(?PR?BLINK6?MAIN\(C:0x10D2\)\)
+	
+	#page size is 64
+	$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB TO $(TARGET) SEGMENTS\(?PR?_rf_send?ISR_RF\(C:0x1000\)\) SEGMENTS\(?PR?BLINK2?MAIN\(C:0x1080\)\) SEGMENTS\(?PR?BLINK4?MAIN\(C:0x10C0\)\) SEGMENTS\(?PR?BLINK6?MAIN\(C:0x1100\)\)
 	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB TO $(TARGET) SEGMENTS\(?PR?_rf_send?ISR_RF\(C:0x1000\)\) SEGMENTS\(?PR?_long_function?MAIN\(C:0x1200\)\) SEGMENTS\(?PR?_long_function_2?MAIN\(C:0x1300\)\)
 
 #SEGMENTS\(?PR?blink_fast?PAGING\(C:0x1000\)\) SEGMENTS\(?PR?blink_fast2?PAGING\(C:0x800\)

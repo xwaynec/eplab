@@ -15,17 +15,20 @@
 #include "eco_page.h"
 #include "eeprom/eeprom.h"
 
-#define ECO_PAGE_SIZE 256
-#define ECO_PAGE_ADDR_OFFSET	11	
+#define ECO_PAGE_SIZE 64
+
+#define ECO_PAGE_ADDR_OFFSET 47	
+//#define ECO_PAGE_ADDR_OFFSET 23
+//#define ECO_PAGE_ADDR_OFFSET 11 
 
 #if ECO_PAGE_SIZE == 64
 	
-	#define ECO_PAGE_ENTRY	48
+	#define ECO_PAGE_ENTRY	(63-ECO_PAGE_ADDR_OFFSET)
 	#define ECO_PAGE_SHIFT	6
 	#define ECO_PAGE_MASK	0x003F
-	#define ECO_PAGE_MOV_MASK	0xFC00
+	#define ECO_PAGE_MOV_MASK	0xFFC0
 
-	unsigned int idata ECO_PAGE_TABLE[63-ECO_PAGE_ADDR_OFFSET] = {0};
+	unsigned int idata ECO_PAGE_TABLE[ECO_PAGE_ENTRY];
 	//Eco page virtual address id
 	unsigned int ECO_PAGE_PREV_VID;
 	//Eco page physical address id 
@@ -33,13 +36,13 @@
 
 #elif ECO_PAGE_SIZE == 128
 	
-	#define ECO_PAGE_ENTRY 24	
+	#define ECO_PAGE_ENTRY (31-ECO_PAGE_ADDR_OFFSET)
 	#define ECO_PAGE_SHIFT	7
 	#define ECO_PAGE_MASK	0x007F
-	#define ECO_PAGE_MOV_MASK	0xFE00
+	#define ECO_PAGE_MOV_MASK	0xFF80
 
 	//unsigned int idata ECO_PAGE_TABLE[32-ECO_PAGE_ADDR_OFFSET] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
-	unsigned int idata ECO_PAGE_TABLE[31-ECO_PAGE_ADDR_OFFSET];
+	unsigned int idata ECO_PAGE_TABLE[ECO_PAGE_ENTRY];
 	//Eco page virtual address id
 	unsigned int ECO_PAGE_PREV_VID;
 	//Eco page physical address id 
@@ -62,9 +65,7 @@
 #endif
 
 unsigned char ECO_PAGE_TABLE_INDEX;
-
 unsigned int ECO_PAGE_ADDR;
-
 unsigned char ECO_PAGE_SPI_CONN;
 
 unsigned char idata ECO_PAGE_REGISTER1;
@@ -84,21 +85,6 @@ void eco_page_init()
 	ECO_PAGE_PREV_VID = 0;
 	ECO_PAGE_PREV_PID = 0;
 
-	/*
-	ECO_PAGE_TABLE[0] = 0; 
-	ECO_PAGE_TABLE[1] = 0; 
-	ECO_PAGE_TABLE[2] = 0;
-	ECO_PAGE_TABLE[3] = 0; 
-	ECO_PAGE_TABLE[4] = 0; 
-	ECO_PAGE_TABLE[5] = 0; 
-	ECO_PAGE_TABLE[6] = 0; 
-	ECO_PAGE_TABLE[7] = 0; 
-	ECO_PAGE_TABLE[8] = 0; 
-	ECO_PAGE_TABLE[9] = 0;
-	ECO_PAGE_TABLE[10] = 0; 
-	ECO_PAGE_TABLE[11] = 0; 
-	ECO_PAGE_TABLE[12] = 0;
-	*/	
 }
 
 //LRU page replacement
@@ -228,7 +214,7 @@ void eco_page_manager()
 	if((ECO_PAGE_ADDR >> ECO_PAGE_SHIFT) == ECO_PAGE_PREV_PID)
 	{
 		//virtual address id + function offset
-		ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << 8) + (ECO_PAGE_ADDR & 0x00FF);
+		ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << ECO_PAGE_SHIFT) + (ECO_PAGE_ADDR & ECO_PAGE_MASK);
 		#pragma asm
 		//eco_page_function_call
 		#pragma endasm
@@ -282,7 +268,8 @@ void eco_page_manager()
 		ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;
 
 		//store physical address id
-		ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX];
+		//ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX];
+		ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;
 
 		//update page address
 		ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << ECO_PAGE_SHIFT) + (ECO_PAGE_ADDR & ECO_PAGE_MASK);
