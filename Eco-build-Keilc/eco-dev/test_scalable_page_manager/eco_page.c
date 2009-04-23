@@ -15,10 +15,12 @@
 #include "eco_page.h"
 #include "eeprom/eeprom.h"
 
-#define ECO_PAGE_SIZE 64
+//#define ECO_PAGE_SIZE 256
+#define ECO_PAGE_SIZE 128
+//#define ECO_PAGE_SIZE 64
 
-#define ECO_PAGE_ADDR_OFFSET 47	
-//#define ECO_PAGE_ADDR_OFFSET 23
+//#define ECO_PAGE_ADDR_OFFSET 47
+#define ECO_PAGE_ADDR_OFFSET 23
 //#define ECO_PAGE_ADDR_OFFSET 11 
 
 #if ECO_PAGE_SIZE == 64
@@ -41,7 +43,6 @@
 	#define ECO_PAGE_MASK	0x007F
 	#define ECO_PAGE_MOV_MASK	0xFF80
 
-	//unsigned int idata ECO_PAGE_TABLE[32-ECO_PAGE_ADDR_OFFSET] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
 	unsigned int idata ECO_PAGE_TABLE[ECO_PAGE_ENTRY];
 	//Eco page virtual address id
 	unsigned int ECO_PAGE_PREV_VID;
@@ -54,7 +55,6 @@
 	#define ECO_PAGE_SHIFT	8	
 	#define ECO_PAGE_MASK	0x00FF
 	#define ECO_PAGE_MOV_MASK	0xFF00
-	
 
 	unsigned int ECO_PAGE_TABLE[ECO_PAGE_ENTRY];
 	//Eco page virtual address id
@@ -79,7 +79,7 @@ unsigned char idata ECO_PAGE_REGISTER7;
 
 void eco_page_init()
 {
-	ECO_PAGE_TABLE_INDEX = 0;
+	ECO_PAGE_TABLE_INDEX = ECO_PAGE_ENTRY - 1;
 	
 	ECO_PAGE_ADDR = 0;
 	ECO_PAGE_PREV_VID = 0;
@@ -278,7 +278,7 @@ void eco_page_manager()
 		ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;	
 
 		//mov to the next index
-		ECO_PAGE_TABLE_INDEX++;
+		ECO_PAGE_TABLE_INDEX = (ECO_PAGE_TABLE_INDEX + 1) % ECO_PAGE_ENTRY;
 			
 		//jump  to function address
 		#pragma asm

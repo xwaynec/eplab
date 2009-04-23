@@ -165,11 +165,9 @@ REGX_LSB	DATA	0ACH
 PSW	DATA	0D0H
 REGX_MSB	DATA	0ABH
 ?PR?blink2?MAIN      SEGMENT CODE 
-?DT?blink2?MAIN      SEGMENT DATA OVERLAYABLE 
 ?PR?blink4?MAIN      SEGMENT CODE 
 ?DT?blink4?MAIN      SEGMENT DATA OVERLAYABLE 
 ?PR?blink6?MAIN      SEGMENT CODE 
-?DT?blink6?MAIN      SEGMENT DATA OVERLAYABLE 
 ?PR?main?MAIN        SEGMENT CODE 
 ?DT?main?MAIN        SEGMENT DATA OVERLAYABLE 
 ?C_INITSEG           SEGMENT CODE 
@@ -195,21 +193,13 @@ REGX_MSB	DATA	0ABH
 
 	RSEG  ?DT?main?MAIN
 ?main?BYTE:
-        idx?343:   DS   1
+        idx?341:   DS   1
 	ORG  1
-          i?344:   DS   2
-
-	RSEG  ?DT?blink2?MAIN
-?blink2?BYTE:
-          i?040:   DS   2
+          i?342:   DS   2
 
 	RSEG  ?DT?blink4?MAIN
 ?blink4?BYTE:
-          i?141:   DS   2
-
-	RSEG  ?DT?blink6?MAIN
-?blink6?BYTE:
-          i?242:   DS   2
+          i?140:   DS   2
 
 	RSEG  ?DT?MAIN
             cfg:   DS   3
@@ -356,86 +346,93 @@ blink2:
 			; SOURCE LINE # 100
 ; {
 			; SOURCE LINE # 101
-; 	int i;
+; 	/*int i;
 ; 	for(i=0;i<4;i++)
-			; SOURCE LINE # 103
-	CLR  	A
-	MOV  	i?040,A
-	MOV  	i?040+01H,A
-?C0001:
 ; 	{
-			; SOURCE LINE # 104
 ; 		blink_led();
-			; SOURCE LINE # 105
-	XRL  	P0,#020H
 ; 		mdelay(400);
-			; SOURCE LINE # 106
+; 	}
+; 	mdelay(1000);*/
+; 	blink_led();
+			; SOURCE LINE # 109
+	XRL  	P0,#020H
+; 	mdelay(400);
+			; SOURCE LINE # 110
 	MOV  	R7,#090H
 	MOV  	R6,#01H
 	LCALL	_mdelay
-; 	}
-			; SOURCE LINE # 107
-	INC  	i?040+01H
-	MOV  	A,i?040+01H
-	JNZ  	?C0019
-	INC  	i?040
-?C0019:
-	CLR  	C
-	SUBB 	A,#04H
-	MOV  	A,i?040
-	XRL  	A,#080H
-	SUBB 	A,#080H
-	JC   	?C0001
-?C0002:
-; 	mdelay(1000);	
-			; SOURCE LINE # 108
-	MOV  	R7,#0E8H
-	MOV  	R6,#03H
+; 
+; 	blink_led();
+			; SOURCE LINE # 112
+	XRL  	P0,#020H
+; 	mdelay(400);
+			; SOURCE LINE # 113
+	MOV  	R7,#090H
+	MOV  	R6,#01H
+	LCALL	_mdelay
+; 	
+; 	blink_led();
+			; SOURCE LINE # 115
+	XRL  	P0,#020H
+; 	mdelay(400);
+			; SOURCE LINE # 116
+	MOV  	R7,#090H
+	MOV  	R6,#01H
+	LCALL	_mdelay
+; 
+; 	blink_led();
+			; SOURCE LINE # 118
+	XRL  	P0,#020H
+; 	mdelay(400);
+			; SOURCE LINE # 119
+	MOV  	R7,#090H
+	MOV  	R6,#01H
 	LJMP 	_mdelay
 ; END OF blink2
 
+; 
 ; }
 ; void blink4()
 
 	RSEG  ?PR?blink4?MAIN
 blink4:
 	USING	0
-			; SOURCE LINE # 110
+			; SOURCE LINE # 122
 ; {
-			; SOURCE LINE # 111
+			; SOURCE LINE # 123
 ; 	int i;
 ; 	for(i=0;i<8;i++)
-			; SOURCE LINE # 113
+			; SOURCE LINE # 125
 	CLR  	A
-	MOV  	i?141,A
-	MOV  	i?141+01H,A
-?C0005:
+	MOV  	i?140,A
+	MOV  	i?140+01H,A
+?C0002:
 ; 	{
-			; SOURCE LINE # 114
+			; SOURCE LINE # 126
 ; 		blink_led();
-			; SOURCE LINE # 115
+			; SOURCE LINE # 127
 	XRL  	P0,#020H
 ; 		mdelay(400);
-			; SOURCE LINE # 116
+			; SOURCE LINE # 128
 	MOV  	R7,#090H
 	MOV  	R6,#01H
 	LCALL	_mdelay
 ; 	}	
-			; SOURCE LINE # 117
-	INC  	i?141+01H
-	MOV  	A,i?141+01H
-	JNZ  	?C0020
-	INC  	i?141
-?C0020:
+			; SOURCE LINE # 129
+	INC  	i?140+01H
+	MOV  	A,i?140+01H
+	JNZ  	?C0013
+	INC  	i?140
+?C0013:
 	CLR  	C
 	SUBB 	A,#08H
-	MOV  	A,i?141
+	MOV  	A,i?140
 	XRL  	A,#080H
 	SUBB 	A,#080H
-	JC   	?C0005
-?C0006:
+	JC   	?C0002
+?C0003:
 ; 	mdelay(1000);	
-			; SOURCE LINE # 118
+			; SOURCE LINE # 130
 	MOV  	R7,#0E8H
 	MOV  	R6,#03H
 	LJMP 	_mdelay
@@ -447,44 +444,32 @@ blink4:
 	RSEG  ?PR?blink6?MAIN
 blink6:
 	USING	0
-			; SOURCE LINE # 120
+			; SOURCE LINE # 132
 ; {
-			; SOURCE LINE # 121
-; 	int i;
+			; SOURCE LINE # 133
+; 	/*int i;
 ; 	for(i=0;i<12;i++)
-			; SOURCE LINE # 123
-	CLR  	A
-	MOV  	i?242,A
-	MOV  	i?242+01H,A
-?C0009:
 ; 	{
-			; SOURCE LINE # 124
 ; 		blink_led();
-			; SOURCE LINE # 125
-	XRL  	P0,#020H
 ; 		mdelay(400);
-			; SOURCE LINE # 126
+; 	}	
+; 	mdelay(1000);*/
+; 	
+; 	blink_led();
+			; SOURCE LINE # 142
+	XRL  	P0,#020H
+; 	mdelay(400);
+			; SOURCE LINE # 143
 	MOV  	R7,#090H
 	MOV  	R6,#01H
 	LCALL	_mdelay
-; 	}	
-			; SOURCE LINE # 127
-	INC  	i?242+01H
-	MOV  	A,i?242+01H
-	JNZ  	?C0021
-	INC  	i?242
-?C0021:
-	CLR  	C
-	SUBB 	A,#0CH
-	MOV  	A,i?242
-	XRL  	A,#080H
-	SUBB 	A,#080H
-	JC   	?C0009
-?C0010:
-; 	mdelay(1000);	
-			; SOURCE LINE # 128
-	MOV  	R7,#0E8H
-	MOV  	R6,#03H
+; 	blink_led();
+			; SOURCE LINE # 144
+	XRL  	P0,#020H
+; 	mdelay(400);
+			; SOURCE LINE # 145
+	MOV  	R7,#090H
+	MOV  	R6,#01H
 	LJMP 	_mdelay
 ; END OF blink6
 
@@ -495,120 +480,120 @@ blink6:
 	RSEG  ?PR?main?MAIN
 main:
 	USING	0
-			; SOURCE LINE # 131
+			; SOURCE LINE # 148
 ; {
-			; SOURCE LINE # 132
+			; SOURCE LINE # 149
 ; 	unsigned char idx;
 ; 	unsigned int i = 0;
-			; SOURCE LINE # 134
+			; SOURCE LINE # 151
 	CLR  	A
-	MOV  	i?344,A
-	MOV  	i?344+01H,A
+	MOV  	i?342,A
+	MOV  	i?342+01H,A
 ; 	store_cpu_rate(16);
-			; SOURCE LINE # 135
+			; SOURCE LINE # 152
 	MOV  	R7,#010H
 	MOV  	R6,A
 	LCALL	_store_cpu_rate
 ; 	P0_DIR &= ~0x28;
-			; SOURCE LINE # 136
+			; SOURCE LINE # 153
 	ANL  	P0_DIR,#0D7H
 ; 	P0_ALT &= ~0x28;
-			; SOURCE LINE # 137
+			; SOURCE LINE # 154
 	ANL  	P0_ALT,#0D7H
 ; 
 ; 	
 ; 
 ; 	rf_init();
-			; SOURCE LINE # 141
+			; SOURCE LINE # 158
 	LCALL	rf_init
 ; 	rf_configure(cfg);
-			; SOURCE LINE # 142
+			; SOURCE LINE # 159
 	MOV  	R3,cfg
 	MOV  	R2,cfg+01H
 	MOV  	R1,cfg+02H
 	LCALL	_rf_configure
 ; 	serial_init(19200);	
-			; SOURCE LINE # 143
+			; SOURCE LINE # 160
 	MOV  	R7,#00H
 	MOV  	R6,#04BH
 	LCALL	_serial_init
 ; 	eco_page_init();
-			; SOURCE LINE # 144
+			; SOURCE LINE # 161
 	LCALL	eco_page_init
 ; 	
 ; 	//long_function(4,6,8,4);
 ; 
 ; 	msg[0] = 0x0A;
-			; SOURCE LINE # 148
+			; SOURCE LINE # 165
 	MOV  	R0,#LOW (msg)
 	MOV  	@R0,#0AH
 ; 	msg[1] = 0x00;
-			; SOURCE LINE # 149
+			; SOURCE LINE # 166
 	CLR  	A
 	INC  	R0
 	MOV  	@R0,A
 ; 	/* ADDR */
 ; 	msg[2] = 0x02;
-			; SOURCE LINE # 151
+			; SOURCE LINE # 168
 	INC  	R0
 	MOV  	@R0,#02H
 ; 	msg[3] = 0xA0;
-			; SOURCE LINE # 152
+			; SOURCE LINE # 169
 	INC  	R0
 	MOV  	@R0,#0A0H
 ; 	/* LEN */
 ; 	msg[4] = 0x02;
-			; SOURCE LINE # 154
+			; SOURCE LINE # 171
 	INC  	R0
 	MOV  	@R0,#02H
 ; 	msg[5] = 0xDD;
-			; SOURCE LINE # 155
+			; SOURCE LINE # 172
 	INC  	R0
 	MOV  	@R0,#0DDH
 ; 	msg[6] = 0xCC;
-			; SOURCE LINE # 156
+			; SOURCE LINE # 173
 	INC  	R0
 	MOV  	@R0,#0CCH
 ; 	
 ; 	for(idx = 4; idx > 0; idx--)
-			; SOURCE LINE # 158
-	MOV  	idx?343,#04H
-?C0013:
+			; SOURCE LINE # 175
+	MOV  	idx?341,#04H
+?C0007:
 ; 	{
-			; SOURCE LINE # 159
+			; SOURCE LINE # 176
 ; 		blink_led();		
-			; SOURCE LINE # 160
+			; SOURCE LINE # 177
 	XRL  	P0,#020H
 ; 		mdelay(300);
-			; SOURCE LINE # 161
+			; SOURCE LINE # 178
 	MOV  	R7,#02CH
 	MOV  	R6,#01H
 	LCALL	_mdelay
 ; 	}
-			; SOURCE LINE # 162
-	DEC  	idx?343
-	MOV  	A,idx?343
+			; SOURCE LINE # 179
+	DEC  	idx?341
+	MOV  	A,idx?341
 	SETB 	C
 	SUBB 	A,#00H
-	JNC  	?C0013
-?C0014:
+	JNC  	?C0007
+?C0008:
 ; 
 ; 	mdelay(1000);
-			; SOURCE LINE # 164
+			; SOURCE LINE # 181
 	MOV  	R7,#0E8H
 	MOV  	R6,#03H
 	LCALL	_mdelay
-?C0016:
+?C0010:
 ; 
 ; 	while(1)
-			; SOURCE LINE # 166
+			; SOURCE LINE # 183
 ; 	{
-			; SOURCE LINE # 167
+			; SOURCE LINE # 184
 ; 		blink4();
-			; SOURCE LINE # 168
+			; SOURCE LINE # 185
 	LCALL	blink4
 ; 		rf_send(dst_addr, 3, msg, 7);
-			; SOURCE LINE # 169
+			; SOURCE LINE # 186
 	MOV  	?_rf_send?BYTE+04H,#00H
 	MOV  	?_rf_send?BYTE+05H,#HIGH (msg)
 	MOV  	?_rf_send?BYTE+06H,#LOW (msg)
@@ -619,19 +604,19 @@ main:
 	MOV  	R5,#03H
 	LCALL	_rf_send
 ; 		blink2();
-			; SOURCE LINE # 170
+			; SOURCE LINE # 187
 	LCALL	blink2
 ; 		mdelay(200);	
-			; SOURCE LINE # 171
+			; SOURCE LINE # 188
 	MOV  	R7,#0C8H
 	MOV  	R6,#00H
 	LCALL	_mdelay
 ; 		blink6();
-			; SOURCE LINE # 172
+			; SOURCE LINE # 189
 	LCALL	blink6
 ; 	}
-			; SOURCE LINE # 173
-	SJMP 	?C0016
+			; SOURCE LINE # 190
+	SJMP 	?C0010
 ; END OF main
 
 	END

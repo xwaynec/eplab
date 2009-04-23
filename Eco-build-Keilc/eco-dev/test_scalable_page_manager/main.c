@@ -105,7 +105,8 @@ void blink2()
 		blink_led();
 		mdelay(400);
 	}
-	mdelay(1000);	
+	mdelay(1000);
+
 }
 void blink4()
 {
@@ -125,7 +126,8 @@ void blink6()
 		blink_led();
 		mdelay(400);
 	}	
-	mdelay(1000);	
+	mdelay(1000);
+	
 }
 
 int main()
