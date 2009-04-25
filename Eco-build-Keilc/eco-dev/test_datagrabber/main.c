@@ -7,18 +7,23 @@
 #include "eco_page.h"
 #include "adc/adc.h"
 
+
+//#include <math.h> /* for log */
+
+
+
 struct rf_config rf_data = { {0x00}, /* data2 width */
-	{0x38}, /* data1 width */ 
+	{0xA0}, /* data1 width */ 
 	{0x00, 0x00, 0x00, 0x00, 0x00}, /* addr2 */
 	{0xF2, 0xF2, 0xF2, 0xF2, 0xF2}, /* addr1, host addr */
 	{0x63}, /* 24-bit address, 16-bit CRC */
 	{0x6f, 0xEC} };
 struct rf_config *cfg = &rf_data;
 char dst_addr[3] = {0xF1, 0xF1, 0xF1};
-char idata msg[7];
+char idata msg[20];
 
 
-void blink2()
+/*void blink2()
 {
 	int i;
 	for(i=0;i<4;i++)
@@ -52,6 +57,7 @@ void blink6()
 	mdelay(1000);
 	
 }
+*/
 
 int main()
 {
@@ -92,7 +98,7 @@ int main()
 		msg[4] = acc_z & 0x00FF;
 		msg[5] = acc_z >> 8;
 	
-		rf_send(dst_addr, 3, msg, 7);
+		rf_send(dst_addr, 3, msg, 20);
 
 		//blink2();
 		mdelay(200);

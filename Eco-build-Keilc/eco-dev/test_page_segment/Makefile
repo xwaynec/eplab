@@ -76,7 +76,7 @@ main.obj : main.src
 
 
 eco_page.src : eco_page.c
-	$(CC) ./$< $(CFLAG) INCDIR\($(INCLUDE)\) SRC \(./$@\) 
+	$(CC) ./$< $(CFLAG) ROM\(LARGE\) INCDIR\($(INCLUDE)\) SRC \(./$@\) 
 
 #rf.src : rf.c
 #	$(CC) ./$< $(CFLAG) INCDIR\($(INCLUDE)\) SRC \(./$@\) 

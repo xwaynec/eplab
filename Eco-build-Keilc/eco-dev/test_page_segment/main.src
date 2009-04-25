@@ -176,6 +176,16 @@ REGX_MSB	DATA	0ABH
 ?DT?MAIN             SEGMENT DATA 
 ?ID?MAIN             SEGMENT IDATA 
 	EXTRN	CODE (_mdelay)
+	EXTRN	CODE (eco_page_manager)
+	EXTRN	DATA (ECO_PAGE_ADDR)
+	EXTRN	DATA (ECO_PAGE_SPI_CONN)
+	EXTRN	IDATA (ECO_PAGE_REGISTER1)
+	EXTRN	IDATA (ECO_PAGE_REGISTER2)
+	EXTRN	IDATA (ECO_PAGE_REGISTER3)
+	EXTRN	IDATA (ECO_PAGE_REGISTER4)
+	EXTRN	IDATA (ECO_PAGE_REGISTER5)
+	EXTRN	IDATA (ECO_PAGE_REGISTER6)
+	EXTRN	IDATA (ECO_PAGE_REGISTER7)
 	EXTRN	CODE (_rf_configure)
 	EXTRN	CODE (_serial_init)
 	EXTRN	CODE (eco_page_init)
@@ -599,31 +609,70 @@ main:
 			; SOURCE LINE # 161
 ; 	{
 			; SOURCE LINE # 162
-; 		blink2();
-			; SOURCE LINE # 163
-	LCALL	blink2
+	;----------	LCALL	blink2 start----------
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (blink2)
+	MOV	ECO_PAGE_ADDR+01H,#LOW (blink2)
+	LCALL	eco_page_manager
+	;----------	LCALL	blink2 end----------
 ; 		rf_send(dst_addr, 3, msg, 7);
 			; SOURCE LINE # 164
+
 	MOV  	?_rf_send?BYTE+04H,#00H
+
 	MOV  	?_rf_send?BYTE+05H,#HIGH (msg)
+
 	MOV  	?_rf_send?BYTE+06H,#LOW (msg)
+
 	MOV  	?_rf_send?BYTE+07H,#07H
-	MOV  	R3,#00H
-	MOV  	R2,#HIGH (dst_addr)
-	MOV  	R1,#LOW (dst_addr)
-	MOV  	R5,#03H
-	LCALL	_rf_send
-; 		blink4();
-			; SOURCE LINE # 165
-	LCALL	blink4
+
+;	MOV  	R3,#00H
+
+;--------------------------
+	MOV	R0,#LOW (ECO_PAGE_REGISTER3)
+	MOV	@R0,#00H
+;--------------------------
+;	MOV  	R2,#HIGH (dst_addr)
+
+;--------------------------
+	MOV	R0,#LOW (ECO_PAGE_REGISTER2)
+	MOV	@R0,#HIGH (dst_addr)
+;--------------------------
+;	MOV  	R1,#LOW (dst_addr)
+
+;--------------------------
+	MOV	R0,#LOW (ECO_PAGE_REGISTER1)
+	MOV	@R0,#LOW (dst_addr)
+;--------------------------
+;	MOV  	R5,#03H
+
+;--------------------------
+	MOV	R0,#LOW (ECO_PAGE_REGISTER5)
+	MOV	@R0,#03H
+;--------------------------
+	;----------	LCALL	_rf_send start----------
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (_rf_send)
+	MOV	ECO_PAGE_ADDR+01H,#LOW (_rf_send)
+	LCALL	eco_page_manager
+	;----------	LCALL	_rf_send end----------
+	;----------	LCALL	blink4 start----------
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (blink4)
+	MOV	ECO_PAGE_ADDR+01H,#LOW (blink4)
+	LCALL	eco_page_manager
+	;----------	LCALL	blink4 end----------
 ; 		mdelay(200);	
 			; SOURCE LINE # 166
 	MOV  	R7,#0C8H
 	MOV  	R6,#00H
 	LCALL	_mdelay
-; 		blink6();
-			; SOURCE LINE # 167
-	LCALL	blink6
+	;----------	LCALL	blink6 start----------
+	MOV	ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV	ECO_PAGE_ADDR,#HIGH (blink6)
+	MOV	ECO_PAGE_ADDR+01H,#LOW (blink6)
+	LCALL	eco_page_manager
+	;----------	LCALL	blink6 end----------
 ; 	}
 			; SOURCE LINE # 168
 	SJMP 	?C0016

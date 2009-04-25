@@ -6,7 +6,7 @@
 #include "serial/serial.h"
 
 struct rf_config rf_data = { {0x00}, /* data2 width */
-	{0x38}, /* data1 width */ 
+	{0xA0}, /* data1 width */ 
 	{0x00, 0x00, 0x00, 0x00, 0x00}, /* addr2 */
 	{0xF1, 0xF1, 0xF1, 0xF1, 0xF1}, /* addr1, host addr */
 	{0x63}, /* 24-bit address, 16-bit CRC */

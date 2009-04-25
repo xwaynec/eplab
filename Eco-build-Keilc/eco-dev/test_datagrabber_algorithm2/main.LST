@@ -1,0 +1,1317 @@
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 1   
+
+
+C51 COMPILER V8.16, COMPILATION OF MODULE MAIN
+NO OBJECT MODULE REQUESTED
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.exe .\main.c BROWSE DEBUG CODE LISTINCLUDE SYMBOLS PREPRINT INCDIR(../../Includ
+                    -e) SRC(./main.src)
+
+line level    source
+
+   1          /* 
+   2            FFT Code Written in C Language for the 8052 Microcontroller
+   3              Written by Alfredo del Rio, University of Vigo, Spain
+   4                                  November, 13th, 2001
+   5          
+   6            Note: This SW has been tested, and the Author thinks that it works well.
+   7              However the Author does not guarantee that the code is free of bugs.
+   8          
+   9            This program computes the FFT from a set of 64 samples.
+  10            Each sample is a signed integer and is expected to be in the range 
+  11            -512 to 511, using two's complement notation. Samples can be obtained
+  12            using a 10-bit ADC, and substracting 512 (ADCs usually provide values
+  13            in binary-offset format). 
+  14            
+  15            With a 12 MHz crystal it takes about 0.3 seconds to perform the fft, 
+  16            including the additional computation needed to find the amplitudes.
+  17          
+  18            If samples exceed the range (-512, 511), an automatic scaling might be 
+  19            performed (this program can do the scaling when necessary, but the 
+  20            execution time increases). See 'NOTE 1' in the code list.
+  21            
+  22            The array amplitude[n] gives the absolute amplitudes from f0 (DC) to f31,
+  23            but note that values are multiplied by 32. This improves resolution.
+  24          
+  25            The array harmonic[n] gives the amplitudes of harmonics from f1 (n=1)
+  26            to f31 (f31), all relative to f1 in parts per thousand. Therefore
+  27            harmonic[1] shold always be 1000. Note that harmonic[0] is not computed.
+  28            
+  29            In my application, I get 64 voltage samples per power-line period, using
+  30            a 10-bit ADC. The analog interface is designed so that 1 LSB is 1 volt.
+  31            Since the array amplitude[] gives 32x values, amplitude[1]= 4978 indicates
+  32            that the main frequency component (for example 60Hz) is about 156 Vpeak, 
+  33            or 110 Vrms. Additional math can be used to scale the amplitudes as needed.
+  34            For example amplitude[n] * 4 / 181 gives the result in tenths of volts rms.
+  35          
+  36            Since the fft is computed using integer notation (not floating point), it
+  37            introduces rounding errors. Errors of about 0.1 percent should be expected.
+  38            
+  39            Some special code has been included in order to improve speed. For example,
+  40            the function longroot() evaluates the square root of an unsigned long 
+  41            using a relatively fast algorithm, based on succesive aproximations.
+  42          */
+  43          
+  44          //#include "stdlib.h"
+  45          //#include "io51.h"
+  46          #include "Eco/reg24e1.h"
+   1      =1  #ifndef REGnRF24E1_H
+   2      =1  #define REGnRF24E1_H
+   3      =1  
+   4      =1  /*  BYTE Registers  */
+   5      =1  sfr P0                  = 0x80 ;
+   6      =1  sfr SP                  = 0x81 ;
+   7      =1  sfr DPL                 = 0x82 ;
+   8      =1  sfr DPL0                = 0x82 ;
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 2   
+
+   9      =1  sfr DPH                 = 0x83 ;
+  10      =1  sfr DPH0                = 0x83 ;
+  11      =1  sfr DPL1                = 0x84 ;
+  12      =1  sfr DPH1                = 0x85 ;
+  13      =1  sfr DPS                 = 0x86 ;
+  14      =1  sfr PCON                = 0x87 ;
+  15      =1  sfr TCON                = 0x88 ;
+  16      =1  sfr TMOD                = 0x89 ;
+  17      =1  sfr TL0                 = 0x8A ;
+  18      =1  sfr TL1                 = 0x8B ;
+  19      =1  sfr TH0                 = 0x8C ;
+  20      =1  sfr TH1                 = 0x8D ;
+  21      =1  sfr CKCON               = 0x8E ;
+  22      =1  sfr SPC_FNC             = 0x8F ;
+  23      =1  sfr P1          = 0x90 ;
+  24      =1  sfr EXIF                = 0x91 ;
+  25      =1  sfr MPAGE               = 0x92 ;
+  26      =1  sfr P0_DIR              = 0x94 ;
+  27      =1  sfr P0_ALT              = 0x95 ;
+  28      =1  sfr P1_DIR              = 0x96 ;
+  29      =1  sfr P1_ALT              = 0x97 ;
+  30      =1  sfr SCON                = 0x98 ;
+  31      =1  sfr SBUF                = 0x99 ;
+  32      =1  sfr RADIO               = 0xA0 ;
+  33      =1  sfr ADCCON              = 0xA1 ;
+  34      =1  sfr ADCDATAH    = 0xA2 ;
+  35      =1  sfr ADCDATAL    = 0xA3 ;
+  36      =1  sfr ADCSTATIC   = 0xA4 ;
+  37      =1  sfr IE                  = 0xA8 ;
+  38      =1  sfr PWMCON              = 0xA9 ;
+  39      =1  sfr PWMDUTY             = 0xAA ;
+  40      =1  sfr REGX_MSB    = 0xAB ;
+  41      =1  sfr REGX_LSB    = 0xAC ;
+  42      =1  sfr REGX_CTRL   = 0xAD ;
+  43      =1  sfr RSTREAS             = 0xB1 ;
+  44      =1  sfr SPI_DATA    = 0xB2 ;
+  45      =1  sfr SPI_CTRL    = 0xB3 ;
+  46      =1  sfr SPICLK              = 0xB4 ;
+  47      =1  sfr TICK_DV             = 0xB5 ;
+  48      =1  sfr CK_CTRL             = 0xB6 ;
+  49      =1  sfr TEST_MODE   = 0xB7 ;
+  50      =1  sfr IP                  = 0xB8 ;
+  51      =1  sfr T1_1V2              = 0xBC ;
+  52      =1  sfr T2_1V2              = 0xBD ;
+  53      =1  sfr DEV_OFFSET  = 0xBE ;
+  54      =1  sfr T2CON               = 0xC8 ;
+  55      =1  sfr RCAP2L              = 0xCA ;
+  56      =1  sfr RCAP2H              = 0xCB ;
+  57      =1  sfr TL2                 = 0xCC ;
+  58      =1  sfr TH2                 = 0xCD ;
+  59      =1  sfr PSW                 = 0xD0 ;
+  60      =1  sfr EICON               = 0xD8 ;
+  61      =1  sfr ACC                 = 0xE0 ;
+  62      =1  sfr EIE                 = 0xE8 ;
+  63      =1  sfr B                   = 0xF0 ;
+  64      =1  sfr EIP                 = 0xF8 ;
+  65      =1  
+  66      =1  
+  67      =1  /*  BIT Registers  */
+  68      =1  /* P0 */
+  69      =1  sbit P0_0       = 0x80  ;
+  70      =1  sbit DIO2       = 0x80  ;
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 3   
+
+  71      =1  sbit P0_1       = 0x81  ;
+  72      =1  sbit RXD        = 0x81  ;
+  73      =1  sbit DIO3       = 0x81  ;
+  74      =1  sbit P0_2       = 0x82  ;
+  75      =1  sbit TXD        = 0x82  ;
+  76      =1  sbit DIO4       = 0x82  ;
+  77      =1  sbit P0_3       = 0x83  ;
+  78      =1  sbit INT0_N     = 0x83  ;
+  79      =1  sbit DIO5       = 0x83  ;
+  80      =1  sbit P0_4       = 0x84  ;
+  81      =1  sbit INT1_N     = 0x84  ;
+  82      =1  sbit DIO6       = 0x84  ;
+  83      =1  sbit P0_5       = 0x85  ;
+  84      =1  sbit T0         = 0x85  ;
+  85      =1  sbit DIO7       = 0x85  ;
+  86      =1  sbit P0_6       = 0x86  ;
+  87      =1  sbit T1         = 0x86  ;
+  88      =1  sbit DIO8       = 0x86  ;
+  89      =1  sbit P0_7       = 0x87  ;
+  90      =1  sbit PWM        = 0x87  ;
+  91      =1  sbit DIO9       = 0x87  ;
+  92      =1  
+  93      =1  /*  TCON  */
+  94      =1  sbit IT0        = 0x88 ;
+  95      =1  sbit IE0        = 0x89 ;
+  96      =1  sbit IT1        = 0x8A ;
+  97      =1  sbit IE1        = 0x8B ;
+  98      =1  sbit TR0        = 0x8C ;
+  99      =1  sbit TF0        = 0x8D ;
+ 100      =1  sbit TR1        = 0x8E ;
+ 101      =1  sbit TF1        = 0x8F ;
+ 102      =1  
+ 103      =1  /* P1 */
+ 104      =1  sbit P1_0       = 0x90 ;
+ 105      =1  sbit T2         = 0x90 ;
+ 106      =1  sbit DIO0       = 0x90 ;
+ 107      =1  sbit P1_1       = 0x91 ;
+ 108      =1  sbit DIO1       = 0x91 ;
+ 109      =1  sbit P1_2       = 0x92 ;
+ 110      =1  sbit DIN0       = 0x92 ;
+ 111      =1  
+ 112      =1  /*  SCON  */
+ 113      =1  sbit RI         = 0x98 ;
+ 114      =1  sbit TI         = 0x99 ;
+ 115      =1  sbit RB8        = 0x9A ;
+ 116      =1  sbit TB8        = 0x9B ;
+ 117      =1  sbit REN        = 0x9C ;
+ 118      =1  sbit SM2        = 0x9D ;
+ 119      =1  sbit SM1        = 0x9E ;
+ 120      =1  sbit SM0        = 0x9F ;
+ 121      =1  
+ 122      =1  /* P2 */
+ 123      =1  sbit DATA       = 0xA0 ;
+ 124      =1  sbit CLK1       = 0xA1 ;
+ 125      =1  sbit DR1        = 0xA2 ;
+ 126      =1  sbit CS         = 0xA3 ;
+ 127      =1  sbit DOUT2      = 0xA4 ;
+ 128      =1  sbit CLK2       = 0xA5 ;
+ 129      =1  sbit DR2_CE     = 0xA6 ;
+ 130      =1  sbit DR2        = 0xA6 ;
+ 131      =1  sbit CE         = 0xA6 ;
+ 132      =1  sbit PWR_UP     = 0xA7 ;
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 4   
+
+ 133      =1  
+ 134      =1  /*  IE   */
+ 135      =1  sbit EX0        = 0xA8 ;
+ 136      =1  sbit ET0        = 0xA9 ;
+ 137      =1  sbit EX1        = 0xAA ;
+ 138      =1  sbit ET1        = 0xAB ;
+ 139      =1  sbit ES         = 0xAC ;
+ 140      =1  sbit ET2        = 0xAD ;
+ 141      =1  sbit EA         = 0xAF ;
+ 142      =1  
+ 143      =1  /*  IP   */
+ 144      =1  sbit PX0        = 0xB8 ;
+ 145      =1  sbit PT0        = 0xB9 ;
+ 146      =1  sbit PX1        = 0xBA ;
+ 147      =1  sbit PT1        = 0xBB ;
+ 148      =1  sbit PS         = 0xBC ;
+ 149      =1  sbit PT2        = 0xBD ;
+ 150      =1  
+ 151      =1  /*  T2CON  */
+ 152      =1  sbit CP_RL2     = 0xC8 ;
+ 153      =1  sbit CPRL2      = 0xC8 ;
+ 154      =1  sbit C_T2       = 0xC9 ;
+ 155      =1  sbit CT2        = 0xC9 ;
+ 156      =1  sbit TR2        = 0xCA ;
+ 157      =1  sbit EXEN2      = 0xCB ;
+ 158      =1  sbit TCLK       = 0xCC ;
+ 159      =1  sbit RCLK       = 0xCD ;
+ 160      =1  sbit EXF2       = 0xCE ;
+ 161      =1  sbit TF2        = 0xCF ;
+ 162      =1  
+ 163      =1  /*  PSW   */
+ 164      =1  sbit P          = 0xD0 ;
+ 165      =1  sbit F1         = 0xD1 ;
+ 166      =1  sbit OV         = 0xD2 ;
+ 167      =1  sbit RS0        = 0xD3 ;
+ 168      =1  sbit RS1        = 0xD4 ;
+ 169      =1  sbit F0         = 0xD5 ;
+ 170      =1  sbit AC         = 0xD6 ;
+ 171      =1  sbit CY         = 0xD7 ;
+ 172      =1  
+ 173      =1  /*  EICON  */
+ 174      =1  sbit WDTI       = 0xDB ;
+ 175      =1  
+ 176      =1  /*  EIE  */
+ 177      =1  sbit EX2        = 0xE8 ;
+ 178      =1  sbit EX3        = 0xE9 ;
+ 179      =1  sbit EX4        = 0xEA ;
+ 180      =1  sbit EX5        = 0xEB ;
+ 181      =1  sbit EWDI       = 0xEC ;
+ 182      =1  
+ 183      =1  /*  EIP  */
+ 184      =1  sbit PX2        = 0xF8 ;
+ 185      =1  sbit PX3        = 0xF9 ;
+ 186      =1  sbit PX4        = 0xFA ;
+ 187      =1  sbit PX5        = 0xFB ;
+ 188      =1  sbit PWDI       = 0xFC ;
+ 189      =1  
+ 190      =1  
+ 191      =1  /* BIT definitions for bits that are not directly accessible */
+ 192      =1  /* PCON bits */
+ 193      =1  #define IDL             0x01
+ 194      =1  #define PD              0x02
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 5   
+
+ 195      =1  #define GF0             0x04
+ 196      =1  #define GF1             0x08
+ 197      =1  #define SMOD            0x80
+ 198      =1  
+ 199      =1  /* TMOD bits */
+ 200      =1  #define T0_M0           0x01
+ 201      =1  #define T0_M1           0x02
+ 202      =1  #define T0_CT           0x04
+ 203      =1  #define T0_GATE         0x08
+ 204      =1  #define T1_M0           0x10
+ 205      =1  #define T1_M1           0x20
+ 206      =1  #define T1_CT           0x40
+ 207      =1  #define T1_GATE         0x80
+ 208      =1  
+ 209      =1  #define T0_MASK         0x0F
+ 210      =1  #define T1_MASK         0xF0
+ 211      =1  
+ 212      =1  /* Interrupt numbers: address = (number * 8) + 3 */
+ 213      =1  #define IE0_VECTOR      0       /* 0x03 external interrupt 0 */
+ 214      =1  #define TF0_VECTOR      1       /* 0x0b timer 0 */
+ 215      =1  #define IE1_VECTOR      2       /* 0x13 external interrupt 1 */
+ 216      =1  #define TF1_VECTOR      3       /* 0x1b timer 1 */
+ 217      =1  #define SI0_VECTOR      4       /* 0x23 serial port 0 */
+ 218      =1  
+ 219      =1  #endif
+  47          #include "Eco/eco_sys.h"
+   1      =1  /*
+   2      =1   * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+   3      =1   * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+   4      =1   * Permission to copy, modify, and distribute this program is granted 
+   5      =1   * for noncommercial purposes, provided the author(s) and copyright
+   6      =1   * notice are retained. All other uses require explicit written
+   7      =1   * permission from NTHU. 
+   8      =1   *
+   9      =1   * Min-Hua Chen <orca.chen@gmail.com> 
+  10      =1   */
+  11      =1  #ifndef _ECO_SYS_H_
+  12      =1  #define _ECO_SYS_H_
+  13      =1  
+  14      =1  #include <Eco/reg24e1.h>
+   1      =2  #ifndef REGnRF24E1_H
+           =2 #define REGnRF24E1_H
+           =2 
+           =2 /*  BYTE Registers  */
+           =2 sfr P0                  = 0x80 ;
+           =2 sfr SP                  = 0x81 ;
+           =2 sfr DPL                 = 0x82 ;
+           =2 sfr DPL0                = 0x82 ;
+           =2 sfr DPH                 = 0x83 ;
+           =2 sfr DPH0                = 0x83 ;
+           =2 sfr DPL1                = 0x84 ;
+           =2 sfr DPH1                = 0x85 ;
+           =2 sfr DPS                 = 0x86 ;
+           =2 sfr PCON                = 0x87 ;
+           =2 sfr TCON                = 0x88 ;
+           =2 sfr TMOD                = 0x89 ;
+           =2 sfr TL0                 = 0x8A ;
+           =2 sfr TL1                 = 0x8B ;
+           =2 sfr TH0                 = 0x8C ;
+           =2 sfr TH1                 = 0x8D ;
+           =2 sfr CKCON               = 0x8E ;
+           =2 sfr SPC_FNC             = 0x8F ;
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 6   
+
+           =2 sfr P1          = 0x90 ;
+           =2 sfr EXIF                = 0x91 ;
+           =2 sfr MPAGE               = 0x92 ;
+           =2 sfr P0_DIR              = 0x94 ;
+           =2 sfr P0_ALT              = 0x95 ;
+           =2 sfr P1_DIR              = 0x96 ;
+           =2 sfr P1_ALT              = 0x97 ;
+           =2 sfr SCON                = 0x98 ;
+           =2 sfr SBUF                = 0x99 ;
+           =2 sfr RADIO               = 0xA0 ;
+           =2 sfr ADCCON              = 0xA1 ;
+           =2 sfr ADCDATAH    = 0xA2 ;
+           =2 sfr ADCDATAL    = 0xA3 ;
+           =2 sfr ADCSTATIC   = 0xA4 ;
+           =2 sfr IE                  = 0xA8 ;
+           =2 sfr PWMCON              = 0xA9 ;
+           =2 sfr PWMDUTY             = 0xAA ;
+           =2 sfr REGX_MSB    = 0xAB ;
+           =2 sfr REGX_LSB    = 0xAC ;
+           =2 sfr REGX_CTRL   = 0xAD ;
+           =2 sfr RSTREAS             = 0xB1 ;
+           =2 sfr SPI_DATA    = 0xB2 ;
+           =2 sfr SPI_CTRL    = 0xB3 ;
+           =2 sfr SPICLK              = 0xB4 ;
+           =2 sfr TICK_DV             = 0xB5 ;
+           =2 sfr CK_CTRL             = 0xB6 ;
+           =2 sfr TEST_MODE   = 0xB7 ;
+           =2 sfr IP                  = 0xB8 ;
+           =2 sfr T1_1V2              = 0xBC ;
+           =2 sfr T2_1V2              = 0xBD ;
+           =2 sfr DEV_OFFSET  = 0xBE ;
+           =2 sfr T2CON               = 0xC8 ;
+           =2 sfr RCAP2L              = 0xCA ;
+           =2 sfr RCAP2H              = 0xCB ;
+           =2 sfr TL2                 = 0xCC ;
+           =2 sfr TH2                 = 0xCD ;
+           =2 sfr PSW                 = 0xD0 ;
+           =2 sfr EICON               = 0xD8 ;
+           =2 sfr ACC                 = 0xE0 ;
+           =2 sfr EIE                 = 0xE8 ;
+           =2 sfr B                   = 0xF0 ;
+           =2 sfr EIP                 = 0xF8 ;
+           =2 
+           =2 
+           =2 /*  BIT Registers  */
+           =2 /* P0 */
+           =2 sbit P0_0       = 0x80  ;
+           =2 sbit DIO2       = 0x80  ;
+           =2 sbit P0_1       = 0x81  ;
+           =2 sbit RXD        = 0x81  ;
+           =2 sbit DIO3       = 0x81  ;
+           =2 sbit P0_2       = 0x82  ;
+           =2 sbit TXD        = 0x82  ;
+           =2 sbit DIO4       = 0x82  ;
+           =2 sbit P0_3       = 0x83  ;
+           =2 sbit INT0_N     = 0x83  ;
+           =2 sbit DIO5       = 0x83  ;
+           =2 sbit P0_4       = 0x84  ;
+           =2 sbit INT1_N     = 0x84  ;
+           =2 sbit DIO6       = 0x84  ;
+           =2 sbit P0_5       = 0x85  ;
+           =2 sbit T0         = 0x85  ;
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 7   
+
+           =2 sbit DIO7       = 0x85  ;
+           =2 sbit P0_6       = 0x86  ;
+           =2 sbit T1         = 0x86  ;
+           =2 sbit DIO8       = 0x86  ;
+           =2 sbit P0_7       = 0x87  ;
+           =2 sbit PWM        = 0x87  ;
+           =2 sbit DIO9       = 0x87  ;
+           =2 
+           =2 /*  TCON  */
+           =2 sbit IT0        = 0x88 ;
+           =2 sbit IE0        = 0x89 ;
+           =2 sbit IT1        = 0x8A ;
+           =2 sbit IE1        = 0x8B ;
+           =2 sbit TR0        = 0x8C ;
+           =2 sbit TF0        = 0x8D ;
+           =2 sbit TR1        = 0x8E ;
+           =2 sbit TF1        = 0x8F ;
+           =2 
+           =2 /* P1 */
+           =2 sbit P1_0       = 0x90 ;
+           =2 sbit T2         = 0x90 ;
+           =2 sbit DIO0       = 0x90 ;
+           =2 sbit P1_1       = 0x91 ;
+           =2 sbit DIO1       = 0x91 ;
+           =2 sbit P1_2       = 0x92 ;
+           =2 sbit DIN0       = 0x92 ;
+           =2 
+           =2 /*  SCON  */
+           =2 sbit RI         = 0x98 ;
+           =2 sbit TI         = 0x99 ;
+           =2 sbit RB8        = 0x9A ;
+           =2 sbit TB8        = 0x9B ;
+           =2 sbit REN        = 0x9C ;
+           =2 sbit SM2        = 0x9D ;
+           =2 sbit SM1        = 0x9E ;
+           =2 sbit SM0        = 0x9F ;
+           =2 
+           =2 /* P2 */
+           =2 sbit DATA       = 0xA0 ;
+           =2 sbit CLK1       = 0xA1 ;
+           =2 sbit DR1        = 0xA2 ;
+           =2 sbit CS         = 0xA3 ;
+           =2 sbit DOUT2      = 0xA4 ;
+           =2 sbit CLK2       = 0xA5 ;
+           =2 sbit DR2_CE     = 0xA6 ;
+           =2 sbit DR2        = 0xA6 ;
+           =2 sbit CE         = 0xA6 ;
+           =2 sbit PWR_UP     = 0xA7 ;
+           =2 
+           =2 /*  IE   */
+           =2 sbit EX0        = 0xA8 ;
+           =2 sbit ET0        = 0xA9 ;
+           =2 sbit EX1        = 0xAA ;
+           =2 sbit ET1        = 0xAB ;
+           =2 sbit ES         = 0xAC ;
+           =2 sbit ET2        = 0xAD ;
+           =2 sbit EA         = 0xAF ;
+           =2 
+           =2 /*  IP   */
+           =2 sbit PX0        = 0xB8 ;
+           =2 sbit PT0        = 0xB9 ;
+           =2 sbit PX1        = 0xBA ;
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 8   
+
+           =2 sbit PT1        = 0xBB ;
+           =2 sbit PS         = 0xBC ;
+           =2 sbit PT2        = 0xBD ;
+           =2 
+           =2 /*  T2CON  */
+           =2 sbit CP_RL2     = 0xC8 ;
+           =2 sbit CPRL2      = 0xC8 ;
+           =2 sbit C_T2       = 0xC9 ;
+           =2 sbit CT2        = 0xC9 ;
+           =2 sbit TR2        = 0xCA ;
+           =2 sbit EXEN2      = 0xCB ;
+           =2 sbit TCLK       = 0xCC ;
+           =2 sbit RCLK       = 0xCD ;
+           =2 sbit EXF2       = 0xCE ;
+           =2 sbit TF2        = 0xCF ;
+           =2 
+           =2 /*  PSW   */
+           =2 sbit P          = 0xD0 ;
+           =2 sbit F1         = 0xD1 ;
+           =2 sbit OV         = 0xD2 ;
+           =2 sbit RS0        = 0xD3 ;
+           =2 sbit RS1        = 0xD4 ;
+           =2 sbit F0         = 0xD5 ;
+           =2 sbit AC         = 0xD6 ;
+           =2 sbit CY         = 0xD7 ;
+           =2 
+           =2 /*  EICON  */
+           =2 sbit WDTI       = 0xDB ;
+           =2 
+           =2 /*  EIE  */
+           =2 sbit EX2        = 0xE8 ;
+           =2 sbit EX3        = 0xE9 ;
+           =2 sbit EX4        = 0xEA ;
+           =2 sbit EX5        = 0xEB ;
+           =2 sbit EWDI       = 0xEC ;
+           =2 
+           =2 /*  EIP  */
+           =2 sbit PX2        = 0xF8 ;
+           =2 sbit PX3        = 0xF9 ;
+           =2 sbit PX4        = 0xFA ;
+           =2 sbit PX5        = 0xFB ;
+           =2 sbit PWDI       = 0xFC ;
+           =2 
+           =2 
+           =2 /* BIT definitions for bits that are not directly accessible */
+           =2 /* PCON bits */
+           =2 #define IDL             0x01
+           =2 #define PD              0x02
+           =2 #define GF0             0x04
+           =2 #define GF1             0x08
+           =2 #define SMOD            0x80
+           =2 
+           =2 /* TMOD bits */
+           =2 #define T0_M0           0x01
+           =2 #define T0_M1           0x02
+           =2 #define T0_CT           0x04
+           =2 #define T0_GATE         0x08
+           =2 #define T1_M0           0x10
+           =2 #define T1_M1           0x20
+           =2 #define T1_CT           0x40
+           =2 #define T1_GATE         0x80
+           =2 
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 9   
+
+           =2 #define T0_MASK         0x0F
+           =2 #define T1_MASK         0xF0
+           =2 
+           =2 /* Interrupt numbers: address = (number * 8) + 3 */
+           =2 #define IE0_VECTOR      0       /* 0x03 external interrupt 0 */
+           =2 #define TF0_VECTOR      1       /* 0x0b timer 0 */
+           =2 #define IE1_VECTOR      2       /* 0x13 external interrupt 1 */
+           =2 #define TF1_VECTOR      3       /* 0x1b timer 1 */
+           =2 #define SI0_VECTOR      4       /* 0x23 serial port 0 */
+           =2 
+           =2 #endif
+  15      =1  
+  16      =1  #define blink_led() P0 ^= 0x20
+  17      =1  
+  18      =1  #define eco_dev_blink_led() P0 ^= 0x08
+  19      =1  
+  20      =1  #endif 
+  48          #include "utils/utils.h"
+   1      =1  /*
+   2      =1   * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+   3      =1   * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+   4      =1   * Permission to copy, modify, and distribute this program is granted 
+   5      =1   * for noncommercial purposes, provided the author(s) and copyright
+   6      =1   * notice are retained. All other uses require explicit written
+   7      =1   * permission from NTHU. 
+   8      =1   *
+   9      =1   * utils.h
+  10      =1   * utility functions
+  11      =1   * Min-Hua Chen <orca.chen@gmail.com> 
+  12      =1   * 2007/11/20
+  13      =1   */
+  14      =1  
+  15      =1  void store_cpu_rate(int mhz);
+  16      =1  void mdelay(unsigned int msec);
+  17      =1  void wdt_load(unsigned int cnt);
+  18      =1  void strncpy(char *src, char *dst, int n);
+  49          #include "serial/serial.h"
+   1      =1  /*
+   2      =1   * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+   3      =1   * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+   4      =1   * Permission to copy, modify, and distribute this program is granted 
+   5      =1   * for noncommercial purposes, provided the author(s) and copyright
+   6      =1   * notice are retained. All other uses require explicit written
+   7      =1   * permission from NTHU. 
+   8      =1   */
+   9      =1  #ifndef _SERIAL_H_
+  10      =1  #define _SERIAL_H_
+  11      =1  
+  12      =1  /* for SCON register */
+  13      =1  #define SERIAL_MODE0    0x00    /* sync mode */
+  14      =1  #define SERIAL_MODE1    (1 << 6)        /* async, full duplex mode */
+  15      =1  #define SERIAL_MODE2    (2 << 6)        /* async, full duplex mode */ 
+  16      =1  #define SERIAL_MODE3    (3 << 6)        /* async, full duplex mode */ 
+  17      =1  
+  18      =1  #define SERIAL_CLK_D4           (1 << 5)
+  19      =1  
+  20      =1  #define SERIAL_IO_PORT  (3 << 1)
+  21      =1  #define RECV_ENABLE     (1 << 4)
+  22      =1  #define TRAN_DONE       (1 << 1)
+  23      =1  #define RECV_DONE       1
+  24      =1  
+  25      =1  /* for PCON register */
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 10  
+
+  26      =1  #define BAUD_DOUBLE     (1 << 7)
+  27      =1  
+  28      =1  void serial_init(unsigned int baud);
+  29      =1  void putc(char c);
+  30      =1  void puts(char *s);
+  31      =1  char getc();
+  32      =1  void int_print(unsigned int val) reentrant;
+  33      =1  
+  34      =1  #endif
+  50          #include "isr/isr_rf.h"
+   1      =1  /* 
+   2      =1   * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+   3      =1   * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+   4      =1   * Permission to copy, modify, and distribute this program is granted 
+   5      =1   * for noncommercial purposes, provided the author(s) and copyright
+   6      =1   * notice are retained. All other uses require explicit written
+   7      =1   * permission from NTHU. 
+   8      =1   */
+   9      =1  #ifndef _RADIO_H_
+  10      =1  #define _RADIO_H_
+  11      =1  
+  12      =1  #define RF_BUF_LEN      23      /* default rf buffer size */
+  13      =1  
+  14      =1  /* RF configuration descriptor */
+  15      =1  struct rf_config {
+  16      =1          /* data width (in bits) */
+  17      =1          unsigned char data2_width;
+  18      =1          unsigned char data1_width;
+  19      =1          /* address for two channels ,for only one channel, use addr1 */
+  20      =1          char addr2[5];
+  21      =1          char addr1[5];
+  22      =1          /* [7:2] is address width (in bits), [1:0] is for CRC control */
+  23      =1          char addr_and_crc;
+  24      =1          char rf_prog[2];        /* rf programming */
+  25      =1  };
+  26      =1  
+  27      =1  /* RF buffer */
+  28      =1  struct radio_buffer {
+  29      =1          unsigned char ready;
+  30      =1          unsigned char buffer[RF_BUF_LEN];
+  31      =1  };
+  32      =1  
+  33      =1  void rf_init();
+  34      =1  void rf_configure(struct rf_config *cfg);
+  35      =1  void rf_send(char *addr, unsigned char addr_len,
+  36      =1                  char *payload, unsigned char pl_len);
+  37      =1  void rf_wait_msg();
+  38      =1  //void rf_ch1_recv() interrupt 10;
+  39      =1  extern struct radio_buffer rf_buf;
+  40      =1  
+  41      =1  #endif 
+  51          #include "eeprom/eeprom.h"
+   1      =1  /*
+   2      =1   * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+   3      =1   * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+   4      =1   * Permission to copy, modify, and distribute this program is granted 
+   5      =1   * for noncommercial purposes, provided the author(s) and copyright
+   6      =1   * notice are retained. All other uses require explicit written
+   7      =1   * permission from NTHU. 
+   8      =1   */
+   9      =1  #ifndef _EEPROM_H_
+  10      =1  #define _EEPROM_H_
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 11  
+
+  11      =1  
+  12      =1  /* instruction for eeprom AT25320A */
+  13      =1  #define EE_WREN         0x06
+  14      =1  #define EE_WRDI         0x04
+  15      =1  #define EE_RDSR         0x05
+  16      =1  #define EE_WRSR         0x01
+  17      =1  #define EE_READ         0x03
+  18      =1  #define EE_WRITE        0x02
+  19      =1  #define ERASE_ALL       0x62    /* erase all page for flash memory */
+  20      =1  /* the eeprom chip select is connected to P0_0, and
+  21      =1   * the eeprom is active when CS is set low */
+  22      =1  #define EE_CS           P0_0
+  23      =1  
+  24      =1  void eeprom_init();
+  25      =1  void eeprom_write(unsigned int addr, char byte);
+  26      =1  char eeprom_read(unsigned int addr);
+  27      =1  char eeprom_status();
+  28      =1  
+  29      =1  #endif 
+  52          #include "eco_page.h"
+   1      =1  /*
+   2      =1   * Author(s): Wei-Han Chen (Embedded Platform Lab, NTHU)
+   3      =1   * Copyright (c) 2009 National Tsing Hua University (NTHU) 
+   4      =1   * Permission to copy, modify, and distribute this program is granted 
+   5      =1   * for noncommercial purposes, provided the author(s) and copyright
+   6      =1   * notice are retained. All other uses require explicit written
+   7      =1   * permission from NTHU. 
+   8      =1   *
+   9      =1   * Eco Paging Library
+  10      =1   *
+  11      =1   * Wei-Han Chen <xwaynec@gmail.com> 
+  12      =1   * 2009/2/13
+  13      =1   */
+  14      =1  
+  15      =1  #ifndef __ECO_PAGE_H
+  16      =1  #define __ECO_PAGE_H
+  17      =1  
+  18      =1  
+  19      =1  #include "Eco/reg24e1.h"
+   1      =2  #ifndef REGnRF24E1_H
+           =2 #define REGnRF24E1_H
+           =2 
+           =2 /*  BYTE Registers  */
+           =2 sfr P0                  = 0x80 ;
+           =2 sfr SP                  = 0x81 ;
+           =2 sfr DPL                 = 0x82 ;
+           =2 sfr DPL0                = 0x82 ;
+           =2 sfr DPH                 = 0x83 ;
+           =2 sfr DPH0                = 0x83 ;
+           =2 sfr DPL1                = 0x84 ;
+           =2 sfr DPH1                = 0x85 ;
+           =2 sfr DPS                 = 0x86 ;
+           =2 sfr PCON                = 0x87 ;
+           =2 sfr TCON                = 0x88 ;
+           =2 sfr TMOD                = 0x89 ;
+           =2 sfr TL0                 = 0x8A ;
+           =2 sfr TL1                 = 0x8B ;
+           =2 sfr TH0                 = 0x8C ;
+           =2 sfr TH1                 = 0x8D ;
+           =2 sfr CKCON               = 0x8E ;
+           =2 sfr SPC_FNC             = 0x8F ;
+           =2 sfr P1          = 0x90 ;
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 12  
+
+           =2 sfr EXIF                = 0x91 ;
+           =2 sfr MPAGE               = 0x92 ;
+           =2 sfr P0_DIR              = 0x94 ;
+           =2 sfr P0_ALT              = 0x95 ;
+           =2 sfr P1_DIR              = 0x96 ;
+           =2 sfr P1_ALT              = 0x97 ;
+           =2 sfr SCON                = 0x98 ;
+           =2 sfr SBUF                = 0x99 ;
+           =2 sfr RADIO               = 0xA0 ;
+           =2 sfr ADCCON              = 0xA1 ;
+           =2 sfr ADCDATAH    = 0xA2 ;
+           =2 sfr ADCDATAL    = 0xA3 ;
+           =2 sfr ADCSTATIC   = 0xA4 ;
+           =2 sfr IE                  = 0xA8 ;
+           =2 sfr PWMCON              = 0xA9 ;
+           =2 sfr PWMDUTY             = 0xAA ;
+           =2 sfr REGX_MSB    = 0xAB ;
+           =2 sfr REGX_LSB    = 0xAC ;
+           =2 sfr REGX_CTRL   = 0xAD ;
+           =2 sfr RSTREAS             = 0xB1 ;
+           =2 sfr SPI_DATA    = 0xB2 ;
+           =2 sfr SPI_CTRL    = 0xB3 ;
+           =2 sfr SPICLK              = 0xB4 ;
+           =2 sfr TICK_DV             = 0xB5 ;
+           =2 sfr CK_CTRL             = 0xB6 ;
+           =2 sfr TEST_MODE   = 0xB7 ;
+           =2 sfr IP                  = 0xB8 ;
+           =2 sfr T1_1V2              = 0xBC ;
+           =2 sfr T2_1V2              = 0xBD ;
+           =2 sfr DEV_OFFSET  = 0xBE ;
+           =2 sfr T2CON               = 0xC8 ;
+           =2 sfr RCAP2L              = 0xCA ;
+           =2 sfr RCAP2H              = 0xCB ;
+           =2 sfr TL2                 = 0xCC ;
+           =2 sfr TH2                 = 0xCD ;
+           =2 sfr PSW                 = 0xD0 ;
+           =2 sfr EICON               = 0xD8 ;
+           =2 sfr ACC                 = 0xE0 ;
+           =2 sfr EIE                 = 0xE8 ;
+           =2 sfr B                   = 0xF0 ;
+           =2 sfr EIP                 = 0xF8 ;
+           =2 
+           =2 
+           =2 /*  BIT Registers  */
+           =2 /* P0 */
+           =2 sbit P0_0       = 0x80  ;
+           =2 sbit DIO2       = 0x80  ;
+           =2 sbit P0_1       = 0x81  ;
+           =2 sbit RXD        = 0x81  ;
+           =2 sbit DIO3       = 0x81  ;
+           =2 sbit P0_2       = 0x82  ;
+           =2 sbit TXD        = 0x82  ;
+           =2 sbit DIO4       = 0x82  ;
+           =2 sbit P0_3       = 0x83  ;
+           =2 sbit INT0_N     = 0x83  ;
+           =2 sbit DIO5       = 0x83  ;
+           =2 sbit P0_4       = 0x84  ;
+           =2 sbit INT1_N     = 0x84  ;
+           =2 sbit DIO6       = 0x84  ;
+           =2 sbit P0_5       = 0x85  ;
+           =2 sbit T0         = 0x85  ;
+           =2 sbit DIO7       = 0x85  ;
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 13  
+
+           =2 sbit P0_6       = 0x86  ;
+           =2 sbit T1         = 0x86  ;
+           =2 sbit DIO8       = 0x86  ;
+           =2 sbit P0_7       = 0x87  ;
+           =2 sbit PWM        = 0x87  ;
+           =2 sbit DIO9       = 0x87  ;
+           =2 
+           =2 /*  TCON  */
+           =2 sbit IT0        = 0x88 ;
+           =2 sbit IE0        = 0x89 ;
+           =2 sbit IT1        = 0x8A ;
+           =2 sbit IE1        = 0x8B ;
+           =2 sbit TR0        = 0x8C ;
+           =2 sbit TF0        = 0x8D ;
+           =2 sbit TR1        = 0x8E ;
+           =2 sbit TF1        = 0x8F ;
+           =2 
+           =2 /* P1 */
+           =2 sbit P1_0       = 0x90 ;
+           =2 sbit T2         = 0x90 ;
+           =2 sbit DIO0       = 0x90 ;
+           =2 sbit P1_1       = 0x91 ;
+           =2 sbit DIO1       = 0x91 ;
+           =2 sbit P1_2       = 0x92 ;
+           =2 sbit DIN0       = 0x92 ;
+           =2 
+           =2 /*  SCON  */
+           =2 sbit RI         = 0x98 ;
+           =2 sbit TI         = 0x99 ;
+           =2 sbit RB8        = 0x9A ;
+           =2 sbit TB8        = 0x9B ;
+           =2 sbit REN        = 0x9C ;
+           =2 sbit SM2        = 0x9D ;
+           =2 sbit SM1        = 0x9E ;
+           =2 sbit SM0        = 0x9F ;
+           =2 
+           =2 /* P2 */
+           =2 sbit DATA       = 0xA0 ;
+           =2 sbit CLK1       = 0xA1 ;
+           =2 sbit DR1        = 0xA2 ;
+           =2 sbit CS         = 0xA3 ;
+           =2 sbit DOUT2      = 0xA4 ;
+           =2 sbit CLK2       = 0xA5 ;
+           =2 sbit DR2_CE     = 0xA6 ;
+           =2 sbit DR2        = 0xA6 ;
+           =2 sbit CE         = 0xA6 ;
+           =2 sbit PWR_UP     = 0xA7 ;
+           =2 
+           =2 /*  IE   */
+           =2 sbit EX0        = 0xA8 ;
+           =2 sbit ET0        = 0xA9 ;
+           =2 sbit EX1        = 0xAA ;
+           =2 sbit ET1        = 0xAB ;
+           =2 sbit ES         = 0xAC ;
+           =2 sbit ET2        = 0xAD ;
+           =2 sbit EA         = 0xAF ;
+           =2 
+           =2 /*  IP   */
+           =2 sbit PX0        = 0xB8 ;
+           =2 sbit PT0        = 0xB9 ;
+           =2 sbit PX1        = 0xBA ;
+           =2 sbit PT1        = 0xBB ;
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 14  
+
+           =2 sbit PS         = 0xBC ;
+           =2 sbit PT2        = 0xBD ;
+           =2 
+           =2 /*  T2CON  */
+           =2 sbit CP_RL2     = 0xC8 ;
+           =2 sbit CPRL2      = 0xC8 ;
+           =2 sbit C_T2       = 0xC9 ;
+           =2 sbit CT2        = 0xC9 ;
+           =2 sbit TR2        = 0xCA ;
+           =2 sbit EXEN2      = 0xCB ;
+           =2 sbit TCLK       = 0xCC ;
+           =2 sbit RCLK       = 0xCD ;
+           =2 sbit EXF2       = 0xCE ;
+           =2 sbit TF2        = 0xCF ;
+           =2 
+           =2 /*  PSW   */
+           =2 sbit P          = 0xD0 ;
+           =2 sbit F1         = 0xD1 ;
+           =2 sbit OV         = 0xD2 ;
+           =2 sbit RS0        = 0xD3 ;
+           =2 sbit RS1        = 0xD4 ;
+           =2 sbit F0         = 0xD5 ;
+           =2 sbit AC         = 0xD6 ;
+           =2 sbit CY         = 0xD7 ;
+           =2 
+           =2 /*  EICON  */
+           =2 sbit WDTI       = 0xDB ;
+           =2 
+           =2 /*  EIE  */
+           =2 sbit EX2        = 0xE8 ;
+           =2 sbit EX3        = 0xE9 ;
+           =2 sbit EX4        = 0xEA ;
+           =2 sbit EX5        = 0xEB ;
+           =2 sbit EWDI       = 0xEC ;
+           =2 
+           =2 /*  EIP  */
+           =2 sbit PX2        = 0xF8 ;
+           =2 sbit PX3        = 0xF9 ;
+           =2 sbit PX4        = 0xFA ;
+           =2 sbit PX5        = 0xFB ;
+           =2 sbit PWDI       = 0xFC ;
+           =2 
+           =2 
+           =2 /* BIT definitions for bits that are not directly accessible */
+           =2 /* PCON bits */
+           =2 #define IDL             0x01
+           =2 #define PD              0x02
+           =2 #define GF0             0x04
+           =2 #define GF1             0x08
+           =2 #define SMOD            0x80
+           =2 
+           =2 /* TMOD bits */
+           =2 #define T0_M0           0x01
+           =2 #define T0_M1           0x02
+           =2 #define T0_CT           0x04
+           =2 #define T0_GATE         0x08
+           =2 #define T1_M0           0x10
+           =2 #define T1_M1           0x20
+           =2 #define T1_CT           0x40
+           =2 #define T1_GATE         0x80
+           =2 
+           =2 #define T0_MASK         0x0F
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 15  
+
+           =2 #define T1_MASK         0xF0
+           =2 
+           =2 /* Interrupt numbers: address = (number * 8) + 3 */
+           =2 #define IE0_VECTOR      0       /* 0x03 external interrupt 0 */
+           =2 #define TF0_VECTOR      1       /* 0x0b timer 0 */
+           =2 #define IE1_VECTOR      2       /* 0x13 external interrupt 1 */
+           =2 #define TF1_VECTOR      3       /* 0x1b timer 1 */
+           =2 #define SI0_VECTOR      4       /* 0x23 serial port 0 */
+           =2 
+           =2 #endif
+  20      =1  #include "Eco/eco_sys.h"
+   1      =2  /*
+   2      =2   * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+   3      =2   * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+   4      =2   * Permission to copy, modify, and distribute this program is granted 
+   5      =2   * for noncommercial purposes, provided the author(s) and copyright
+   6      =2   * notice are retained. All other uses require explicit written
+   7      =2   * permission from NTHU. 
+   8      =2   *
+   9      =2   * Min-Hua Chen <orca.chen@gmail.com> 
+  10      =2   */
+  11      =2  #ifndef _ECO_SYS_H_
+           =2 #define _ECO_SYS_H_
+           =2 
+           =2 #include <Eco/reg24e1.h>
+           =2 
+           =2 #define blink_led() P0 ^= 0x20
+           =2 
+           =2 #define eco_dev_blink_led() P0 ^= 0x08
+           =2 
+           =2 #endif 
+  21      =1  #include "utils/utils.h"
+   1      =2  /*
+   2      =2   * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+   3      =2   * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+   4      =2   * Permission to copy, modify, and distribute this program is granted 
+   5      =2   * for noncommercial purposes, provided the author(s) and copyright
+   6      =2   * notice are retained. All other uses require explicit written
+   7      =2   * permission from NTHU. 
+   8      =2   *
+   9      =2   * utils.h
+  10      =2   * utility functions
+  11      =2   * Min-Hua Chen <orca.chen@gmail.com> 
+  12      =2   * 2007/11/20
+  13      =2   */
+  14      =2  
+  15      =2  void store_cpu_rate(int mhz);
+  16      =2  void mdelay(unsigned int msec);
+  17      =2  void wdt_load(unsigned int cnt);
+  18      =2  void strncpy(char *src, char *dst, int n);
+  22      =1  #include "eeprom/eeprom.h"
+   1      =2  /*
+   2      =2   * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+   3      =2   * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+   4      =2   * Permission to copy, modify, and distribute this program is granted 
+   5      =2   * for noncommercial purposes, provided the author(s) and copyright
+   6      =2   * notice are retained. All other uses require explicit written
+   7      =2   * permission from NTHU. 
+   8      =2   */
+   9      =2  #ifndef _EEPROM_H_
+           =2 #define _EEPROM_H_
+           =2 
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 16  
+
+           =2 /* instruction for eeprom AT25320A */
+           =2 #define EE_WREN         0x06
+           =2 #define EE_WRDI         0x04
+           =2 #define EE_RDSR         0x05
+           =2 #define EE_WRSR         0x01
+           =2 #define EE_READ         0x03
+           =2 #define EE_WRITE        0x02
+           =2 #define ERASE_ALL       0x62    /* erase all page for flash memory */
+           =2 /* the eeprom chip select is connected to P0_0, and
+           =2  * the eeprom is active when CS is set low */
+           =2 #define EE_CS           P0_0
+           =2 
+           =2 void eeprom_init();
+           =2 void eeprom_write(unsigned int addr, char byte);
+           =2 char eeprom_read(unsigned int addr);
+           =2 char eeprom_status();
+           =2 
+           =2 #endif 
+  23      =1  
+  24      =1  #define EEPROM_HEADER 3
+  25      =1  #define ECO_ADDR_SHIFT(x)       ((unsigned int)(x) + 3)
+  26      =1  
+  27      =1  
+  28      =1  /*
+  29      =1  static unsigned char ECO_PAGE_TABLE[10];
+  30      =1  
+  31      =1  static unsigned int ECO_PAGE_ADDR;
+  32      =1  
+  33      =1  static unsigned int ECO_PAGE_TABLE_INDEX;
+  34      =1  */
+  35      =1  
+  36      =1  void eco_page_init();
+  37      =1  void eco_page_manager();
+  38      =1  
+  39      =1  
+  40      =1  #endif
+  53          #include <math.h>
+   1      =1  /*--------------------------------------------------------------------------
+   2      =1  MATH.H
+   3      =1  
+   4      =1  Prototypes for mathematic functions.
+   5      =1  Copyright (c) 1988-2002 Keil Elektronik GmbH and Keil Software, Inc.
+   6      =1  All rights reserved.
+   7      =1  --------------------------------------------------------------------------*/
+   8      =1  
+   9      =1  #ifndef __MATH_H__
+  10      =1  #define __MATH_H__
+  11      =1  
+  12      =1  #pragma SAVE
+  13      =1  #pragma REGPARMS
+  14      =1  extern char  cabs  (char  val);
+  15      =1  extern int    abs  (int   val);
+  16      =1  extern long  labs  (long  val);
+  17      =1  extern float fabs  (float val);
+  18      =1  extern float sqrt  (float val);
+  19      =1  extern float exp   (float val);
+  20      =1  extern float log   (float val);
+  21      =1  extern float log10 (float val);
+  22      =1  extern float sin   (float val);
+  23      =1  extern float cos   (float val);
+  24      =1  extern float tan   (float val);
+  25      =1  extern float asin  (float val);
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 17  
+
+  26      =1  extern float acos  (float val);
+  27      =1  extern float atan  (float val);
+  28      =1  extern float sinh  (float val);
+  29      =1  extern float cosh  (float val);
+  30      =1  extern float tanh  (float val);
+  31      =1  extern float atan2 (float y, float x);
+  32      =1  
+  33      =1  extern float ceil  (float val);
+  34      =1  extern float floor (float val);
+  35      =1  extern float modf  (float val, float *n);
+  36      =1  extern float fmod  (float x, float y);
+  37      =1  extern float pow   (float x, float y);
+  38      =1  
+  39      =1  #pragma RESTORE
+  40      =1  
+  41      =1  #endif
+  54          
+  55          
+  56          #define uchar unsigned char
+  57          #define uint  unsigned int
+  58          
+  59          #define limit 16383   /* when this limit is reached, scaling is invoked */
+  60          
+  61          /* this table is used for the initial sample placing */
+  62          /*const unsigned char move[64]= {
+  63            0x00,  0x20,  0x10,  0x30,  0x08,  0x28,  0x18,  0x38,
+  64            0x04,  0x24,  0x14,  0x34,  0x0C,  0x2C,  0x1C,  0x3C,
+  65            0x02,  0x22,  0x12,  0x32,  0x0A,  0x2A,  0x1A,  0x3A,
+  66            0x06,  0x26,  0x16,  0x36,  0x0E,  0x2E,  0x1E,  0x3E,
+  67            0x01,  0x21,  0x11,  0x31,  0x09,  0x29,  0x19,  0x39,
+  68            0x05,  0x25,  0x15,  0x35,  0x0D,  0x2D,  0x1D,  0x3D,
+  69            0x03,  0x23,  0x13,  0x33,  0x0B,  0x2B,  0x1B,  0x3B,
+  70            0x07,  0x27,  0x17,  0x37,  0x0F,  0x2F,  0x1F,  0x3F
+  71          };
+  72          */
+  73          /* look-up table for fast sine function (maximum is 0x4000 = 16384) */
+  74          /*const int sine[64]= {
+  75            0x0000,  0x0646,  0x0C7C,  0x1294,  0x187E,  0x1E2B,  0x238E,  0x289A,
+  76            0x2D41,  0x3179,  0x3537,  0x3871,  0x3B21,  0x3D3F,  0x3EC5,  0x3FB1,
+  77            0x4000,  0x3FB1,  0x3EC5,  0x3D3F,  0x3B21,  0x3871,  0x3537,  0x3179,
+  78            0x2D41,  0x289A,  0x238E,  0x1E2B,  0x187E,  0x1294,  0x0C7C,  0x0646,
+  79            0x0000,  0xF9BA,  0xF384,  0xED6C,  0xE782,  0xE1D5,  0xDC72,  0xD766,
+  80            0xD2BF,  0xCE87,  0xCAC9,  0xC78F,  0xC4DF,  0xC2C1,  0xC13B,  0xC04F,
+  81            0xC000,  0xC04F,  0xC13B,  0xC2C1,  0xC4DF,  0xC78F,  0xCAC9,  0xCE87,
+  82            0xD2BF,  0xD766,  0xDC72,  0xE1D5,  0xE782,  0xED6C,  0xF384,  0xF9BA
+  83          };
+  84          */
+  85          /* idem for cosine */
+  86          /*const int cosine[64]= {
+  87            0x4000,  0x3FB1,  0x3EC5,  0x3D3F,  0x3B21,  0x3871,  0x3537,  0x3179,
+  88            0x2D41,  0x289A,  0x238E,  0x1E2B,  0x187E,  0x1294,  0x0C7C,  0x0646,
+  89            0x0000,  0xF9BA,  0xF384,  0xED6C,  0xE782,  0xE1D5,  0xDC72,  0xD766,
+  90            0xD2BF,  0xCE87,  0xCAC9,  0xC78F,  0xC4DF,  0xC2C1,  0xC13B,  0xC04F,
+  91            0xC000,  0xC04F,  0xC13B,  0xC2C1,  0xC4DF,  0xC78F,  0xCAC9,  0xCE87,
+  92            0xD2BF,  0xD766,  0xDC72,  0xE1D5,  0xE782,  0xED6C,  0xF384,  0xF9BA,
+  93            0x0000,  0x0646,  0x0C7C,  0x1294,  0x187E,  0x1E2B,  0x238E,  0x289A,
+  94            0x2D41,  0x3179,  0x3537,  0x3871,  0x3B21,  0x3D3F,  0x3EC5,  0x3FB1
+  95          };
+  96          */
+  97          xdata int in[64];           /* samples array */
+  98          xdata uint amplitude[32];   /* absolute amplitude for every frequency */
+  99          xdata uint harmonic[32];    /* idem, but relative to f1, in parts per thousand */
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 18  
+
+ 100          xdata int work[128];        /* work array */
+ 101          
+ 102          uchar scale;
+ 103          uchar i_r, i_i, ip_r, ip_i;
+ 104          uchar pass, di, dip, dk, k, rot;
+ 105          int sink, cosk;
+ 106          int x0, x1, x2, x3, x4, x5;
+ 107          int real, imag;
+ 108          
+ 109          void fft_int(void);                                 /* fft */
+ 110          uint longroot(unsigned long radic);    /* fast square root */
+ 111          int mult(int x, int y);         /* fast multiply and shift */
+ 112          
+ 113          main()
+ 114          {
+ 115   1        uchar i;
+ 116   1      
+ 117   1      /* You can place here some sample loading for test purposes ... */
+ 118   1      
+ 119   1      /* The following 'for' loop loads the sample vector with: 
+ 120   1         component    amplitude (Vpeak)   phase
+ 121   1         f1           256                 0 (cosine)
+ 122   1         f2           128                 0 (cosine)
+ 123   1         f3            85 aprox.          delayed 90 degrees (because sine)
+ 124   1      */  
+ 125   1        /*for(i=0;i<64;i++){ 
+ 126   1          in[i]= cosine[i]/2 + cosine[(2*i) & 63] / 4 + sine[(3*i) & 63] / 6;
+ 127   1          if(in[i]<0) in[i]+= 16;
+ 128   1          in[i]= in[i] >> 5;
+ 129   1        }*/
+ 130   1        
+ 131   1      /* ... but you probably will include some ADC control routines instead */
+ 132   1      
+ 133   1        fft_int();   /* includes initial placing, fft and amplitude computing */
+ 134   1        
+ 135   1        while(1);
+ 136   1      }
+*** WARNING C280 IN LINE 115 OF .\MAIN.C: 'i': unreferenced local variable
+ 137          
+ 138          /* fft_int() uses the following global variables:
+ 139            int in[64]              samples array
+ 140            int work[128]           work array (Real+Imaginary)
+ 141            uint amplitude[32]      output amplitudes array
+ 142            uint harmonic[32]       harmonics in parts per thousand
+ 143            uchar scale             indicates how many scalings have been performed
+ 144            i_r, i_i, ip_r, ip_i;   indices for work[] (butterflies)
+ 145            uchar pass, di, dip,    control indices (butterflies)
+ 146            uchar dk, k, rot;       idem
+ 147            int sink, cosk;         temporary copies of sine and cosine
+ 148            int x0, x1, x2, x3,     temporaries
+ 149            int x4, x5;             idem
+ 150            int real, imag;         idem
+ 151          
+ 152          .. and the look-up tables:
+ 153            move[64]                initial placing table
+ 154            sine[64]                sine table
+ 155            cosine[64]              cosine table
+ 156          
+ 157            Should you prefer to place some of this variables as locals, do it!, but
+ 158            not in the case of arrays.
+ 159          */
+ 160          void fft_int()
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 19  
+
+ 161          {
+ 162   1        uchar i,j;                /* loop control */
+ 163   1        bit done;                 /* scaling control */
+ 164   1        uint f1;                  /* amplitude for f1 */
+ 165   1        uint adjust;              /* auxiliar variable used for rounding */
+ 166   1        int workipr, workipi;     /* temporary copies for some work[] elements */
+ 167   1      
+ 168   1      /* initial sample placing */  
+ 169   1        for(i=0;i<64;i++){
+ 170   2          j= move[i];
+*** ERROR C202 IN LINE 170 OF .\MAIN.C: 'move': undefined identifier
+ 171   2          work[j]= in[i];
+ 172   2          work[64+j]= 0;     /* imaginary parts are set to 0 */
+ 173   2        }
+ 174   1        
+ 175   1        scale= 0;
+ 176   1        di= 2;
+ 177   1        dip= 1;
+ 178   1        dk= 32;
+ 179   1      
+ 180   1        for(pass=0;pass<6;pass++){
+ 181   2          k= 0;
+ 182   2          for(rot=1;rot<=dip;rot++,k+=dk){
+ 183   3            sink= sine[k];
+*** ERROR C202 IN LINE 183 OF .\MAIN.C: 'sine': undefined identifier
+ 184   3            cosk= cosine[k];
+*** ERROR C202 IN LINE 184 OF .\MAIN.C: 'cosine': undefined identifier
+ 185   3            for(i_r=rot-1;i_r<64;i_r+=di){
+ 186   4              ip_r= i_r + dip;
+ 187   4              i_i= i_r + 64;
+ 188   4              ip_i= i_i + dip;
+ 189   4              workipr= work[ip_r];
+ 190   4              workipi= work[ip_i];
+ 191   4              done= 0;
+ 192   4              do{
+ 193   5                x1= mult(workipr,cosk);
+ 194   5                x2= mult(workipi,sink);
+ 195   5                real= x1 + x2;
+ 196   5      
+ 197   5      /* NOTE 1: The following disabled code lines (forced to be comments) 
+ 198   5         must be enabled if scaling is expected to be needed 
+ 199   5         (see text at the beginning of file) */
+ 200   5      
+ 201   5      /*          if(abs(real)>limit){ scaling(); continue;} */
+ 202   5                x1= mult(workipi,cosk);
+ 203   5                x2= mult(workipr,sink);
+ 204   5                imag= x1 - x2;
+ 205   5      /*          if(abs(imag)>limit){ scaling(); continue;} */
+ 206   5                x1= work[i_r];
+ 207   5                x2= x1 + real;
+ 208   5      /*          if(abs(x2)>limit){ scaling(); continue;} */
+ 209   5                x3= work[i_i];
+ 210   5                x4= x3 + imag;
+ 211   5      /*          if(abs(x4)>limit){ scaling(); continue;} */
+ 212   5                x5= x1 - real;                 
+ 213   5      /*          if(abs(x5)>limit){ scaling(); continue;} */
+ 214   5                x0= x3 - imag;
+ 215   5      /*          if(abs(x0)>limit){ scaling(); continue;} */
+ 216   5      
+ 217   5                work[ip_i]= x0;
+ 218   5                work[ip_r]= x5;
+ 219   5                work[i_r]= x2;
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 20  
+
+ 220   5                work[i_i]= x4;
+ 221   5                done= 1;
+ 222   5              }
+ 223   4              while(!done);
+ 224   4            }
+ 225   3          }
+ 226   2      
+ 227   2          dk= dk >> 1;
+ 228   2          dip= di;
+ 229   2          di= di << 1;
+ 230   2        }
+ 231   1      
+ 232   1        f1= 0;
+ 233   1        for(i=0;i<32;i++){
+ 234   2          x1= abs(work[i]);
+ 235   2          x2= abs(work[i+64]);
+ 236   2      
+ 237   2      /* The following aproximations are used to speed up amplitude computation, 
+ 238   2         calling the longroot() function only when really needed. If time is not 
+ 239   2         critical, use only 'x3= longroot(...)' */
+ 240   2          
+ 241   2          if((x1<8) && (x2<8)) x3= 0;      /* negligible amplitudes (math noise) */
+ 242   2          else if(x1 < (x2 >> 5)) x3= x2;  /* aprox. (x^2+y^2)= x^2, if x>32*y */
+ 243   2          else if(x2 < (x1 >> 5)) x3= x1;  /* reciprocal */
+ 244   2          else x3= longroot((unsigned long) x1*x1 + (unsigned long) x2*x2);
+ 245   2          
+ 246   2          if(i==1){ f1= x3; adjust= x3 >> 1;}
+ 247   2          else if(f1 != 0) harmonic[i]= (adjust + x3 * 1000L) / f1;
+ 248   2          
+ 249   2          if(scale) x3= x3 << scale;
+ 250   2          amplitude[i]= x3;
+ 251   2        }
+ 252   1      }
+ 253          
+ 254          void scaling()          
+ 255          {
+ 256   1        uchar i;
+ 257   1        uint x;
+ 258   1        
+ 259   1        scale++;
+ 260   1        for(i=0;i<128;i++){
+ 261   2          x= work[i];
+ 262   2          if(x>0) x++;
+ 263   2          if(x>limit) x--;
+ 264   2          x= x >> 1;
+ 265   2          work[i]= x;
+ 266   2        }
+ 267   1      }
+ 268          
+ 269          /* maximum permitted value for radic 1,073,676,289 (whose root is 32767) */
+ 270          /* it takes about 4.62 ms to get the square root */
+ 271          uint longroot(unsigned long radic)
+ 272          {
+ 273   1        uint result;
+ 274   1        uint mask, masknot;
+ 275   1        unsigned long acu;
+ 276   1      
+ 277   1        radic= radic << 2;    /* multiply radic by 4 */
+ 278   1        result= 0;
+ 279   1        mask= 0x8000;
+ 280   1        do{
+ 281   2          masknot= ~mask;
+C51 COMPILER V8.16   MAIN                                                                  04/25/2009 22:41:31 PAGE 21  
+
+ 282   2          result |= mask;
+ 283   2          acu= result;
+ 284   2          acu*= result;
+ 285   2          if(acu > radic){
+ 286   3            result &= masknot;
+ 287   3          }
+ 288   2          mask= mask >> 1;
+ 289   2        }
+ 290   1        while(!(mask & 1));
+ 291   1      
+ 292   1      /* round, adding 1 and dividing by 2 */
+ 293   1        result++;
+ 294   1        result= result >> 1;
+ 295   1        return result;
+ 296   1      }
+ 297          
+ 298          /*  fast multiply and shift:  int= ((long) x * y) >> 14   */
+ 299          int mult(int x, int y)
+ 300          {
+ 301   1        long temp;
+ 302   1        uchar templo;
+ 303   1        uint  temphi;
+ 304   1        
+ 305   1        temp= (long) x * y;
+ 306   1        temphi= *((uint *) (&temp));         /* bytes 3 and 2 of temp */
+ 307   1        templo= *((uchar *) (&temp) + 2);    /* byte 1 of temp */
+ 308   1        temphi= temphi << 2;
+ 309   1        if(templo & 0x80) temphi |= 2;
+ 310   1        if(templo & 0x40) temphi |= 1;
+ 311   1        return temphi;
+ 312   1      }
+ 313          
+ 314          /* end of fft code (November, 13th, 2001) */
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  3 ERROR(S)

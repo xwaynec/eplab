@@ -1008,51 +1008,57 @@
 #line 8 ".\main.c" /0
  
  
+ 
+ 
+ 
+ 
+ 
  struct rf_config rf_data = { {0x00},  
- {0x38},  
+ {0xA0},  
  {0x00, 0x00, 0x00, 0x00, 0x00},  
  {0xF2, 0xF2, 0xF2, 0xF2, 0xF2},  
  {0x63},  
  {0x6f, 0xEC} };
  struct rf_config *cfg = &rf_data;
  char dst_addr[3] = {0xF1, 0xF1, 0xF1};
- char idata msg[7];
+ char idata msg[20];
  
  
- void blink2()
- {
- int i;
- for(i=0;i<4;i++)
- {
-  P0 ^= 0x20;
- mdelay(400);
- }
- mdelay(1000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
- }
- 
- void blink4()
- {
- int i;
- for(i=0;i<8;i++)
- {
-  P0 ^= 0x20;
- mdelay(400);
- }	
- mdelay(1000);	
- }
- 
- void blink6()
- {
- int i;
- for(i=0;i<12;i++)
- {
-  P0 ^= 0x20;
- mdelay(400);
- }	
- mdelay(1000);
- 
- }
  
  int main()
  {
@@ -1093,7 +1099,7 @@
  msg[4] = acc_z & 0x00FF;
  msg[5] = acc_z >> 8;
  
- rf_send(dst_addr, 3, msg, 7);
+ rf_send(dst_addr, 3, msg, 20);
  
  
  mdelay(200);

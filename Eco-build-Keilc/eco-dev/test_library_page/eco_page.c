@@ -36,8 +36,8 @@
 	#define ECO_PAGE_SHIFT	7
 	#define ECO_PAGE_MASK	0x007F
 
-	//unsigned int idata ECO_PAGE_TABLE[32-ECO_PAGE_ADDR_OFFSET] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
-	unsigned int idata ECO_PAGE_TABLE[32-ECO_PAGE_ADDR_OFFSET];
+	unsigned int idata ECO_PAGE_TABLE[32-ECO_PAGE_ADDR_OFFSET] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
+	//unsigned int idata ECO_PAGE_TABLE[32-ECO_PAGE_ADDR_OFFSET];
 	//Eco page virtual address id
 	unsigned int ECO_PAGE_PREV_VID;
 	//Eco page physical address id 

@@ -226,7 +226,7 @@ eco_page_init:
 			; SOURCE LINE # 31
 	MOV  	ECO_PAGE_TABLE_INDEX,#00H
 	MOV  	ECO_PAGE_TABLE_INDEX+01H,#05H
-; 	
+; 
 ; 	ECO_PAGE_ADDR = 0;
 			; SOURCE LINE # 33
 	CLR  	A
@@ -365,7 +365,7 @@ eco_page_manager:
 	ORL  	A,i?141
 	JNZ  	?C0005
 ?C0006:
-; 	
+; 
 ; 
 ; 	if(page_index != -1) 
 			; SOURCE LINE # 73
@@ -408,7 +408,7 @@ eco_page_manager:
 	SUBB 	A,#00H
 	JC   	?C0010
 ?C0011:
-;   
+; 
 ; 		ECO_PAGE_ADDR = (page_index + ECO_PAGE_ADDR_OFFSET) << 8;
 			; SOURCE LINE # 82
 	MOV  	A,page_index?142+01H
@@ -419,9 +419,9 @@ eco_page_manager:
 	MOV  	A,R7
 	MOV  	ECO_PAGE_ADDR+01H,#00H
 	MOV  	ECO_PAGE_ADDR,A
-; 		
-; 		#pragma asm
-;         //eco_page_function_call
+; 
+; #pragma asm
+; 		//eco_page_function_call
 	  
 ; 		//MOV     DPH,ECO_PAGE_ADDR
 	  
@@ -429,17 +429,17 @@ eco_page_manager:
 	  
 ; 		//LCALL	?C?ICALL2
 	  
-; 		#pragma endasm
+; #pragma endasm
 ; 	}   
 			; SOURCE LINE # 90
 	SJMP 	?C0013
 ?C0009:
 ; 	else
-;         {
+; 	{
 			; SOURCE LINE # 92
-;                 //page fault
-;                 /* Move Data from EEPROM to iRAM */
-;                 unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET)<<8);
+; 		//page fault
+; 		/* Move Data from EEPROM to iRAM */
+; 		unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET)<<8);
 			; SOURCE LINE # 95
 	MOV  	A,ECO_PAGE_TABLE_INDEX+01H
 	ADD  	A,#06H
@@ -447,16 +447,16 @@ eco_page_manager:
 	MOV  	A,R7
 	MOV  	seg?140,A
 	MOV  	seg?140+01H,#00H
-;  
-; 		        for(i=0;i<256;i++)
+; 
+; 		for(i=0;i<256;i++)
 			; SOURCE LINE # 97
 	CLR  	A
 	MOV  	i?141,A
 	MOV  	i?141+01H,A
 ?C0014:
-;                 {
+; 		{
 			; SOURCE LINE # 98
-;                         *(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR) +i);
+; 			*(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR) +i);
 			; SOURCE LINE # 99
 	MOV  	A,ECO_PAGE_ADDR+01H
 	ADD  	A,#03H
@@ -477,7 +477,7 @@ eco_page_manager:
 	MOV  	DPH,A
 	MOV  	A,R7
 	MOVX 	@DPTR,A
-;                 }
+; 		}
 			; SOURCE LINE # 100
 	INC  	i?141+01H
 	MOV  	A,i?141+01H
@@ -490,8 +490,8 @@ eco_page_manager:
 	JC   	?C0014
 ?C0015:
 ; 
-;                 //Update Page Table
-;                 ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 8;
+; 		//Update Page Table
+; 		ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 8;
 			; SOURCE LINE # 103
 	MOV  	A,ECO_PAGE_ADDR
 	MOV  	R7,A
@@ -500,8 +500,8 @@ eco_page_manager:
 	MOV  	R0,A
 	MOV  	@R0,AR7
 ; 
-;                 //Update Page Address
-;                 ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8);
+; 		//Update Page Address
+; 		ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << 8);
 			; SOURCE LINE # 106
 	MOV  	A,ECO_PAGE_TABLE_INDEX+01H
 	ADD  	A,#06H
@@ -512,7 +512,7 @@ eco_page_manager:
 	MOV  	ECO_PAGE_ADDR+01H,#00H
 	MOV  	ECO_PAGE_ADDR,A
 ; 
-;                 ECO_PAGE_TABLE_INDEX++;
+; 		ECO_PAGE_TABLE_INDEX++;
 			; SOURCE LINE # 108
 	INC  	ECO_PAGE_TABLE_INDEX+01H
 	MOV  	A,ECO_PAGE_TABLE_INDEX+01H
@@ -520,22 +520,22 @@ eco_page_manager:
 	INC  	ECO_PAGE_TABLE_INDEX
 ?C0024:
 ; 
-;                 //Jump  to Function Address     
+; 		//Jump  to Function Address     
 ; 
-;                 #pragma asm
-;                 //MOV     DPH,ECO_PAGE_ADDR
+; #pragma asm
+; 		//MOV     DPH,ECO_PAGE_ADDR
 	  
-;                 //MOV     DPL,ECO_PAGE_ADDR+01H
+; 		//MOV     DPL,ECO_PAGE_ADDR+01H
 	  
-; 		        //LCALL        ?C?ICALL2               
+; 		//LCALL        ?C?ICALL2               
 	  
-;                 #pragma endasm
+; #pragma endasm
 ; 
-;         }
+; 	}
 			; SOURCE LINE # 118
 ?C0013:
 ; 
-;         mdelay(1);
+; 	mdelay(1);
 			; SOURCE LINE # 120
 	MOV  	R7,#01H
 	MOV  	R6,#00H
