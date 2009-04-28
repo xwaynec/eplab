@@ -625,7 +625,13 @@
  
  
  
-#line 27 ".\eco_page.c" /1
+ 
+ 
+ 
+ 
+ 
+ 
+#line 33 ".\eco_page.c" /1
  
   
   
@@ -639,7 +645,7 @@
  
  
  
-#line 40 ".\eco_page.c" /0
+#line 46 ".\eco_page.c" /0
  
  
  
@@ -653,7 +659,7 @@
  unsigned int ECO_PAGE_PREV_PID;
  
  
-#line 53 ".\eco_page.c" /1
+#line 59 ".\eco_page.c" /1
  
   
   
@@ -667,7 +673,7 @@
  
  
  
-#line 66 ".\eco_page.c" /0
+#line 72 ".\eco_page.c" /0
  
  unsigned char ECO_PAGE_TABLE_INDEX;
  unsigned int ECO_PAGE_ADDR;
@@ -684,8 +690,8 @@
  
  void eco_page_init()
  {
- ECO_PAGE_TABLE_INDEX = (31-23) - 1;
  
+ ECO_PAGE_TABLE_INDEX = 0;	
  ECO_PAGE_ADDR = 0;
  ECO_PAGE_PREV_VID = 0;
  ECO_PAGE_PREV_PID = 0;
@@ -693,127 +699,12 @@
  }
  
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  
  
  void eco_page_manager()
  {
  unsigned int i;
- unsigned int page_index = -1; 
- 
- 
- 
- 
- 
- 
- 
- 
+ unsigned int page_index = -1;
  
  
  if((ECO_PAGE_ADDR >> 7) == ECO_PAGE_PREV_PID)
@@ -824,20 +715,23 @@
  
  #pragma endasm
  return ;
- }	
+ }
  
  
  for(i=0;i<(31-23);i++)
  {   
- if((ECO_PAGE_ADDR >> 7) == ECO_PAGE_TABLE[i])
+ if((ECO_PAGE_ADDR >> 7) == (ECO_PAGE_TABLE[i] & 0x7FFF))
  {
  page_index = i;
+ 
+ 
+ ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] | 0x8000;
  break;
  }
  }
  
- if(page_index != -1) 
- {  
+ if(page_index != -1)
+ {
  
  ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 7;
  
@@ -847,43 +741,55 @@
  
  ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 7;
  
+ 
+ 
  #pragma asm
  
  
  
  
  #pragma endasm
- }   
+ 
+ return ;
+ }	
  else
  {
  
+ for(i=ECO_PAGE_TABLE_INDEX+1; ;i=(i+1)%(31-23))
+ {
+ if((ECO_PAGE_TABLE[i] & 0x8000) == 0x8000)
+ {
  
- unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + 23) << 7);
+ ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] & 0x7FFF;
+ }
+ else
+ {
+ unsigned char xdata *seg = (unsigned char xdata *)((i + 23) << 7);
+ unsigned int j;
  
  
  eeprom_init();
  
  
- for(i=0;i<128;i++)
+ for(j=0;j<128;j++)
  {
- *(seg+i) = eeprom_read(((unsigned int)(ECO_PAGE_ADDR & 0xFF80) + 3) +i);
+ *(seg+j) = eeprom_read(((unsigned int)(ECO_PAGE_ADDR & 0xFF80) + 3) +j);
  }
  
  
- ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 7;
+ ECO_PAGE_TABLE[i] = ECO_PAGE_ADDR >> 7;
  
  
+ ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[i];
  
- ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 7;
  
- 
- ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + 23) << 7) + (ECO_PAGE_ADDR & 0x007F);
+ ECO_PAGE_ADDR = ((i + 23) << 7) + (ECO_PAGE_ADDR & 0x007F);
  
  
  ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 7;	
  
  
- ECO_PAGE_TABLE_INDEX = (ECO_PAGE_TABLE_INDEX + 1) % (31-23);
+ ECO_PAGE_TABLE_INDEX = i;
  
  
  #pragma asm
@@ -893,7 +799,112 @@
  
  #pragma endasm
  
+ return ;
+ 
+ }
  }
  
  }
  
+ }
+ 
+ 
+#line 207 ".\eco_page.c" /1
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 303 ".\eco_page.c" /0

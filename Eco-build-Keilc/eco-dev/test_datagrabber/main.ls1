@@ -1,4 +1,4 @@
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/25/09 23:16:47 PAGE     1
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/29/09 00:22:47 PAGE     1
 
 
 MACRO ASSEMBLER AX51 V3.06a
@@ -10,7 +10,7 @@ LOC    OBJ             LINE     SOURCE
                           1     ; ./main.src generated from: .\main.c
                           2     ; COMPILER INVOKED BY:
                           3     ;        C:\Keil\C51\BIN\C51.exe .\main.c BROWSE DEBUG CODE LISTINCLUDE SYMBOLS PREPRINT
-                                INCDIR(../../Include) SRC(./main.src)
+                                ROM(LARGE) INCDIR(../../Include) SRC(./main.src)
                           4     
                           5     $nomod51 
                           6     
@@ -65,7 +65,7 @@ LOC    OBJ             LINE     SOURCE
  0098.0                  55     RI      BIT     098H.0
  00D0.7                  56     CY      BIT     0D0H.7
  0098.1                  57     TI      BIT     098H.1
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/25/09 23:16:47 PAGE     2
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/29/09 00:22:47 PAGE     2
 
  00BC                    58     T1_1V2  DATA    0BCH
  008F                    59     SPC_FNC DATA    08FH
@@ -133,7 +133,7 @@ LOC    OBJ             LINE     SOURCE
  0098.7                 121     SM0     BIT     098H.7
  008A                   122     TL0     DATA    08AH
  00E8.2                 123     EX4     BIT     0E8H.2
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/25/09 23:16:47 PAGE     3
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/29/09 00:22:47 PAGE     3
 
  0098.6                 124     SM1     BIT     098H.6
  008B                   125     TL1     DATA    08BH
@@ -178,22 +178,22 @@ LOC    OBJ             LINE     SOURCE
  00AC                   164     REGX_LSB        DATA    0ACH
  00D0                   165     PSW     DATA    0D0H
  00AB                   166     REGX_MSB        DATA    0ABH
-------                  167     ?PR?main?MAIN        SEGMENT CODE 
-------                  168     ?DT?main?MAIN        SEGMENT DATA OVERLAYABLE 
-------                  169     ?C_INITSEG           SEGMENT CODE 
-------                  170     ?DT?MAIN             SEGMENT DATA 
-------                  171     ?ID?MAIN             SEGMENT IDATA 
-                        172             EXTRN   CODE (_mdelay)
-                        173             EXTRN   CODE (eco_page_manager)
-                        174         EXTRN   DATA (ECO_PAGE_ADDR)
-                        175         EXTRN   DATA (ECO_PAGE_SPI_CONN)
-                        176         EXTRN   IDATA (ECO_PAGE_REGISTER1)
-                        177         EXTRN   IDATA (ECO_PAGE_REGISTER2)
-                        178         EXTRN   IDATA (ECO_PAGE_REGISTER3)
-                        179         EXTRN   IDATA (ECO_PAGE_REGISTER4)
-                        180         EXTRN   IDATA (ECO_PAGE_REGISTER5)
-                        181         EXTRN   IDATA (ECO_PAGE_REGISTER6)
-                        182         EXTRN   IDATA (ECO_PAGE_REGISTER7)
+                        167     EXTRN   CODE (eco_page_manager)
+                        168         EXTRN   DATA (ECO_PAGE_ADDR)
+                        169         EXTRN   DATA (ECO_PAGE_SPI_CONN)
+                        170         EXTRN   IDATA (ECO_PAGE_REGISTER1)
+                        171         EXTRN   IDATA (ECO_PAGE_REGISTER2)
+                        172         EXTRN   IDATA (ECO_PAGE_REGISTER3)
+                        173         EXTRN   IDATA (ECO_PAGE_REGISTER4)
+                        174         EXTRN   IDATA (ECO_PAGE_REGISTER5)
+                        175         EXTRN   IDATA (ECO_PAGE_REGISTER6)
+                        176         EXTRN   IDATA (ECO_PAGE_REGISTER7)
+------                  177     ?PR?main?MAIN        SEGMENT CODE 
+------                  178     ?DT?main?MAIN        SEGMENT DATA OVERLAYABLE 
+------                  179     ?C_INITSEG           SEGMENT CODE 
+------                  180     ?DT?MAIN             SEGMENT DATA 
+------                  181     ?ID?MAIN             SEGMENT IDATA 
+                        182             EXTRN   CODE (_mdelay)
                         183             EXTRN   CODE (_rf_configure)
                         184             EXTRN   CODE (_adc_read)
                         185             EXTRN   CODE (_adc_init)
@@ -201,7 +201,7 @@ LOC    OBJ             LINE     SOURCE
                         187             EXTRN   CODE (_rf_send)
                         188             EXTRN   DATA (?_rf_send?BYTE)
                         189             EXTRN   CODE (_store_cpu_rate)
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/25/09 23:16:47 PAGE     4
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/29/09 00:22:47 PAGE     4
 
                         190             EXTRN   CODE (rf_init)
                         191             EXTRN   CODE (?C_STARTUP)
@@ -269,7 +269,7 @@ LOC    OBJ             LINE     SOURCE
                         253     ; #include "eco_page.h"
                         254     ; #include "adc/adc.h"
                         255     ; 
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/25/09 23:16:47 PAGE     5
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/29/09 00:22:47 PAGE     5
 
                         256     ; 
                         257     ; //#include <math.h> /* for log */
@@ -337,7 +337,7 @@ LOC    OBJ             LINE     SOURCE
 000001 F500       F     319             MOV     i?043,A
 000003 F500       F     320             MOV     i?043+01H,A
                         321     ;       store_cpu_rate(16);
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/25/09 23:16:47 PAGE     6
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/29/09 00:22:47 PAGE     6
 
                         322                             ; SOURCE LINE # 65
 000005 7F10             323             MOV     R7,#010H
@@ -405,7 +405,7 @@ LOC    OBJ             LINE     SOURCE
                         385     ;               blink_led();
                         386                             ; SOURCE LINE # 78
 00003D 638020           387             XRL     P0,#020H
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/25/09 23:16:47 PAGE     7
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/29/09 00:22:47 PAGE     7
 
                         388     ;               mdelay(300);
                         389                             ; SOURCE LINE # 79
@@ -473,7 +473,7 @@ LOC    OBJ             LINE     SOURCE
 00007A 750000     E     451             MOV     ECO_PAGE_ADDR,#HIGH (_adc_read)
 00007D 750000     E     452             MOV     ECO_PAGE_ADDR+01H,#LOW (_adc_read)
 000080 120000     E     453             LCALL   eco_page_manager
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/25/09 23:16:47 PAGE     8
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/29/09 00:22:47 PAGE     8
 
                         454             ;LCALL----------end----------
                         455     
@@ -541,7 +541,7 @@ LOC    OBJ             LINE     SOURCE
 0000C0 08               517             INC     R0
 0000C1 A607             518             MOV     @R0,AR7
                         519     ;       
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/25/09 23:16:47 PAGE     9
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/29/09 00:22:47 PAGE     9
 
                         520     ;               rf_send(dst_addr, 3, msg, 20);
                         521                             ; SOURCE LINE # 101
@@ -599,7 +599,7 @@ LOC    OBJ             LINE     SOURCE
                         573     ; END OF main
                         574     
                         575             END
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/25/09 23:16:47 PAGE    10
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/29/09 00:22:47 PAGE    10
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -667,7 +667,7 @@ DPH0. . . . . . . . . . . . .  D  ADDR  0083H     A
 DPH1. . . . . . . . . . . . .  D  ADDR  0085H     A   
 DPL . . . . . . . . . . . . .  D  ADDR  0082H     A   
 DPL0. . . . . . . . . . . . .  D  ADDR  0082H     A   
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/25/09 23:16:47 PAGE    11
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/29/09 00:22:47 PAGE    11
 
 DPL1. . . . . . . . . . . . .  D  ADDR  0084H     A   
 DPS . . . . . . . . . . . . .  D  ADDR  0086H     A   
@@ -735,7 +735,7 @@ P1. . . . . . . . . . . . . .  D  ADDR  0090H     A
 P1_0. . . . . . . . . . . . .  B  ADDR  0090H.0   A   
 P1_1. . . . . . . . . . . . .  B  ADDR  0090H.1   A   
 P1_2. . . . . . . . . . . . .  B  ADDR  0090H.2   A   
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/25/09 23:16:47 PAGE    12
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/29/09 00:22:47 PAGE    12
 
 P1_ALT. . . . . . . . . . . .  D  ADDR  0097H     A   
 P1_DIR. . . . . . . . . . . .  D  ADDR  0096H     A   
@@ -803,7 +803,7 @@ TICK_DV . . . . . . . . . . .  D  ADDR  00B5H     A
 TL0 . . . . . . . . . . . . .  D  ADDR  008AH     A   
 TL1 . . . . . . . . . . . . .  D  ADDR  008BH     A   
 TL2 . . . . . . . . . . . . .  D  ADDR  00CCH     A   
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/25/09 23:16:47 PAGE    13
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/29/09 00:22:47 PAGE    13
 
 TMOD. . . . . . . . . . . . .  D  ADDR  0089H     A   
 TR0 . . . . . . . . . . . . .  B  ADDR  0088H.4   A   

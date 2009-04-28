@@ -105,7 +105,7 @@ isr_rf.src : isr_rf.c
 	$(CC) ./$< $(CFLAG) INCDIR\($(INCLUDE)\) SRC \(./$@\) 
 
 main.src : main.c
-	$(CC) ./$< $(CFLAG) INCDIR\($(INCLUDE)\) SRC \(./$@\) 
+	$(CC) ./$< $(CFLAG) ROM\(LARGE\) INCDIR\($(INCLUDE)\) SRC \(./$@\) 
 
 utils.src : utils.c
 	$(CC) ../../include/utils/utils.c $(CFLAG) INCDIR\($(INCLUDE)\) PRINT\(./utils.lst\) PREPRINT\(./utils.i\) SRC\(./$@\) 

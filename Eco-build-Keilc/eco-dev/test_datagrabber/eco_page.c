@@ -15,6 +15,9 @@
 #include "eco_page.h"
 #include "eeprom/eeprom.h"
 
+//control page replacement policy is LRU or Round-Robin
+#define PAGE_REPLACEMENT 0
+
 //#define ECO_PAGE_SIZE 256
 #define ECO_PAGE_SIZE 128
 //#define ECO_PAGE_SIZE 64
@@ -22,6 +25,9 @@
 //#define ECO_PAGE_ADDR_OFFSET 47
 #define ECO_PAGE_ADDR_OFFSET 23
 //#define ECO_PAGE_ADDR_OFFSET 11 
+
+
+
 
 #if ECO_PAGE_SIZE == 64
 	
@@ -79,43 +85,42 @@ unsigned char idata ECO_PAGE_REGISTER7;
 
 void eco_page_init()
 {
-	ECO_PAGE_TABLE_INDEX = ECO_PAGE_ENTRY - 1;
-	
+	//ECO_PAGE_TABLE_INDEX = ECO_PAGE_ENTRY - 1;
+	ECO_PAGE_TABLE_INDEX = 0;	
 	ECO_PAGE_ADDR = 0;
 	ECO_PAGE_PREV_VID = 0;
 	ECO_PAGE_PREV_PID = 0;
 
 }
 
+
+#if PAGE_REPLACEMENT == 0 
 //LRU page replacement
-/*void eco_page_manager()
+void eco_page_manager()
 {
 	unsigned int i;
 	unsigned int page_index = -1;
 
 	//if page id is the same with the last page id
-	if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_PREV_PID & 0x7F))
+	if((ECO_PAGE_ADDR >> ECO_PAGE_SHIFT) == ECO_PAGE_PREV_PID)
 	{
 		//virtual address id + function offset
-		ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << 8) + (ECO_PAGE_ADDR & 0x00FF);
+		ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << ECO_PAGE_SHIFT) + (ECO_PAGE_ADDR & ECO_PAGE_MASK);
 		#pragma asm
-		//eco_page_function_call	
-		//MOV     DPH,ECO_PAGE_ADDR
-		//MOV     DPL,ECO_PAGE_ADDR+01H
-		//LCALL	?C?ICALL2
+		//eco_page_function_call
 		#pragma endasm
 		return ;
-	}	
-	
-	//check page table
+	}
+
+	//Check Table   
 	for(i=0;i<ECO_PAGE_ENTRY;i++)
-	{
-		if((ECO_PAGE_ADDR >> 8) == ECO_PAGE_TABLE[i])
+	{   
+		if((ECO_PAGE_ADDR >> ECO_PAGE_SHIFT) == (ECO_PAGE_TABLE[i] & 0x7FFF))
 		{
 			page_index = i;
-			
+
 			//set LRU bit is 1
-			ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] | 0x80;
+			ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] | 0x8000;
 			break;
 		}
 	}
@@ -123,14 +128,16 @@ void eco_page_init()
 	if(page_index != -1)
 	{
 		//store function physical addres id 
-		ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 8;
+		ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;
 	
 		//memory page is in ram
-		ECO_PAGE_ADDR = ((page_index + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_ADDR & 0x00FF);
+		ECO_PAGE_ADDR = ((page_index + ECO_PAGE_ADDR_OFFSET) << ECO_PAGE_SHIFT) + (ECO_PAGE_ADDR & ECO_PAGE_MASK);
 
 		//cache the virtual address id
-		ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;
+		ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;
 
+
+		
 		#pragma asm
 		//eco_page_function_call
 		//MOV     DPH,ECO_PAGE_ADDR
@@ -143,38 +150,38 @@ void eco_page_init()
 	else
 	{
 		//page fault
-		for(i=ECO_PAGE_TABLE_INDEX+1; ;i=(i+1)%10)
+		for(i=ECO_PAGE_TABLE_INDEX+1; ;i=(i+1)%ECO_PAGE_ENTRY)
 		{
-			if((ECO_PAGE_TABLE[i] & 0x80) == 0x80)
+			if((ECO_PAGE_TABLE[i] & 0x8000) == 0x8000)
 			{
 				//LRU bit is 1 and then set this bit is 0
-				ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] & 0x7F;
+				ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] & 0x7FFF;
 			}
 			else
 			{
-				unsigned char xdata *seg = (unsigned char xdata *)((i + ECO_PAGE_ADDR_OFFSET)<<8);
+				unsigned char xdata *seg = (unsigned char xdata *)((i + ECO_PAGE_ADDR_OFFSET) << ECO_PAGE_SHIFT);
 				unsigned int j;
 				
 				//memory page is in ram
 				eeprom_init();
 
 				//mov code from eeprom to external ram
-				for(j=0;j<256;j++)
+				for(j=0;j<ECO_PAGE_SIZE;j++)
 				{
-					*(seg+j) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR & 0xFF00 ) +j);
+					*(seg+j) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR & ECO_PAGE_MOV_MASK ) +j);
 				}
 				
 				//update page table to connect this physical address id with virtual address id 
-				ECO_PAGE_TABLE[i] = ECO_PAGE_ADDR >> 8;
+				ECO_PAGE_TABLE[i] = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;
 
 				//store physical address id
 				ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[i];
 
 				//update page address e.g.  (page_id<<8) + page_offset
-				ECO_PAGE_ADDR = ((i + ECO_PAGE_ADDR_OFFSET) << 8) + (ECO_PAGE_ADDR & 0x00FF);
+				ECO_PAGE_ADDR = ((i + ECO_PAGE_ADDR_OFFSET) << ECO_PAGE_SHIFT) + (ECO_PAGE_ADDR & ECO_PAGE_MASK);
 
 				//store virtual address id 
-				ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;	
+				ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;	
 
 				//mov to the next index
 				ECO_PAGE_TABLE_INDEX = i;
@@ -195,7 +202,8 @@ void eco_page_init()
 	}
 				
 }
-*/
+
+#else
 
 void eco_page_manager()
 {
@@ -292,3 +300,4 @@ void eco_page_manager()
 
 }
 
+#endif
