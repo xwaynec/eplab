@@ -15,17 +15,20 @@
 #include "eco_page.h"
 #include "eeprom/eeprom.h"
 
-//#define ECO_PAGE_SIZE 256
-#define ECO_PAGE_SIZE 128
+#define ECO_PAGE_SIZE 256
+//#define ECO_PAGE_SIZE 128
 //#define ECO_PAGE_SIZE 64
 
 //#define ECO_PAGE_ADDR_OFFSET 47
-#define ECO_PAGE_ADDR_OFFSET 23
+//#define ECO_PAGE_ADDR_OFFSET 23
 //#define ECO_PAGE_ADDR_OFFSET 11 
+
+//test for data compress
+#define ECO_PAGE_ADDR_OFFSET 15
 
 #if ECO_PAGE_SIZE == 64
 	
-	#define ECO_PAGE_ENTRY	(63-ECO_PAGE_ADDR_OFFSET)
+	#define ECO_PAGE_ENTRY	(64-ECO_PAGE_ADDR_OFFSET)
 	#define ECO_PAGE_SHIFT	6
 	#define ECO_PAGE_MASK	0x003F
 	#define ECO_PAGE_MOV_MASK	0xFFC0
@@ -38,7 +41,7 @@
 
 #elif ECO_PAGE_SIZE == 128
 	
-	#define ECO_PAGE_ENTRY (31-ECO_PAGE_ADDR_OFFSET)
+	#define ECO_PAGE_ENTRY (32-ECO_PAGE_ADDR_OFFSET)
 	#define ECO_PAGE_SHIFT	7
 	#define ECO_PAGE_MASK	0x007F
 	#define ECO_PAGE_MOV_MASK	0xFF80
@@ -51,7 +54,7 @@
 
 #elif ECO_PAGE_SIZE == 256
 	
-	#define ECO_PAGE_ENTRY 	(15-ECO_PAGE_ADDR_OFFSET)
+	#define ECO_PAGE_ENTRY 	(16-ECO_PAGE_ADDR_OFFSET)
 	#define ECO_PAGE_SHIFT	8	
 	#define ECO_PAGE_MASK	0x00FF
 	#define ECO_PAGE_MOV_MASK	0xFF00

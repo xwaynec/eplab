@@ -48,7 +48,6 @@ class FunctRelocation:
         #print 'parse code memory'
         #print '---------------------------' 
         #print self.lines
-
         code_memory_flag = False
         code_memory_counter = 0
 
@@ -60,7 +59,7 @@ class FunctRelocation:
                 code_memory_flag = True
                 continue
 
-            if code_memory_counter >= 3:
+            if code_memory_counter >= 3 or map_line.find('*  X D A T A   M E M O R Y  *') != -1:
                 #print 'code memory is over'
                 code_memory_flag = False 
                 break
@@ -69,7 +68,7 @@ class FunctRelocation:
                 #reg_code = re.search(self.PATTERN_CODE,map_line)
                 reg_code = re.search(self.PATTERN_CODE,map_line)
                 if reg_code:
-                    #print reg_code.group(0)
+                    print reg_code.group(0)
                     code_memory_counter = 0
                     self.code_memory_list.append(reg_code.group(0))
                     self.code_memory_start.append(reg_code.group(1))
@@ -79,7 +78,8 @@ class FunctRelocation:
                 elif map_line == '\n':
                     code_memory_counter += 1                
                 #print map_line 
-                 
+
+        print 'Len = ',len(self.code_memory_list) 
 
     #######################################
     #   
@@ -100,7 +100,7 @@ class FunctRelocation:
         #print self.code_memory_segment_name
 
         for i in range(len(self.code_memory_list)):
-            if self._check_segment(self.code_memory_segment_name[i]):
+            if self._check_segment(self.code_memory_segment_name[i]) and str(self.code_memory_segment_name[i]).find('MAIN') != -1:
                 #print '----------------------------------------'
                 print '%s can be relocated' %self.code_memory_segment_name[i]
                 if (code_start_address/self.ECO_PAGE_SIZE) != ((code_start_address + int(self.code_memory_length[i][0:-1],16))/self.ECO_PAGE_SIZE):
@@ -151,6 +151,8 @@ class FunctRelocation:
         elif s_name.find('?CO?') != -1:
             #print '\t\t%s is constant data memory' %s_name
             return False
+        elif s_name.find('TIMER0') != -1:
+            return False
         else:
             reg_int = re.search('[\?][$\d]',s_name)
             if reg_int:
@@ -162,25 +164,43 @@ class FunctRelocation:
 
     #######################################
     #   
+    #   check reserved space  
+    #
+    #######################################
+    def _check_reserved_space(self,s_name):
+        
+        if s_name.find('?CO?') != -1:
+            return False
+        elif s_name.find('?MAIN?MAIN') != -1:
+            return False
+        elif s_name.find('TIMER0') != -1:
+            return False
+        elif s_name.find('?MAIN') != -1:
+            return True
+        else:
+            return False
+          
+    #######################################
+    #   
     #   calculate reserved space  
     #
     #######################################
     def calculate_reserved_space(self):
-        #print 'calculate reserved space'
-        
+        print 'calculate reserved space'
         temp_code_memory = 0
- 
         for i in range(len(self.code_memory_list)):
-            if not self._check_segment(self.code_memory_segment_name[i]):
+            #if not self._check_segment(self.code_memory_segment_name[i]):
+            if not self._check_reserved_space(self.code_memory_segment_name[i]):
                 #print self.code_memory_segment_name[i] 
                 temp_code_memory += int(self.code_memory_length[i][0:-1],16)
-
-        
-        #print 'reserved code_memory = ',temp_code_memory   
+            else:
+                print self.code_memory_segment_name[i] 
+                 
+        print 'reserved code_memory = ',temp_code_memory   
  
         self.ECO_RESERVED_SIZE = int(math.ceil(temp_code_memory / float(self.ECO_PAGE_SIZE)) * self.ECO_PAGE_SIZE)
 
-        #print 'self.ECO_RESERVED_SIZE = ',self.ECO_RESERVED_SIZE
+        print 'self.ECO_RESERVED_SIZE = ',self.ECO_RESERVED_SIZE
 
 
     #######################################

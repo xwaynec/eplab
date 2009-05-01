@@ -197,6 +197,18 @@ REGX_MSB	DATA	0ABH
 	EXTRN	CODE (?C?FPNEG)
 	EXTRN	CODE (?C?LSTIDATA)
 	EXTRN	CODE (?C_STARTUP)
+
+	EXTRN   CODE (eco_page_manager)
+    EXTRN   DATA (ECO_PAGE_ADDR)
+    EXTRN   DATA (ECO_PAGE_SPI_CONN)
+    EXTRN   IDATA (ECO_PAGE_REGISTER1)
+    EXTRN   IDATA (ECO_PAGE_REGISTER2)
+    EXTRN   IDATA (ECO_PAGE_REGISTER3)
+    EXTRN   IDATA (ECO_PAGE_REGISTER4)
+    EXTRN   IDATA (ECO_PAGE_REGISTER5)
+    EXTRN   IDATA (ECO_PAGE_REGISTER6)
+    EXTRN   IDATA (ECO_PAGE_REGISTER7)
+
 	PUBLIC	rf_data
 	PUBLIC	dst_addr
 	PUBLIC	msg
@@ -842,18 +854,37 @@ main:
 ; 
 ; 		delta_compress();
 			; SOURCE LINE # 143
-	LCALL	delta_compress
+	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    MOV ECO_PAGE_ADDR,#HIGH (delta_compress)
+    MOV ECO_PAGE_ADDR+01H,#LOW (delta_compress)
+    LCALL   eco_page_manager
+	;LCALL	delta_compress
 ; 		rf_send(dst_addr, 3, msg, 20);
 			; SOURCE LINE # 144
 	MOV  	?_rf_send?BYTE+04H,#00H
 	MOV  	?_rf_send?BYTE+05H,#HIGH (msg)
 	MOV  	?_rf_send?BYTE+06H,#LOW (msg)
 	MOV  	?_rf_send?BYTE+07H,#014H
-	MOV  	R3,#00H
-	MOV  	R2,#HIGH (dst_addr)
-	MOV  	R1,#LOW (dst_addr)
-	MOV  	R5,#03H
-	LCALL	_rf_send
+	;MOV  	R3,#00H
+	;MOV  	R2,#HIGH (dst_addr)
+	;MOV  	R1,#LOW (dst_addr)
+	;MOV  	R5,#03H
+	
+	;--------------------------
+    MOV R0,#LOW (ECO_PAGE_REGISTER3)
+    MOV @R0,#00H
+    MOV R0,#LOW (ECO_PAGE_REGISTER2)
+    MOV @R0,#HIGH (dst_addr)
+    MOV R0,#LOW (ECO_PAGE_REGISTER1)
+    MOV @R0,#LOW (dst_addr)
+    MOV R0,#LOW (ECO_PAGE_REGISTER5)
+    MOV @R0,#03H
+	;--------------------------
+	;LCALL	_rf_send
+	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    MOV ECO_PAGE_ADDR,#HIGH (_rf_send)
+    MOV ECO_PAGE_ADDR+01H,#LOW (_rf_send)
+    LCALL   eco_page_manager
 ; 		
 ; 		if(flag == 1)
 			; SOURCE LINE # 146
@@ -888,7 +919,7 @@ main:
 			; SOURCE LINE # 153
 ; 	}
 			; SOURCE LINE # 154
-	SJMP 	?C0016
+	LJMP 	?C0016
 ; END OF main
 
 	END

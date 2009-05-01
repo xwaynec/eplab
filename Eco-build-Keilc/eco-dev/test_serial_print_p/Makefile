@@ -55,7 +55,8 @@ main: main.obj isr_rf.obj utils.obj serial.obj spi.obj eeprom.obj adc.obj eco_pa
 	#page size is 128	
 	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB TO $(TARGET) SEGMENTS\(?PR?_rf_send?ISR_RF\(C:0x1000\)\) SEGMENTS\(?PR?_adc_init?ADC\(C:0x1080\)\) SEGMENTS\(?PR?_adc_read?ADC\(C:0x10A0\)\)
 
-	$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB , C51FPL.LIB  TO $(TARGET) 
+	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB , C51FPL.LIB  TO $(TARGET) 
+	$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB , C51FPL.LIB  TO $(TARGET) SEGMENTS\(?PR?_LOG_2?MAIN\(C:0xF00\)\) SEGMENTS\(?PR?DELTA_COMPRESS?MAIN\(C:0x1000\)\) SEGMENTS\(?PR?_RF_SEND?ISR_RF\(C:0x1100\)\)
 
 #SEGMENTS\(?PR?blink_fast?PAGING\(C:0x1000\)\) SEGMENTS\(?PR?blink_fast2?PAGING\(C:0x800\)
 
