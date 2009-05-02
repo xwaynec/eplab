@@ -166,6 +166,7 @@ PSW	DATA	0D0H
 REGX_MSB	DATA	0ABH
 ?PR?timer0?MAIN      SEGMENT CODE 
 ?PR?_log_2?MAIN      SEGMENT CODE 
+?DT?_log_2?MAIN      SEGMENT DATA OVERLAYABLE 
 ?PR?delta_compress?MAIN                  SEGMENT CODE 
 ?DT?delta_compress?MAIN                  SEGMENT DATA OVERLAYABLE 
 ?PR?delta_compress_2?MAIN                  SEGMENT CODE 
@@ -179,6 +180,7 @@ REGX_MSB	DATA	0ABH
 	EXTRN	CODE (_mdelay)
 	EXTRN	CODE (_rf_configure)
 	EXTRN	CODE (_serial_init)
+	EXTRN	CODE (_log10)
 	EXTRN	CODE (_adc_read)
 	EXTRN	CODE (_adc_init)
 	EXTRN	CODE (_puts)
@@ -192,7 +194,7 @@ REGX_MSB	DATA	0ABH
 	EXTRN	CODE (?C?LLDIDATA)
 	EXTRN	CODE (?C?CASTF)
 	EXTRN	CODE (?C_STARTUP)
-
+	
 	EXTRN   CODE (eco_page_manager)
     EXTRN   DATA (ECO_PAGE_ADDR)
     EXTRN   DATA (ECO_PAGE_SPI_CONN)
@@ -203,7 +205,7 @@ REGX_MSB	DATA	0ABH
     EXTRN   IDATA (ECO_PAGE_REGISTER5)
     EXTRN   IDATA (ECO_PAGE_REGISTER6)
     EXTRN   IDATA (ECO_PAGE_REGISTER7)
-
+	
 	PUBLIC	rf_data
 	PUBLIC	dst_addr
 	PUBLIC	msg
@@ -222,6 +224,10 @@ REGX_MSB	DATA	0ABH
           i?346:   DS   2
 	ORG  2
        accx?347:   DS   2
+
+	RSEG  ?DT?_log_2?MAIN
+?_log_2?BYTE:
+          x?140:   DS   2
 
 	RSEG  ?DT?delta_compress?MAIN
 ?delta_compress?BYTE:
@@ -285,6 +291,7 @@ REGX_MSB	DATA	0ABH
 	DB	0F1H
 	DB	0F1H
 
+
 ; #include "Eco/reg24e1.h"
 ; #include "Eco/eco_sys.h"
 ; #include "utils/utils.h"
@@ -340,7 +347,7 @@ timer0:
 	MOV  	A,timer_counter+01H
 	JNZ  	?C0003
 	INC  	timer_counter
-?C0025:
+?C0026:
 ; 	}
 			; SOURCE LINE # 33
 	SJMP 	?C0003
@@ -377,54 +384,66 @@ timer0:
 _log_2:
 	USING	0
 			; SOURCE LINE # 43
-;---- Variable 'x?140' assigned to Register 'R6/R7' ----
+	MOV  	x?140,R6
+	MOV  	x?140+01H,R7
 ; {
 			; SOURCE LINE # 44
 ; 	//EA = 0;	
 ; 	if( x > 0)
 			; SOURCE LINE # 46
 	SETB 	C
-	MOV  	A,R7
+	MOV  	A,x?140+01H
 	SUBB 	A,#00H
-	MOV  	A,R6
+	MOV  	A,x?140
 	XRL  	A,#080H
 	SUBB 	A,#080H
 	JC   	?C0004
 ; 	{
 			; SOURCE LINE # 47
-?C0005:
 ; 		//return (log10(x))/(log10(2.0)) + 1;
-; 		while(x--)
+; 		if ( x< 0) log10(x);
 			; SOURCE LINE # 49
-	MOV  	A,R7
-	DEC  	R7
-	MOV  	R4,AR6
-	JNZ  	?C0026
-	DEC  	R6
-?C0026:
-	ORL  	A,R4
-	JNZ  	?C0005
+	MOV  	A,x?140
+	XRL  	A,#080H
+	SUBB 	A,#080H
+	JNC  	?C0006
+	MOV  	R4,x?140
+	MOV  	R5,x?140+01H
+	MOV  	A,R4
+	LCALL	?C?FCASTI
+	LCALL	_log10
+?C0006:
+; 		while(x--)
+			; SOURCE LINE # 50
+	MOV  	A,x?140+01H
+	DEC  	x?140+01H
+	MOV  	R6,x?140
+	JNZ  	?C0027
+	DEC  	x?140
+?C0027:
+	ORL  	A,R6
+	JNZ  	?C0006
 ; 		;
 ; 	}
-			; SOURCE LINE # 51
+			; SOURCE LINE # 52
 ?C0004:
 ; 	else if(x == 0)
-			; SOURCE LINE # 52
-; 	{
 			; SOURCE LINE # 53
+; 	{
+			; SOURCE LINE # 54
 ; 		return ;
 ; 	}
-			; SOURCE LINE # 55
+			; SOURCE LINE # 56
 ; 	else
 ; 	{
-			; SOURCE LINE # 57
+			; SOURCE LINE # 58
 ; 		//return -(log10(-x))/(log10(2.0)) + 2;
 ; 		return ;	
 ; 	}
-			; SOURCE LINE # 60
-; }
 			; SOURCE LINE # 61
-?C0009:
+; }
+			; SOURCE LINE # 62
+?C0010:
 	RET  	
 ; END OF _log_2
 
@@ -434,21 +453,21 @@ _log_2:
 	RSEG  ?PR?delta_compress?MAIN
 delta_compress:
 	USING	0
-			; SOURCE LINE # 63
-; {
 			; SOURCE LINE # 64
+; {
+			; SOURCE LINE # 65
 ; 	int i,j;
 ; 	float idata delta;
 ; 	int now,prev;
 ; 	test_counter++;
-			; SOURCE LINE # 68
+			; SOURCE LINE # 69
 	INC  	test_counter+01H
 	MOV  	A,test_counter+01H
-	JNZ  	?C0027
+	JNZ  	?C0028
 	INC  	test_counter
-?C0027:
+?C0028:
 ; 	now = prev = (msg[0]<<8) + msg[1];
-			; SOURCE LINE # 69
+			; SOURCE LINE # 70
 	MOV  	R0,#LOW (msg)
 	MOV  	A,@R0
 	MOV  	R7,A
@@ -472,37 +491,39 @@ delta_compress:
 	MOV  	now?244,A
 	MOV  	now?244+01H,R7
 
-	MOV ECO_PAGE_ADDR,#HIGH (delta_compress_2)
-    MOV ECO_PAGE_ADDR+01H,#LOW (delta_compress_2)
-    LCALL   eco_page_manager
-    RET 
+	;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    ;MOV ECO_PAGE_ADDR,#HIGH (delta_compress_2)
+    ;MOV ECO_PAGE_ADDR+01H,#LOW (delta_compress_2)
+    ;LCALL   eco_page_manager
+	LCALL delta_compress_2
+    RET
 
     RSEG  ?PR?delta_compress_2?MAIN
 delta_compress_2:
     USING   0
 ; 	
 ; 	for(i=2,j=2;i<54;i+=2,j++)
-			; SOURCE LINE # 71
+			; SOURCE LINE # 72
 	MOV  	i?241,#00H
 	MOV  	i?241+01H,#02H
 	MOV  	j?242,#00H
 	MOV  	j?242+01H,#02H
-?C0011:
+?C0012:
 	CLR  	C
 	MOV  	A,i?241+01H
 	SUBB 	A,#036H
 	MOV  	A,i?241
 	XRL  	A,#080H
 	SUBB 	A,#080H
-	JNC  	?C0014
+	JNC  	?C0015
 ; 	{
-			; SOURCE LINE # 72
-; 		prev = now;
 			; SOURCE LINE # 73
+; 		prev = now;
+			; SOURCE LINE # 74
 	MOV  	prev?245,now?244
 	MOV  	prev?245+01H,now?244+01H
 ; 		now = (msg[i]<<8) + msg[i+1];
-			; SOURCE LINE # 74
+			; SOURCE LINE # 75
 	MOV  	R5,i?241+01H
 	MOV  	A,#LOW (msg)
 	ADD  	A,R5
@@ -526,7 +547,7 @@ delta_compress_2:
 	ADDC 	A,R4
 	MOV  	now?244,A
 ; 		delta = now - prev;
-			; SOURCE LINE # 75
+			; SOURCE LINE # 76
 	CLR  	C
 	MOV  	A,now?244+01H
 	SUBB 	A,prev?245+01H
@@ -538,19 +559,23 @@ delta_compress_2:
 	MOV  	R0,#LOW (delta?243)
 	LCALL	?C?LSTIDATA
 ; 		log_2(delta);
-			; SOURCE LINE # 76
+			; SOURCE LINE # 77
 	MOV  	R0,#LOW (delta?243)
 	LCALL	?C?LLDIDATA
 	LCALL	?C?CASTF
-	LCALL	_log_2
+	;LCALL	_log_2
+	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    MOV ECO_PAGE_ADDR,#HIGH (_log_2)
+    MOV ECO_PAGE_ADDR+01H,#LOW (_log_2)
+    LCALL   eco_page_manager
 ; 		msg[j] = now;
-			; SOURCE LINE # 77
+			; SOURCE LINE # 78
 	MOV  	A,#LOW (msg)
 	ADD  	A,j?242+01H
 	MOV  	R0,A
 	MOV  	@R0,now?244+01H
 ; 	}
-			; SOURCE LINE # 78
+			; SOURCE LINE # 79
 	MOV  	A,#02H
 	ADD  	A,i?241+01H
 	MOV  	i?241+01H,A
@@ -559,13 +584,13 @@ delta_compress_2:
 	MOV  	i?241,A
 	INC  	j?242+01H
 	MOV  	A,j?242+01H
-	JNZ  	?C0011
+	JNZ  	?C0012
 	INC  	j?242
-?C0028:
-	SJMP 	?C0011
+?C0029:
+	SJMP 	?C0012
 ; }
-			; SOURCE LINE # 79
-?C0014:
+			; SOURCE LINE # 80
+?C0015:
 	RET  	
 ; END OF delta_compress
 
@@ -576,91 +601,128 @@ delta_compress_2:
 	RSEG  ?PR?main?MAIN
 main:
 	USING	0
-			; SOURCE LINE # 82
-; {
 			; SOURCE LINE # 83
+; {
+			; SOURCE LINE # 84
 ; 
 ; 	int i;
 ; 	int accx;
 ; 	store_cpu_rate(16);
-			; SOURCE LINE # 87
+			; SOURCE LINE # 88
 	MOV  	R7,#010H
 	MOV  	R6,#00H
+	
+	;MOV R0,#LOW (ECO_PAGE_REGISTER7)
+    ;MOV @R0,#010H
+
+	;MOV R0,#LOW (ECO_PAGE_REGISTER6)
+    ;MOV @R0,#00H
 	LCALL	_store_cpu_rate
+    ;MOV ECO_PAGE_ADDR,#HIGH (_store_cpu_rate)
+    ;MOV ECO_PAGE_ADDR+01H,#LOW (_store_cpu_rate)
+    ;LCALL   eco_page_manager
 ; 	/* init led */
 ; 	P0_DIR &= ~0x28;
-			; SOURCE LINE # 89
+			; SOURCE LINE # 90
 	ANL  	P0_DIR,#0D7H
 ; 	P0_ALT &= ~0x28;
-			; SOURCE LINE # 90
+			; SOURCE LINE # 91
 	ANL  	P0_ALT,#0D7H
 ; 
 ; 
 ; 	serial_init(19200);
-			; SOURCE LINE # 93
+			; SOURCE LINE # 94
 	MOV  	R7,#00H
 	MOV  	R6,#04BH
 	LCALL	_serial_init
+	;MOV R0,#LOW (ECO_PAGE_REGISTER7)
+    ;MOV @R0,#00H
+
+    ;MOV R0,#LOW (ECO_PAGE_REGISTER6)
+    ;MOV @R0,#04BH
+    ;;LCALL  _store_cpu_rate
+    ;MOV ECO_PAGE_ADDR,#HIGH (_serial_init)
+    ;MOV ECO_PAGE_ADDR+01H,#LOW (_serial_init)
+    ;LCALL   eco_page_manager
+
+	
 ; 	puts("test:");
-			; SOURCE LINE # 94
+			; SOURCE LINE # 95
 	MOV  	R3,#0FFH
 	MOV  	R2,#HIGH (?SC_0)
 	MOV  	R1,#LOW (?SC_0)
 	LCALL	_puts
 ; 	int_print(test_counter);
-			; SOURCE LINE # 95
+			; SOURCE LINE # 96
 	MOV  	R6,test_counter
 	MOV  	R7,test_counter+01H
 	LCALL	_?int_print
 ;   	puts("\r\n");
-			; SOURCE LINE # 96
+			; SOURCE LINE # 97
 	MOV  	R3,#0FFH
 	MOV  	R2,#HIGH (?SC_6)
 	MOV  	R1,#LOW (?SC_6)
 	LCALL	_puts
 ; 
 ; 	for (i = 0; i < 6; i++) {
-			; SOURCE LINE # 98
+			; SOURCE LINE # 99
 	CLR  	A
 	MOV  	i?346,A
 	MOV  	i?346+01H,A
-?C0015:
+?C0016:
 ; 		blink_led();
-			; SOURCE LINE # 99
+			; SOURCE LINE # 100
 	XRL  	P0,#020H
 ; 		mdelay(400);
-			; SOURCE LINE # 100
+			; SOURCE LINE # 101
 	MOV  	R7,#090H
 	MOV  	R6,#01H
 	LCALL	_mdelay
 ; 	}
-			; SOURCE LINE # 101
+			; SOURCE LINE # 102
 	INC  	i?346+01H
 	MOV  	A,i?346+01H
-	JNZ  	?C0029
+	JNZ  	?C0030
 	INC  	i?346
-?C0029:
+?C0030:
 	CLR  	C
 	SUBB 	A,#06H
 	MOV  	A,i?346
 	XRL  	A,#080H
 	SUBB 	A,#080H
-	JC   	?C0015
-?C0016:
+	JC   	?C0016
+?C0017:
 ; 	/* init adc */
 ; 	adc_init(ADC_CLK_D8, ADC_RES_12, EXTREF);
-			; SOURCE LINE # 103
+			; SOURCE LINE # 104
 	MOV  	R3,#010H
 	MOV  	R5,#03H
 	MOV  	R7,#020H
 	LCALL	_adc_init
+	;MOV R0,#LOW (ECO_PAGE_REGISTER3)
+    ;MOV @R0,#010H
+
+	;MOV R0,#LOW (ECO_PAGE_REGISTER5)
+    ;MOV @R0,#03H
+
+    ;MOV R0,#LOW (ECO_PAGE_REGISTER7)
+    ;MOV @R0,#020H
+    ;;LCALL  _store_cpu_rate
+    ;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    ;MOV ECO_PAGE_ADDR,#HIGH (_adc_init)
+    ;MOV ECO_PAGE_ADDR+01H,#LOW (_adc_init)
+    ;LCALL   eco_page_manager
 ; 
 ; 	/* rf */
 ; 	rf_init();
-			; SOURCE LINE # 106
-	LCALL	rf_init
-; 	rf_configure(cfg);
 			; SOURCE LINE # 107
+	LCALL	rf_init
+    ;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    ;MOV ECO_PAGE_ADDR,#HIGH (rf_init)
+    ;MOV ECO_PAGE_ADDR+01H,#LOW (rf_init)
+    ;LCALL   eco_page_manager
+; 	rf_configure(cfg);
+			; SOURCE LINE # 108
 	MOV  	R3,cfg
 	MOV  	R2,cfg+01H
 	MOV  	R1,cfg+02H
@@ -668,67 +730,67 @@ main:
 ; 
 ; 	//volatile value for calculating 
 ; 	test_counter = 0;
-			; SOURCE LINE # 110
+			; SOURCE LINE # 111
 	CLR  	A
 	MOV  	test_counter,A
 	MOV  	test_counter+01H,A
 ; 	timer_counter = 0;
-			; SOURCE LINE # 111
+			; SOURCE LINE # 112
 	MOV  	timer_counter,A
 	MOV  	timer_counter+01H,A
 ; 	flag = 0;
-			; SOURCE LINE # 112
+			; SOURCE LINE # 113
 	MOV  	flag,A
 	MOV  	flag+01H,A
 ; 	/* init timer */
 ; 	// TMOD.1 TMOD.2 [1 0] 8-bit counter with auto-reload
 ; 	TMOD = 0x02;
-			; SOURCE LINE # 115
+			; SOURCE LINE # 116
 	MOV  	TMOD,#02H
 ; 	TH0 = 0x00;
-			; SOURCE LINE # 116
+			; SOURCE LINE # 117
 	MOV  	TH0,A
 ; 	//enable interrupt
 ; 	EA = 1;
-			; SOURCE LINE # 118
+			; SOURCE LINE # 119
 	SETB 	EA
 ; 	//enable timer interrupt
 ; 	ET0 = 1;
-			; SOURCE LINE # 120
+			; SOURCE LINE # 121
 	SETB 	ET0
 ; 	//set to 1 to enable counting on Timer 0.		
 ; 	TR0 = 1;	
-			; SOURCE LINE # 122
+			; SOURCE LINE # 123
 	SETB 	TR0
-?C0018:
+?C0019:
 ; 
 ; 	while(1)
-			; SOURCE LINE # 124
-; 	{
 			; SOURCE LINE # 125
-; 		for(i=0;i<LEN*2;i+=2)
+; 	{
 			; SOURCE LINE # 126
+; 		for(i=0;i<LEN*2;i+=2)
+			; SOURCE LINE # 127
 	CLR  	A
 	MOV  	i?346,A
 	MOV  	i?346+01H,A
-?C0020:
+?C0021:
 	CLR  	C
 	MOV  	A,i?346+01H
 	SUBB 	A,#036H
 	MOV  	A,i?346
 	XRL  	A,#080H
 	SUBB 	A,#080H
-	JNC  	?C0021
+	JNC  	?C0022
 ; 		{
-			; SOURCE LINE # 127
-; 			accx = adc_read(X_AXIS);
 			; SOURCE LINE # 128
+; 			accx = adc_read(X_AXIS);
+			; SOURCE LINE # 129
 	MOV  	R7,#03H
 	LCALL	_adc_read
 	MOV  	accx?347,R6
 	MOV  	accx?347+01H,R7
 ; 			msg[i] = (accx >> 8);
-			; SOURCE LINE # 129
+			; SOURCE LINE # 130
 	MOV  	A,accx?347
 	MOV  	R7,A
 	MOV  	R6,i?346+01H
@@ -737,80 +799,106 @@ main:
 	MOV  	R0,A
 	MOV  	@R0,AR7
 ; 			msg[i+1] = accx & 0xff;
-			; SOURCE LINE # 130
+			; SOURCE LINE # 131
 	MOV  	A,#LOW (msg+01H)
 	ADD  	A,R6
 	MOV  	R0,A
 	MOV  	@R0,accx?347+01H
 ; 			mdelay(5);
-			; SOURCE LINE # 131
+			; SOURCE LINE # 132
 	MOV  	R7,#05H
 	MOV  	R6,#00H
 	LCALL	_mdelay
 ; 		}
-			; SOURCE LINE # 132
+			; SOURCE LINE # 133
 	MOV  	A,#02H
 	ADD  	A,i?346+01H
 	MOV  	i?346+01H,A
 	CLR  	A
 	ADDC 	A,i?346
 	MOV  	i?346,A
-	SJMP 	?C0020
-?C0021:
+	SJMP 	?C0021
+?C0022:
 ; 
 ; 		delta_compress();
-			; SOURCE LINE # 134
-	LCALL	delta_compress
+			; SOURCE LINE # 135
+	;LCALL	delta_compress
+    MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    MOV ECO_PAGE_ADDR,#HIGH (delta_compress)
+    MOV ECO_PAGE_ADDR+01H,#LOW (delta_compress)
+    LCALL   eco_page_manager
 ; 
 ; 		if(flag == 1)
-			; SOURCE LINE # 136
+			; SOURCE LINE # 137
 	MOV  	A,flag+01H
 	XRL  	A,#01H
 	ORL  	A,flag
-	JNZ  	?C0023
+	JNZ  	?C0024
 ; 		{
-			; SOURCE LINE # 137
-; 			flag = 0;
 			; SOURCE LINE # 138
+; 			flag = 0;
+			; SOURCE LINE # 139
 	MOV  	flag,A
 	MOV  	flag+01H,A
 ; 			blink_led();
-			; SOURCE LINE # 139
+			; SOURCE LINE # 140
 	XRL  	P0,#020H
 ; 			int_print(test_counter);
-			; SOURCE LINE # 140
+			; SOURCE LINE # 141
 	MOV  	R6,test_counter
 	MOV  	R7,test_counter+01H
 	LCALL	_?int_print
 ; 			//int_print(timer_counter);
 ; 		   	puts("\r\n");
-			; SOURCE LINE # 142
+			; SOURCE LINE # 143
 	MOV  	R3,#0FFH
 	MOV  	R2,#HIGH (?SC_6)
 	MOV  	R1,#LOW (?SC_6)
 	LCALL	_puts
 ; 			EA = 1;
-			; SOURCE LINE # 143
+			; SOURCE LINE # 144
 	SETB 	EA
 ; 		}
-			; SOURCE LINE # 144
-?C0023:
+			; SOURCE LINE # 145
+?C0024:
 ; 
 ; 		rf_send(dst_addr, 3, msg, 20);
-			; SOURCE LINE # 146
+			; SOURCE LINE # 147
 	MOV  	?_rf_send?BYTE+04H,#00H
 	MOV  	?_rf_send?BYTE+05H,#HIGH (msg)
 	MOV  	?_rf_send?BYTE+06H,#LOW (msg)
 	MOV  	?_rf_send?BYTE+07H,#014H
+	;--------------------------
+    ;MOV R0,#LOW (ECO_PAGE_REGISTER3)
+    ;MOV @R0,#00H
+;--------------------------
+;   MOV     R2,#HIGH (dst_addr)
+;--------------------------
+    ;MOV R0,#LOW (ECO_PAGE_REGISTER2)
+    ;MOV @R0,#HIGH (dst_addr)
+;--------------------------
+;   MOV     R1,#LOW (dst_addr)
+;--------------------------
+    ;MOV R0,#LOW (ECO_PAGE_REGISTER1)
+    ;MOV @R0,#LOW (dst_addr)
+;--------------------------
+;   MOV     R5,#03H
+;--------------------------
+    ;MOV R0,#LOW (ECO_PAGE_REGISTER5)
+    ;MOV @R0,#03H
 	MOV  	R3,#00H
 	MOV  	R2,#HIGH (dst_addr)
 	MOV  	R1,#LOW (dst_addr)
 	MOV  	R5,#03H
 	LCALL	_rf_send
+	;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    ;MOV ECO_PAGE_ADDR,#HIGH (_rf_send)
+    ;MOV ECO_PAGE_ADDR+01H,#LOW (_rf_send)
+    ;LCALL   eco_page_manager
 ; 		//mdelay(20);
 ; 	}
-			; SOURCE LINE # 148
-	SJMP 	?C0018
+			; SOURCE LINE # 149
+	LJMP 	?C0019
 ; END OF main
 
 	END

@@ -16,15 +16,15 @@
 #include "eeprom/eeprom.h"
 
 //#define ECO_PAGE_SIZE 256
-#define ECO_PAGE_SIZE 128
-//#define ECO_PAGE_SIZE 64
+//#define ECO_PAGE_SIZE 128
+#define ECO_PAGE_SIZE 64
 
 //#define ECO_PAGE_ADDR_OFFSET 47
 //#define ECO_PAGE_ADDR_OFFSET 23
 //#define ECO_PAGE_ADDR_OFFSET 11 
 
 //test for data compress
-#define ECO_PAGE_ADDR_OFFSET 29
+#define ECO_PAGE_ADDR_OFFSET 62
 
 #if ECO_PAGE_SIZE == 64
 	

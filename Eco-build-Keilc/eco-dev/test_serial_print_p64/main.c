@@ -46,6 +46,7 @@ int log_2(int x)
 	if( x > 0)
 	{
 		//return (log10(x))/(log10(2.0)) + 1;
+		if ( x< 0) log10(x);
 		while(x--)
 		;
 	}

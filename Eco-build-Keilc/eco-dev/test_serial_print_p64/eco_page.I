@@ -628,35 +628,33 @@
  
  
  
-#line 30 ".\eco_page.c" /1
- 
-  
-  
-  
-  
  
  
  
  
  
  
- 
- 
-#line 43 ".\eco_page.c" /0
- 
- 
- 
- 
- 
- 
- unsigned int idata ECO_PAGE_TABLE[(32-29)];
+ unsigned int idata ECO_PAGE_TABLE[(64-62)];
  
  unsigned int ECO_PAGE_PREV_VID;
  
  unsigned int ECO_PAGE_PREV_PID;
  
  
-#line 56 ".\eco_page.c" /1
+#line 43 ".\eco_page.c" /1
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
   
   
@@ -687,7 +685,7 @@
  
  void eco_page_init()
  {
- ECO_PAGE_TABLE_INDEX = (32-29) - 1;
+ ECO_PAGE_TABLE_INDEX = (64-62) - 1;
  
  ECO_PAGE_ADDR = 0;
  ECO_PAGE_PREV_VID = 0;
@@ -819,10 +817,10 @@
  
  
  
- if((ECO_PAGE_ADDR >> 7) == ECO_PAGE_PREV_PID)
+ if((ECO_PAGE_ADDR >> 6) == ECO_PAGE_PREV_PID)
  {
  
- ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << 7) + (ECO_PAGE_ADDR & 0x007F);
+ ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << 6) + (ECO_PAGE_ADDR & 0x003F);
  #pragma asm
  
  #pragma endasm
@@ -830,9 +828,9 @@
  }	
  
  
- for(i=0;i<(32-29);i++)
+ for(i=0;i<(64-62);i++)
  {   
- if((ECO_PAGE_ADDR >> 7) == ECO_PAGE_TABLE[i])
+ if((ECO_PAGE_ADDR >> 6) == ECO_PAGE_TABLE[i])
  {
  page_index = i;
  break;
@@ -842,13 +840,13 @@
  if(page_index != -1) 
  {  
  
- ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 7;
+ ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 6;
  
  
- ECO_PAGE_ADDR = ((page_index + 29) << 7) + (ECO_PAGE_ADDR & 0x007F);
+ ECO_PAGE_ADDR = ((page_index + 62) << 6) + (ECO_PAGE_ADDR & 0x003F);
  
  
- ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 7;
+ ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 6;
  
  #pragma asm
  
@@ -861,32 +859,32 @@
  {
  
  
- unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + 29) << 7);
+ unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + 62) << 6);
  
  
  eeprom_init();
  
  
- for(i=0;i<128;i++)
+ for(i=0;i<64;i++)
  {
- *(seg+i) = eeprom_read(((unsigned int)(ECO_PAGE_ADDR & 0xFF80) + 3) +i);
+ *(seg+i) = eeprom_read(((unsigned int)(ECO_PAGE_ADDR & 0xFFC0) + 3) +i);
  }
  
  
- ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 7;
+ ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 6;
  
  
  
- ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 7;
+ ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 6;
  
  
- ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + 29) << 7) + (ECO_PAGE_ADDR & 0x007F);
+ ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + 62) << 6) + (ECO_PAGE_ADDR & 0x003F);
  
  
- ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 7;	
+ ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 6;	
  
  
- ECO_PAGE_TABLE_INDEX = (ECO_PAGE_TABLE_INDEX + 1) % (32-29);
+ ECO_PAGE_TABLE_INDEX = (ECO_PAGE_TABLE_INDEX + 1) % (64-62);
  
  
  #pragma asm

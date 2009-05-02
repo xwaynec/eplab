@@ -1,4 +1,4 @@
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 1   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 1   
 
 
 C51 COMPILER V8.16, COMPILATION OF MODULE ECO_PAGE
@@ -62,7 +62,7 @@ line level    source
   18      =2  sfr TL1                 = 0x8B ;
   19      =2  sfr TH0                 = 0x8C ;
   20      =2  sfr TH1                 = 0x8D ;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 2   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 2   
 
   21      =2  sfr CKCON               = 0x8E ;
   22      =2  sfr SPC_FNC             = 0x8F ;
@@ -126,7 +126,7 @@ line level    source
   80      =2  sbit P0_4       = 0x84  ;
   81      =2  sbit INT1_N     = 0x84  ;
   82      =2  sbit DIO6       = 0x84  ;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 3   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 3   
 
   83      =2  sbit P0_5       = 0x85  ;
   84      =2  sbit T0         = 0x85  ;
@@ -190,7 +190,7 @@ line level    source
  142      =2  
  143      =2  /*  IP   */
  144      =2  sbit PX0        = 0xB8 ;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 4   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 4   
 
  145      =2  sbit PT0        = 0xB9 ;
  146      =2  sbit PX1        = 0xBA ;
@@ -254,7 +254,7 @@ line level    source
  204      =2  #define T1_M0           0x10
  205      =2  #define T1_M1           0x20
  206      =2  #define T1_CT           0x40
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 5   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 5   
 
  207      =2  #define T1_GATE         0x80
  208      =2  
@@ -318,7 +318,7 @@ line level    source
            =3 sfr RADIO               = 0xA0 ;
            =3 sfr ADCCON              = 0xA1 ;
            =3 sfr ADCDATAH    = 0xA2 ;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 6   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 6   
 
            =3 sfr ADCDATAL    = 0xA3 ;
            =3 sfr ADCSTATIC   = 0xA4 ;
@@ -382,7 +382,7 @@ line level    source
            =3 sbit IT0        = 0x88 ;
            =3 sbit IE0        = 0x89 ;
            =3 sbit IT1        = 0x8A ;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 7   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 7   
 
            =3 sbit IE1        = 0x8B ;
            =3 sbit TR0        = 0x8C ;
@@ -446,7 +446,7 @@ line level    source
            =3 sbit TR2        = 0xCA ;
            =3 sbit EXEN2      = 0xCB ;
            =3 sbit TCLK       = 0xCC ;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 8   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 8   
 
            =3 sbit RCLK       = 0xCD ;
            =3 sbit EXF2       = 0xCE ;
@@ -510,7 +510,7 @@ line level    source
            =3 
            =3 #endif
   15      =2  
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 9   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 9   
 
   16      =2  #define blink_led() P0 ^= 0x20
   17      =2  
@@ -574,7 +574,7 @@ line level    source
   28      =1  /*
   29      =1  static unsigned char ECO_PAGE_TABLE[10];
   30      =1  
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 10  
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 10  
 
   31      =1  static unsigned int ECO_PAGE_ADDR;
   32      =1  
@@ -618,45 +618,45 @@ line level    source
            =1 #endif 
   17          
   18          //#define ECO_PAGE_SIZE 256
-  19          #define ECO_PAGE_SIZE 128
-  20          //#define ECO_PAGE_SIZE 64
+  19          //#define ECO_PAGE_SIZE 128
+  20          #define ECO_PAGE_SIZE 64
   21          
   22          //#define ECO_PAGE_ADDR_OFFSET 47
   23          //#define ECO_PAGE_ADDR_OFFSET 23
   24          //#define ECO_PAGE_ADDR_OFFSET 11 
   25          
   26          //test for data compress
-  27          #define ECO_PAGE_ADDR_OFFSET 29
+  27          #define ECO_PAGE_ADDR_OFFSET 62
   28          
   29          #if ECO_PAGE_SIZE == 64
+  30                  
+  31                  #define ECO_PAGE_ENTRY  (64-ECO_PAGE_ADDR_OFFSET)
+  32                  #define ECO_PAGE_SHIFT  6
+  33                  #define ECO_PAGE_MASK   0x003F
+  34                  #define ECO_PAGE_MOV_MASK       0xFFC0
+  35          
+  36                  unsigned int idata ECO_PAGE_TABLE[ECO_PAGE_ENTRY];
+  37                  //Eco page virtual address id
+  38                  unsigned int ECO_PAGE_PREV_VID;
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 11  
+
+  39                  //Eco page physical address id 
+  40                  unsigned int ECO_PAGE_PREV_PID;
+  41          
+  42          #elif ECO_PAGE_SIZE == 128
                       
-                      #define ECO_PAGE_ENTRY  (64-ECO_PAGE_ADDR_OFFSET)
-                      #define ECO_PAGE_SHIFT  6
-                      #define ECO_PAGE_MASK   0x003F
-                      #define ECO_PAGE_MOV_MASK       0xFFC0
+                      #define ECO_PAGE_ENTRY (32-ECO_PAGE_ADDR_OFFSET)
+                      #define ECO_PAGE_SHIFT  7
+                      #define ECO_PAGE_MASK   0x007F
+                      #define ECO_PAGE_MOV_MASK       0xFF80
               
                       unsigned int idata ECO_PAGE_TABLE[ECO_PAGE_ENTRY];
                       //Eco page virtual address id
                       unsigned int ECO_PAGE_PREV_VID;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 11  
-
                       //Eco page physical address id 
                       unsigned int ECO_PAGE_PREV_PID;
               
-              #elif ECO_PAGE_SIZE == 128
-  43                  
-  44                  #define ECO_PAGE_ENTRY (32-ECO_PAGE_ADDR_OFFSET)
-  45                  #define ECO_PAGE_SHIFT  7
-  46                  #define ECO_PAGE_MASK   0x007F
-  47                  #define ECO_PAGE_MOV_MASK       0xFF80
-  48          
-  49                  unsigned int idata ECO_PAGE_TABLE[ECO_PAGE_ENTRY];
-  50                  //Eco page virtual address id
-  51                  unsigned int ECO_PAGE_PREV_VID;
-  52                  //Eco page physical address id 
-  53                  unsigned int ECO_PAGE_PREV_PID;
-  54          
-  55          #elif ECO_PAGE_SIZE == 256
+              #elif ECO_PAGE_SIZE == 256
                       
                       #define ECO_PAGE_ENTRY  (16-ECO_PAGE_ADDR_OFFSET)
                       #define ECO_PAGE_SHIFT  8       
@@ -702,7 +702,7 @@ line level    source
   98          
   99                  //if page id is the same with the last page id
  100                  if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_PREV_PID & 0x7F))
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 12  
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 12  
 
  101                  {
  102                          //virtual address id + function offset
@@ -766,7 +766,7 @@ line level    source
  160                                          
  161                                          //memory page is in ram
  162                                          eeprom_init();
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 13  
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 13  
 
  163          
  164                                          //mov code from eeprom to external ram
@@ -830,7 +830,7 @@ line level    source
  222   2                      //eco_page_function_call
  223   2                      #pragma endasm
  224   2                      return ;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 14  
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 14  
 
  225   2              }       
  226   1                                      
@@ -894,7 +894,7 @@ line level    source
  281   2                      ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;    
  282   2      
  283   2                      //mov to the next index
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 15  
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 15  
 
  284   2                      ECO_PAGE_TABLE_INDEX = (ECO_PAGE_TABLE_INDEX + 1) % ECO_PAGE_ENTRY;
  285   2                              
@@ -910,27 +910,27 @@ line level    source
  295   1      
  296   1      }
  297          
-C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 01:19:51 PAGE 16  
+C51 COMPILER V8.16   ECO_PAGE                                                              05/02/2009 15:09:59 PAGE 16  
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
 
 
 _eeprom_read . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-ECO_PAGE_TABLE . . . . . . . . . . . .  PUBLIC   IDATA  ARRAY    0000H  6
+ECO_PAGE_TABLE . . . . . . . . . . . .  PUBLIC   IDATA  ARRAY    0000H  4
 eeprom_init. . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 ECO_PAGE_SPI_CONN. . . . . . . . . . .  PUBLIC   DATA   U_CHAR   0000H  1
 ECO_PAGE_PREV_PID. . . . . . . . . . .  PUBLIC   DATA   U_INT    0001H  2
 ECO_PAGE_PREV_VID. . . . . . . . . . .  PUBLIC   DATA   U_INT    0003H  2
 eco_page_init. . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-ECO_PAGE_REGISTER1 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0006H  1
-ECO_PAGE_REGISTER2 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0007H  1
-ECO_PAGE_REGISTER3 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0008H  1
+ECO_PAGE_REGISTER1 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0004H  1
+ECO_PAGE_REGISTER2 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0005H  1
+ECO_PAGE_REGISTER3 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0006H  1
 ECO_PAGE_ADDR. . . . . . . . . . . . .  PUBLIC   DATA   U_INT    0005H  2
-ECO_PAGE_REGISTER4 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0009H  1
-ECO_PAGE_REGISTER5 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   000AH  1
-ECO_PAGE_REGISTER6 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   000BH  1
-ECO_PAGE_REGISTER7 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   000CH  1
+ECO_PAGE_REGISTER4 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0007H  1
+ECO_PAGE_REGISTER5 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0008H  1
+ECO_PAGE_REGISTER6 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   0009H  1
+ECO_PAGE_REGISTER7 . . . . . . . . . .  PUBLIC   IDATA  U_CHAR   000AH  1
 eco_page_manager . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
   seg?140. . . . . . . . . . . . . . .  AUTO     DATA   PTR      0004H  2
   i?141. . . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
@@ -939,12 +939,12 @@ ECO_PAGE_TABLE_INDEX . . . . . . . . .  PUBLIC   DATA   U_CHAR   0007H  1
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    411    ----
+   CODE SIZE        =    399    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =      8       6
-   IDATA SIZE       =     13    ----
+   IDATA SIZE       =     11    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
