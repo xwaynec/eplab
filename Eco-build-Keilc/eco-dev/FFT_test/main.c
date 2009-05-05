@@ -8,7 +8,7 @@
 #include "serial/serial.h"
 #include "isr/isr_rf.h"
 #include "eeprom/eeprom.h"
-//#include "eco_page.h"
+#include "eco_page.h"
 #include "adc/adc.h"
 
 #include <math.h>
@@ -45,7 +45,7 @@ int log_2(int idata n)
  * Note: W is bit-reversal permuted because fft(..) goes faster if this is done.
  *       see that function for more details on why we treat 'i' as a (log2n-1) bit number.
  */
-void compute_W(int n, int W_re[], int W_im[])
+void compute_W(int idata n, int idata W_re[], int idata W_im[])
 {
 	int idata i;
 	int idata br;
@@ -80,7 +80,7 @@ void permute_bitrev(int n, int *A_re, int *A_im)
 
 	for (i=0; i<n; i++)
 	{
-		bri = bitrev(i, log2n);
+		bri  = bitrev(i, log2n);
 
 		/* skip already swapped elements */
 		if (bri <= i) continue;
@@ -170,22 +170,26 @@ int main()
 {
 	int idata n;
 	//int idata i;
-	//int idata A_re[8];
-	//int idata A_im[8];
+	int idata A_re[8];
+	int idata A_im[8];
 	//int idata W_re[4];
 	//int idata W_im[4]; 
-	int idata A_re[16];
-	int idata A_im[16];
-	int idata W_re[8];
-	int idata W_im[8]; 
+	//int idata A_re[16];
+	//int idata A_im[16];
+	//int idata W_re[8];
+	//int idata W_im[8]; 
 
-	n = 16;
 	
 	store_cpu_rate(16);
 
 	P0_DIR &= ~0x28;
 	P0_ALT &= ~0x28;
 
+	for(n=0;n<6;n++)
+	{
+		blink_led();
+		mdelay(400);
+	}
 	//A_re = (double*)malloc(sizeof(double)*n); 
 	//A_im = (double*)malloc(sizeof(double)*n); 
 	//W_re = (double*)malloc(sizeof(double)*n/2); 
@@ -196,11 +200,15 @@ int main()
 	{
 	//for (i=0; i<3; i++) {
 		//init_array(n, A_re, A_im); 
-		compute_W(n, W_re, W_im); 
-		fft(n, A_re, A_im, W_re, W_im);
+		n = 8;
+		blink_led();
+
+		//compute_W(n, W_re, W_im); 
+		//fft(n, A_re, A_im, W_re, W_im);
 		permute_bitrev(n, A_re, A_im);        
 		//output_array(n, A_re, A_im, argv[2]);  
 		//print_string("done");
+		mdelay(100);
 	//}
 	}
 	//free(A_re); 

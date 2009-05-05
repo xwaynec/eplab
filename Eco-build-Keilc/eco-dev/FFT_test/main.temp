@@ -253,10 +253,10 @@ REGX_MSB	DATA	0ABH
          br?250:   DS   2
 
 	RSEG  ?ID?_permute_bitrev?MAIN
-          i?355:   DS   2
+        bri?355:   DS   2
 
 	RSEG  ?ID?_permute_bitrev?MAIN
-        bri?356:   DS   2
+          i?356:   DS   2
 
 	RSEG  ?ID?_permute_bitrev?MAIN
       log2n?357:   DS   2
@@ -308,6 +308,12 @@ REGX_MSB	DATA	0ABH
 
 	RSEG  ?ID?main?MAIN
        A_im?578:   DS   16
+
+	RSEG  ?ID?main?MAIN
+       W_re?579:   DS   8
+
+	RSEG  ?ID?main?MAIN
+       W_im?580:   DS   8
 ; /* gets no. of points from the user, initialize the points and roots of unity lookup table 
 ;  * and lets fft go. finally bit-reverses the results and outputs them into a file. 
 ;  * n should be a power of 2. 
@@ -669,13 +675,12 @@ _permute_bitrev:
 ; { 
 			; SOURCE LINE # 72
 ; 	int idata i;
-; 	int idata bri;
 ; 	int idata log2n;
 ; 	int idata t_re;
 ; 	int idata t_im;
 ; 
 ; 	log2n = log_2(n); 
-			; SOURCE LINE # 79
+			; SOURCE LINE # 78
 	LCALL	_log_2
 	MOV  	R0,#LOW (log2n?357)
 	MOV  	@R0,AR6
@@ -683,14 +688,14 @@ _permute_bitrev:
 	MOV  	@R0,AR7
 ; 
 ; 	for (i=0; i<n; i++)
-			; SOURCE LINE # 81
+			; SOURCE LINE # 80
 	CLR  	A
-	MOV  	R0,#LOW (i?355)
+	MOV  	R0,#LOW (i?356)
 	MOV  	@R0,A
 	INC  	R0
 	MOV  	@R0,A
 ?C0013:
-	MOV  	R0,#LOW (i?355)
+	MOV  	R0,#LOW (i?356)
 	MOV  	A,@R0
 	MOV  	R6,A
 	INC  	R0
@@ -706,12 +711,13 @@ _permute_bitrev:
 	SUBB 	A,R0
 	JC   	$ + 0AH
 	;LJMP 	?C0017
-	MOV     DPH,#HIGH (?C0017)
-    MOV     DPL,#LOW  (?C0017)
-    CLR     A    
-    JMP     @A+DPTR
+	MOV             DPH,#HIGH (?C0017)
+    MOV             DPL,#LOW  (?C0017)
+    CLR             A
+    JMP             @A+DPTR
 ; 	{
-			; SOURCE LINE # 82
+			; SOURCE LINE # 81
+; 		int idata bri;
 ; 		bri  = bitrev(i, log2n);
 			; SOURCE LINE # 83
 	MOV  	R0,#LOW (log2n?357)
@@ -721,7 +727,7 @@ _permute_bitrev:
 	MOV  	A,@R0
 	MOV  	R5,A
 	LCALL	_bitrev
-	MOV  	R0,#LOW (bri?356)
+	MOV  	R0,#LOW (bri?355)
 	MOV  	A,R6
 	MOV  	@R0,A
 	INC  	R0
@@ -731,7 +737,7 @@ _permute_bitrev:
 ; 		/* skip already swapped elements */
 ; 		if (bri <= i) continue;
 			; SOURCE LINE # 86
-	MOV  	R0,#LOW (i?355)
+	INC  	R0
 	MOV  	A,@R0
 	MOV  	R4,A
 	INC  	R0
@@ -748,15 +754,15 @@ _permute_bitrev:
 	SUBB 	A,R0
 	JNC  	$ + 0AH
 	;LJMP 	?C0015
-	MOV     DPH,#HIGH (?C0015)
-    MOV     DPL,#LOW  (?C0015)
-    CLR     A    
-    JMP     @A+DPTR
+	MOV             DPH,#HIGH (?C0015)
+    MOV             DPL,#LOW  (?C0015)
+    CLR             A
+    JMP             @A+DPTR
 ?C0016:
 ; 
 ; 		t_re = A_re[i];
 			; SOURCE LINE # 88
-	MOV  	R0,#LOW (i?355+01H)
+	MOV  	R0,#LOW (i?356+01H)
 	MOV  	A,@R0
 	ADD  	A,ACC
 	MOV  	R7,A
@@ -775,15 +781,20 @@ _permute_bitrev:
 	INC  	R0
 	MOV  	@R0,A
 
+
 	MOV     DPH,#HIGH (_permute_bitrev_2)
     MOV     DPL,#LOW  (_permute_bitrev_2)
     CLR     A    
     JMP     @A+DPTR
 
 
-    RSEG  ?PR?_permute_bitrev_2?MAIN
+
+
+
+	RSEG  ?PR?_permute_bitrev_2?MAIN
 _permute_bitrev_2:
-    USING   0
+	USING	0
+
 ; 		t_im = A_im[i];
 			; SOURCE LINE # 89
 	MOV  	R3,A_im?354
@@ -798,7 +809,7 @@ _permute_bitrev_2:
 	MOV  	@R0,A
 ; 		A_re[i]= A_re[bri];
 			; SOURCE LINE # 90
-	MOV  	R0,#LOW (bri?356+01H)
+	MOV  	R0,#LOW (bri?355+01H)
 	MOV  	A,@R0
 	ADD  	A,ACC
 	MOV  	R7,A
@@ -812,7 +823,7 @@ _permute_bitrev_2:
 	MOV  	DPH,A
 	LCALL	?C?ILDOPTR
 	MOV  	R5,A
-	MOV  	R0,#LOW (i?355+01H)
+	MOV  	R0,#LOW (i?356+01H)
 	MOV  	A,@R0
 	ADD  	A,ACC
 	MOV  	R7,A
@@ -826,7 +837,7 @@ _permute_bitrev_2:
 	LCALL	?C?ISTOPTR
 ; 		A_im[i]= A_im[bri];
 			; SOURCE LINE # 91
-	MOV  	R0,#LOW (bri?356+01H)
+	MOV  	R0,#LOW (bri?355+01H)
 	MOV  	A,@R0
 	ADD  	A,ACC
 	MOV  	R7,A
@@ -840,7 +851,7 @@ _permute_bitrev_2:
 	MOV  	DPH,A
 	LCALL	?C?ILDOPTR
 	MOV  	R5,A
-	MOV  	R0,#LOW (i?355+01H)
+	MOV  	R0,#LOW (i?356+01H)
 	MOV  	A,@R0
 	ADD  	A,ACC
 	MOV  	R7,A
@@ -860,7 +871,7 @@ _permute_bitrev_2:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R5,A
-	MOV  	R0,#LOW (bri?356+01H)
+	MOV  	R0,#LOW (bri?355+01H)
 	MOV  	A,@R0
 	ADD  	A,ACC
 	MOV  	R7,A
@@ -894,23 +905,25 @@ _permute_bitrev_2:
 ; 	}  
 			; SOURCE LINE # 94
 ?C0015:
-	MOV  	R0,#LOW (i?355+01H)
+	MOV  	R0,#LOW (i?356+01H)
 	INC  	@R0
 	MOV  	A,@R0
 	DEC  	R0
 	JZ   	$ + 0AH
 	;LJMP 	?C0013
-	MOV     DPH,#HIGH (?C0013)
-    MOV     DPL,#LOW  (?C0013)
-    CLR     A
+	MOV 	DPH,#HIGH (?C0013)
+    MOV     DPL,#LOW  (?C0013)    
+	CLR     A
     JMP     @A+DPTR
+
 	INC  	@R0
 ?C0037:
 	;LJMP 	?C0013
-	MOV     DPH,#HIGH (?C0013)
-    MOV     DPL,#LOW  (?C0013)
-    CLR     A
-    JMP     @A+DPTR
+	MOV             DPH,#HIGH (?C0013)
+    MOV             DPL,#LOW  (?C0013)
+    CLR             A
+    JMP             @A+DPTR
+	
 ; } 
 			; SOURCE LINE # 95
 ?C0017:
@@ -1465,8 +1478,8 @@ main:
 ; 	//int idata i;
 ; 	int idata A_re[8];
 ; 	int idata A_im[8];
-; 	//int idata W_re[4];
-; 	//int idata W_im[4]; 
+; 	int idata W_re[4];
+; 	int idata W_im[4]; 
 ; 	//int idata A_re[16];
 ; 	//int idata A_im[16];
 ; 	//int idata W_re[8];
@@ -1545,11 +1558,45 @@ main:
 			; SOURCE LINE # 204
 	XRL  	P0,#020H
 ; 
-; 		//compute_W(n, W_re, W_im); 
-; 		//fft(n, A_re, A_im, W_re, W_im);
+; 		compute_W(n, W_re, W_im); 
+			; SOURCE LINE # 206
+	DEC  	R0
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R7,A
+	MOV  	?_compute_W?BYTE+05H,#00H
+	MOV  	?_compute_W?BYTE+06H,#HIGH (W_im?580)
+	MOV  	?_compute_W?BYTE+07H,#LOW (W_im?580)
+	MOV  	R3,#00H
+	MOV  	R2,#HIGH (W_re?579)
+	MOV  	R1,#LOW (W_re?579)
+	LCALL	_compute_W
+; 		fft(n, A_re, A_im, W_re, W_im);
+			; SOURCE LINE # 207
+	MOV  	R0,#LOW (n?576)
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R7,A
+	MOV  	?_fft?BYTE+05H,#00H
+	MOV  	?_fft?BYTE+06H,#HIGH (A_im?578)
+	MOV  	?_fft?BYTE+07H,#LOW (A_im?578)
+	MOV  	?_fft?BYTE+08H,#00H
+	MOV  	?_fft?BYTE+09H,#HIGH (W_re?579)
+	MOV  	?_fft?BYTE+0AH,#LOW (W_re?579)
+	MOV  	?_fft?BYTE+0BH,#00H
+	MOV  	?_fft?BYTE+0CH,#HIGH (W_im?580)
+	MOV  	?_fft?BYTE+0DH,#LOW (W_im?580)
+	MOV  	R3,#00H
+	MOV  	R2,#HIGH (A_re?577)
+	MOV  	R1,#LOW (A_re?577)
+	LCALL	_fft
 ; 		permute_bitrev(n, A_re, A_im);        
 			; SOURCE LINE # 208
-	DEC  	R0
+	MOV  	R0,#LOW (n?576)
 	MOV  	A,@R0
 	MOV  	R6,A
 	INC  	R0
@@ -1564,14 +1611,9 @@ main:
 	LCALL	_permute_bitrev
 ; 		//output_array(n, A_re, A_im, argv[2]);  
 ; 		//print_string("done");
-; 		mdelay(100);
-			; SOURCE LINE # 211
-	MOV  	R7,#064H
-	MOV  	R6,#00H
-	LCALL	_mdelay
 ; 	//}
 ; 	}
-			; SOURCE LINE # 213
+			; SOURCE LINE # 212
 	SJMP 	?C0031
 ; END OF main
 

@@ -56,9 +56,10 @@ main: main.obj isr_rf.obj utils.obj serial.obj spi.obj eeprom.obj adc.obj eco_pa
 	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB TO $(TARGET) SEGMENTS\(?PR?_rf_send?ISR_RF\(C:0x1000\)\) SEGMENTS\(?PR?_adc_init?ADC\(C:0x1080\)\) SEGMENTS\(?PR?_adc_read?ADC\(C:0x10A0\)\)
 
 	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB , C51FPL.LIB  TO $(TARGET) 
-	$(LX) main.obj , isr_rf.obj , adc.obj , utils.obj , serial.obj , spi.obj , C51S.LIB , C51FPL.LIB  TO $(TARGET) 
-
-#SEGMENTS\(?PR?blink_fast?PAGING\(C:0x1000\)\) SEGMENTS\(?PR?blink_fast2?PAGING\(C:0x800\)
+	#$(LX) main.obj , isr_rf.obj , adc.obj , utils.obj , serial.obj , spi.obj , C51S.LIB , C51FPL.LIB  TO $(TARGET) SEGMENTS\(?PR?_FFT?MAIN\(C:0x1200\)\) SEGMENTS\(?PR?_BITREV?MAIN\(C:0x1000\)\)
+	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj , eeprom.obj , C51S.LIB , C51FPL.LIB  TO $(TARGET) SEGMENTS\(?PR?_BITREV?MAIN\(C:0x1000\)\) SEGMENTS\(?PR?_LOG_2?MAIN\(C:0x1055\)\) SEGMENTS\(?PR?_COMPUTE_W?MAIN\(C:0x1100\)\) SEGMENTS\(?PR?_EEPROM_WRITE?EEPROM\(C:0x3000\)\) SEGMENTS\(?PR?ECO_PAGE_INIT?ECO_PAGE\(C:0x303B\)\) SEGMENTS\(?PR?_SERIAL_WRITE?SERIAL\(C:0x3047\)\) SEGMENTS\(?PR?RF_WAIT_MSG?ISR_RF\(C:0x304F\)\) SEGMENTS\(?PR?RF_CH1_RECV?ISR_RF\(C:0x3058\)\) SEGMENTS\(?PR?FLASH_ERASE_ALL?EEPROM\(C:0x30B8\)\)
+	$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj , eeprom.obj , C51S.LIB , C51FPL.LIB  TO $(TARGET) SEGMENTS\(?PR?_FFT?MAIN\(C:0x1500\)\) SEGMENTS\(?PR?_RF_SEND?ISR_RF\(C:0x1800\)\) SEGMENTS\(?PR?ECO_PAGE_INIT?ECO_PAGE\(C:0x193B\)\) SEGMENTS\(?PR?_SERIAL_WRITE?SERIAL\(C:0x1947\)\) SEGMENTS\(?PR?RF_WAIT_MSG?ISR_RF\(C:0x194F\)\) SEGMENTS\(?PR?RF_CH1_RECV?ISR_RF\(C:0x1958\)\) SEGMENTS\(?PR?FLASH_ERASE_ALL?EEPROM\(C:0x19B8\)\)
+#SEGMENTS\(?PR?blink_fast?PAGING\(C:0x1000\)\) SEGMENTS\(?PR?blink_fast2?PAGING\(C:0x800\)SEGMENTS\(?PR?_BITREV?MAIN\(C:0x1800\)\)
 
 	$(OX) "MAIN" HEX
 	#./eeprepbat.bat

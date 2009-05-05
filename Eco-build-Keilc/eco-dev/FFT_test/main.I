@@ -613,6 +613,353 @@
  
 #line 10 ".\main.c" /0
  
+  
+#line 1 "eco_page.h" /0
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+  
+#line 1 "../../INCLUDE\ECO/REG24E1.H" /0
+ 
+#line 2 "../../INCLUDE\ECO/REG24E1.H" /1
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+ 
+#line 19 "eco_page.h" /0
+#line 19 "eco_page.h" /0
+ 
+  
+#line 1 "../../INCLUDE\ECO/ECO_SYS.H" /0
+
+
+
+
+
+
+
+
+
+ 
+ 
+#line 12 "../../INCLUDE\ECO/ECO_SYS.H" /1
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+#line 20 "eco_page.h" /0
+#line 20 "eco_page.h" /0
+ 
+  
+#line 1 "../../INCLUDE\UTILS/UTILS.H" /0
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ void store_cpu_rate(int mhz);
+ void mdelay(unsigned int msec);
+ void wdt_load(unsigned int cnt);
+ void strncpy(char *src, char *dst, int n);
+#line 21 "eco_page.h" /0
+ 
+  
+#line 1 "../../INCLUDE\EEPROM/EEPROM.H" /0
+
+
+
+
+
+
+
+ 
+ 
+#line 10 "../../INCLUDE\EEPROM/EEPROM.H" /1
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 22 "eco_page.h" /0
+#line 22 "eco_page.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+ 
+ 
+ void eco_page_init();
+ void eco_page_manager();
+ 
+ 
+ 
+#line 11 ".\main.c" /0
  
   
 #line 1 "../../INCLUDE\ADC/ADC.H" /0
@@ -743,7 +1090,7 @@
 
 
  
- void compute_W(int n, int W_re[], int W_im[])
+ void compute_W(int idata n, int idata W_re[], int idata W_im[])
  {
  int idata i;
  int idata br;
@@ -756,14 +1103,12 @@
  W_im[br] = sin((i*2*3)/(n));  
  }
  
-#line 61 ".\main.c" /1
  
  
  
  
  
  
-#line 67 ".\main.c" /0
  }
  
  
@@ -780,7 +1125,7 @@
  
  for (i=0; i<n; i++)
  {
- bri = bitrev(i, log2n);
+ bri  = bitrev(i, log2n);
  
  
  if (bri <= i) continue;
@@ -870,22 +1215,26 @@
  {
  int idata n;
  
+ int idata A_re[8];
+ int idata A_im[8];
  
  
  
  
- int idata A_re[16];
- int idata A_im[16];
- int idata W_re[8];
- int idata W_im[8]; 
  
- n = 16;
+ 
+ 
  
  store_cpu_rate(16);
  
  P0_DIR &= ~0x28;
  P0_ALT &= ~0x28;
  
+ for(n=0;n<6;n++)
+ {
+  P0 ^= 0x20;
+ mdelay(400);
+ }
  
  
  
@@ -896,11 +1245,15 @@
  {
  
  
- compute_W(n, W_re, W_im); 
- fft(n, A_re, A_im, W_re, W_im);
+ n = 8;
+  P0 ^= 0x20;
+ 
+ 
+ 
  permute_bitrev(n, A_re, A_im);        
  
  
+ mdelay(100);
  
  }
  
