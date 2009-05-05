@@ -1,0 +1,1996 @@
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE     1
+
+
+MACRO ASSEMBLER AX51 V3.06a
+OBJECT MODULE PLACED IN .\main.obj
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\AX51.exe .\main.src EP DEBUG SYMBOLS OJ(.\main.obj) PR(.\main.ls1) 
+
+LOC    OBJ             LINE     SOURCE
+
+                          1     ; ./main.src generated from: .\main.c
+                          2     ; COMPILER INVOKED BY:
+                          3     ;        C:\Keil\C51\BIN\C51.exe .\main.c BROWSE DEBUG CODE LISTINCLUDE SYMBOLS PREPRINT
+                                ROM(LARGE) INCDIR(../../Include) SRC(./main.src)
+                          4     
+                          5     $nomod51 
+                          6     
+                          7     NAME    MAIN
+                          8     
+ 00A0.7                   9     PWR_UP  BIT     0A0H.7
+ 0080                    10     P0      DATA    080H
+ 0090                    11     P1      DATA    090H
+ 00D0.6                  12     AC      BIT     0D0H.6
+ 0080.5                  13     T0      BIT     080H.5
+ 00B3                    14     SPI_CTRL        DATA    0B3H
+ 0080.6                  15     T1      BIT     080H.6
+ 00A8.7                  16     EA      BIT     0A8H.7
+ 0090.0                  17     T2      BIT     090H.0
+ 00A0.6                  18     CE      BIT     0A0H.6
+ 00BE                    19     DEV_OFFSET      DATA    0BEH
+ 00A0.1                  20     CLK1    BIT     0A0H.1
+ 0090.2                  21     DIN0    BIT     090H.2
+ 00A0.5                  22     CLK2    BIT     0A0H.5
+ 0090.0                  23     DIO0    BIT     090H.0
+ 0083                    24     DPH0    DATA    083H
+ 0090.1                  25     DIO1    BIT     090H.1
+ 00A8                    26     IE      DATA    0A8H
+ 0085                    27     DPH1    DATA    085H
+ 0080.0                  28     DIO2    BIT     080H.0
+ 0080.1                  29     DIO3    BIT     080H.1
+ 0080.0                  30     P0_0    BIT     080H.0
+ 0090.0                  31     P1_0    BIT     090H.0
+ 0080.2                  32     DIO4    BIT     080H.2
+ 0080.1                  33     P0_1    BIT     080H.1
+ 0082                    34     DPL0    DATA    082H
+ 0090.1                  35     P1_1    BIT     090H.1
+ 0080.3                  36     DIO5    BIT     080H.3
+ 0080.2                  37     P0_2    BIT     080H.2
+ 0084                    38     DPL1    DATA    084H
+ 0090.2                  39     P1_2    BIT     090H.2
+ 0080.4                  40     DIO6    BIT     080H.4
+ 0080.3                  41     P0_3    BIT     080H.3
+ 0080.5                  42     DIO7    BIT     080H.5
+ 0080.4                  43     P0_4    BIT     080H.4
+ 00A4                    44     ADCSTATIC       DATA    0A4H
+ 0080.6                  45     DIO8    BIT     080H.6
+ 0080.5                  46     P0_5    BIT     080H.5
+ 00C8.6                  47     EXF2    BIT     0C8H.6
+ 00A0.3                  48     CS      BIT     0A0H.3
+ 0080.7                  49     DIO9    BIT     080H.7
+ 0080.6                  50     P0_6    BIT     080H.6
+ 0080.7                  51     P0_7    BIT     080H.7
+ 00A8.4                  52     ES      BIT     0A8H.4
+ 00B8                    53     IP      DATA    0B8H
+ 00A0.0                  54     DATA?   BIT     0A0H.0
+ 0098.0                  55     RI      BIT     098H.0
+ 00D0.7                  56     CY      BIT     0D0H.7
+ 0098.1                  57     TI      BIT     098H.1
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE     2
+
+ 00BC                    58     T1_1V2  DATA    0BCH
+ 008F                    59     SPC_FNC DATA    08FH
+ 00BD                    60     T2_1V2  DATA    0BDH
+ 00CB                    61     RCAP2H  DATA    0CBH
+ 00B8.4                  62     PS      BIT     0B8H.4
+ 0081                    63     SP      DATA    081H
+ 00D0.2                  64     OV      BIT     0D0H.2
+ 00B6                    65     CK_CTRL DATA    0B6H
+ 00CA                    66     RCAP2L  DATA    0CAH
+ 00B5                    67     TICK_DV DATA    0B5H
+ 00B1                    68     RSTREAS DATA    0B1H
+ 00C8.1                  69     C_T2    BIT     0C8H.1
+ 00E8.4                  70     EWDI    BIT     0E8H.4
+ 00A1                    71     ADCCON  DATA    0A1H
+ 00C8.5                  72     RCLK    BIT     0C8H.5
+ 00A2                    73     ADCDATAH        DATA    0A2H
+ 0091                    74     EXIF    DATA    091H
+ 00C8.4                  75     TCLK    BIT     0C8H.4
+ 00A0.6                  76     DR2_CE  BIT     0A0H.6
+ 00A3                    77     ADCDATAL        DATA    0A3H
+ 0099                    78     SBUF    DATA    099H
+ 0087                    79     PCON    DATA    087H
+ 0098                    80     SCON    DATA    098H
+ 00F8.4                  81     PWDI    BIT     0F8H.4
+ 0089                    82     TMOD    DATA    089H
+ 0088                    83     TCON    DATA    088H
+ 00D8.3                  84     WDTI    BIT     0D8H.3
+ 00AA                    85     PWMDUTY DATA    0AAH
+ 0088.1                  86     IE0     BIT     088H.1
+ 0088.3                  87     IE1     BIT     088H.3
+ 0094                    88     P0_DIR  DATA    094H
+ 00F0                    89     B       DATA    0F0H
+ 0096                    90     P1_DIR  DATA    096H
+ 0095                    91     P0_ALT  DATA    095H
+ 0097                    92     P1_ALT  DATA    097H
+ 00C8.0                  93     CP_RL2  BIT     0C8H.0
+ 00A0.2                  94     DR1     BIT     0A0H.2
+ 00E0                    95     ACC     DATA    0E0H
+ 00A0.6                  96     DR2     BIT     0A0H.6
+ 00B7                    97     TEST_MODE       DATA    0B7H
+ 00B4                    98     SPICLK  DATA    0B4H
+ 00C8.1                  99     CT2     BIT     0C8H.1
+ 00A8.1                 100     ET0     BIT     0A8H.1
+ 00A8.3                 101     ET1     BIT     0A8H.3
+ 0088.5                 102     TF0     BIT     088H.5
+ 0080.3                 103     INT0_N  BIT     080H.3
+ 00A8.5                 104     ET2     BIT     0A8H.5
+ 0088.7                 105     TF1     BIT     088H.7
+ 0080.4                 106     INT1_N  BIT     080H.4
+ 00C8.7                 107     TF2     BIT     0C8H.7
+ 0098.2                 108     RB8     BIT     098H.2
+ 008C                   109     TH0     DATA    08CH
+ 00A8.0                 110     EX0     BIT     0A8H.0
+ 0088.0                 111     IT0     BIT     088H.0
+ 008D                   112     TH1     DATA    08DH
+ 00A8.2                 113     EX1     BIT     0A8H.2
+ 0098.3                 114     TB8     BIT     098H.3
+ 0088.2                 115     IT1     BIT     088H.2
+ 00CD                   116     TH2     DATA    0CDH
+ 00AD                   117     REGX_CTRL       DATA    0ADH
+ 00E8.0                 118     EX2     BIT     0E8H.0
+ 00D0.0                 119     P       BIT     0D0H.0
+ 00E8.1                 120     EX3     BIT     0E8H.1
+ 0098.7                 121     SM0     BIT     098H.7
+ 008A                   122     TL0     DATA    08AH
+ 00E8.2                 123     EX4     BIT     0E8H.2
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE     3
+
+ 0098.6                 124     SM1     BIT     098H.6
+ 008B                   125     TL1     DATA    08BH
+ 00E8.3                 126     EX5     BIT     0E8H.3
+ 0098.5                 127     SM2     BIT     098H.5
+ 00CC                   128     TL2     DATA    0CCH
+ 00E8                   129     EIE     DATA    0E8H
+ 00B8.1                 130     PT0     BIT     0B8H.1
+ 00D0.3                 131     RS0     BIT     0D0H.3
+ 00B8.3                 132     PT1     BIT     0B8H.3
+ 00D0.4                 133     RS1     BIT     0D0H.4
+ 00B8.5                 134     PT2     BIT     0B8H.5
+ 0088.4                 135     TR0     BIT     088H.4
+ 00A9                   136     PWMCON  DATA    0A9H
+ 0088.6                 137     TR1     BIT     088H.6
+ 00C8.2                 138     TR2     BIT     0C8H.2
+ 00B8.0                 139     PX0     BIT     0B8H.0
+ 00B8.2                 140     PX1     BIT     0B8H.2
+ 00F8.0                 141     PX2     BIT     0F8H.0
+ 00F8.1                 142     PX3     BIT     0F8H.1
+ 00F8.2                 143     PX4     BIT     0F8H.2
+ 0083                   144     DPH     DATA    083H
+ 00F8.3                 145     PX5     BIT     0F8H.3
+ 00F8                   146     EIP     DATA    0F8H
+ 0082                   147     DPL     DATA    082H
+ 00C8.3                 148     EXEN2   BIT     0C8H.3
+ 00C8.0                 149     CPRL2   BIT     0C8H.0
+ 0098.4                 150     REN     BIT     098H.4
+ 00C8                   151     T2CON   DATA    0C8H
+ 0086                   152     DPS     DATA    086H
+ 00B2                   153     SPI_DATA        DATA    0B2H
+ 0092                   154     MPAGE   DATA    092H
+ 0080.1                 155     RXD     BIT     080H.1
+ 00A0.4                 156     DOUT2   BIT     0A0H.4
+ 00D8                   157     EICON   DATA    0D8H
+ 008E                   158     CKCON   DATA    08EH
+ 0080.2                 159     TXD     BIT     080H.2
+ 00A0                   160     RADIO   DATA    0A0H
+ 0080.7                 161     PWM     BIT     080H.7
+ 00D0.5                 162     F0      BIT     0D0H.5
+ 00D0.1                 163     F1      BIT     0D0H.1
+ 00AC                   164     REGX_LSB        DATA    0ACH
+ 00D0                   165     PSW     DATA    0D0H
+ 00AB                   166     REGX_MSB        DATA    0ABH
+------                  167     ?PR?_bitrev?MAIN     SEGMENT CODE 
+------                  168     ?DT?_bitrev?MAIN     SEGMENT DATA OVERLAYABLE 
+------                  169     ?PR?_log_2?MAIN      SEGMENT CODE 
+------                  170     ?PR?_compute_W?MAIN  SEGMENT CODE 
+------                  171     ?DT?_compute_W?MAIN  SEGMENT DATA OVERLAYABLE 
+------                  172     ?PR?_permute_bitrev?MAIN                 SEGMENT CODE 
+------                  173     ?DT?_permute_bitrev?MAIN                 SEGMENT DATA OVERLAYABLE 
+------                  174     ?PR?_fft?MAIN        SEGMENT CODE 
+------                  175     ?DT?_fft?MAIN        SEGMENT DATA OVERLAYABLE 
+------                  176     ?PR?main?MAIN        SEGMENT CODE 
+------                  177     ?ID?_bitrev?MAIN     SEGMENT IDATA OVERLAYABLE 
+------                  178     ?ID?_log_2?MAIN      SEGMENT IDATA OVERLAYABLE 
+------                  179     ?ID?_compute_W?MAIN  SEGMENT IDATA OVERLAYABLE 
+------                  180     ?ID?_permute_bitrev?MAIN                 SEGMENT IDATA OVERLAYABLE 
+------                  181     ?ID?_fft?MAIN        SEGMENT IDATA OVERLAYABLE 
+------                  182     ?ID?main?MAIN        SEGMENT IDATA OVERLAYABLE 
+                        183             EXTRN   CODE (_mdelay)
+                        184             EXTRN   CODE (_cos)
+                        185             EXTRN   CODE (_sin)
+                        186             EXTRN   CODE (_store_cpu_rate)
+                        187             EXTRN   CODE (?C?SIDIV)
+                        188             EXTRN   CODE (?C?IMUL)
+                        189             EXTRN   CODE (?C?FCASTI)
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE     4
+
+                        190             EXTRN   CODE (?C?CASTF)
+                        191             EXTRN   CODE (?C?ISTOPTR)
+                        192             EXTRN   CODE (?C?ILDOPTR)
+                        193             EXTRN   CODE (?C_STARTUP)
+                        194     
+                        195             EXTRN   CODE (eco_page_manager)
+                        196         EXTRN   DATA (ECO_PAGE_ADDR)
+                        197         EXTRN   DATA (ECO_PAGE_SPI_CONN)
+                        198         EXTRN   IDATA (ECO_PAGE_REGISTER1)
+                        199         EXTRN   IDATA (ECO_PAGE_REGISTER2)
+                        200         EXTRN   IDATA (ECO_PAGE_REGISTER3)
+                        201         EXTRN   IDATA (ECO_PAGE_REGISTER4)
+                        202         EXTRN   IDATA (ECO_PAGE_REGISTER5)
+                        203         EXTRN   IDATA (ECO_PAGE_REGISTER6)
+                        204         EXTRN   IDATA (ECO_PAGE_REGISTER7)
+                        205     
+                        206             PUBLIC  main
+                        207             PUBLIC  ?_fft?BYTE
+                        208             PUBLIC  _fft
+                        209             PUBLIC  ?_permute_bitrev?BYTE
+                        210             PUBLIC  _permute_bitrev
+                        211             PUBLIC  ?_compute_W?BYTE
+                        212             PUBLIC  _compute_W
+                        213             PUBLIC  _log_2
+                        214             PUBLIC  _bitrev
+                        215     
+------                  216             RSEG  ?DT?_bitrev?MAIN
+000000                  217     ?_bitrev?BYTE:
+000000                  218         numbits?041:   DS   2
+                        219     
+------                  220             RSEG  ?DT?_compute_W?MAIN
+000000                  221     ?_compute_W?BYTE:
+000000                  222               n?246:   DS   2
+000002                  223             ORG  2
+000002                  224            W_re?247:   DS   3
+000005                  225             ORG  5
+000005                  226            W_im?248:   DS   3
+000008                  227             ORG  8
+000008                  228           log2n?251:   DS   2
+                        229     
+------                  230             RSEG  ?DT?_fft?MAIN
+000000                  231     ?_fft?BYTE:
+000000                  232               n?460:   DS   2
+000002                  233             ORG  2
+000002                  234            A_re?461:   DS   3
+000005                  235             ORG  5
+000005                  236            A_im?462:   DS   3
+000008                  237             ORG  8
+000008                  238            W_re?463:   DS   3
+00000B                  239             ORG  11
+00000B                  240            W_im?464:   DS   3
+                        241     
+------                  242             RSEG  ?DT?_permute_bitrev?MAIN
+000000                  243     ?_permute_bitrev?BYTE:
+000000                  244               n?352:   DS   2
+000002                  245             ORG  2
+000002                  246            A_re?353:   DS   3
+000005                  247             ORG  5
+000005                  248            A_im?354:   DS   3
+                        249     
+------                  250             RSEG  ?ID?_bitrev?MAIN
+000000                  251               i?042:   DS   2
+                        252     
+------                  253             RSEG  ?ID?_bitrev?MAIN
+000002                  254             rev?043:   DS   2
+                        255     
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE     5
+
+------                  256             RSEG  ?ID?_log_2?MAIN
+000000                  257             res?145:   DS   2
+                        258     
+------                  259             RSEG  ?ID?_compute_W?MAIN
+000000                  260               i?249:   DS   2
+                        261     
+------                  262             RSEG  ?ID?_compute_W?MAIN
+000002                  263              br?250:   DS   2
+                        264     
+------                  265             RSEG  ?ID?_permute_bitrev?MAIN
+000000                  266               i?355:   DS   2
+                        267     
+------                  268             RSEG  ?ID?_permute_bitrev?MAIN
+000002                  269             bri?356:   DS   2
+                        270     
+------                  271             RSEG  ?ID?_permute_bitrev?MAIN
+000004                  272           log2n?357:   DS   2
+                        273     
+------                  274             RSEG  ?ID?_permute_bitrev?MAIN
+000006                  275            t_re?358:   DS   2
+                        276     
+------                  277             RSEG  ?ID?_permute_bitrev?MAIN
+000008                  278            t_im?359:   DS   2
+                        279     
+------                  280             RSEG  ?ID?_fft?MAIN
+000000                  281            w_re?465:   DS   2
+                        282     
+------                  283             RSEG  ?ID?_fft?MAIN
+000002                  284            w_im?466:   DS   2
+                        285     
+------                  286             RSEG  ?ID?_fft?MAIN
+000004                  287            u_re?467:   DS   2
+                        288     
+------                  289             RSEG  ?ID?_fft?MAIN
+000006                  290            u_im?468:   DS   2
+                        291     
+------                  292             RSEG  ?ID?_fft?MAIN
+000008                  293            t_re?469:   DS   2
+                        294     
+------                  295             RSEG  ?ID?_fft?MAIN
+00000A                  296            t_im?470:   DS   2
+                        297     
+------                  298             RSEG  ?ID?_fft?MAIN
+00000C                  299               m?471:   DS   2
+                        300     
+------                  301             RSEG  ?ID?_fft?MAIN
+00000E                  302               g?472:   DS   2
+                        303     
+------                  304             RSEG  ?ID?_fft?MAIN
+000010                  305               b?473:   DS   2
+                        306     
+------                  307             RSEG  ?ID?_fft?MAIN
+000012                  308              mt?474:   DS   2
+                        309     
+------                  310             RSEG  ?ID?_fft?MAIN
+000014                  311               k?475:   DS   2
+                        312     
+------                  313             RSEG  ?ID?main?MAIN
+000000                  314               n?576:   DS   2
+                        315     
+------                  316             RSEG  ?ID?main?MAIN
+000002                  317            A_re?577:   DS   16
+                        318     
+------                  319             RSEG  ?ID?main?MAIN
+000012                  320            A_im?578:   DS   16
+                        321     
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE     6
+
+------                  322             RSEG  ?ID?main?MAIN
+000022                  323            W_re?579:   DS   8
+                        324     
+------                  325             RSEG  ?ID?main?MAIN
+00002A                  326            W_im?580:   DS   8
+                        327     ; /* gets no. of points from the user, initialize the points and roots of unity lookup t
+                               able 
+                        328     ;  * and lets fft go. finally bit-reverses the results and outputs them into a file. 
+                        329     ;  * n should be a power of 2. 
+                        330     ;  */
+                        331     ; #include "Eco/reg24e1.h"
+                        332     ; #include "Eco/eco_sys.h"
+                        333     ; #include "utils/utils.h"
+                        334     ; #include "serial/serial.h"
+                        335     ; #include "isr/isr_rf.h"
+                        336     ; #include "eeprom/eeprom.h"
+                        337     ; #include "eco_page.h"
+                        338     ; #include "adc/adc.h"
+                        339     ; 
+                        340     ; #include <math.h>
+                        341     ; 
+                        342     ; /* treats inp as a numbits number and bitreverses it. 
+                        343     ;  * inp < 2^(numbits) for meaningful bit-reversal
+                        344     ;  */ 
+                        345     ; int bitrev(int idata inp, int idata numbits)
+                        346     
+------                  347             RSEG  ?PR?_bitrev?MAIN
+000000                  348     _bitrev:
+                        349             USING   0
+                        350                             ; SOURCE LINE # 19
+000000 8C00       F     351             MOV     numbits?041,R4
+000002 8D00       F     352             MOV     numbits?041+01H,R5
+                        353     ;---- Variable 'inp?040' assigned to Register 'R2/R3' ----
+000004 AB07             354             MOV     R3,AR7
+000006 AA06             355             MOV     R2,AR6
+                        356     ; {
+                        357                             ; SOURCE LINE # 20
+                        358     ;       int idata i;
+                        359     ;       int idata rev=0;
+                        360                             ; SOURCE LINE # 22
+000008 E4               361             CLR     A
+000009 7800       F     362             MOV     R0,#LOW (rev?043)
+00000B F6               363             MOV     @R0,A
+00000C 08               364             INC     R0
+00000D F6               365             MOV     @R0,A
+                        366     ;       for (i=0; i < numbits; i++)
+                        367                             ; SOURCE LINE # 23
+00000E 7800       F     368             MOV     R0,#LOW (i?042)
+000010 F6               369             MOV     @R0,A
+000011 08               370             INC     R0
+000012 F6               371             MOV     @R0,A
+000013                  372     ?C0001:
+000013 C3               373             CLR     C
+000014 7800       F     374             MOV     R0,#LOW (i?042+01H)
+000016 E6               375             MOV     A,@R0
+000017 9500       F     376             SUBB    A,numbits?041+01H
+000019 E500       F     377             MOV     A,numbits?041
+00001B 6480             378             XRL     A,#080H
+00001D F5F0             379             MOV     B,A
+00001F 18               380             DEC     R0
+000020 E6               381             MOV     A,@R0
+000021 6480             382             XRL     A,#080H
+000023 95F0             383             SUBB    A,B
+000025 5026             384             JNC     ?C0002
+                        385     ;       {
+                        386                             ; SOURCE LINE # 24
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE     7
+
+                        387     ;               rev = (rev << 1) | (inp & 1);
+                        388                             ; SOURCE LINE # 25
+000027 7800       F     389             MOV     R0,#LOW (rev?043+01H)
+000029 E6               390             MOV     A,@R0
+00002A 25E0             391             ADD     A,ACC
+00002C FF               392             MOV     R7,A
+00002D 18               393             DEC     R0
+00002E E6               394             MOV     A,@R0
+00002F 33               395             RLC     A
+000030 FE               396             MOV     R6,A
+000031 EB               397             MOV     A,R3
+000032 5401             398             ANL     A,#01H
+000034 FD               399             MOV     R5,A
+000035 EE               400             MOV     A,R6
+000036 F6               401             MOV     @R0,A
+000037 EF               402             MOV     A,R7
+000038 4D               403             ORL     A,R5
+000039 08               404             INC     R0
+00003A F6               405             MOV     @R0,A
+                        406     ;               inp >>= 1;
+                        407                             ; SOURCE LINE # 26
+00003B EA               408             MOV     A,R2
+00003C A2E7             409             MOV     C,ACC.7
+00003E 13               410             RRC     A
+00003F FA               411             MOV     R2,A
+000040 EB               412             MOV     A,R3
+000041 13               413             RRC     A
+000042 FB               414             MOV     R3,A
+                        415     ;       }
+                        416                             ; SOURCE LINE # 27
+000043 7800       F     417             MOV     R0,#LOW (i?042+01H)
+000045 06               418             INC     @R0
+000046 E6               419             MOV     A,@R0
+000047 18               420             DEC     R0
+000048 70C9             421             JNZ     ?C0001
+00004A 06               422             INC     @R0
+00004B                  423     ?C0034:
+00004B 80C6             424             SJMP    ?C0001
+00004D                  425     ?C0002:
+                        426     ;       return rev;
+                        427                             ; SOURCE LINE # 28
+00004D 7800       F     428             MOV     R0,#LOW (rev?043)
+00004F E6               429             MOV     A,@R0
+000050 FE               430             MOV     R6,A
+000051 08               431             INC     R0
+000052 E6               432             MOV     A,@R0
+000053 FF               433             MOV     R7,A
+                        434     ; }
+                        435                             ; SOURCE LINE # 29
+000054                  436     ?C0004:
+000054 22               437             RET     
+                        438     ; END OF _bitrev
+                        439     
+                        440     ; 
+                        441     ; 
+                        442     ; /* returns log n (to the base 2), if n is positive and power of 2 */ 
+                        443     ; int log_2(int idata n) 
+                        444     
+------                  445             RSEG  ?PR?_log_2?MAIN
+000000                  446     _log_2:
+                        447             USING   0
+                        448                             ; SOURCE LINE # 33
+                        449     ;---- Variable 'n?144' assigned to Register 'R6/R7' ----
+                        450     ; {
+                        451                             ; SOURCE LINE # 34
+                        452     ;       int idata res; 
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE     8
+
+                        453     ;       for (res=0; n >= 2; res++) 
+                        454                             ; SOURCE LINE # 36
+000000 E4               455             CLR     A
+000001 7800       F     456             MOV     R0,#LOW (res?145)
+000003 F6               457             MOV     @R0,A
+000004 08               458             INC     R0
+000005 F6               459             MOV     @R0,A
+000006                  460     ?C0005:
+000006 C3               461             CLR     C
+000007 EF               462             MOV     A,R7
+000008 9402             463             SUBB    A,#02H
+00000A EE               464             MOV     A,R6
+00000B 6480             465             XRL     A,#080H
+00000D 9480             466             SUBB    A,#080H
+00000F 4012             467             JC      ?C0006
+                        468     ;               n = n >> 1; 
+                        469                             ; SOURCE LINE # 37
+000011 EE               470             MOV     A,R6
+000012 A2E7             471             MOV     C,ACC.7
+000014 13               472             RRC     A
+000015 FE               473             MOV     R6,A
+000016 EF               474             MOV     A,R7
+000017 13               475             RRC     A
+000018 FF               476             MOV     R7,A
+000019 7800       F     477             MOV     R0,#LOW (res?145+01H)
+00001B 06               478             INC     @R0
+00001C E6               479             MOV     A,@R0
+00001D 18               480             DEC     R0
+00001E 70E6             481             JNZ     ?C0005
+000020 06               482             INC     @R0
+000021                  483     ?C0035:
+000021 80E3             484             SJMP    ?C0005
+000023                  485     ?C0006:
+                        486     ;       return res; 
+                        487                             ; SOURCE LINE # 38
+000023 7800       F     488             MOV     R0,#LOW (res?145)
+000025 E6               489             MOV     A,@R0
+000026 FE               490             MOV     R6,A
+000027 08               491             INC     R0
+000028 E6               492             MOV     A,@R0
+000029 FF               493             MOV     R7,A
+                        494     ; }
+                        495                             ; SOURCE LINE # 39
+00002A                  496     ?C0008:
+00002A 22               497             RET     
+                        498     ; END OF _log_2
+                        499     
+                        500     ; 
+                        501     ; 
+                        502     ; 
+                        503     ; /* W will contain roots of unity so that W[bitrev(i,log2n-1)] = e^(2*pi*i/n)
+                        504     ;  * n should be a power of 2
+                        505     ;  * Note: W is bit-reversal permuted because fft(..) goes faster if this is done.
+                        506     ;  *       see that function for more details on why we treat 'i' as a (log2n-1) bit num
+                               ber.
+                        507     ;  */
+                        508     ; void compute_W(int n, int W_re[], int W_im[])
+                        509     
+------                  510             RSEG  ?PR?_compute_W?MAIN
+000000                  511     _compute_W:
+                        512             USING   0
+                        513                             ; SOURCE LINE # 48
+000000 8E00       F     514             MOV     n?246,R6
+000002 8F00       F     515             MOV     n?246+01H,R7
+000004 8B00       F     516             MOV     W_re?247,R3
+000006 8A00       F     517             MOV     W_re?247+01H,R2
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE     9
+
+000008 8900       F     518             MOV     W_re?247+02H,R1
+                        519     ; {
+                        520                             ; SOURCE LINE # 49
+                        521     ;       int idata i;
+                        522     ;       int idata br;
+                        523     ;       int log2n = log_2(n);
+                        524                             ; SOURCE LINE # 52
+00000A 120000     F     525             LCALL   _log_2
+00000D 8E00       F     526             MOV     log2n?251,R6
+00000F 8F00       F     527             MOV     log2n?251+01H,R7
+                        528     ; 
+                        529     ;       for (i=0; i<(n/2); i++)
+                        530                             ; SOURCE LINE # 54
+000011 E4               531             CLR     A
+000012 7800       F     532             MOV     R0,#LOW (i?249)
+000014 F6               533             MOV     @R0,A
+000015 08               534             INC     R0
+000016 F6               535             MOV     @R0,A
+000017                  536     ?C0009:
+000017 AE00       F     537             MOV     R6,n?246
+000019 AF00       F     538             MOV     R7,n?246+01H
+00001B 7C00             539             MOV     R4,#00H
+00001D 7D02             540             MOV     R5,#02H
+00001F 120000     E     541             LCALL   ?C?SIDIV
+000022 AC06             542             MOV     R4,AR6
+000024 AD07             543             MOV     R5,AR7
+000026 7800       F     544             MOV     R0,#LOW (i?249)
+000028 E6               545             MOV     A,@R0
+000029 FE               546             MOV     R6,A
+00002A 08               547             INC     R0
+00002B E6               548             MOV     A,@R0
+00002C FF               549             MOV     R7,A
+00002D C3               550             CLR     C
+00002E 9D               551             SUBB    A,R5
+00002F EC               552             MOV     A,R4
+000030 6480             553             XRL     A,#080H
+000032 F8               554             MOV     R0,A
+000033 EE               555             MOV     A,R6
+000034 6480             556             XRL     A,#080H
+000036 98               557             SUBB    A,R0
+000037 4003             558             JC      $ + 5H
+000039 020000     F     559             LJMP    ?C0012
+                        560     ;       {
+                        561                             ; SOURCE LINE # 55
+                        562     ;               br = bitrev(i,log2n-1); 
+                        563                             ; SOURCE LINE # 56
+00003C E500       F     564             MOV     A,log2n?251+01H
+00003E 24FF             565             ADD     A,#0FFH
+000040 FD               566             MOV     R5,A
+000041 E500       F     567             MOV     A,log2n?251
+000043 34FF             568             ADDC    A,#0FFH
+000045 FC               569             MOV     R4,A
+                        570             ;LCALL  _bitrev
+                        571     
+000046 85B300     E     572             MOV     ECO_PAGE_SPI_CONN,SPI_CTRL
+000049 750000     F     573         MOV ECO_PAGE_ADDR,#HIGH (_bitrev)
+00004C 750000     F     574         MOV ECO_PAGE_ADDR+01H,#LOW (_bitrev)
+00004F 120000     E     575         LCALL   eco_page_manager
+                        576     
+000052 7800       F     577             MOV     R0,#LOW (br?250)
+000054 A606             578             MOV     @R0,AR6
+000056 08               579             INC     R0
+000057 A607             580             MOV     @R0,AR7
+                        581     ;               W_re[br] = cos((i*2*3)/(n));  
+                        582                             ; SOURCE LINE # 57
+000059 7800       F     583             MOV     R0,#LOW (i?249)
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    10
+
+00005B E6               584             MOV     A,@R0
+00005C FE               585             MOV     R6,A
+00005D 08               586             INC     R0
+00005E E6               587             MOV     A,@R0
+00005F FF               588             MOV     R7,A
+000060 7C00             589             MOV     R4,#00H
+000062 7D06             590             MOV     R5,#06H
+000064 120000     E     591             LCALL   ?C?IMUL
+000067 AC00       F     592             MOV     R4,n?246
+000069 AD00       F     593             MOV     R5,n?246+01H
+00006B 120000     E     594             LCALL   ?C?SIDIV
+00006E AC06             595             MOV     R4,AR6
+000070 AD07             596             MOV     R5,AR7
+000072 EC               597             MOV     A,R4
+000073 120000     E     598             LCALL   ?C?FCASTI
+000076 120000     E     599             LCALL   _cos
+000079 120000     E     600             LCALL   ?C?CASTF
+00007C AD07             601             MOV     R5,AR7
+00007E 7800       F     602             MOV     R0,#LOW (br?250+01H)
+000080 E6               603             MOV     A,@R0
+000081 25E0             604             ADD     A,ACC
+000083 FF               605             MOV     R7,A
+000084 18               606             DEC     R0
+000085 E6               607             MOV     A,@R0
+000086 33               608             RLC     A
+000087 AB00       F     609             MOV     R3,W_re?247
+000089 AA00       F     610             MOV     R2,W_re?247+01H
+00008B A900       F     611             MOV     R1,W_re?247+02H
+00008D 8F82             612             MOV     DPL,R7
+00008F F583             613             MOV     DPH,A
+000091 EE               614             MOV     A,R6
+000092 8DF0             615             MOV     B,R5
+000094 120000     E     616             LCALL   ?C?ISTOPTR
+                        617     ;               W_im[br] = sin((i*2*3)/(n));  
+                        618                             ; SOURCE LINE # 58
+000097 7800       F     619             MOV     R0,#LOW (i?249)
+000099 E6               620             MOV     A,@R0
+00009A FE               621             MOV     R6,A
+00009B 08               622             INC     R0
+00009C E6               623             MOV     A,@R0
+00009D FF               624             MOV     R7,A
+00009E 7C00             625             MOV     R4,#00H
+0000A0 7D06             626             MOV     R5,#06H
+0000A2 120000     E     627             LCALL   ?C?IMUL
+0000A5 AC00       F     628             MOV     R4,n?246
+0000A7 AD00       F     629             MOV     R5,n?246+01H
+0000A9 120000     E     630             LCALL   ?C?SIDIV
+0000AC AC06             631             MOV     R4,AR6
+0000AE AD07             632             MOV     R5,AR7
+0000B0 EC               633             MOV     A,R4
+0000B1 120000     E     634             LCALL   ?C?FCASTI
+0000B4 120000     E     635             LCALL   _sin
+0000B7 120000     E     636             LCALL   ?C?CASTF
+0000BA AD07             637             MOV     R5,AR7
+0000BC 7800       F     638             MOV     R0,#LOW (br?250+01H)
+0000BE E6               639             MOV     A,@R0
+0000BF 25E0             640             ADD     A,ACC
+0000C1 FF               641             MOV     R7,A
+0000C2 18               642             DEC     R0
+0000C3 E6               643             MOV     A,@R0
+0000C4 33               644             RLC     A
+0000C5 AB00       F     645             MOV     R3,W_im?248
+0000C7 AA00       F     646             MOV     R2,W_im?248+01H
+0000C9 A900       F     647             MOV     R1,W_im?248+02H
+0000CB 8F82             648             MOV     DPL,R7
+0000CD F583             649             MOV     DPH,A
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    11
+
+0000CF EE               650             MOV     A,R6
+0000D0 8DF0             651             MOV     B,R5
+0000D2 120000     E     652             LCALL   ?C?ISTOPTR
+                        653     ;       }
+                        654                             ; SOURCE LINE # 59
+0000D5 7800       F     655             MOV     R0,#LOW (i?249+01H)
+0000D7 06               656             INC     @R0
+0000D8 E6               657             MOV     A,@R0
+0000D9 18               658             DEC     R0
+0000DA 6003             659             JZ      $ + 5H
+0000DC 020000     F     660             LJMP    ?C0009
+0000DF 06               661             INC     @R0
+0000E0                  662     ?C0036:
+0000E0 020000     F     663             LJMP    ?C0009
+                        664     ; //#ifdef COMMENT_ONLY 
+                        665     ; //    for (i=0;i<(n/2);i++)
+                        666     ; //    { 
+                        667     ; //            br = i; //bitrev(i,log2n-1); 
+                        668     ; //            printf("(%g\t%g)\n", W_re[br], W_im[br]);
+                        669     ; //    }  
+                        670     ; //#endif 
+                        671     ; }
+                        672                             ; SOURCE LINE # 67
+0000E3                  673     ?C0012:
+0000E3 22               674             RET     
+                        675     ; END OF _compute_W
+                        676     
+                        677     ; 
+                        678     ; 
+                        679     ; /* permutes the array using a bit-reversal permutation */ 
+                        680     ; void permute_bitrev(int n, int *A_re, int *A_im) 
+                        681     
+------                  682             RSEG  ?PR?_permute_bitrev?MAIN
+000000                  683     _permute_bitrev:
+                        684             USING   0
+                        685                             ; SOURCE LINE # 71
+000000 8E00       F     686             MOV     n?352,R6
+000002 8F00       F     687             MOV     n?352+01H,R7
+000004 8B00       F     688             MOV     A_re?353,R3
+000006 8A00       F     689             MOV     A_re?353+01H,R2
+000008 8900       F     690             MOV     A_re?353+02H,R1
+                        691     ; { 
+                        692                             ; SOURCE LINE # 72
+                        693     ;       int idata i;
+                        694     ;       int idata bri;
+                        695     ;       int idata log2n;
+                        696     ;       int idata t_re;
+                        697     ;       int idata t_im;
+                        698     ; 
+                        699     ;       log2n = log_2(n); 
+                        700                             ; SOURCE LINE # 79
+00000A 120000     F     701             LCALL   _log_2
+00000D 7800       F     702             MOV     R0,#LOW (log2n?357)
+00000F A606             703             MOV     @R0,AR6
+000011 08               704             INC     R0
+000012 A607             705             MOV     @R0,AR7
+                        706     ; 
+                        707     ;       for (i=0; i<n; i++)
+                        708                             ; SOURCE LINE # 81
+000014 E4               709             CLR     A
+000015 7800       F     710             MOV     R0,#LOW (i?355)
+000017 F6               711             MOV     @R0,A
+000018 08               712             INC     R0
+000019 F6               713             MOV     @R0,A
+00001A                  714     ?C0013:
+00001A 7800       F     715             MOV     R0,#LOW (i?355)
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    12
+
+00001C E6               716             MOV     A,@R0
+00001D FE               717             MOV     R6,A
+00001E 08               718             INC     R0
+00001F E6               719             MOV     A,@R0
+000020 FF               720             MOV     R7,A
+000021 C3               721             CLR     C
+000022 9500       F     722             SUBB    A,n?352+01H
+000024 E500       F     723             MOV     A,n?352
+000026 6480             724             XRL     A,#080H
+000028 F8               725             MOV     R0,A
+000029 EE               726             MOV     A,R6
+00002A 6480             727             XRL     A,#080H
+00002C 98               728             SUBB    A,R0
+00002D 4003             729             JC      $ + 5H
+00002F 020000     F     730             LJMP    ?C0017
+                        731     ;       {
+                        732                             ; SOURCE LINE # 82
+                        733     ;               bri = bitrev(i, log2n);
+                        734                             ; SOURCE LINE # 83
+000032 7800       F     735             MOV     R0,#LOW (log2n?357)
+000034 E6               736             MOV     A,@R0
+000035 FC               737             MOV     R4,A
+000036 08               738             INC     R0
+000037 E6               739             MOV     A,@R0
+000038 FD               740             MOV     R5,A
+                        741             ;LCALL  _bitrev
+000039 85B300     E     742             MOV     ECO_PAGE_SPI_CONN,SPI_CTRL
+00003C 750000     F     743         MOV ECO_PAGE_ADDR,#HIGH (_bitrev)
+00003F 750000     F     744         MOV ECO_PAGE_ADDR+01H,#LOW (_bitrev)
+000042 120000     E     745         LCALL   eco_page_manager
+000045 7800       F     746             MOV     R0,#LOW (bri?356)
+000047 EE               747             MOV     A,R6
+000048 F6               748             MOV     @R0,A
+000049 08               749             INC     R0
+00004A EF               750             MOV     A,R7
+00004B F6               751             MOV     @R0,A
+                        752     ; 
+                        753     ;               /* skip already swapped elements */
+                        754     ;               if (bri <= i) continue;
+                        755                             ; SOURCE LINE # 86
+00004C 7800       F     756             MOV     R0,#LOW (i?355)
+00004E E6               757             MOV     A,@R0
+00004F FC               758             MOV     R4,A
+000050 08               759             INC     R0
+000051 E6               760             MOV     A,@R0
+000052 FD               761             MOV     R5,A
+000053 D3               762             SETB    C
+000054 EF               763             MOV     A,R7
+000055 9D               764             SUBB    A,R5
+000056 EC               765             MOV     A,R4
+000057 6480             766             XRL     A,#080H
+000059 F8               767             MOV     R0,A
+00005A EE               768             MOV     A,R6
+00005B 6480             769             XRL     A,#080H
+00005D 98               770             SUBB    A,R0
+00005E 5003             771             JNC     $ + 5H
+000060 020000     F     772             LJMP    ?C0015
+000063                  773     ?C0016:
+                        774     ; 
+                        775     ;               t_re = A_re[i];
+                        776                             ; SOURCE LINE # 88
+000063 7800       F     777             MOV     R0,#LOW (i?355+01H)
+000065 E6               778             MOV     A,@R0
+000066 25E0             779             ADD     A,ACC
+000068 FF               780             MOV     R7,A
+000069 18               781             DEC     R0
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    13
+
+00006A E6               782             MOV     A,@R0
+00006B 33               783             RLC     A
+00006C FE               784             MOV     R6,A
+00006D AB00       F     785             MOV     R3,A_re?353
+00006F AA00       F     786             MOV     R2,A_re?353+01H
+000071 A900       F     787             MOV     R1,A_re?353+02H
+000073 8F82             788             MOV     DPL,R7
+000075 F583             789             MOV     DPH,A
+000077 120000     E     790             LCALL   ?C?ILDOPTR
+00007A 7800       F     791             MOV     R0,#LOW (t_re?358)
+00007C A6F0             792             MOV     @R0,B
+00007E 08               793             INC     R0
+00007F F6               794             MOV     @R0,A
+                        795     ;               t_im = A_im[i];
+                        796                             ; SOURCE LINE # 89
+000080 AB00       F     797             MOV     R3,A_im?354
+000082 AA00       F     798             MOV     R2,A_im?354+01H
+000084 A900       F     799             MOV     R1,A_im?354+02H
+000086 8F82             800             MOV     DPL,R7
+000088 8E83             801             MOV     DPH,R6
+00008A 120000     E     802             LCALL   ?C?ILDOPTR
+00008D 7800       F     803             MOV     R0,#LOW (t_im?359)
+00008F A6F0             804             MOV     @R0,B
+000091 08               805             INC     R0
+000092 F6               806             MOV     @R0,A
+                        807     ;               A_re[i]= A_re[bri];
+                        808                             ; SOURCE LINE # 90
+000093 7800       F     809             MOV     R0,#LOW (bri?356+01H)
+000095 E6               810             MOV     A,@R0
+000096 25E0             811             ADD     A,ACC
+000098 FF               812             MOV     R7,A
+000099 18               813             DEC     R0
+00009A E6               814             MOV     A,@R0
+00009B 33               815             RLC     A
+00009C AB00       F     816             MOV     R3,A_re?353
+00009E AA00       F     817             MOV     R2,A_re?353+01H
+0000A0 A900       F     818             MOV     R1,A_re?353+02H
+0000A2 8F82             819             MOV     DPL,R7
+0000A4 F583             820             MOV     DPH,A
+0000A6 120000     E     821             LCALL   ?C?ILDOPTR
+0000A9 FD               822             MOV     R5,A
+0000AA 7800       F     823             MOV     R0,#LOW (i?355+01H)
+0000AC E6               824             MOV     A,@R0
+0000AD 25E0             825             ADD     A,ACC
+0000AF FF               826             MOV     R7,A
+0000B0 18               827             DEC     R0
+0000B1 E6               828             MOV     A,@R0
+0000B2 33               829             RLC     A
+0000B3 8F82             830             MOV     DPL,R7
+0000B5 F583             831             MOV     DPH,A
+0000B7 E5F0             832             MOV     A,B
+0000B9 8DF0             833             MOV     B,R5
+0000BB 120000     E     834             LCALL   ?C?ISTOPTR
+                        835     ;               A_im[i]= A_im[bri];
+                        836                             ; SOURCE LINE # 91
+0000BE 7800       F     837             MOV     R0,#LOW (bri?356+01H)
+0000C0 E6               838             MOV     A,@R0
+0000C1 25E0             839             ADD     A,ACC
+0000C3 FF               840             MOV     R7,A
+0000C4 18               841             DEC     R0
+0000C5 E6               842             MOV     A,@R0
+0000C6 33               843             RLC     A
+0000C7 AB00       F     844             MOV     R3,A_im?354
+0000C9 AA00       F     845             MOV     R2,A_im?354+01H
+0000CB A900       F     846             MOV     R1,A_im?354+02H
+0000CD 8F82             847             MOV     DPL,R7
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    14
+
+0000CF F583             848             MOV     DPH,A
+0000D1 120000     E     849             LCALL   ?C?ILDOPTR
+0000D4 FD               850             MOV     R5,A
+0000D5 7800       F     851             MOV     R0,#LOW (i?355+01H)
+0000D7 E6               852             MOV     A,@R0
+0000D8 25E0             853             ADD     A,ACC
+0000DA FF               854             MOV     R7,A
+0000DB 18               855             DEC     R0
+0000DC E6               856             MOV     A,@R0
+0000DD 33               857             RLC     A
+0000DE 8F82             858             MOV     DPL,R7
+0000E0 F583             859             MOV     DPH,A
+0000E2 E5F0             860             MOV     A,B
+0000E4 8DF0             861             MOV     B,R5
+0000E6 120000     E     862             LCALL   ?C?ISTOPTR
+                        863     ;               A_re[bri]= t_re;
+                        864                             ; SOURCE LINE # 92
+0000E9 7800       F     865             MOV     R0,#LOW (t_re?358)
+0000EB E6               866             MOV     A,@R0
+0000EC FC               867             MOV     R4,A
+0000ED 08               868             INC     R0
+0000EE E6               869             MOV     A,@R0
+0000EF FD               870             MOV     R5,A
+0000F0 7800       F     871             MOV     R0,#LOW (bri?356+01H)
+0000F2 E6               872             MOV     A,@R0
+0000F3 25E0             873             ADD     A,ACC
+0000F5 FF               874             MOV     R7,A
+0000F6 18               875             DEC     R0
+0000F7 E6               876             MOV     A,@R0
+0000F8 33               877             RLC     A
+0000F9 FE               878             MOV     R6,A
+0000FA AB00       F     879             MOV     R3,A_re?353
+0000FC AA00       F     880             MOV     R2,A_re?353+01H
+0000FE A900       F     881             MOV     R1,A_re?353+02H
+000100 8F82             882             MOV     DPL,R7
+000102 F583             883             MOV     DPH,A
+000104 EC               884             MOV     A,R4
+000105 8DF0             885             MOV     B,R5
+000107 120000     E     886             LCALL   ?C?ISTOPTR
+                        887     ;               A_im[bri]= t_im;
+                        888                             ; SOURCE LINE # 93
+00010A 7800       F     889             MOV     R0,#LOW (t_im?359)
+00010C E6               890             MOV     A,@R0
+00010D FD               891             MOV     R5,A
+00010E 08               892             INC     R0
+00010F E6               893             MOV     A,@R0
+000110 AB00       F     894             MOV     R3,A_im?354
+000112 AA00       F     895             MOV     R2,A_im?354+01H
+000114 A900       F     896             MOV     R1,A_im?354+02H
+000116 8F82             897             MOV     DPL,R7
+000118 8E83             898             MOV     DPH,R6
+00011A CD               899             XCH     A,R5
+00011B 8DF0             900             MOV     B,R5
+00011D 120000     E     901             LCALL   ?C?ISTOPTR
+                        902     ;       }  
+                        903                             ; SOURCE LINE # 94
+000120                  904     ?C0015:
+000120 7800       F     905             MOV     R0,#LOW (i?355+01H)
+000122 06               906             INC     @R0
+000123 E6               907             MOV     A,@R0
+000124 18               908             DEC     R0
+000125 6003             909             JZ      $ + 5H
+000127 020000     F     910             LJMP    ?C0013
+00012A 06               911             INC     @R0
+00012B                  912     ?C0037:
+00012B 020000     F     913             LJMP    ?C0013
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    15
+
+                        914     ; } 
+                        915                             ; SOURCE LINE # 95
+00012E                  916     ?C0017:
+00012E 22               917             RET     
+                        918     ; END OF _permute_bitrev
+                        919     
+                        920     ; 
+                        921     ; 
+                        922     ; /* fft on a set of n points given by A_re and A_im. Bit-reversal permuted roots-of-uni
+                               ty lookup table
+                        923     ;  * is given by W_re and W_im. More specifically,  W is the array of first n/2 nth root
+                               s of unity stored
+                        924     ;  * in a permuted bitreversal order.
+                        925     ;  *
+                        926     ;  * FFT - Decimation In Time FFT with input array in correct order and output array in 
+                               bit-reversed order.
+                        927     ;  *
+                        928     ;  * REQ: n should be a power of 2 to work. 
+                        929     ;  *
+                        930     ;  * Note: - See www.cs.berkeley.edu/~randit for her thesis on VIRAM FFTs and other deta
+                               ils about VHALF section of the algo
+                        931     ;  *         (thesis link - http://www.cs.berkeley.edu/~randit/papers/csd-00-1106.pdf)
+                        932     ;  *       - See the foll. CS267 website for details of the Decimation In Time FFT imple
+                               mented here.
+                        933     ;  *         (www.cs.berkeley.edu/~demmel/cs267/lecture24/lecture24.html)
+                        934     ;  *       - Also, look "Cormen Leicester Rivest [CLR] - Introduction to Algorithms" boo
+                               k for another variant of Iterative-FFT
+                        935     ;  */
+                        936     ; 
+                        937     ; //void fft(int n, double *A_re, double *A_im, double *W_re, double *W_im) 
+                        938     ; void fft(int n, int A_re[], int A_im[], int W_re[], int W_im[]) 
+                        939     
+------                  940             RSEG  ?PR?_fft?MAIN
+000000                  941     _fft:
+                        942             USING   0
+                        943                             ; SOURCE LINE # 114
+000000 8E00       F     944             MOV     n?460,R6
+000002 8F00       F     945             MOV     n?460+01H,R7
+000004 8B00       F     946             MOV     A_re?461,R3
+000006 8A00       F     947             MOV     A_re?461+01H,R2
+000008 8900       F     948             MOV     A_re?461+02H,R1
+                        949     ; {
+                        950                             ; SOURCE LINE # 115
+                        951     ;       int idata w_re, w_im, u_re, u_im, t_re, t_im;
+                        952     ;       int idata m, g, b;
+                        953     ;       //int i;
+                        954     ;       int idata mt, k;
+                        955     ; 
+                        956     ;       /* for each stage */  
+                        957     ;       for (m=n; m>=2; m=m>>1) 
+                        958                             ; SOURCE LINE # 122
+00000A 7800       F     959             MOV     R0,#LOW (m?471)
+00000C A600       F     960             MOV     @R0,n?460
+00000E 08               961             INC     R0
+00000F A600       F     962             MOV     @R0,n?460+01H
+000011                  963     ?C0018:
+000011 7800       F     964             MOV     R0,#LOW (m?471)
+000013 E6               965             MOV     A,@R0
+000014 FE               966             MOV     R6,A
+000015 08               967             INC     R0
+000016 E6               968             MOV     A,@R0
+000017 FF               969             MOV     R7,A
+000018 C3               970             CLR     C
+000019 9402             971             SUBB    A,#02H
+00001B EE               972             MOV     A,R6
+00001C 6480             973             XRL     A,#080H
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    16
+
+00001E 9480             974             SUBB    A,#080H
+000020 5003             975             JNC     $ + 5H
+000022 020000     F     976             LJMP    ?C0027
+                        977     ;       {
+                        978                             ; SOURCE LINE # 123
+                        979     ;               /* m = n/2^s; mt = m/2; */
+                        980     ;               mt = m >> 1;
+                        981                             ; SOURCE LINE # 125
+000025 EE               982             MOV     A,R6
+000026 A2E7             983             MOV     C,ACC.7
+000028 13               984             RRC     A
+000029 7900       F     985             MOV     R1,#LOW (mt?474)
+00002B F7               986             MOV     @R1,A
+00002C EF               987             MOV     A,R7
+00002D 13               988             RRC     A
+00002E 09               989             INC     R1
+00002F F7               990             MOV     @R1,A
+                        991     ; 
+                        992     ;               /* for each group of butterfly */ 
+                        993     ;               for (g=0,k=0; g<n; g+=m,k++) 
+                        994                             ; SOURCE LINE # 128
+000030 E4               995             CLR     A
+000031 08               996             INC     R0
+000032 F6               997             MOV     @R0,A
+000033 08               998             INC     R0
+000034 F6               999             MOV     @R0,A
+000035 7800       F    1000             MOV     R0,#LOW (k?475)
+000037 F6              1001             MOV     @R0,A
+000038 08              1002             INC     R0
+000039 F6              1003             MOV     @R0,A
+00003A                 1004     ?C0021:
+00003A C3              1005             CLR     C
+00003B 7800       F    1006             MOV     R0,#LOW (g?472+01H)
+00003D E6              1007             MOV     A,@R0
+00003E 9500       F    1008             SUBB    A,n?460+01H
+000040 E500       F    1009             MOV     A,n?460
+000042 6480            1010             XRL     A,#080H
+000044 F5F0            1011             MOV     B,A
+000046 18              1012             DEC     R0
+000047 E6              1013             MOV     A,@R0
+000048 6480            1014             XRL     A,#080H
+00004A 95F0            1015             SUBB    A,B
+00004C 4003            1016             JC      $ + 5H
+00004E 020000     F    1017             LJMP    ?C0020
+                       1018     ;               {
+                       1019                             ; SOURCE LINE # 129
+                       1020     ;                       /* each butterfly group uses only one root of unity. actually, i
+                               t is the bitrev of this group's number k.
+                       1021     ;                        * BUT 'bitrev' it as a log2n-1 bit number because we are using 
+                               a lookup array of nth root of unity and
+                       1022     ;                        * using cancellation lemma to scale nth root to n/2, n/4,... th
+                                root.
+                       1023     ;                        *
+                       1024     ;                        * It turns out like the foll.
+                       1025     ;                        *   w.re = W[bitrev(k, log2n-1)].re;
+                       1026     ;                        *   w.im = W[bitrev(k, log2n-1)].im;
+                       1027     ;                        * Still, we just use k, because the lookup array itself is bit-
+                               reversal permuted. 
+                       1028     ;                        */
+                       1029     ;                       w_re = W_re[k];
+                       1030                             ; SOURCE LINE # 139
+000051 7800       F    1031             MOV     R0,#LOW (k?475+01H)
+000053 E6              1032             MOV     A,@R0
+000054 25E0            1033             ADD     A,ACC
+000056 FF              1034             MOV     R7,A
+000057 18              1035             DEC     R0
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    17
+
+000058 E6              1036             MOV     A,@R0
+000059 33              1037             RLC     A
+00005A FE              1038             MOV     R6,A
+00005B AB00       F    1039             MOV     R3,W_re?463
+00005D AA00       F    1040             MOV     R2,W_re?463+01H
+00005F A900       F    1041             MOV     R1,W_re?463+02H
+000061 8F82            1042             MOV     DPL,R7
+000063 F583            1043             MOV     DPH,A
+000065 120000     E    1044             LCALL   ?C?ILDOPTR
+000068 7800       F    1045             MOV     R0,#LOW (w_re?465)
+00006A A6F0            1046             MOV     @R0,B
+00006C 08              1047             INC     R0
+00006D F6              1048             MOV     @R0,A
+                       1049     ;                       w_im = W_im[k];
+                       1050                             ; SOURCE LINE # 140
+00006E AB00       F    1051             MOV     R3,W_im?464
+000070 AA00       F    1052             MOV     R2,W_im?464+01H
+000072 A900       F    1053             MOV     R1,W_im?464+02H
+000074 8F82            1054             MOV     DPL,R7
+000076 8E83            1055             MOV     DPH,R6
+000078 120000     E    1056             LCALL   ?C?ILDOPTR
+00007B 7800       F    1057             MOV     R0,#LOW (w_im?466)
+00007D A6F0            1058             MOV     @R0,B
+00007F 08              1059             INC     R0
+000080 F6              1060             MOV     @R0,A
+                       1061     ; 
+                       1062     ;                       /* for each butterfly */ 
+                       1063     ;                       for (b=g; b<(g+mt); b++) 
+                       1064                             ; SOURCE LINE # 143
+000081 7800       F    1065             MOV     R0,#LOW (g?472)
+000083 E6              1066             MOV     A,@R0
+000084 FE              1067             MOV     R6,A
+000085 08              1068             INC     R0
+000086 E6              1069             MOV     A,@R0
+000087 FF              1070             MOV     R7,A
+000088 08              1071             INC     R0
+000089 A606            1072             MOV     @R0,AR6
+00008B 08              1073             INC     R0
+00008C A607            1074             MOV     @R0,AR7
+00008E                 1075     ?C0024:
+00008E 7900       F    1076             MOV     R1,#LOW (g?472+01H)
+000090 E7              1077             MOV     A,@R1
+000091 7800       F    1078             MOV     R0,#LOW (mt?474+01H)
+000093 26              1079             ADD     A,@R0
+000094 FF              1080             MOV     R7,A
+000095 19              1081             DEC     R1
+000096 E7              1082             MOV     A,@R1
+000097 18              1083             DEC     R0
+000098 36              1084             ADDC    A,@R0
+000099 FE              1085             MOV     R6,A
+00009A C3              1086             CLR     C
+00009B 18              1087             DEC     R0
+00009C E6              1088             MOV     A,@R0
+00009D 9F              1089             SUBB    A,R7
+00009E EE              1090             MOV     A,R6
+00009F 6480            1091             XRL     A,#080H
+0000A1 F5F0            1092             MOV     B,A
+0000A3 18              1093             DEC     R0
+0000A4 E6              1094             MOV     A,@R0
+0000A5 6480            1095             XRL     A,#080H
+0000A7 95F0            1096             SUBB    A,B
+0000A9 4003            1097             JC      $ + 5H
+0000AB 020000     F    1098             LJMP    ?C0023
+                       1099     ;                       {
+                       1100                             ; SOURCE LINE # 144
+                       1101     ;                               /* printf("bf %d %d %d %f %f %f %f\n", m, g, b, A_re[b],
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    18
+
+                                A_im[b], A_re[b+mt], A_im[b+mt]);
+                       1102     ;                                */ 
+                       1103     ;                               //printf("bf %d %d %d (u,t) %g %g %g %g (w) %g %g\n", m,
+                                g, b, A_re[b], A_im[b], A_re[b+mt], A_im[b+mt], w_re, w_im);
+                       1104     ; 
+                       1105     ;                               /* t = w * A[b+mt] */
+                       1106     ;                               t_re = w_re * A_re[b+mt] - w_im * A_im[b+mt];
+                       1107                             ; SOURCE LINE # 150
+0000AE 7900       F    1108             MOV     R1,#LOW (b?473+01H)
+0000B0 E7              1109             MOV     A,@R1
+0000B1 7800       F    1110             MOV     R0,#LOW (mt?474+01H)
+0000B3 26              1111             ADD     A,@R0
+0000B4 FF              1112             MOV     R7,A
+0000B5 19              1113             DEC     R1
+0000B6 E7              1114             MOV     A,@R1
+0000B7 18              1115             DEC     R0
+0000B8 36              1116             ADDC    A,@R0
+0000B9 FE              1117             MOV     R6,A
+0000BA EF              1118             MOV     A,R7
+0000BB 25E0            1119             ADD     A,ACC
+0000BD FF              1120             MOV     R7,A
+0000BE EE              1121             MOV     A,R6
+0000BF 33              1122             RLC     A
+0000C0 AB00       F    1123             MOV     R3,A_im?462
+0000C2 AA00       F    1124             MOV     R2,A_im?462+01H
+0000C4 A900       F    1125             MOV     R1,A_im?462+02H
+0000C6 8F82            1126             MOV     DPL,R7
+0000C8 F583            1127             MOV     DPH,A
+0000CA 120000     E    1128             LCALL   ?C?ILDOPTR
+0000CD FD              1129             MOV     R5,A
+0000CE ACF0            1130             MOV     R4,B
+0000D0 7800       F    1131             MOV     R0,#LOW (w_im?466)
+0000D2 E6              1132             MOV     A,@R0
+0000D3 FE              1133             MOV     R6,A
+0000D4 08              1134             INC     R0
+0000D5 E6              1135             MOV     A,@R0
+0000D6 FF              1136             MOV     R7,A
+0000D7 120000     E    1137             LCALL   ?C?IMUL
+0000DA C006            1138             PUSH    AR6
+0000DC C007            1139             PUSH    AR7
+0000DE 7900       F    1140             MOV     R1,#LOW (b?473+01H)
+0000E0 E7              1141             MOV     A,@R1
+0000E1 7800       F    1142             MOV     R0,#LOW (mt?474+01H)
+0000E3 26              1143             ADD     A,@R0
+0000E4 FF              1144             MOV     R7,A
+0000E5 19              1145             DEC     R1
+0000E6 E7              1146             MOV     A,@R1
+0000E7 18              1147             DEC     R0
+0000E8 36              1148             ADDC    A,@R0
+0000E9 FE              1149             MOV     R6,A
+0000EA EF              1150             MOV     A,R7
+0000EB 25E0            1151             ADD     A,ACC
+0000ED FF              1152             MOV     R7,A
+0000EE EE              1153             MOV     A,R6
+0000EF 33              1154             RLC     A
+0000F0 AB00       F    1155             MOV     R3,A_re?461
+0000F2 AA00       F    1156             MOV     R2,A_re?461+01H
+0000F4 A900       F    1157             MOV     R1,A_re?461+02H
+0000F6 8F82            1158             MOV     DPL,R7
+0000F8 F583            1159             MOV     DPH,A
+0000FA 120000     E    1160             LCALL   ?C?ILDOPTR
+0000FD FB              1161             MOV     R3,A
+0000FE AAF0            1162             MOV     R2,B
+000100 7800       F    1163             MOV     R0,#LOW (w_re?465)
+000102 E6              1164             MOV     A,@R0
+000103 FE              1165             MOV     R6,A
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    19
+
+000104 08              1166             INC     R0
+000105 E6              1167             MOV     A,@R0
+000106 FF              1168             MOV     R7,A
+000107 AD03            1169             MOV     R5,AR3
+000109 AC02            1170             MOV     R4,AR2
+00010B 120000     E    1171             LCALL   ?C?IMUL
+00010E AC06            1172             MOV     R4,AR6
+000110 AD07            1173             MOV     R5,AR7
+000112 D007            1174             POP     AR7
+000114 D006            1175             POP     AR6
+000116 C3              1176             CLR     C
+000117 ED              1177             MOV     A,R5
+000118 9F              1178             SUBB    A,R7
+000119 7800       F    1179             MOV     R0,#LOW (t_re?469+01H)
+00011B F6              1180             MOV     @R0,A
+00011C EC              1181             MOV     A,R4
+00011D 9E              1182             SUBB    A,R6
+00011E 18              1183             DEC     R0
+00011F F6              1184             MOV     @R0,A
+                       1185     ;                               t_im = w_re * A_im[b+mt] + w_im * A_re[b+mt];
+                       1186                             ; SOURCE LINE # 151
+000120 7800       F    1187             MOV     R0,#LOW (w_im?466)
+000122 E6              1188             MOV     A,@R0
+000123 FE              1189             MOV     R6,A
+000124 08              1190             INC     R0
+000125 E6              1191             MOV     A,@R0
+000126 FF              1192             MOV     R7,A
+000127 AD03            1193             MOV     R5,AR3
+000129 AC02            1194             MOV     R4,AR2
+00012B 120000     E    1195             LCALL   ?C?IMUL
+00012E C006            1196             PUSH    AR6
+000130 C007            1197             PUSH    AR7
+000132 7900       F    1198             MOV     R1,#LOW (b?473+01H)
+000134 E7              1199             MOV     A,@R1
+000135 7800       F    1200             MOV     R0,#LOW (mt?474+01H)
+000137 26              1201             ADD     A,@R0
+000138 FF              1202             MOV     R7,A
+000139 19              1203             DEC     R1
+00013A E7              1204             MOV     A,@R1
+00013B 18              1205             DEC     R0
+00013C 36              1206             ADDC    A,@R0
+00013D FE              1207             MOV     R6,A
+00013E EF              1208             MOV     A,R7
+00013F 25E0            1209             ADD     A,ACC
+000141 FF              1210             MOV     R7,A
+000142 EE              1211             MOV     A,R6
+000143 33              1212             RLC     A
+000144 AB00       F    1213             MOV     R3,A_im?462
+000146 AA00       F    1214             MOV     R2,A_im?462+01H
+000148 A900       F    1215             MOV     R1,A_im?462+02H
+00014A 8F82            1216             MOV     DPL,R7
+00014C F583            1217             MOV     DPH,A
+00014E 120000     E    1218             LCALL   ?C?ILDOPTR
+000151 FD              1219             MOV     R5,A
+000152 ACF0            1220             MOV     R4,B
+000154 7800       F    1221             MOV     R0,#LOW (w_re?465)
+000156 E6              1222             MOV     A,@R0
+000157 FE              1223             MOV     R6,A
+000158 08              1224             INC     R0
+000159 E6              1225             MOV     A,@R0
+00015A FF              1226             MOV     R7,A
+00015B 120000     E    1227             LCALL   ?C?IMUL
+00015E D0E0            1228             POP     ACC
+000160 2F              1229             ADD     A,R7
+000161 7800       F    1230             MOV     R0,#LOW (t_im?470+01H)
+000163 F6              1231             MOV     @R0,A
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    20
+
+000164 D0E0            1232             POP     ACC
+000166 3E              1233             ADDC    A,R6
+000167 18              1234             DEC     R0
+000168 F6              1235             MOV     @R0,A
+                       1236     ; 
+                       1237     ;                               /* u = A[b]; in[b] = u + t; in[b+mt] = u - t; */
+                       1238     ;                               u_re = A_re[b];
+                       1239                             ; SOURCE LINE # 154
+000169 7800       F    1240             MOV     R0,#LOW (b?473+01H)
+00016B E6              1241             MOV     A,@R0
+00016C 25E0            1242             ADD     A,ACC
+00016E FF              1243             MOV     R7,A
+00016F 18              1244             DEC     R0
+000170 E6              1245             MOV     A,@R0
+000171 33              1246             RLC     A
+000172 FE              1247             MOV     R6,A
+000173 AB00       F    1248             MOV     R3,A_re?461
+000175 AA00       F    1249             MOV     R2,A_re?461+01H
+000177 A900       F    1250             MOV     R1,A_re?461+02H
+000179 8F82            1251             MOV     DPL,R7
+00017B F583            1252             MOV     DPH,A
+00017D 120000     E    1253             LCALL   ?C?ILDOPTR
+000180 7800       F    1254             MOV     R0,#LOW (u_re?467)
+000182 A6F0            1255             MOV     @R0,B
+000184 08              1256             INC     R0
+000185 F6              1257             MOV     @R0,A
+                       1258     ;                               u_im = A_im[b];
+                       1259                             ; SOURCE LINE # 155
+000186 AB00       F    1260             MOV     R3,A_im?462
+000188 AA00       F    1261             MOV     R2,A_im?462+01H
+00018A A900       F    1262             MOV     R1,A_im?462+02H
+00018C 8F82            1263             MOV     DPL,R7
+00018E 8E83            1264             MOV     DPH,R6
+000190 120000     E    1265             LCALL   ?C?ILDOPTR
+000193 7800       F    1266             MOV     R0,#LOW (u_im?468)
+000195 A6F0            1267             MOV     @R0,B
+000197 08              1268             INC     R0
+000198 F6              1269             MOV     @R0,A
+                       1270     ;                               A_re[b] = u_re + t_re;
+                       1271                             ; SOURCE LINE # 156
+000199 7900       F    1272             MOV     R1,#LOW (u_re?467+01H)
+00019B E7              1273             MOV     A,@R1
+00019C 7800       F    1274             MOV     R0,#LOW (t_re?469+01H)
+00019E 26              1275             ADD     A,@R0
+00019F FD              1276             MOV     R5,A
+0001A0 19              1277             DEC     R1
+0001A1 E7              1278             MOV     A,@R1
+0001A2 18              1279             DEC     R0
+0001A3 36              1280             ADDC    A,@R0
+0001A4 FC              1281             MOV     R4,A
+0001A5 7800       F    1282             MOV     R0,#LOW (b?473+01H)
+0001A7 E6              1283             MOV     A,@R0
+0001A8 25E0            1284             ADD     A,ACC
+0001AA FF              1285             MOV     R7,A
+0001AB 18              1286             DEC     R0
+0001AC E6              1287             MOV     A,@R0
+0001AD 33              1288             RLC     A
+0001AE AB00       F    1289             MOV     R3,A_re?461
+0001B0 AA00       F    1290             MOV     R2,A_re?461+01H
+0001B2 A900       F    1291             MOV     R1,A_re?461+02H
+0001B4 8F82            1292             MOV     DPL,R7
+0001B6 F583            1293             MOV     DPH,A
+0001B8 EC              1294             MOV     A,R4
+0001B9 8DF0            1295             MOV     B,R5
+0001BB 120000     E    1296             LCALL   ?C?ISTOPTR
+                       1297     ;                               A_im[b] = u_im + t_im;
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    21
+
+                       1298                             ; SOURCE LINE # 157
+0001BE 7900       F    1299             MOV     R1,#LOW (u_im?468+01H)
+0001C0 E7              1300             MOV     A,@R1
+0001C1 7800       F    1301             MOV     R0,#LOW (t_im?470+01H)
+0001C3 26              1302             ADD     A,@R0
+0001C4 FD              1303             MOV     R5,A
+0001C5 19              1304             DEC     R1
+0001C6 E7              1305             MOV     A,@R1
+0001C7 18              1306             DEC     R0
+0001C8 36              1307             ADDC    A,@R0
+0001C9 FC              1308             MOV     R4,A
+0001CA 7800       F    1309             MOV     R0,#LOW (b?473+01H)
+0001CC E6              1310             MOV     A,@R0
+0001CD 25E0            1311             ADD     A,ACC
+0001CF FF              1312             MOV     R7,A
+0001D0 18              1313             DEC     R0
+0001D1 E6              1314             MOV     A,@R0
+0001D2 33              1315             RLC     A
+0001D3 AB00       F    1316             MOV     R3,A_im?462
+0001D5 AA00       F    1317             MOV     R2,A_im?462+01H
+0001D7 A900       F    1318             MOV     R1,A_im?462+02H
+0001D9 8F82            1319             MOV     DPL,R7
+0001DB F583            1320             MOV     DPH,A
+0001DD EC              1321             MOV     A,R4
+0001DE 8DF0            1322             MOV     B,R5
+0001E0 120000     E    1323             LCALL   ?C?ISTOPTR
+                       1324     ;                               A_re[b+mt] = u_re - t_re;
+                       1325                             ; SOURCE LINE # 158
+0001E3 C3              1326             CLR     C
+0001E4 7900       F    1327             MOV     R1,#LOW (u_re?467+01H)
+0001E6 E7              1328             MOV     A,@R1
+0001E7 7800       F    1329             MOV     R0,#LOW (t_re?469+01H)
+0001E9 96              1330             SUBB    A,@R0
+0001EA FD              1331             MOV     R5,A
+0001EB 19              1332             DEC     R1
+0001EC E7              1333             MOV     A,@R1
+0001ED 18              1334             DEC     R0
+0001EE 96              1335             SUBB    A,@R0
+0001EF FC              1336             MOV     R4,A
+0001F0 7900       F    1337             MOV     R1,#LOW (b?473+01H)
+0001F2 E7              1338             MOV     A,@R1
+0001F3 7800       F    1339             MOV     R0,#LOW (mt?474+01H)
+0001F5 26              1340             ADD     A,@R0
+0001F6 FF              1341             MOV     R7,A
+0001F7 19              1342             DEC     R1
+0001F8 E7              1343             MOV     A,@R1
+0001F9 18              1344             DEC     R0
+0001FA 36              1345             ADDC    A,@R0
+0001FB FE              1346             MOV     R6,A
+0001FC EF              1347             MOV     A,R7
+0001FD 25E0            1348             ADD     A,ACC
+0001FF FF              1349             MOV     R7,A
+000200 EE              1350             MOV     A,R6
+000201 33              1351             RLC     A
+000202 AB00       F    1352             MOV     R3,A_re?461
+000204 AA00       F    1353             MOV     R2,A_re?461+01H
+000206 A900       F    1354             MOV     R1,A_re?461+02H
+000208 8F82            1355             MOV     DPL,R7
+00020A F583            1356             MOV     DPH,A
+00020C EC              1357             MOV     A,R4
+00020D 8DF0            1358             MOV     B,R5
+00020F 120000     E    1359             LCALL   ?C?ISTOPTR
+                       1360     ;                               A_im[b+mt] = u_im - t_im;
+                       1361                             ; SOURCE LINE # 159
+000212 C3              1362             CLR     C
+000213 7900       F    1363             MOV     R1,#LOW (u_im?468+01H)
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    22
+
+000215 E7              1364             MOV     A,@R1
+000216 7800       F    1365             MOV     R0,#LOW (t_im?470+01H)
+000218 96              1366             SUBB    A,@R0
+000219 FD              1367             MOV     R5,A
+00021A 19              1368             DEC     R1
+00021B E7              1369             MOV     A,@R1
+00021C 18              1370             DEC     R0
+00021D 96              1371             SUBB    A,@R0
+00021E FC              1372             MOV     R4,A
+00021F 7900       F    1373             MOV     R1,#LOW (b?473+01H)
+000221 E7              1374             MOV     A,@R1
+000222 7800       F    1375             MOV     R0,#LOW (mt?474+01H)
+000224 26              1376             ADD     A,@R0
+000225 FF              1377             MOV     R7,A
+000226 19              1378             DEC     R1
+000227 E7              1379             MOV     A,@R1
+000228 18              1380             DEC     R0
+000229 36              1381             ADDC    A,@R0
+00022A FE              1382             MOV     R6,A
+00022B EF              1383             MOV     A,R7
+00022C 25E0            1384             ADD     A,ACC
+00022E FF              1385             MOV     R7,A
+00022F EE              1386             MOV     A,R6
+000230 33              1387             RLC     A
+000231 AB00       F    1388             MOV     R3,A_im?462
+000233 AA00       F    1389             MOV     R2,A_im?462+01H
+000235 A900       F    1390             MOV     R1,A_im?462+02H
+000237 8F82            1391             MOV     DPL,R7
+000239 F583            1392             MOV     DPH,A
+00023B EC              1393             MOV     A,R4
+00023C 8DF0            1394             MOV     B,R5
+00023E 120000     E    1395             LCALL   ?C?ISTOPTR
+                       1396     ; 
+                       1397     ;                               /*  printf("af %d %d %d %f %f %f %f\n", m, g, b, A_re[b]
+                               , A_im[b], A_re[b+mt], A_im[b+mt]);
+                       1398     ;                                */         
+                       1399     ;                               //printf("af %d %d %d (u,t) %g %g %g %g (w) %g %g\n", m,
+                                g, b, A_re[b], A_im[b], A_re[b+mt], A_im[b+mt], w_re, w_im);
+                       1400     ;                       }
+                       1401                             ; SOURCE LINE # 164
+000241 7800       F    1402             MOV     R0,#LOW (b?473+01H)
+000243 06              1403             INC     @R0
+000244 E6              1404             MOV     A,@R0
+000245 18              1405             DEC     R0
+000246 7001            1406             JNZ     ?C0038
+000248 06              1407             INC     @R0
+000249                 1408     ?C0038:
+000249 020000     F    1409             LJMP    ?C0024
+                       1410     ;               }
+                       1411                             ; SOURCE LINE # 165
+00024C                 1412     ?C0023:
+00024C 7800       F    1413             MOV     R0,#LOW (m?471)
+00024E E6              1414             MOV     A,@R0
+00024F FE              1415             MOV     R6,A
+000250 08              1416             INC     R0
+000251 E6              1417             MOV     A,@R0
+000252 7800       F    1418             MOV     R0,#LOW (g?472+01H)
+000254 26              1419             ADD     A,@R0
+000255 F6              1420             MOV     @R0,A
+000256 18              1421             DEC     R0
+000257 EE              1422             MOV     A,R6
+000258 36              1423             ADDC    A,@R0
+000259 F6              1424             MOV     @R0,A
+00025A 7800       F    1425             MOV     R0,#LOW (k?475+01H)
+00025C 06              1426             INC     @R0
+00025D E6              1427             MOV     A,@R0
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    23
+
+00025E 18              1428             DEC     R0
+00025F 6003            1429             JZ      $ + 5H
+000261 020000     F    1430             LJMP    ?C0021
+000264 06              1431             INC     @R0
+000265                 1432     ?C0039:
+000265 020000     F    1433             LJMP    ?C0021
+                       1434     ;       }
+                       1435                             ; SOURCE LINE # 166
+000268                 1436     ?C0020:
+000268 7800       F    1437             MOV     R0,#LOW (m?471)
+00026A E6              1438             MOV     A,@R0
+00026B A2E7            1439             MOV     C,ACC.7
+00026D 13              1440             RRC     A
+00026E 7900       F    1441             MOV     R1,#LOW (m?471)
+000270 F7              1442             MOV     @R1,A
+000271 08              1443             INC     R0
+000272 E6              1444             MOV     A,@R0
+000273 13              1445             RRC     A
+000274 09              1446             INC     R1
+000275 F7              1447             MOV     @R1,A
+000276 020000     F    1448             LJMP    ?C0018
+                       1449     ; }
+                       1450                             ; SOURCE LINE # 167
+000279                 1451     ?C0027:
+000279 22              1452             RET     
+                       1453     ; END OF _fft
+                       1454     
+                       1455     ; 
+                       1456     ; int main()
+                       1457     
+------                 1458             RSEG  ?PR?main?MAIN
+000000                 1459     main:
+                       1460             USING   0
+                       1461                             ; SOURCE LINE # 169
+                       1462     ; {
+                       1463                             ; SOURCE LINE # 170
+                       1464     ;       int idata n;
+                       1465     ;       //int idata i;
+                       1466     ;       //int idata A_re[16];
+                       1467     ;       //int idata A_im[16];
+                       1468     ;       //int idata W_re[8];
+                       1469     ;       //int idata W_im[8]; 
+                       1470     ;       
+                       1471     ; 
+                       1472     ; 
+                       1473     ;       int idata A_re[8];
+                       1474     ;       int idata A_im[8];
+                       1475     ;       int idata W_re[4];
+                       1476     ;       int idata W_im[4]; 
+                       1477     ; 
+                       1478     ;       
+                       1479     ;       store_cpu_rate(16);
+                       1480                             ; SOURCE LINE # 186
+000000 7F10            1481             MOV     R7,#010H
+000002 7E00            1482             MOV     R6,#00H
+000004 120000     E    1483             LCALL   _store_cpu_rate
+                       1484     ; 
+                       1485     ;       P0_DIR &= ~0x28;
+                       1486                             ; SOURCE LINE # 188
+000007 5394D7          1487             ANL     P0_DIR,#0D7H
+                       1488     ;       P0_ALT &= ~0x28;
+                       1489                             ; SOURCE LINE # 189
+00000A 5395D7          1490             ANL     P0_ALT,#0D7H
+                       1491     ; 
+                       1492     ;       for(n=0;n<6;n++)
+                       1493                             ; SOURCE LINE # 191
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    24
+
+00000D E4              1494             CLR     A
+00000E 7800       F    1495             MOV     R0,#LOW (n?576)
+000010 F6              1496             MOV     @R0,A
+000011 08              1497             INC     R0
+000012 F6              1498             MOV     @R0,A
+000013                 1499     ?C0028:
+                       1500     ;       {
+                       1501                             ; SOURCE LINE # 192
+                       1502     ;               blink_led();
+                       1503                             ; SOURCE LINE # 193
+000013 638020          1504             XRL     P0,#020H
+                       1505     ;               mdelay(300);
+                       1506                             ; SOURCE LINE # 194
+000016 7F2C            1507             MOV     R7,#02CH
+000018 7E01            1508             MOV     R6,#01H
+00001A 120000     E    1509             LCALL   _mdelay
+                       1510     ;       }       
+                       1511                             ; SOURCE LINE # 195
+00001D 7800       F    1512             MOV     R0,#LOW (n?576+01H)
+00001F 06              1513             INC     @R0
+000020 E6              1514             MOV     A,@R0
+000021 18              1515             DEC     R0
+000022 7001            1516             JNZ     ?C0040
+000024 06              1517             INC     @R0
+000025                 1518     ?C0040:
+000025 C3              1519             CLR     C
+000026 7800       F    1520             MOV     R0,#LOW (n?576+01H)
+000028 E6              1521             MOV     A,@R0
+000029 9406            1522             SUBB    A,#06H
+00002B 18              1523             DEC     R0
+00002C E6              1524             MOV     A,@R0
+00002D 6480            1525             XRL     A,#080H
+00002F 9480            1526             SUBB    A,#080H
+000031 40E0            1527             JC      ?C0028
+000033                 1528     ?C0031:
+                       1529     ;       //A_re = (double*)malloc(sizeof(double)*n); 
+                       1530     ;       //A_im = (double*)malloc(sizeof(double)*n); 
+                       1531     ;       //W_re = (double*)malloc(sizeof(double)*n/2); 
+                       1532     ;       //W_im = (double*)malloc(sizeof(double)*n/2); 
+                       1533     ;       //assert(A_re != NULL && A_im != NULL && W_re != NULL && W_im != NULL); 
+                       1534     ;       
+                       1535     ;       while(1)
+                       1536                             ; SOURCE LINE # 202
+                       1537     ;       {
+                       1538                             ; SOURCE LINE # 203
+                       1539     ;               blink_led();
+                       1540                             ; SOURCE LINE # 204
+000033 638020          1541             XRL     P0,#020H
+                       1542     ;       //for (i=0; i<3; i++) {
+                       1543     ;               //init_array(n, A_re, A_im); 
+                       1544     ;               
+                       1545     ;               n = 8;
+                       1546                             ; SOURCE LINE # 208
+000036 7800       F    1547             MOV     R0,#LOW (n?576)
+000038 7600            1548             MOV     @R0,#00H
+00003A 08              1549             INC     R0
+00003B 7608            1550             MOV     @R0,#08H
+                       1551     ;               compute_W(n, W_re, W_im); 
+                       1552                             ; SOURCE LINE # 209
+00003D 750000     F    1553             MOV     ?_compute_W?BYTE+05H,#00H
+000040 750000     F    1554             MOV     ?_compute_W?BYTE+06H,#HIGH (W_im?580)
+000043 750000     F    1555             MOV     ?_compute_W?BYTE+07H,#LOW (W_im?580)
+                       1556             ;MOV    R3,#00H
+000046 7800       E    1557             MOV     R0,#LOW (ECO_PAGE_REGISTER3)
+000048 7600            1558         MOV     @R0,#00H
+                       1559             ;MOV    R2,#HIGH (W_re?579)
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    25
+
+00004A 7800       E    1560             MOV     R0,#LOW (ECO_PAGE_REGISTER2)
+00004C 7600       F    1561         MOV     @R0,#HIGH (W_re?579)
+                       1562     
+                       1563             ;MOV    R1,#LOW (W_re?579)
+00004E 7800       E    1564             MOV     R0,#LOW (ECO_PAGE_REGISTER1)
+000050 7600       F    1565         MOV     @R0,#LOW (W_re?579)
+                       1566     
+                       1567             ;MOV    R7,#08H
+000052 7800       E    1568             MOV     R0,#LOW (ECO_PAGE_REGISTER7)
+000054 7608            1569         MOV     @R0,#08H
+                       1570     
+                       1571             ;MOV    R6,#00H
+000056 7800       E    1572             MOV     R0,#LOW (ECO_PAGE_REGISTER6)
+000058 7600            1573         MOV     @R0,#00H
+                       1574     
+                       1575             ;LCALL  _compute_W
+00005A 85B300     E    1576             MOV     ECO_PAGE_SPI_CONN,SPI_CTRL
+00005D 750000     F    1577         MOV ECO_PAGE_ADDR,#HIGH (_compute_W)
+000060 750000     F    1578         MOV ECO_PAGE_ADDR+01H,#LOW (_compute_W)
+000063 120000     E    1579         LCALL   eco_page_manager
+                       1580     ;               fft(n, A_re, A_im, W_re, W_im);
+                       1581                             ; SOURCE LINE # 210
+000066 7800       F    1582             MOV     R0,#LOW (n?576)
+000068 E6              1583             MOV     A,@R0
+000069 FE              1584             MOV     R6,A
+00006A 08              1585             INC     R0
+00006B E6              1586             MOV     A,@R0
+00006C FF              1587             MOV     R7,A
+00006D 750000     F    1588             MOV     ?_fft?BYTE+05H,#00H
+000070 750000     F    1589             MOV     ?_fft?BYTE+06H,#HIGH (A_im?578)
+000073 750000     F    1590             MOV     ?_fft?BYTE+07H,#LOW (A_im?578)
+000076 750000     F    1591             MOV     ?_fft?BYTE+08H,#00H
+000079 750000     F    1592             MOV     ?_fft?BYTE+09H,#HIGH (W_re?579)
+00007C 750000     F    1593             MOV     ?_fft?BYTE+0AH,#LOW (W_re?579)
+00007F 750000     F    1594             MOV     ?_fft?BYTE+0BH,#00H
+000082 750000     F    1595             MOV     ?_fft?BYTE+0CH,#HIGH (W_im?580)
+000085 750000     F    1596             MOV     ?_fft?BYTE+0DH,#LOW (W_im?580)
+000088 7B00            1597             MOV     R3,#00H
+00008A 7A00       F    1598             MOV     R2,#HIGH (A_re?577)
+00008C 7900       F    1599             MOV     R1,#LOW (A_re?577)
+00008E 120000     F    1600             LCALL   _fft
+                       1601     ;               permute_bitrev(n, A_re, A_im);        
+                       1602                             ; SOURCE LINE # 211
+000091 7800       F    1603             MOV     R0,#LOW (n?576)
+000093 E6              1604             MOV     A,@R0
+000094 FE              1605             MOV     R6,A
+000095 08              1606             INC     R0
+000096 E6              1607             MOV     A,@R0
+000097 FF              1608             MOV     R7,A
+000098 750000     F    1609             MOV     ?_permute_bitrev?BYTE+05H,#00H
+00009B 750000     F    1610             MOV     ?_permute_bitrev?BYTE+06H,#HIGH (A_im?578)
+00009E 750000     F    1611             MOV     ?_permute_bitrev?BYTE+07H,#LOW (A_im?578)
+0000A1 7B00            1612             MOV     R3,#00H
+0000A3 7A00       F    1613             MOV     R2,#HIGH (A_re?577)
+0000A5 7900       F    1614             MOV     R1,#LOW (A_re?577)
+0000A7 120000     F    1615             LCALL   _permute_bitrev
+                       1616     ; 
+                       1617     ; 
+                       1618     ;               //output_array(n, A_re, A_im, argv[2]);  
+                       1619     ;               //print_string("done");
+                       1620     ;       }
+                       1621                             ; SOURCE LINE # 216
+0000AA 8087            1622             SJMP    ?C0031
+                       1623     ; END OF main
+                       1624     
+                       1625             END
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    26
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                                   T Y P E  V A L U E     ATTRIBUTES
+
+?_BITREV?BYTE. . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_BITREV?MAIN
+?_COMPUTE_W?BYTE . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_COMPUTE_W?MAIN
+?_FFT?BYTE . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_FFT?MAIN
+?_PERMUTE_BITREV?BYTE. . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_PERMUTE_BITREV?MAIN
+?C0001 . . . . . . . . . . . . . . . .    C  ADDR  0013H     R   SEG=?PR?_BITREV?MAIN
+?C0002 . . . . . . . . . . . . . . . .    C  ADDR  004DH     R   SEG=?PR?_BITREV?MAIN
+?C0004 . . . . . . . . . . . . . . . .    C  ADDR  0054H     R   SEG=?PR?_BITREV?MAIN
+?C0005 . . . . . . . . . . . . . . . .    C  ADDR  0006H     R   SEG=?PR?_LOG_2?MAIN
+?C0006 . . . . . . . . . . . . . . . .    C  ADDR  0023H     R   SEG=?PR?_LOG_2?MAIN
+?C0008 . . . . . . . . . . . . . . . .    C  ADDR  002AH     R   SEG=?PR?_LOG_2?MAIN
+?C0009 . . . . . . . . . . . . . . . .    C  ADDR  0017H     R   SEG=?PR?_COMPUTE_W?MAIN
+?C0012 . . . . . . . . . . . . . . . .    C  ADDR  00E3H     R   SEG=?PR?_COMPUTE_W?MAIN
+?C0013 . . . . . . . . . . . . . . . .    C  ADDR  001AH     R   SEG=?PR?_PERMUTE_BITREV?MAIN
+?C0015 . . . . . . . . . . . . . . . .    C  ADDR  0120H     R   SEG=?PR?_PERMUTE_BITREV?MAIN
+?C0016 . . . . . . . . . . . . . . . .    C  ADDR  0063H     R   SEG=?PR?_PERMUTE_BITREV?MAIN
+?C0017 . . . . . . . . . . . . . . . .    C  ADDR  012EH     R   SEG=?PR?_PERMUTE_BITREV?MAIN
+?C0018 . . . . . . . . . . . . . . . .    C  ADDR  0011H     R   SEG=?PR?_FFT?MAIN
+?C0020 . . . . . . . . . . . . . . . .    C  ADDR  0268H     R   SEG=?PR?_FFT?MAIN
+?C0021 . . . . . . . . . . . . . . . .    C  ADDR  003AH     R   SEG=?PR?_FFT?MAIN
+?C0023 . . . . . . . . . . . . . . . .    C  ADDR  024CH     R   SEG=?PR?_FFT?MAIN
+?C0024 . . . . . . . . . . . . . . . .    C  ADDR  008EH     R   SEG=?PR?_FFT?MAIN
+?C0027 . . . . . . . . . . . . . . . .    C  ADDR  0279H     R   SEG=?PR?_FFT?MAIN
+?C0028 . . . . . . . . . . . . . . . .    C  ADDR  0013H     R   SEG=?PR?MAIN?MAIN
+?C0031 . . . . . . . . . . . . . . . .    C  ADDR  0033H     R   SEG=?PR?MAIN?MAIN
+?C0034 . . . . . . . . . . . . . . . .    C  ADDR  004BH     R   SEG=?PR?_BITREV?MAIN
+?C0035 . . . . . . . . . . . . . . . .    C  ADDR  0021H     R   SEG=?PR?_LOG_2?MAIN
+?C0036 . . . . . . . . . . . . . . . .    C  ADDR  00E0H     R   SEG=?PR?_COMPUTE_W?MAIN
+?C0037 . . . . . . . . . . . . . . . .    C  ADDR  012BH     R   SEG=?PR?_PERMUTE_BITREV?MAIN
+?C0038 . . . . . . . . . . . . . . . .    C  ADDR  0249H     R   SEG=?PR?_FFT?MAIN
+?C0039 . . . . . . . . . . . . . . . .    C  ADDR  0265H     R   SEG=?PR?_FFT?MAIN
+?C0040 . . . . . . . . . . . . . . . .    C  ADDR  0025H     R   SEG=?PR?MAIN?MAIN
+?C?CASTF . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C?FCASTI. . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C?ILDOPTR . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C?IMUL. . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C?ISTOPTR . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C?SIDIV . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C_STARTUP . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?DT?_BITREV?MAIN . . . . . . . . . . .    D  SEG   000002H       REL=UNIT, ALN=BYTE
+?DT?_COMPUTE_W?MAIN. . . . . . . . . .    D  SEG   00000AH       REL=UNIT, ALN=BYTE
+?DT?_FFT?MAIN. . . . . . . . . . . . .    D  SEG   00000EH       REL=UNIT, ALN=BYTE
+?DT?_PERMUTE_BITREV?MAIN . . . . . . .    D  SEG   000008H       REL=UNIT, ALN=BYTE
+?ID?_BITREV?MAIN . . . . . . . . . . .    I  SEG   000004H       REL=UNIT, ALN=BYTE
+?ID?_COMPUTE_W?MAIN. . . . . . . . . .    I  SEG   000004H       REL=UNIT, ALN=BYTE
+?ID?_FFT?MAIN. . . . . . . . . . . . .    I  SEG   000016H       REL=UNIT, ALN=BYTE
+?ID?_LOG_2?MAIN. . . . . . . . . . . .    I  SEG   000002H       REL=UNIT, ALN=BYTE
+?ID?_PERMUTE_BITREV?MAIN . . . . . . .    I  SEG   00000AH       REL=UNIT, ALN=BYTE
+?ID?MAIN?MAIN. . . . . . . . . . . . .    I  SEG   000032H       REL=UNIT, ALN=BYTE
+?PR?_BITREV?MAIN . . . . . . . . . . .    C  SEG   000055H       REL=UNIT, ALN=BYTE
+?PR?_COMPUTE_W?MAIN. . . . . . . . . .    C  SEG   0000E4H       REL=UNIT, ALN=BYTE
+?PR?_FFT?MAIN. . . . . . . . . . . . .    C  SEG   00027AH       REL=UNIT, ALN=BYTE
+?PR?_LOG_2?MAIN. . . . . . . . . . . .    C  SEG   00002BH       REL=UNIT, ALN=BYTE
+?PR?_PERMUTE_BITREV?MAIN . . . . . . .    C  SEG   00012FH       REL=UNIT, ALN=BYTE
+?PR?MAIN?MAIN. . . . . . . . . . . . .    C  SEG   0000ACH       REL=UNIT, ALN=BYTE
+_BITREV. . . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_BITREV?MAIN
+_COMPUTE_W . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_COMPUTE_W?MAIN
+_COS . . . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+_FFT . . . . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_FFT?MAIN
+_LOG_2 . . . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_LOG_2?MAIN
+_MDELAY. . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    27
+
+_PERMUTE_BITREV. . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_PERMUTE_BITREV?MAIN
+_SIN . . . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+_STORE_CPU_RATE. . . . . . . . . . . .    C  ADDR  -------       EXT
+A_IM?354 . . . . . . . . . . . . . . .    D  ADDR  0005H     R   SEG=?DT?_PERMUTE_BITREV?MAIN
+A_IM?462 . . . . . . . . . . . . . . .    D  ADDR  0005H     R   SEG=?DT?_FFT?MAIN
+A_IM?578 . . . . . . . . . . . . . . .    I  ADDR  0012H     R   SEG=?ID?MAIN?MAIN
+A_RE?353 . . . . . . . . . . . . . . .    D  ADDR  0002H     R   SEG=?DT?_PERMUTE_BITREV?MAIN
+A_RE?461 . . . . . . . . . . . . . . .    D  ADDR  0002H     R   SEG=?DT?_FFT?MAIN
+A_RE?577 . . . . . . . . . . . . . . .    I  ADDR  0002H     R   SEG=?ID?MAIN?MAIN
+AC . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.6   A   
+ACC. . . . . . . . . . . . . . . . . .    D  ADDR  00E0H     A   
+ADCCON . . . . . . . . . . . . . . . .    D  ADDR  00A1H     A   
+ADCDATAH . . . . . . . . . . . . . . .    D  ADDR  00A2H     A   
+ADCDATAL . . . . . . . . . . . . . . .    D  ADDR  00A3H     A   
+ADCSTATIC. . . . . . . . . . . . . . .    D  ADDR  00A4H     A   
+AR2. . . . . . . . . . . . . . . . . .    D  ADDR  0002H     A   
+AR3. . . . . . . . . . . . . . . . . .    D  ADDR  0003H     A   
+AR6. . . . . . . . . . . . . . . . . .    D  ADDR  0006H     A   
+AR7. . . . . . . . . . . . . . . . . .    D  ADDR  0007H     A   
+B. . . . . . . . . . . . . . . . . . .    D  ADDR  00F0H     A   
+B?473. . . . . . . . . . . . . . . . .    I  ADDR  0010H     R   SEG=?ID?_FFT?MAIN
+BR?250 . . . . . . . . . . . . . . . .    I  ADDR  0002H     R   SEG=?ID?_COMPUTE_W?MAIN
+BRI?356. . . . . . . . . . . . . . . .    I  ADDR  0002H     R   SEG=?ID?_PERMUTE_BITREV?MAIN
+C_T2 . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.1   A   
+CE . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+CK_CTRL. . . . . . . . . . . . . . . .    D  ADDR  00B6H     A   
+CKCON. . . . . . . . . . . . . . . . .    D  ADDR  008EH     A   
+CLK1 . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.1   A   
+CLK2 . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.5   A   
+CP_RL2 . . . . . . . . . . . . . . . .    B  ADDR  00C8H.0   A   
+CPRL2. . . . . . . . . . . . . . . . .    B  ADDR  00C8H.0   A   
+CS . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.3   A   
+CT2. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.1   A   
+CY . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.7   A   
+DATA?. . . . . . . . . . . . . . . . .    B  ADDR  00A0H.0   A   
+DEV_OFFSET . . . . . . . . . . . . . .    D  ADDR  00BEH     A   
+DIN0 . . . . . . . . . . . . . . . . .    B  ADDR  0090H.2   A   
+DIO0 . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+DIO1 . . . . . . . . . . . . . . . . .    B  ADDR  0090H.1   A   
+DIO2 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.0   A   
+DIO3 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+DIO4 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+DIO5 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+DIO6 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+DIO7 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+DIO8 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+DIO9 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+DOUT2. . . . . . . . . . . . . . . . .    B  ADDR  00A0H.4   A   
+DPH. . . . . . . . . . . . . . . . . .    D  ADDR  0083H     A   
+DPH0 . . . . . . . . . . . . . . . . .    D  ADDR  0083H     A   
+DPH1 . . . . . . . . . . . . . . . . .    D  ADDR  0085H     A   
+DPL. . . . . . . . . . . . . . . . . .    D  ADDR  0082H     A   
+DPL0 . . . . . . . . . . . . . . . . .    D  ADDR  0082H     A   
+DPL1 . . . . . . . . . . . . . . . . .    D  ADDR  0084H     A   
+DPS. . . . . . . . . . . . . . . . . .    D  ADDR  0086H     A   
+DR1. . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.2   A   
+DR2. . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+DR2_CE . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+EA . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.7   A   
+ECO_PAGE_ADDR. . . . . . . . . . . . .    D  ADDR  -------       EXT
+ECO_PAGE_MANAGER . . . . . . . . . . .    C  ADDR  -------       EXT
+ECO_PAGE_REGISTER1 . . . . . . . . . .    I  ADDR  -------       EXT
+ECO_PAGE_REGISTER2 . . . . . . . . . .    I  ADDR  -------       EXT
+ECO_PAGE_REGISTER3 . . . . . . . . . .    I  ADDR  -------       EXT
+ECO_PAGE_REGISTER4 . . . . . . . . . .    I  ADDR  -------       EXT
+ECO_PAGE_REGISTER5 . . . . . . . . . .    I  ADDR  -------       EXT
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    28
+
+ECO_PAGE_REGISTER6 . . . . . . . . . .    I  ADDR  -------       EXT
+ECO_PAGE_REGISTER7 . . . . . . . . . .    I  ADDR  -------       EXT
+ECO_PAGE_SPI_CONN. . . . . . . . . . .    D  ADDR  -------       EXT
+EICON. . . . . . . . . . . . . . . . .    D  ADDR  00D8H     A   
+EIE. . . . . . . . . . . . . . . . . .    D  ADDR  00E8H     A   
+EIP. . . . . . . . . . . . . . . . . .    D  ADDR  00F8H     A   
+ES . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.4   A   
+ET0. . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.1   A   
+ET1. . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.3   A   
+ET2. . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.5   A   
+EWDI . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.4   A   
+EX0. . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.0   A   
+EX1. . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.2   A   
+EX2. . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.0   A   
+EX3. . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.1   A   
+EX4. . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.2   A   
+EX5. . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.3   A   
+EXEN2. . . . . . . . . . . . . . . . .    B  ADDR  00C8H.3   A   
+EXF2 . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.6   A   
+EXIF . . . . . . . . . . . . . . . . .    D  ADDR  0091H     A   
+F0 . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.5   A   
+F1 . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.1   A   
+G?472. . . . . . . . . . . . . . . . .    I  ADDR  000EH     R   SEG=?ID?_FFT?MAIN
+I?042. . . . . . . . . . . . . . . . .    I  ADDR  0000H     R   SEG=?ID?_BITREV?MAIN
+I?249. . . . . . . . . . . . . . . . .    I  ADDR  0000H     R   SEG=?ID?_COMPUTE_W?MAIN
+I?355. . . . . . . . . . . . . . . . .    I  ADDR  0000H     R   SEG=?ID?_PERMUTE_BITREV?MAIN
+IE . . . . . . . . . . . . . . . . . .    D  ADDR  00A8H     A   
+IE0. . . . . . . . . . . . . . . . . .    B  ADDR  0088H.1   A   
+IE1. . . . . . . . . . . . . . . . . .    B  ADDR  0088H.3   A   
+INT0_N . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+INT1_N . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+IP . . . . . . . . . . . . . . . . . .    D  ADDR  00B8H     A   
+IT0. . . . . . . . . . . . . . . . . .    B  ADDR  0088H.0   A   
+IT1. . . . . . . . . . . . . . . . . .    B  ADDR  0088H.2   A   
+K?475. . . . . . . . . . . . . . . . .    I  ADDR  0014H     R   SEG=?ID?_FFT?MAIN
+LOG2N?251. . . . . . . . . . . . . . .    D  ADDR  0008H     R   SEG=?DT?_COMPUTE_W?MAIN
+LOG2N?357. . . . . . . . . . . . . . .    I  ADDR  0004H     R   SEG=?ID?_PERMUTE_BITREV?MAIN
+M?471. . . . . . . . . . . . . . . . .    I  ADDR  000CH     R   SEG=?ID?_FFT?MAIN
+MAIN . . . . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?MAIN?MAIN
+MPAGE. . . . . . . . . . . . . . . . .    D  ADDR  0092H     A   
+MT?474 . . . . . . . . . . . . . . . .    I  ADDR  0012H     R   SEG=?ID?_FFT?MAIN
+N?246. . . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_COMPUTE_W?MAIN
+N?352. . . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_PERMUTE_BITREV?MAIN
+N?460. . . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_FFT?MAIN
+N?576. . . . . . . . . . . . . . . . .    I  ADDR  0000H     R   SEG=?ID?MAIN?MAIN
+NUMBITS?041. . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_BITREV?MAIN
+OV . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.2   A   
+P. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.0   A   
+P0 . . . . . . . . . . . . . . . . . .    D  ADDR  0080H     A   
+P0_0 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.0   A   
+P0_1 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+P0_2 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+P0_3 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+P0_4 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+P0_5 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+P0_6 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+P0_7 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+P0_ALT . . . . . . . . . . . . . . . .    D  ADDR  0095H     A   
+P0_DIR . . . . . . . . . . . . . . . .    D  ADDR  0094H     A   
+P1 . . . . . . . . . . . . . . . . . .    D  ADDR  0090H     A   
+P1_0 . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+P1_1 . . . . . . . . . . . . . . . . .    B  ADDR  0090H.1   A   
+P1_2 . . . . . . . . . . . . . . . . .    B  ADDR  0090H.2   A   
+P1_ALT . . . . . . . . . . . . . . . .    D  ADDR  0097H     A   
+P1_DIR . . . . . . . . . . . . . . . .    D  ADDR  0096H     A   
+PCON . . . . . . . . . . . . . . . . .    D  ADDR  0087H     A   
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    29
+
+PS . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.4   A   
+PSW. . . . . . . . . . . . . . . . . .    D  ADDR  00D0H     A   
+PT0. . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.1   A   
+PT1. . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.3   A   
+PT2. . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.5   A   
+PWDI . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.4   A   
+PWM. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+PWMCON . . . . . . . . . . . . . . . .    D  ADDR  00A9H     A   
+PWMDUTY. . . . . . . . . . . . . . . .    D  ADDR  00AAH     A   
+PWR_UP . . . . . . . . . . . . . . . .    B  ADDR  00A0H.7   A   
+PX0. . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.0   A   
+PX1. . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.2   A   
+PX2. . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.0   A   
+PX3. . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.1   A   
+PX4. . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.2   A   
+PX5. . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.3   A   
+RADIO. . . . . . . . . . . . . . . . .    D  ADDR  00A0H     A   
+RB8. . . . . . . . . . . . . . . . . .    B  ADDR  0098H.2   A   
+RCAP2H . . . . . . . . . . . . . . . .    D  ADDR  00CBH     A   
+RCAP2L . . . . . . . . . . . . . . . .    D  ADDR  00CAH     A   
+RCLK . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.5   A   
+REGX_CTRL. . . . . . . . . . . . . . .    D  ADDR  00ADH     A   
+REGX_LSB . . . . . . . . . . . . . . .    D  ADDR  00ACH     A   
+REGX_MSB . . . . . . . . . . . . . . .    D  ADDR  00ABH     A   
+REN. . . . . . . . . . . . . . . . . .    B  ADDR  0098H.4   A   
+RES?145. . . . . . . . . . . . . . . .    I  ADDR  0000H     R   SEG=?ID?_LOG_2?MAIN
+REV?043. . . . . . . . . . . . . . . .    I  ADDR  0002H     R   SEG=?ID?_BITREV?MAIN
+RI . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.0   A   
+RS0. . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.3   A   
+RS1. . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.4   A   
+RSTREAS. . . . . . . . . . . . . . . .    D  ADDR  00B1H     A   
+RXD. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+SBUF . . . . . . . . . . . . . . . . .    D  ADDR  0099H     A   
+SCON . . . . . . . . . . . . . . . . .    D  ADDR  0098H     A   
+SM0. . . . . . . . . . . . . . . . . .    B  ADDR  0098H.7   A   
+SM1. . . . . . . . . . . . . . . . . .    B  ADDR  0098H.6   A   
+SM2. . . . . . . . . . . . . . . . . .    B  ADDR  0098H.5   A   
+SP . . . . . . . . . . . . . . . . . .    D  ADDR  0081H     A   
+SPC_FNC. . . . . . . . . . . . . . . .    D  ADDR  008FH     A   
+SPI_CTRL . . . . . . . . . . . . . . .    D  ADDR  00B3H     A   
+SPI_DATA . . . . . . . . . . . . . . .    D  ADDR  00B2H     A   
+SPICLK . . . . . . . . . . . . . . . .    D  ADDR  00B4H     A   
+T0 . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+T1 . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+T1_1V2 . . . . . . . . . . . . . . . .    D  ADDR  00BCH     A   
+T2 . . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+T2_1V2 . . . . . . . . . . . . . . . .    D  ADDR  00BDH     A   
+T2CON. . . . . . . . . . . . . . . . .    D  ADDR  00C8H     A   
+T_IM?359 . . . . . . . . . . . . . . .    I  ADDR  0008H     R   SEG=?ID?_PERMUTE_BITREV?MAIN
+T_IM?470 . . . . . . . . . . . . . . .    I  ADDR  000AH     R   SEG=?ID?_FFT?MAIN
+T_RE?358 . . . . . . . . . . . . . . .    I  ADDR  0006H     R   SEG=?ID?_PERMUTE_BITREV?MAIN
+T_RE?469 . . . . . . . . . . . . . . .    I  ADDR  0008H     R   SEG=?ID?_FFT?MAIN
+TB8. . . . . . . . . . . . . . . . . .    B  ADDR  0098H.3   A   
+TCLK . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.4   A   
+TCON . . . . . . . . . . . . . . . . .    D  ADDR  0088H     A   
+TEST_MODE. . . . . . . . . . . . . . .    D  ADDR  00B7H     A   
+TF0. . . . . . . . . . . . . . . . . .    B  ADDR  0088H.5   A   
+TF1. . . . . . . . . . . . . . . . . .    B  ADDR  0088H.7   A   
+TF2. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.7   A   
+TH0. . . . . . . . . . . . . . . . . .    D  ADDR  008CH     A   
+TH1. . . . . . . . . . . . . . . . . .    D  ADDR  008DH     A   
+TH2. . . . . . . . . . . . . . . . . .    D  ADDR  00CDH     A   
+TI . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.1   A   
+TICK_DV. . . . . . . . . . . . . . . .    D  ADDR  00B5H     A   
+TL0. . . . . . . . . . . . . . . . . .    D  ADDR  008AH     A   
+TL1. . . . . . . . . . . . . . . . . .    D  ADDR  008BH     A   
+AX51 MACRO ASSEMBLER  MAIN                                                                  05/05/09 14:28:31 PAGE    30
+
+TL2. . . . . . . . . . . . . . . . . .    D  ADDR  00CCH     A   
+TMOD . . . . . . . . . . . . . . . . .    D  ADDR  0089H     A   
+TR0. . . . . . . . . . . . . . . . . .    B  ADDR  0088H.4   A   
+TR1. . . . . . . . . . . . . . . . . .    B  ADDR  0088H.6   A   
+TR2. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.2   A   
+TXD. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+U_IM?468 . . . . . . . . . . . . . . .    I  ADDR  0006H     R   SEG=?ID?_FFT?MAIN
+U_RE?467 . . . . . . . . . . . . . . .    I  ADDR  0004H     R   SEG=?ID?_FFT?MAIN
+W_IM?248 . . . . . . . . . . . . . . .    D  ADDR  0005H     R   SEG=?DT?_COMPUTE_W?MAIN
+W_IM?464 . . . . . . . . . . . . . . .    D  ADDR  000BH     R   SEG=?DT?_FFT?MAIN
+W_IM?466 . . . . . . . . . . . . . . .    I  ADDR  0002H     R   SEG=?ID?_FFT?MAIN
+W_IM?580 . . . . . . . . . . . . . . .    I  ADDR  002AH     R   SEG=?ID?MAIN?MAIN
+W_RE?247 . . . . . . . . . . . . . . .    D  ADDR  0002H     R   SEG=?DT?_COMPUTE_W?MAIN
+W_RE?463 . . . . . . . . . . . . . . .    D  ADDR  0008H     R   SEG=?DT?_FFT?MAIN
+W_RE?465 . . . . . . . . . . . . . . .    I  ADDR  0000H     R   SEG=?ID?_FFT?MAIN
+W_RE?579 . . . . . . . . . . . . . . .    I  ADDR  0022H     R   SEG=?ID?MAIN?MAIN
+WDTI . . . . . . . . . . . . . . . . .    B  ADDR  00D8H.3   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S).

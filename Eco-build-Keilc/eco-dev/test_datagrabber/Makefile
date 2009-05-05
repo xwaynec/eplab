@@ -120,7 +120,7 @@ adc.src : adc.c
 	$(CC) ../../include/adc/adc.c $(CFLAG) INCDIR\($(INCLUDE)\) PRINT\(./adc.lst\) PREPRINT\(./adc.i\) SRC\(./$@\) 
 
 ts:
-	python ./tools/func.py main.src
+	python ./tools/SrcCall_Replacement.py main.src
 	python ./tools/eco_page_translate.py eco_page.src
 
 asm:

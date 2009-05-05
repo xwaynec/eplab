@@ -1,0 +1,594 @@
+; ./isr_rf.src generated from: .\..\..\include\isr\isr_rf.c
+; COMPILER INVOKED BY:
+;        C:\Keil\C51\BIN\C51.exe .\..\..\include\isr\isr_rf.c BROWSE DEBUG CODE LISTINCLUDE SYMBOLS PREPRINT INCDIR(../../Include) SRC(./isr_rf.src)
+
+$NOMOD51
+
+NAME	ISR_RF
+
+PWR_UP	BIT	0A0H.7
+P0	DATA	080H
+P1	DATA	090H
+AC	BIT	0D0H.6
+T0	BIT	080H.5
+SPI_CTRL	DATA	0B3H
+T1	BIT	080H.6
+EA	BIT	0A8H.7
+T2	BIT	090H.0
+CE	BIT	0A0H.6
+DEV_OFFSET	DATA	0BEH
+CLK1	BIT	0A0H.1
+DIN0	BIT	090H.2
+CLK2	BIT	0A0H.5
+DIO0	BIT	090H.0
+DPH0	DATA	083H
+DIO1	BIT	090H.1
+IE	DATA	0A8H
+DPH1	DATA	085H
+DIO2	BIT	080H.0
+DIO3	BIT	080H.1
+P0_0	BIT	080H.0
+P1_0	BIT	090H.0
+DIO4	BIT	080H.2
+P0_1	BIT	080H.1
+DPL0	DATA	082H
+P1_1	BIT	090H.1
+DIO5	BIT	080H.3
+P0_2	BIT	080H.2
+DPL1	DATA	084H
+P1_2	BIT	090H.2
+DIO6	BIT	080H.4
+P0_3	BIT	080H.3
+DIO7	BIT	080H.5
+P0_4	BIT	080H.4
+ADCSTATIC	DATA	0A4H
+DIO8	BIT	080H.6
+P0_5	BIT	080H.5
+EXF2	BIT	0C8H.6
+CS	BIT	0A0H.3
+DIO9	BIT	080H.7
+P0_6	BIT	080H.6
+P0_7	BIT	080H.7
+ES	BIT	0A8H.4
+IP	DATA	0B8H
+DATA?	BIT	0A0H.0
+RI	BIT	098H.0
+CY	BIT	0D0H.7
+TI	BIT	098H.1
+T1_1V2	DATA	0BCH
+SPC_FNC	DATA	08FH
+T2_1V2	DATA	0BDH
+RCAP2H	DATA	0CBH
+PS	BIT	0B8H.4
+SP	DATA	081H
+OV	BIT	0D0H.2
+CK_CTRL	DATA	0B6H
+RCAP2L	DATA	0CAH
+TICK_DV	DATA	0B5H
+RSTREAS	DATA	0B1H
+C_T2	BIT	0C8H.1
+EWDI	BIT	0E8H.4
+ADCCON	DATA	0A1H
+RCLK	BIT	0C8H.5
+ADCDATAH	DATA	0A2H
+EXIF	DATA	091H
+TCLK	BIT	0C8H.4
+DR2_CE	BIT	0A0H.6
+ADCDATAL	DATA	0A3H
+SBUF	DATA	099H
+PCON	DATA	087H
+SCON	DATA	098H
+PWDI	BIT	0F8H.4
+TMOD	DATA	089H
+TCON	DATA	088H
+WDTI	BIT	0D8H.3
+PWMDUTY	DATA	0AAH
+IE0	BIT	088H.1
+IE1	BIT	088H.3
+P0_DIR	DATA	094H
+B	DATA	0F0H
+P1_DIR	DATA	096H
+P0_ALT	DATA	095H
+P1_ALT	DATA	097H
+CP_RL2	BIT	0C8H.0
+DR1	BIT	0A0H.2
+ACC	DATA	0E0H
+DR2	BIT	0A0H.6
+TEST_MODE	DATA	0B7H
+SPICLK	DATA	0B4H
+CT2	BIT	0C8H.1
+ET0	BIT	0A8H.1
+ET1	BIT	0A8H.3
+TF0	BIT	088H.5
+INT0_N	BIT	080H.3
+ET2	BIT	0A8H.5
+TF1	BIT	088H.7
+INT1_N	BIT	080H.4
+TF2	BIT	0C8H.7
+RB8	BIT	098H.2
+TH0	DATA	08CH
+EX0	BIT	0A8H.0
+IT0	BIT	088H.0
+TH1	DATA	08DH
+EX1	BIT	0A8H.2
+TB8	BIT	098H.3
+IT1	BIT	088H.2
+TH2	DATA	0CDH
+REGX_CTRL	DATA	0ADH
+EX2	BIT	0E8H.0
+P	BIT	0D0H.0
+EX3	BIT	0E8H.1
+SM0	BIT	098H.7
+TL0	DATA	08AH
+EX4	BIT	0E8H.2
+SM1	BIT	098H.6
+TL1	DATA	08BH
+EX5	BIT	0E8H.3
+SM2	BIT	098H.5
+TL2	DATA	0CCH
+EIE	DATA	0E8H
+PT0	BIT	0B8H.1
+RS0	BIT	0D0H.3
+PT1	BIT	0B8H.3
+RS1	BIT	0D0H.4
+PT2	BIT	0B8H.5
+TR0	BIT	088H.4
+PWMCON	DATA	0A9H
+TR1	BIT	088H.6
+TR2	BIT	0C8H.2
+PX0	BIT	0B8H.0
+PX1	BIT	0B8H.2
+PX2	BIT	0F8H.0
+PX3	BIT	0F8H.1
+PX4	BIT	0F8H.2
+DPH	DATA	083H
+PX5	BIT	0F8H.3
+EIP	DATA	0F8H
+DPL	DATA	082H
+EXEN2	BIT	0C8H.3
+CPRL2	BIT	0C8H.0
+REN	BIT	098H.4
+T2CON	DATA	0C8H
+DPS	DATA	086H
+SPI_DATA	DATA	0B2H
+MPAGE	DATA	092H
+RXD	BIT	080H.1
+DOUT2	BIT	0A0H.4
+EICON	DATA	0D8H
+CKCON	DATA	08EH
+TXD	BIT	080H.2
+RADIO	DATA	0A0H
+PWM	BIT	080H.7
+F0	BIT	0D0H.5
+F1	BIT	0D0H.1
+REGX_LSB	DATA	0ACH
+PSW	DATA	0D0H
+REGX_MSB	DATA	0ABH
+?PR?rf_init?ISR_RF   SEGMENT CODE 
+?PR?_rf_configure?ISR_RF                 SEGMENT CODE 
+?DT?_rf_configure?ISR_RF                 SEGMENT DATA OVERLAYABLE 
+?PR?_rf_send?ISR_RF  SEGMENT CODE 
+?DT?_rf_send?ISR_RF  SEGMENT DATA OVERLAYABLE 
+?PR?_rf_send_2?ISR_RF  SEGMENT CODE 
+?PR?rf_ch1_recv?ISR_RF                   SEGMENT CODE 
+?DT?rf_ch1_recv?ISR_RF                   SEGMENT DATA OVERLAYABLE 
+?PR?rf_wait_msg?ISR_RF                   SEGMENT CODE 
+?C_INITSEG           SEGMENT CODE 
+?DT?ISR_RF           SEGMENT DATA 
+	EXTRN	CODE (_spi_init)
+	EXTRN	CODE (_spi_write_then_read)
+	EXTRN	CODE (?C?CLDOPTR)
+	EXTRN   CODE (eco_page_manager)
+    EXTRN   DATA (ECO_PAGE_ADDR)
+    EXTRN   DATA (ECO_PAGE_SPI_CONN)
+    EXTRN   IDATA (ECO_PAGE_REGISTER1)
+    EXTRN   IDATA (ECO_PAGE_REGISTER2)
+    EXTRN   IDATA (ECO_PAGE_REGISTER3)
+    EXTRN   IDATA (ECO_PAGE_REGISTER4)
+    EXTRN   IDATA (ECO_PAGE_REGISTER5)
+    EXTRN   IDATA (ECO_PAGE_REGISTER6)
+    EXTRN   IDATA (ECO_PAGE_REGISTER7)
+	PUBLIC	rf_buf
+	PUBLIC	rf_wait_msg
+	PUBLIC	rf_ch1_recv
+	PUBLIC	?_rf_send?BYTE
+	PUBLIC	_rf_send
+	PUBLIC	_rf_send_2
+	PUBLIC	_rf_configure
+	PUBLIC	rf_init
+
+	RSEG  ?DT?_rf_configure?ISR_RF
+?_rf_configure?BYTE:
+          p?141:   DS   3
+	ORG  3
+          i?142:   DS   2
+
+	RSEG  ?DT?rf_ch1_recv?ISR_RF
+?rf_ch1_recv?BYTE:
+          i?348:   DS   2
+
+	RSEG  ?DT?_rf_send?ISR_RF
+?_rf_send?BYTE:
+       addr?243:   DS   3
+	ORG  3
+   addr_len?244:   DS   1
+	ORG  4
+    payload?245:   DS   3
+	ORG  7
+     pl_len?246:   DS   1
+	ORG  8
+          i?247:   DS   2
+
+	RSEG  ?DT?ISR_RF
+         rf_buf:   DS   24
+
+	RSEG  ?C_INITSEG
+	DB	018H
+	DB	rf_buf
+	DB	000H
+	DB	000H
+	DB  000H,000H,000H,000H,000H,000H,000H,000H,000H,000H
+	DB  000H,000H,000H,000H,000H,000H,000H,000H,000H,000H
+	DB  000H,000H
+
+
+; /*
+;  * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+;  * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+;  * Permission to copy, modify, and distribute this program is granted 
+;  * for noncommercial purposes, provided the author(s) and copyright
+;  * notice are retained. All other uses require explicit written
+;  * permission from NTHU. 
+;  *
+;  * radio driver - ISR
+;  * Nordic transceiver subsystem
+;  * NOTE: DuoCeiver (two parallel independent channels) is not supported, 
+;  * hence only data channel 1 is used.
+;  *
+;  * note: This ISR only has basic function, users should modify this ISR
+;  * for his purpose. Users has to handle the timing to receive /
+;  * transmit.
+;  *
+;  * Min-Hua Chen <orca.chen@gmail.com> 
+;  * 2008/03/16
+;  *
+;  * *set the radio to low power mode after receiving data by set CE = 0
+;  * 2008/06/05
+;  */
+; 
+; #include <eco/reg24e1.h>
+; #include <isr/isr_rf.h>
+; #include <spi/spi.h>
+; struct radio_buffer rf_buf = { 0, {0}};
+; 
+; /* radio_init - basic initialization for radio
+;  * the radio should be configured by rf_configure after radio_init */
+; void rf_init()
+
+	RSEG  ?PR?rf_init?ISR_RF
+rf_init:
+	USING	0
+			; SOURCE LINE # 32
+; {
+			; SOURCE LINE # 33
+; 	/* RADIO init value: 0x80;*/
+; 	PWR_UP = 1;	/* turn on radio power */
+			; SOURCE LINE # 35
+	SETB 	PWR_UP
+; 	/* connect spi to radio and setup clock rate to 1/8 of CPU */
+; 	spi_init(SPI_CONN_RADIO, SPI_CLK_D8);
+			; SOURCE LINE # 37
+	CLR  	A
+	MOV  	R5,A
+	MOV  	R7,#02H
+	LCALL	_spi_init
+; 	EA = 1;	/* enable global interrupt */
+			; SOURCE LINE # 38
+	SETB 	EA
+; 	EX4 = 1;	/* enable radio interrupt */
+			; SOURCE LINE # 39
+	SETB 	EX4
+; }
+			; SOURCE LINE # 40
+	RET  	
+; END OF rf_init
+
+; 
+; /* rf_configure - write configure data to radio subsystem, software 
+;  * should use construct the rf_config struct first
+;  * @*cfg: rf_config struct, which contains the configuration 
+;  * data for the radio subsystem.
+;  */
+; void rf_configure(struct rf_config *cfg)
+
+	RSEG  ?PR?_rf_configure?ISR_RF
+_rf_configure:
+	USING	0
+			; SOURCE LINE # 47
+;---- Variable 'cfg?140' assigned to Register 'R1/R2/R3' ----
+; {
+			; SOURCE LINE # 48
+; 	char *p;
+; 	int i;
+; 
+; 	CS = 1;	/* enter configure mode */
+			; SOURCE LINE # 52
+	SETB 	CS
+; 
+; 	p = (char *)cfg;
+			; SOURCE LINE # 54
+	MOV  	p?141,R3
+	MOV  	p?141+01H,R2
+	MOV  	p?141+02H,R1
+; 	/* write configure data to radio */
+; 	for (i = 0; i < sizeof(*cfg); i++) {
+			; SOURCE LINE # 56
+	CLR  	A
+	MOV  	i?142,A
+	MOV  	i?142+01H,A
+?C0002:
+; 		spi_write_then_read(*(p + i));
+			; SOURCE LINE # 57
+	MOV  	R3,p?141
+	MOV  	R2,p?141+01H
+	MOV  	R1,p?141+02H
+	MOV  	DPL,i?142+01H
+	MOV  	DPH,i?142
+	LCALL	?C?CLDOPTR
+	MOV  	R7,A
+	LCALL	_spi_write_then_read
+; 	}
+			; SOURCE LINE # 58
+	INC  	i?142+01H
+	MOV  	A,i?142+01H
+	JNZ  	?C0021
+	INC  	i?142
+?C0021:
+	CLR  	C
+	SUBB 	A,#0FH
+	MOV  	A,i?142
+	XRL  	A,#080H
+	SUBB 	A,#080H
+	JC   	?C0002
+?C0003:
+; 
+; 	CS = 0;	/* back to standby mode */
+			; SOURCE LINE # 60
+	CLR  	CS
+; }
+			; SOURCE LINE # 61
+	RET  	
+; END OF _rf_configure
+
+; 
+; /* 
+;  * radio_send - send payload to specified address
+;  * @*addr: receiver's address
+;  * @addr_len: receiver's address length (in bytes)
+;  * @*payload: payload to receiver
+;  * @pl_len: payload to receiver length (in bytes)
+;  */
+; void rf_send(char *addr, unsigned char addr_len,
+
+	RSEG  ?PR?_rf_send?ISR_RF
+_rf_send:
+	USING	0
+			; SOURCE LINE # 70
+	MOV  	addr?243,R3
+	MOV  	addr?243+01H,R2
+	MOV  	addr?243+02H,R1
+	MOV  	addr_len?244,R5
+; 		char *payload, unsigned char pl_len)
+; {
+			; SOURCE LINE # 72
+; 	int i;
+; 
+; 	CE = 1;	/* enable on board processing */
+			; SOURCE LINE # 75
+	SETB 	CE
+; 
+; 	/* send address */
+; 	for (i = 0; i < addr_len; i++)
+			; SOURCE LINE # 78
+	;CLR  	A
+	MOV  	i?247,A
+	MOV  	i?247+01H,A
+?C0006:
+	CLR  	C
+	MOV  	A,i?247+01H
+	SUBB 	A,addr_len?244
+	MOV  	A,#080H
+	MOV  	R0,A
+	XRL  	A,i?247
+	SUBB 	A,R0
+	JNC  	?C0007
+; 		spi_write_then_read(*(addr + i));
+			; SOURCE LINE # 79
+	MOV  	R3,addr?243
+	MOV  	R2,addr?243+01H
+	MOV  	R1,addr?243+02H
+	MOV  	DPL,i?247+01H
+	MOV  	DPH,i?247
+	LCALL	?C?CLDOPTR
+	MOV  	R7,A
+	LCALL	_spi_write_then_read
+	INC  	i?247+01H
+	MOV  	A,i?247+01H
+	JNZ  	?C0006
+	INC  	i?247
+?C0022:
+	SJMP 	?C0006
+?C0007:
+
+	;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    ;MOV ECO_PAGE_ADDR,#HIGH (_rf_send_2)
+    ;MOV ECO_PAGE_ADDR+01H,#LOW (_rf_send_2)
+    ;LCALL   eco_page_manager
+	LCALL	_rf_send_2
+    RET
+
+    RSEG  ?PR?_rf_send_2?ISR_RF
+_rf_send_2:
+    USING   0
+; 	/* send payload */
+; 	for (i = 0; i < pl_len; i++)
+			; SOURCE LINE # 81
+	CLR  	A
+	MOV  	i?247,A
+	MOV  	i?247+01H,A
+?C0009:
+	CLR  	C
+	MOV  	A,i?247+01H
+	SUBB 	A,pl_len?246
+	MOV  	A,#080H
+	MOV  	R0,A
+	XRL  	A,i?247
+	SUBB 	A,R0
+	JNC  	?C0010
+; 		spi_write_then_read(*(payload + i));
+			; SOURCE LINE # 82
+	MOV  	R3,payload?245
+	MOV  	R2,payload?245+01H
+	MOV  	R1,payload?245+02H
+	MOV  	DPL,i?247+01H
+	MOV  	DPH,i?247
+	LCALL	?C?CLDOPTR
+	MOV  	R7,A
+	LCALL	_spi_write_then_read
+	INC  	i?247+01H
+	MOV  	A,i?247+01H
+	JNZ  	?C0009
+	INC  	i?247
+?C0023:
+	SJMP 	?C0009
+?C0010:
+; 
+; 	CE = 0; /* enable transmission */
+			; SOURCE LINE # 84
+	CLR  	CE
+; }
+			; SOURCE LINE # 85
+	RET  	
+; END OF _rf_send
+
+CSEG	AT	00053H
+	LJMP	rf_ch1_recv
+
+; 
+; /* rf_ch1_recv - read a packet from radio channel 1 */
+; void rf_ch1_recv() interrupt 10
+
+	RSEG  ?PR?rf_ch1_recv?ISR_RF
+	USING	0
+rf_ch1_recv:
+	PUSH 	ACC
+	PUSH 	B
+	PUSH 	DPH
+	PUSH 	DPL
+	PUSH 	PSW
+	MOV  	PSW,#00H
+	PUSH 	AR0
+	PUSH 	AR1
+	PUSH 	AR2
+	PUSH 	AR3
+	PUSH 	AR4
+	PUSH 	AR5
+	PUSH 	AR6
+	PUSH 	AR7
+	USING	0
+			; SOURCE LINE # 88
+; {
+; 	int i = 0;
+			; SOURCE LINE # 90
+	MOV  	i?348,#00H
+	MOV  	i?348+01H,#00H
+; 	/* 
+; 	 * read the data and write the data to the buffer 
+; 	 * DR1 is set to low when all data is clocked out 
+; 	 */ 
+; 	if (rf_buf.ready)
+			; SOURCE LINE # 95
+	MOV  	A,rf_buf
+	JNZ  	?rf_ch1_recv?out
+; 		goto out;
+			; SOURCE LINE # 96
+?C0015:
+; 	while (DR1) {
+			; SOURCE LINE # 97
+	JNB  	DR1,?C0016
+; 		rf_buf.buffer[i++] = spi_write_then_read(0);
+			; SOURCE LINE # 98
+	CLR  	A
+	MOV  	R7,A
+	LCALL	_spi_write_then_read
+	INC  	i?348+01H
+	MOV  	A,i?348+01H
+	JNZ  	?C0024
+	INC  	i?348
+?C0024:
+	DEC  	A
+	ADD  	A,#LOW (rf_buf+01H)
+	MOV  	R0,A
+	MOV  	@R0,AR7
+; 	}
+			; SOURCE LINE # 99
+	SJMP 	?C0015
+?C0016:
+; 	rf_buf.ready = 1;	/* data ready */
+			; SOURCE LINE # 100
+	MOV  	rf_buf,#01H
+; out:
+			; SOURCE LINE # 101
+?rf_ch1_recv?out:
+; 	/* clean interrupt flag (or the interrupt is always on */ 
+; 	EXIF &= ~0x40;
+			; SOURCE LINE # 103
+	ANL  	EXIF,#0BFH
+; }
+			; SOURCE LINE # 104
+	POP  	AR7
+	POP  	AR6
+	POP  	AR5
+	POP  	AR4
+	POP  	AR3
+	POP  	AR2
+	POP  	AR1
+	POP  	AR0
+	POP  	PSW
+	POP  	DPL
+	POP  	DPH
+	POP  	B
+	POP  	ACC
+	RETI 	
+; END OF rf_ch1_recv
+
+; 
+; /* 
+;  * rf_wait_msg - wait for data packet
+;  */
+; void rf_wait_msg()
+
+	RSEG  ?PR?rf_wait_msg?ISR_RF
+rf_wait_msg:
+			; SOURCE LINE # 109
+; {
+			; SOURCE LINE # 110
+; 	CE = 1;	/* enable radio transceiver (ch1) */
+			; SOURCE LINE # 111
+	SETB 	CE
+?C0018:
+; 	while (!rf_buf.ready)	/* wait for data */
+			; SOURCE LINE # 112
+	MOV  	A,rf_buf
+	JZ   	?C0018
+?C0019:
+; 		;
+; 	CE = 0; /* disable radio to save power */
+			; SOURCE LINE # 114
+	CLR  	CE
+; }
+			; SOURCE LINE # 115
+	RET  	
+; END OF rf_wait_msg
+
+	END

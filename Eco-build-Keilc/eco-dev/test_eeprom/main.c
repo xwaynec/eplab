@@ -10,6 +10,7 @@
 int main()
 {
 	unsigned char idx;
+	unsigned char xdata *seg = (unsigned char xdata *)(0x800);
 	unsigned int i = 0;
 	store_cpu_rate(16);
 	P0_DIR &= ~0x28;
@@ -32,16 +33,11 @@ int main()
 	eeprom_init();
 	while(1)
 	{
-		unsigned char xdata *seg = (unsigned char xdata *)(0x800);
-		
 		//memory page is in ram
-
 		for(i=0;i<256;i++)
 		{
 			*(seg+i) = eeprom_read(i);
 		}
-		blink_led();
-		mdelay(300);
 	}
 
 	return 0;

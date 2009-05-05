@@ -59,7 +59,8 @@ main: main.obj isr_rf.obj utils.obj serial.obj spi.obj eeprom.obj adc.obj eco_pa
 	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB , C51FPL.LIB  TO $(TARGET) SEGMENTS\(?PR?DELTA_COMPRESS?MAIN\(C:0x1080\)\) SEGMENTS\(?PR?DELTA_COMPRESS_2?MAIN\(C:0x1100\)\) SEGMENTS\(?PR?_RF_SEND?ISR_RF\(C:0x1180\)\) SEGMENTS\(?PR?_LOG_2?MAIN\(C:0x1200\)\) SEGMENTS\(?PR?ECO_PAGE_INIT?ECO_PAGE\(C:0x1300\)\)
 
 	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB , C51FPL.LIB  TO $(TARGET) SEGMENTS\(?PR?RF_INIT?ISR_RF\(C:0x106A\)\) SEGMENTS\(?PR?ECO_PAGE_INIT?ECO_PAGE\(C:0x1080\)\) SEGMENTS\(?PR?DELTA_COMPRESS?MAIN\(C:0x1000\)\) SEGMENTS\(?PR?_STORE_CPU_RATE?UTILS\(C:0x1040\)\) SEGMENTS\(?PR?_SERIAL_INIT?SERIAL\(C:0x104D\)\) SEGMENTS\(?PR?_ADC_INIT?ADC\(C:0x1057\)\)
-	$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB , C51FPL.LIB  TO $(TARGET) SEGMENTS\(?PR?ECO_PAGE_INIT?ECO_PAGE\(C:0x1080\)\) SEGMENTS\(?PR?DELTA_COMPRESS?MAIN\(C:0x1000\)\) SEGMENTS\(?PR?_LOG_2?MAIN\(C:0x1140\)\)
+	#$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB , C51FPL.LIB  TO $(TARGET) SEGMENTS\(?PR?ECO_PAGE_INIT?ECO_PAGE\(C:0x1080\)\) SEGMENTS\(?PR?DELTA_COMPRESS?MAIN\(C:0x1000\)\) SEGMENTS\(?PR?_LOG_2?MAIN\(C:0x1140\)\)
+	$(LX) main.obj , isr_rf.obj , eco_page.obj , adc.obj , utils.obj , serial.obj , spi.obj, eeprom.obj , C51S.LIB , C51FPL.LIB  TO $(TARGET) SEGMENTS\(?PR?ECO_PAGE_INIT?ECO_PAGE\(C:0x1080\)\) SEGMENTS\(?PR?DELTA_COMPRESS?MAIN\(C:0x1000\)\) SEGMENTS\(?PR?_LOG_2?MAIN\(C:0x1140\)\) SEGMENTS\(?PR?LOG?LOG\(C:0x1200\)\) SEGMENTS\(?PR?_RF_SEND?ISR_RF\(C:0x11C0\)\)
 #SEGMENTS\(?PR?blink_fast?PAGING\(C:0x1000\)\) SEGMENTS\(?PR?blink_fast2?PAGING\(C:0x800\)
 
 	$(OX) "MAIN" HEX

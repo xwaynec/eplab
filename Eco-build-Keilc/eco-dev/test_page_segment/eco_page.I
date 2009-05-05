@@ -14,7 +14,6 @@
 
  
  
- 
   
 #line 1 "eco_page.h" /0
 
@@ -565,7 +564,6 @@
  
  
  
- 
 
 
 
@@ -579,7 +577,7 @@
  
  
  
-#line 16 ".\eco_page.c" /0
+#line 15 ".\eco_page.c" /0
  
   
 #line 1 "../../INCLUDE\EEPROM/EEPROM.H" /0
@@ -613,23 +611,76 @@
  
  
  
-#line 17 ".\eco_page.c" /0
-#line 17 ".\eco_page.c" /0
+#line 16 ".\eco_page.c" /0
+#line 16 ".\eco_page.c" /0
  
  
- unsigned char ECO_PAGE_TABLE[10];
- unsigned int ECO_PAGE_TABLE_INDEX;
  
- unsigned int ECO_PAGE_ADDR;
- unsigned char ECO_PAGE_SPI_CONN;
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 39 ".\eco_page.c" /1
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 65 ".\eco_page.c" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ unsigned int ECO_PAGE_TABLE[(16-14)];
  
  unsigned char ECO_PAGE_PREV_VID;
- 
  
  unsigned char ECO_PAGE_PREV_PID;
  
  
+ 
+ unsigned char ECO_PAGE_TABLE_INDEX;
+ unsigned int ECO_PAGE_ADDR;
+ unsigned char ECO_PAGE_SPI_CONN;
  
  unsigned char idata ECO_PAGE_REGISTER1;
  unsigned char idata ECO_PAGE_REGISTER2;
@@ -642,26 +693,124 @@
  
  void eco_page_init()
  {
- ECO_PAGE_TABLE_INDEX = 5;
  
- 
- 
+ ECO_PAGE_TABLE_INDEX = 0;	
  ECO_PAGE_ADDR = 0;
  ECO_PAGE_PREV_VID = 0;
  ECO_PAGE_PREV_PID = 0;
- 
- ECO_PAGE_TABLE[0] = -1; 
- ECO_PAGE_TABLE[1] = -1; 
- ECO_PAGE_TABLE[2] = 8;
- ECO_PAGE_TABLE[3] = -1; 
- ECO_PAGE_TABLE[4] = -1; 
- ECO_PAGE_TABLE[5] = -1; 
- ECO_PAGE_TABLE[6] = -1; 
- ECO_PAGE_TABLE[7] = -1; 
- ECO_PAGE_TABLE[8] = -1; 
- ECO_PAGE_TABLE[9] = -1; 
  }
  
+ 
+ 
+#line 103 ".\eco_page.c" /1
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 210 ".\eco_page.c" /0
  
  void eco_page_manager()
  {
@@ -669,36 +818,55 @@
  unsigned int page_index = -1; 
  
  
-
-
-
-
-
-
  
  
  
- if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_PREV_PID & 0x7F))
+ 
+ 
+ 
+ 
+ 
+ if((ECO_PAGE_ADDR >> 8) == ECO_PAGE_PREV_PID)
  {
  
  ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << 8) + (ECO_PAGE_ADDR & 0x00FF);
  #pragma asm
  
+ MOV R0,#LOW (ECO_PAGE_REGISTER1)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER2)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER3)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER4)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER5)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER6)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER7)
+ MOV A,@R0
+ 
+ MOV	SPI_CTRL,ECO_PAGE_SPI_CONN
+ MOV	DPH,ECO_PAGE_ADDR
+ MOV	DPL,ECO_PAGE_ADDR+01H
+ 
+ CLR	A
+ JMP	@A+DPTR
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  #pragma endasm
- return ;
  }	
  
  
- 
- for(i=0;i<10;i++)
+ for(i=0;i<(16-14);i++)
  {   
- 
- 
- 
- 
- 
- 
- if(((ECO_PAGE_ADDR >> 8) & 0x7F) == (ECO_PAGE_TABLE[i] & 0x7F))
+ if((ECO_PAGE_ADDR >> 8) == ECO_PAGE_TABLE[i])
  {
  page_index = i;
  break;
@@ -711,7 +879,7 @@
  ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 8;
  
  
- ECO_PAGE_ADDR = (page_index + 6) << 8;
+ ECO_PAGE_ADDR = ((page_index + 14) << 8) + (ECO_PAGE_ADDR & 0x00FF);
  
  
  ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;
@@ -721,39 +889,90 @@
  
  
  
+ 
+ MOV R0,#LOW (ECO_PAGE_REGISTER1)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER2)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER3)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER4)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER5)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER6)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER7)
+ MOV A,@R0
+ 
+ MOV	SPI_CTRL,ECO_PAGE_SPI_CONN
+ MOV	DPH,ECO_PAGE_ADDR
+ MOV	DPL,ECO_PAGE_ADDR+01H
+ 
+ CLR	A
+ JMP	@A+DPTR
  #pragma endasm
  }   
  else
  {
  
  
- unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + 6)<<8);
+ unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + 14) << 8);
  
  
  eeprom_init();
  
+ 
  for(i=0;i<256;i++)
  {
- *(seg+i) = eeprom_read(((unsigned int)(ECO_PAGE_ADDR) + 3) +i);
+ *(seg+i) = eeprom_read(((unsigned int)(ECO_PAGE_ADDR & 0xFF00) + 3) +i);
  }
  
  
  ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> 8;
  
  
- ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX];
+ 
+ ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> 8;
  
  
- ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + 6) << 8);
+ ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + 14) << 8) + (ECO_PAGE_ADDR & 0x00FF);
  
  
  ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> 8;	
  
  
- ECO_PAGE_TABLE_INDEX++;
+ ECO_PAGE_TABLE_INDEX = (ECO_PAGE_TABLE_INDEX + 1) % (16-14);
  
  
  #pragma asm
+ 
+ MOV R0,#LOW (ECO_PAGE_REGISTER1)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER2)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER3)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER4)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER5)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER6)
+ MOV A,@R0
+ MOV R0,#LOW (ECO_PAGE_REGISTER7)
+ MOV A,@R0
+ 
+ MOV	SPI_CTRL,ECO_PAGE_SPI_CONN
+ MOV	DPH,ECO_PAGE_ADDR
+ MOV	DPL,ECO_PAGE_ADDR+01H
+ 
+ CLR	A
+ JMP	@A+DPTR
+ 
+ 
+ 
+ 
+ 
  
  
  
@@ -761,6 +980,6 @@
  
  }
  
- mdelay(1);
- 
  }
+ 
+ 

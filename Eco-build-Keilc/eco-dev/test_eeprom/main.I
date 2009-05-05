@@ -615,6 +615,7 @@
  int main()
  {
  unsigned char idx;
+ unsigned char xdata *seg = (unsigned char xdata *)(0x800);
  unsigned int i = 0;
  store_cpu_rate(16);
  P0_DIR &= ~0x28;
@@ -637,16 +638,11 @@
  eeprom_init();
  while(1)
  {
- unsigned char xdata *seg = (unsigned char xdata *)(0x800);
- 
- 
  
  for(i=0;i<256;i++)
  {
  *(seg+i) = eeprom_read(i);
  }
-  P0 ^= 0x20;
- mdelay(300);
  }
  
  return 0;

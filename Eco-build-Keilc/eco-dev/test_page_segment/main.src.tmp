@@ -173,8 +173,8 @@ REGX_MSB	DATA	0ABH
 ?PR?main?MAIN        SEGMENT CODE 
 ?DT?main?MAIN        SEGMENT DATA OVERLAYABLE 
 ?C_INITSEG           SEGMENT CODE 
-?DT?MAIN             SEGMENT DATA 
 ?ID?MAIN             SEGMENT IDATA 
+?DT?MAIN             SEGMENT DATA 
 	EXTRN	CODE (_mdelay)
 	EXTRN	CODE (eco_page_manager)
 	EXTRN	DATA (ECO_PAGE_ADDR)
@@ -197,7 +197,6 @@ REGX_MSB	DATA	0ABH
 	PUBLIC	rf_data
 	PUBLIC	dst_addr
 	PUBLIC	msg
-	PUBLIC	cfg
 	PUBLIC	main
 	PUBLIC	blink6
 	PUBLIC	blink4
@@ -221,13 +220,12 @@ REGX_MSB	DATA	0ABH
 ?blink6?BYTE:
           i?242:   DS   2
 
-	RSEG  ?DT?MAIN
-            cfg:   DS   3
-       dst_addr:   DS   3
-        rf_data:   DS   15
-
 	RSEG  ?ID?MAIN
             msg:   DS   7
+       dst_addr:   DS   3
+
+	RSEG  ?DT?MAIN
+        rf_data:   DS   15
 
 	RSEG  ?C_INITSEG
 	DB	00FH
@@ -247,11 +245,6 @@ REGX_MSB	DATA	0ABH
 	DB	063H
 	DB	06FH
 	DB	0ECH
-
-	DB	003H
-	DB	cfg
-	DB	000H
-	DW	rf_data + 0
 
 	DB	003H
 	DB	dst_addr
@@ -274,12 +267,10 @@ REGX_MSB	DATA	0ABH
 ; 	{0xF2, 0xF2, 0xF2, 0xF2, 0xF2}, /* addr1, host addr */
 ; 	{0x63}, /* 24-bit address, 16-bit CRC */
 ; 	{0x6f, 0xEC} };
-; struct rf_config *cfg = &rf_data;
-; char dst_addr[3] = {0xF1, 0xF1, 0xF1};
-; idata char msg[7];
+; char idata dst_addr[3] = {0xF1, 0xF1, 0xF1};
+; char idata msg[7];
 ; 
 ; 
-; extern unsigned char ECO_PAGE_SPI_CONN;
 ; /* rf.c
 ; void rf_init();
 ; void rf_configure(struct rf_config);
@@ -363,28 +354,28 @@ REGX_MSB	DATA	0ABH
 	RSEG  ?PR?blink2?MAIN
 blink2:
 	USING	0
-			; SOURCE LINE # 100
+			; SOURCE LINE # 98
 ; {
-			; SOURCE LINE # 101
+			; SOURCE LINE # 99
 ; 	int i;
 ; 	for(i=0;i<4;i++)
-			; SOURCE LINE # 103
+			; SOURCE LINE # 101
 	CLR  	A
 	MOV  	i?040,A
 	MOV  	i?040+01H,A
 ?C0001:
 ; 	{
-			; SOURCE LINE # 104
+			; SOURCE LINE # 102
 ; 		blink_led();
-			; SOURCE LINE # 105
+			; SOURCE LINE # 103
 	XRL  	P0,#020H
 ; 		mdelay(400);
-			; SOURCE LINE # 106
+			; SOURCE LINE # 104
 	MOV  	R7,#090H
 	MOV  	R6,#01H
 	LCALL	_mdelay
 ; 	}
-			; SOURCE LINE # 107
+			; SOURCE LINE # 105
 	INC  	i?040+01H
 	MOV  	A,i?040+01H
 	JNZ  	?C0019
@@ -398,7 +389,7 @@ blink2:
 	JC   	?C0001
 ?C0002:
 ; 	mdelay(1000);	
-			; SOURCE LINE # 108
+			; SOURCE LINE # 106
 	MOV  	R7,#0E8H
 	MOV  	R6,#03H
 	LJMP 	_mdelay
@@ -410,28 +401,28 @@ blink2:
 	RSEG  ?PR?blink4?MAIN
 blink4:
 	USING	0
-			; SOURCE LINE # 110
+			; SOURCE LINE # 108
 ; {
-			; SOURCE LINE # 111
+			; SOURCE LINE # 109
 ; 	int i;
 ; 	for(i=0;i<8;i++)
-			; SOURCE LINE # 113
+			; SOURCE LINE # 111
 	CLR  	A
 	MOV  	i?141,A
 	MOV  	i?141+01H,A
 ?C0005:
 ; 	{
-			; SOURCE LINE # 114
+			; SOURCE LINE # 112
 ; 		blink_led();
-			; SOURCE LINE # 115
+			; SOURCE LINE # 113
 	XRL  	P0,#020H
 ; 		mdelay(400);
-			; SOURCE LINE # 116
+			; SOURCE LINE # 114
 	MOV  	R7,#090H
 	MOV  	R6,#01H
 	LCALL	_mdelay
 ; 	}	
-			; SOURCE LINE # 117
+			; SOURCE LINE # 115
 	INC  	i?141+01H
 	MOV  	A,i?141+01H
 	JNZ  	?C0020
@@ -445,7 +436,7 @@ blink4:
 	JC   	?C0005
 ?C0006:
 ; 	mdelay(1000);	
-			; SOURCE LINE # 118
+			; SOURCE LINE # 116
 	MOV  	R7,#0E8H
 	MOV  	R6,#03H
 	LJMP 	_mdelay
@@ -457,28 +448,28 @@ blink4:
 	RSEG  ?PR?blink6?MAIN
 blink6:
 	USING	0
-			; SOURCE LINE # 120
+			; SOURCE LINE # 118
 ; {
-			; SOURCE LINE # 121
+			; SOURCE LINE # 119
 ; 	int i;
 ; 	for(i=0;i<12;i++)
-			; SOURCE LINE # 123
+			; SOURCE LINE # 121
 	CLR  	A
 	MOV  	i?242,A
 	MOV  	i?242+01H,A
 ?C0009:
 ; 	{
-			; SOURCE LINE # 124
+			; SOURCE LINE # 122
 ; 		blink_led();
-			; SOURCE LINE # 125
+			; SOURCE LINE # 123
 	XRL  	P0,#020H
 ; 		mdelay(400);
-			; SOURCE LINE # 126
+			; SOURCE LINE # 124
 	MOV  	R7,#090H
 	MOV  	R6,#01H
 	LCALL	_mdelay
 ; 	}	
-			; SOURCE LINE # 127
+			; SOURCE LINE # 125
 	INC  	i?242+01H
 	MOV  	A,i?242+01H
 	JNZ  	?C0021
@@ -492,7 +483,7 @@ blink6:
 	JC   	?C0009
 ?C0010:
 ; 	mdelay(1000);	
-			; SOURCE LINE # 128
+			; SOURCE LINE # 126
 	MOV  	R7,#0E8H
 	MOV  	R6,#03H
 	LJMP 	_mdelay
@@ -505,34 +496,36 @@ blink6:
 	RSEG  ?PR?main?MAIN
 main:
 	USING	0
-			; SOURCE LINE # 131
+			; SOURCE LINE # 129
 ; {
-			; SOURCE LINE # 132
+			; SOURCE LINE # 130
 ; 	unsigned char idx;
 ; 	unsigned int i = 0;
-			; SOURCE LINE # 134
+			; SOURCE LINE # 132
 	CLR  	A
 	MOV  	i?344,A
 	MOV  	i?344+01H,A
 ; 	store_cpu_rate(16);
-			; SOURCE LINE # 135
+			; SOURCE LINE # 133
 	MOV  	R7,#010H
 	MOV  	R6,A
 	LCALL	_store_cpu_rate
 ; 	P0_DIR &= ~0x28;
-			; SOURCE LINE # 136
+			; SOURCE LINE # 134
 	ANL  	P0_DIR,#0D7H
 ; 	P0_ALT &= ~0x28;
-			; SOURCE LINE # 137
+			; SOURCE LINE # 135
 	ANL  	P0_ALT,#0D7H
+; 
+; 	
 ; 	rf_init();
 			; SOURCE LINE # 138
 	LCALL	rf_init
-; 	rf_configure(cfg);
+; 	rf_configure(&rf_data);
 			; SOURCE LINE # 139
-	MOV  	R3,cfg
-	MOV  	R2,cfg+01H
-	MOV  	R1,cfg+02H
+	MOV  	R3,#00H
+	MOV  	R2,#HIGH (rf_data)
+	MOV  	R1,#LOW (rf_data)
 	LCALL	_rf_configure
 ; 	serial_init(19200);	
 			; SOURCE LINE # 140

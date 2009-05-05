@@ -1,0 +1,766 @@
+AX51 MACRO ASSEMBLER  SERIAL                                                                05/03/09 13:49:37 PAGE     1
+
+
+MACRO ASSEMBLER AX51 V3.06a
+OBJECT MODULE PLACED IN .\serial.obj
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\AX51.exe .\serial.src EP DEBUG SYMBOLS OJ(.\serial.obj) PR(.\utils.ls1) 
+
+LOC    OBJ             LINE     SOURCE
+
+                          1     ; ./serial.src generated from: .\..\..\include\serial\serial.c
+                          2     ; COMPILER INVOKED BY:
+                          3     ;        C:\Keil\C51\BIN\C51.exe .\..\..\include\serial\serial.c BROWSE DEBUG CODE LISTI
+                               NCLUDE SYMBOLS PREPRINT INCDIR(../../Include) SRC(./serial.src)
+                          4     
+                          5     $nomod51 
+                          6     
+                          7     NAME    SERIAL
+                          8     
+ 00A0.7                   9     PWR_UP  BIT     0A0H.7
+ 0080                    10     P0      DATA    080H
+ 0090                    11     P1      DATA    090H
+ 00D0.6                  12     AC      BIT     0D0H.6
+ 0080.5                  13     T0      BIT     080H.5
+ 00B3                    14     SPI_CTRL        DATA    0B3H
+ 0080.6                  15     T1      BIT     080H.6
+ 00A8.7                  16     EA      BIT     0A8H.7
+ 0090.0                  17     T2      BIT     090H.0
+ 00A0.6                  18     CE      BIT     0A0H.6
+ 00BE                    19     DEV_OFFSET      DATA    0BEH
+ 00A0.1                  20     CLK1    BIT     0A0H.1
+ 0090.2                  21     DIN0    BIT     090H.2
+ 00A0.5                  22     CLK2    BIT     0A0H.5
+ 0090.0                  23     DIO0    BIT     090H.0
+ 0083                    24     DPH0    DATA    083H
+ 0090.1                  25     DIO1    BIT     090H.1
+ 00A8                    26     IE      DATA    0A8H
+ 0085                    27     DPH1    DATA    085H
+ 0080.0                  28     DIO2    BIT     080H.0
+ 0080.1                  29     DIO3    BIT     080H.1
+ 0080.0                  30     P0_0    BIT     080H.0
+ 0090.0                  31     P1_0    BIT     090H.0
+ 0080.2                  32     DIO4    BIT     080H.2
+ 0080.1                  33     P0_1    BIT     080H.1
+ 0082                    34     DPL0    DATA    082H
+ 0090.1                  35     P1_1    BIT     090H.1
+ 0080.3                  36     DIO5    BIT     080H.3
+ 0080.2                  37     P0_2    BIT     080H.2
+ 0084                    38     DPL1    DATA    084H
+ 0090.2                  39     P1_2    BIT     090H.2
+ 0080.4                  40     DIO6    BIT     080H.4
+ 0080.3                  41     P0_3    BIT     080H.3
+ 0080.5                  42     DIO7    BIT     080H.5
+ 0080.4                  43     P0_4    BIT     080H.4
+ 00A4                    44     ADCSTATIC       DATA    0A4H
+ 0080.6                  45     DIO8    BIT     080H.6
+ 0080.5                  46     P0_5    BIT     080H.5
+ 00C8.6                  47     EXF2    BIT     0C8H.6
+ 00A0.3                  48     CS      BIT     0A0H.3
+ 0080.7                  49     DIO9    BIT     080H.7
+ 0080.6                  50     P0_6    BIT     080H.6
+ 0080.7                  51     P0_7    BIT     080H.7
+ 00A8.4                  52     ES      BIT     0A8H.4
+ 00B8                    53     IP      DATA    0B8H
+ 00A0.0                  54     DATA?   BIT     0A0H.0
+ 0098.0                  55     RI      BIT     098H.0
+ 00D0.7                  56     CY      BIT     0D0H.7
+ 0098.1                  57     TI      BIT     098H.1
+AX51 MACRO ASSEMBLER  SERIAL                                                                05/03/09 13:49:37 PAGE     2
+
+ 00BC                    58     T1_1V2  DATA    0BCH
+ 008F                    59     SPC_FNC DATA    08FH
+ 00BD                    60     T2_1V2  DATA    0BDH
+ 00CB                    61     RCAP2H  DATA    0CBH
+ 00B8.4                  62     PS      BIT     0B8H.4
+ 0081                    63     SP      DATA    081H
+ 00D0.2                  64     OV      BIT     0D0H.2
+ 00B6                    65     CK_CTRL DATA    0B6H
+ 00CA                    66     RCAP2L  DATA    0CAH
+ 00B5                    67     TICK_DV DATA    0B5H
+ 00B1                    68     RSTREAS DATA    0B1H
+ 00C8.1                  69     C_T2    BIT     0C8H.1
+ 00E8.4                  70     EWDI    BIT     0E8H.4
+ 00A1                    71     ADCCON  DATA    0A1H
+ 00C8.5                  72     RCLK    BIT     0C8H.5
+ 00A2                    73     ADCDATAH        DATA    0A2H
+ 0091                    74     EXIF    DATA    091H
+ 00C8.4                  75     TCLK    BIT     0C8H.4
+ 00A0.6                  76     DR2_CE  BIT     0A0H.6
+ 00A3                    77     ADCDATAL        DATA    0A3H
+ 0099                    78     SBUF    DATA    099H
+ 0087                    79     PCON    DATA    087H
+ 0098                    80     SCON    DATA    098H
+ 00F8.4                  81     PWDI    BIT     0F8H.4
+ 0089                    82     TMOD    DATA    089H
+ 0088                    83     TCON    DATA    088H
+ 00D8.3                  84     WDTI    BIT     0D8H.3
+ 00AA                    85     PWMDUTY DATA    0AAH
+ 0088.1                  86     IE0     BIT     088H.1
+ 0088.3                  87     IE1     BIT     088H.3
+ 0094                    88     P0_DIR  DATA    094H
+ 00F0                    89     B       DATA    0F0H
+ 0096                    90     P1_DIR  DATA    096H
+ 0095                    91     P0_ALT  DATA    095H
+ 0097                    92     P1_ALT  DATA    097H
+ 00C8.0                  93     CP_RL2  BIT     0C8H.0
+ 00A0.2                  94     DR1     BIT     0A0H.2
+ 00E0                    95     ACC     DATA    0E0H
+ 00A0.6                  96     DR2     BIT     0A0H.6
+ 00B7                    97     TEST_MODE       DATA    0B7H
+ 00B4                    98     SPICLK  DATA    0B4H
+ 00C8.1                  99     CT2     BIT     0C8H.1
+ 00A8.1                 100     ET0     BIT     0A8H.1
+ 00A8.3                 101     ET1     BIT     0A8H.3
+ 0088.5                 102     TF0     BIT     088H.5
+ 0080.3                 103     INT0_N  BIT     080H.3
+ 00A8.5                 104     ET2     BIT     0A8H.5
+ 0088.7                 105     TF1     BIT     088H.7
+ 0080.4                 106     INT1_N  BIT     080H.4
+ 00C8.7                 107     TF2     BIT     0C8H.7
+ 0098.2                 108     RB8     BIT     098H.2
+ 008C                   109     TH0     DATA    08CH
+ 00A8.0                 110     EX0     BIT     0A8H.0
+ 0088.0                 111     IT0     BIT     088H.0
+ 008D                   112     TH1     DATA    08DH
+ 00A8.2                 113     EX1     BIT     0A8H.2
+ 0098.3                 114     TB8     BIT     098H.3
+ 0088.2                 115     IT1     BIT     088H.2
+ 00CD                   116     TH2     DATA    0CDH
+ 00AD                   117     REGX_CTRL       DATA    0ADH
+ 00E8.0                 118     EX2     BIT     0E8H.0
+ 00D0.0                 119     P       BIT     0D0H.0
+ 00E8.1                 120     EX3     BIT     0E8H.1
+ 0098.7                 121     SM0     BIT     098H.7
+ 008A                   122     TL0     DATA    08AH
+ 00E8.2                 123     EX4     BIT     0E8H.2
+AX51 MACRO ASSEMBLER  SERIAL                                                                05/03/09 13:49:37 PAGE     3
+
+ 0098.6                 124     SM1     BIT     098H.6
+ 008B                   125     TL1     DATA    08BH
+ 00E8.3                 126     EX5     BIT     0E8H.3
+ 0098.5                 127     SM2     BIT     098H.5
+ 00CC                   128     TL2     DATA    0CCH
+ 00E8                   129     EIE     DATA    0E8H
+ 00B8.1                 130     PT0     BIT     0B8H.1
+ 00D0.3                 131     RS0     BIT     0D0H.3
+ 00B8.3                 132     PT1     BIT     0B8H.3
+ 00D0.4                 133     RS1     BIT     0D0H.4
+ 00B8.5                 134     PT2     BIT     0B8H.5
+ 0088.4                 135     TR0     BIT     088H.4
+ 00A9                   136     PWMCON  DATA    0A9H
+ 0088.6                 137     TR1     BIT     088H.6
+ 00C8.2                 138     TR2     BIT     0C8H.2
+ 00B8.0                 139     PX0     BIT     0B8H.0
+ 00B8.2                 140     PX1     BIT     0B8H.2
+ 00F8.0                 141     PX2     BIT     0F8H.0
+ 00F8.1                 142     PX3     BIT     0F8H.1
+ 00F8.2                 143     PX4     BIT     0F8H.2
+ 0083                   144     DPH     DATA    083H
+ 00F8.3                 145     PX5     BIT     0F8H.3
+ 00F8                   146     EIP     DATA    0F8H
+ 0082                   147     DPL     DATA    082H
+ 00C8.3                 148     EXEN2   BIT     0C8H.3
+ 00C8.0                 149     CPRL2   BIT     0C8H.0
+ 0098.4                 150     REN     BIT     098H.4
+ 00C8                   151     T2CON   DATA    0C8H
+ 0086                   152     DPS     DATA    086H
+ 00B2                   153     SPI_DATA        DATA    0B2H
+ 0092                   154     MPAGE   DATA    092H
+ 0080.1                 155     RXD     BIT     080H.1
+ 00A0.4                 156     DOUT2   BIT     0A0H.4
+ 00D8                   157     EICON   DATA    0D8H
+ 008E                   158     CKCON   DATA    08EH
+ 0080.2                 159     TXD     BIT     080H.2
+ 00A0                   160     RADIO   DATA    0A0H
+ 0080.7                 161     PWM     BIT     080H.7
+ 00D0.5                 162     F0      BIT     0D0H.5
+ 00D0.1                 163     F1      BIT     0D0H.1
+ 00AC                   164     REGX_LSB        DATA    0ACH
+ 00D0                   165     PSW     DATA    0D0H
+ 00AB                   166     REGX_MSB        DATA    0ABH
+------                  167     ?PR?_setup_baudrate?SERIAL               SEGMENT CODE 
+------                  168     ?PR?_serial_init?SERIAL                  SEGMENT CODE 
+------                  169     ?PR?_serial_write?SERIAL                 SEGMENT CODE 
+------                  170     ?PR?serial_read?SERIAL                   SEGMENT CODE 
+------                  171     ?PR?_putc?SERIAL     SEGMENT CODE 
+------                  172     ?PR?_puts?SERIAL     SEGMENT CODE 
+------                  173     ?DT?_puts?SERIAL     SEGMENT DATA OVERLAYABLE 
+------                  174     ?PR?getc?SERIAL      SEGMENT CODE 
+------                  175     ?PR?_?int_print?SERIAL                   SEGMENT CODE 
+                        176             EXTRN   CODE (?C?ICASE)
+                        177             EXTRN   CODE (?C?CLDPTR)
+                        178             EXTRN   DATA (?C_IBP)
+                        179             EXTRN   CODE (?C?UIDIV)
+                        180             PUBLIC  _?int_print
+                        181             PUBLIC  getc
+                        182             PUBLIC  _puts
+                        183             PUBLIC  _putc
+                        184             PUBLIC  _serial_init
+                        185     
+------                  186             RSEG  ?DT?_puts?SERIAL
+000000                  187     ?_puts?BYTE:
+000000                  188               s?544:   DS   3
+                        189     ; /*
+AX51 MACRO ASSEMBLER  SERIAL                                                                05/03/09 13:49:37 PAGE     4
+
+                        190     ;  * Author(s): Min-Hua Chen (Embedded Platform Lab, NTHU)
+                        191     ;  * Copyright (c) 2008 National Tsing Hua University (NTHU) 
+                        192     ;  * Permission to copy, modify, and distribute this program is granted 
+                        193     ;  * for noncommercial purposes, provided the author(s) and copyright
+                        194     ;  * notice are retained. All other uses require explicit written
+                        195     ;  * permission from NTHU. 
+                        196     ;  *
+                        197     ;  * serial port driver
+                        198     ;  *
+                        199     ;  * Min-Hua Chen <orca.chen@gmail.com>
+                        200     ;  * 2007/8/2
+                        201     ;  */
+                        202     ; 
+                        203     ; #include "Eco/reg24e1.h"
+                        204     ; #include "serial.h"
+                        205     ; #include "timer/timer.h"
+                        206     ; 
+                        207     ; /* setup_baudrate - note that the CPU is 16M Hz
+                        208     ;  * @baud: baudrate
+                        209     ;  */
+                        210     ; static int setup_baudrate(unsigned int baud)
+                        211     
+------                  212             RSEG  ?PR?_setup_baudrate?SERIAL
+000000                  213     _setup_baudrate:
+                        214             USING   0
+                        215                             ; SOURCE LINE # 22
+                        216     ;---- Variable 'baud?040' assigned to Register 'R6/R7' ----
+                        217     ; {
+                        218                             ; SOURCE LINE # 23
+                        219     ;       T2CON &= TIMER2_AUTO;   /* set auto-reload */
+                        220                             ; SOURCE LINE # 24
+000000 53C8FE           221             ANL     T2CON,#0FEH
+                        222     ;       TCLK = 1;       /* set transmit clock */
+                        223                             ; SOURCE LINE # 25
+000003 D2CC             224             SETB    TCLK
+                        225     ;       RCLK = 1;       /* set receive clock */
+                        226                             ; SOURCE LINE # 26
+000005 D2CD             227             SETB    RCLK
+                        228     ;       C_T2 = 0;       /* select timer function */
+                        229                             ; SOURCE LINE # 27
+000007 C2C9             230             CLR     C_T2
+                        231     ;       T2CON |= TIMER2_ENABLE; /* enable timer2 */
+                        232                             ; SOURCE LINE # 28
+000009 43C804           233             ORL     T2CON,#04H
+                        234     ; 
+                        235     ;       P0 &= ~0x06;    /* clean [1:2] bits */
+                        236                             ; SOURCE LINE # 30
+00000C 5380F9           237             ANL     P0,#0F9H
+                        238     ;       P0_ALT |= SERIAL_IO_PORT;       /* select serial I/O port */
+                        239                             ; SOURCE LINE # 31
+00000F 439506           240             ORL     P0_ALT,#06H
+                        241     ; 
+                        242     ;       switch (baud) {
+                        243                             ; SOURCE LINE # 33
+000012 EF               244             MOV     A,R7
+000013 8EF0             245             MOV     B,R6
+000015 120000     E     246             LCALL   ?C?ICASE
+000018 0000       F     247             DW      ?C0003
+00001A 4B00             248             DW      04B00H
+00001C 0000       F     249             DW      ?C0002
+00001E E100             250             DW      0E100H
+000020 0000             251             DW      00H
+000022 0000       F     252             DW      ?C0004
+                        253     ;       case 57600:
+                        254                             ; SOURCE LINE # 34
+000024                  255     ?C0002:
+AX51 MACRO ASSEMBLER  SERIAL                                                                05/03/09 13:49:37 PAGE     5
+
+                        256     ;               RCAP2H = 0xFF;
+                        257                             ; SOURCE LINE # 35
+000024 75CBFF           258             MOV     RCAP2H,#0FFH
+                        259     ;               RCAP2L = 0xF7;
+                        260                             ; SOURCE LINE # 36
+000027 75CAF7           261             MOV     RCAP2L,#0F7H
+                        262     ;               break;
+                        263                             ; SOURCE LINE # 37
+00002A 800C             264             SJMP    ?C0001
+                        265     ;       case 19200:
+                        266                             ; SOURCE LINE # 38
+00002C                  267     ?C0003:
+                        268     ;               RCAP2H = 0xFF;
+                        269                             ; SOURCE LINE # 39
+00002C 75CBFF           270             MOV     RCAP2H,#0FFH
+                        271     ;               RCAP2L = 0xE6;
+                        272                             ; SOURCE LINE # 40
+00002F 75CAE6           273             MOV     RCAP2L,#0E6H
+                        274     ;               break;
+                        275                             ; SOURCE LINE # 41
+000032 8004             276             SJMP    ?C0001
+                        277     ;       default:
+                        278                             ; SOURCE LINE # 42
+000034                  279     ?C0004:
+                        280     ;               /* baudrate not supported */
+                        281     ;               return 0;
+                        282                             ; SOURCE LINE # 44
+000034 E4               283             CLR     A
+000035 FE               284             MOV     R6,A
+000036 FF               285             MOV     R7,A
+000037 22               286             RET     
+                        287     ;       }
+                        288                             ; SOURCE LINE # 45
+000038                  289     ?C0001:
+                        290     ;       return 1;
+                        291                             ; SOURCE LINE # 46
+000038 7E00             292             MOV     R6,#00H
+00003A 7F01             293             MOV     R7,#01H
+                        294     ; }
+                        295                             ; SOURCE LINE # 47
+00003C                  296     ?C0005:
+00003C 22               297             RET     
+                        298     ; END OF _setup_baudrate
+                        299     
+                        300     ; 
+                        301     ; /* serial_init - setup baudrate 
+                        302     ;  * NOTE: using timer 2 as baud generator @ CPU 16M Hz only 
+                        303     ;  * @baud: baud rate
+                        304     ;  */
+                        305     ; void serial_init(unsigned int baud)
+                        306     
+------                  307             RSEG  ?PR?_serial_init?SERIAL
+000000                  308     _serial_init:
+                        309             USING   0
+                        310                             ; SOURCE LINE # 53
+                        311     ;---- Variable 'baud?141' assigned to Register 'R6/R7' ----
+                        312     ; {
+                        313                             ; SOURCE LINE # 54
+                        314     ;       /* SCON initial value: 0x00 */
+                        315     ;       /* add more supported modes here */
+                        316     ; 
+                        317     ;       setup_baudrate(baud);
+                        318                             ; SOURCE LINE # 58
+000000 120000     F     319             LCALL   _setup_baudrate
+                        320     ;       SCON |= SERIAL_MODE1;   /* enable serial port mode 1 */
+                        321                             ; SOURCE LINE # 59
+AX51 MACRO ASSEMBLER  SERIAL                                                                05/03/09 13:49:37 PAGE     6
+
+000003 439840           322             ORL     SCON,#040H
+                        323     ;       SCON |= RECV_ENABLE;    /* enable receive */
+                        324                             ; SOURCE LINE # 60
+000006 439810           325             ORL     SCON,#010H
+                        326     ; }
+                        327                             ; SOURCE LINE # 61
+000009 22               328             RET     
+                        329     ; END OF _serial_init
+                        330     
+                        331     ; 
+                        332     ; /* serial_write - transmit one byte by serial port
+                        333     ;  * @byte: writing byte
+                        334     ;  */
+                        335     ; static void serial_write(char byte)
+                        336     
+------                  337             RSEG  ?PR?_serial_write?SERIAL
+000000                  338     _serial_write:
+                        339                             ; SOURCE LINE # 66
+                        340     ;---- Variable 'byte?242' assigned to Register 'R7' ----
+                        341     ; {
+                        342                             ; SOURCE LINE # 67
+                        343     ;       SBUF = byte;    /* write to serial buffer */
+                        344                             ; SOURCE LINE # 68
+000000 8F99             345             MOV     SBUF,R7
+000002                  346     ?C0007:
+                        347     ;       while (!TI)     /* wait until done */
+                        348                             ; SOURCE LINE # 69
+000002 3099FD           349             JNB     TI,?C0007
+000005                  350     ?C0008:
+                        351     ;               ;
+                        352     ;       TI = 0; /* clean transmit done bit */
+                        353                             ; SOURCE LINE # 71
+000005 C299             354             CLR     TI
+                        355     ; }
+                        356                             ; SOURCE LINE # 72
+000007 22               357             RET     
+                        358     ; END OF _serial_write
+                        359     
+                        360     ; 
+                        361     ; /* serial_read - read one byte from serial port
+                        362     ;  * @ret: read byte
+                        363     ;  */
+                        364     ; static char serial_read()
+                        365     
+------                  366             RSEG  ?PR?serial_read?SERIAL
+000000                  367     serial_read:
+                        368             USING   0
+                        369                             ; SOURCE LINE # 77
+                        370     ; {
+                        371                             ; SOURCE LINE # 78
+000000                  372     ?C0010:
+                        373     ;       while (!RI)     /* wait until done */
+                        374                             ; SOURCE LINE # 79
+000000 3098FD           375             JNB     RI,?C0010
+000003                  376     ?C0011:
+                        377     ;               ;
+                        378     ;       RI = 0; /* clean receive bit */
+                        379                             ; SOURCE LINE # 81
+000003 C298             380             CLR     RI
+                        381     ;       return SBUF;
+                        382                             ; SOURCE LINE # 82
+000005 AF99             383             MOV     R7,SBUF
+                        384     ; }
+                        385                             ; SOURCE LINE # 83
+000007                  386     ?C0012:
+000007 22               387             RET     
+AX51 MACRO ASSEMBLER  SERIAL                                                                05/03/09 13:49:37 PAGE     7
+
+                        388     ; END OF serial_read
+                        389     
+                        390     ; 
+                        391     ; /* wrappers for serial read/write interface */
+                        392     ; void putc(char c)
+                        393     
+------                  394             RSEG  ?PR?_putc?SERIAL
+000000                  395     _putc:
+                        396                             ; SOURCE LINE # 86
+                        397     ;---- Variable 'c?443' assigned to Register 'R7' ----
+                        398     ; {
+                        399                             ; SOURCE LINE # 87
+                        400     ;       serial_write(c);
+                        401                             ; SOURCE LINE # 88
+000000 020000     F     402             LJMP    _serial_write
+                        403     ; END OF _putc
+                        404     
+                        405     ; }
+                        406     ; 
+                        407     ; void puts(char *s)
+                        408     
+------                  409             RSEG  ?PR?_puts?SERIAL
+000000                  410     _puts:
+                        411             USING   0
+                        412                             ; SOURCE LINE # 91
+000000 8B00       F     413             MOV     s?544,R3
+000002 8A00       F     414             MOV     s?544+01H,R2
+000004 8900       F     415             MOV     s?544+02H,R1
+                        416     ; {
+                        417                             ; SOURCE LINE # 92
+000006                  418     ?C0014:
+                        419     ;       while (*s)
+                        420                             ; SOURCE LINE # 93
+000006 AB00       F     421             MOV     R3,s?544
+000008 AA00       F     422             MOV     R2,s?544+01H
+00000A A900       F     423             MOV     R1,s?544+02H
+00000C 120000     E     424             LCALL   ?C?CLDPTR
+00000F 6013             425             JZ      ?C0016
+                        426     ;               serial_write(*s++);
+                        427                             ; SOURCE LINE # 94
+000011 0500       F     428             INC     s?544+02H
+000013 E500       F     429             MOV     A,s?544+02H
+000015 7002             430             JNZ     ?C0020
+000017 0500       F     431             INC     s?544+01H
+000019                  432     ?C0020:
+000019 14               433             DEC     A
+00001A F9               434             MOV     R1,A
+00001B 120000     E     435             LCALL   ?C?CLDPTR
+00001E FF               436             MOV     R7,A
+00001F 120000     F     437             LCALL   _serial_write
+000022 80E2             438             SJMP    ?C0014
+                        439     ; }
+                        440                             ; SOURCE LINE # 95
+000024                  441     ?C0016:
+000024 22               442             RET     
+                        443     ; END OF _puts
+                        444     
+                        445     ; 
+                        446     ; char getc()
+                        447     
+------                  448             RSEG  ?PR?getc?SERIAL
+000000                  449     getc:
+                        450             USING   0
+                        451                             ; SOURCE LINE # 97
+                        452     ; {
+                        453                             ; SOURCE LINE # 98
+AX51 MACRO ASSEMBLER  SERIAL                                                                05/03/09 13:49:37 PAGE     8
+
+                        454     ;       return serial_read();
+                        455                             ; SOURCE LINE # 99
+000000 120000     F     456             LCALL   serial_read
+                        457     ; }
+                        458                             ; SOURCE LINE # 100
+000003                  459     ?C0017:
+000003 22               460             RET     
+                        461     ; END OF getc
+                        462     
+                        463     ; 
+                        464     ; /* int_print - convert an unsigned int to a string then print it
+                        465     ;  * max int is 65535
+                        466     ;  * @val: int for printing
+                        467     ;  */
+                        468     ; void int_print(unsigned int val) reentrant
+                        469     
+------                  470             RSEG  ?PR?_?int_print?SERIAL
+000000                  471     _?int_print:
+                        472             USING   0
+                        473                             ; SOURCE LINE # 106
+000000 1500       E     474             DEC     ?C_IBP
+000002 1500       E     475             DEC     ?C_IBP
+000004 A800       E     476             MOV     R0,?C_IBP
+000006 A606             477             MOV     @R0,AR6
+000008 08               478             INC     R0
+000009 A607             479             MOV     @R0,AR7
+                        480     ; {
+                        481     ;       if (val / 10)
+                        482                             ; SOURCE LINE # 108
+00000B A800       E     483             MOV     R0,?C_IBP
+00000D E6               484             MOV     A,@R0
+00000E FE               485             MOV     R6,A
+00000F 08               486             INC     R0
+000010 E6               487             MOV     A,@R0
+000011 FF               488             MOV     R7,A
+000012 7C00             489             MOV     R4,#00H
+000014 7D0A             490             MOV     R5,#0AH
+000016 120000     E     491             LCALL   ?C?UIDIV
+000019 EF               492             MOV     A,R7
+00001A 4E               493             ORL     A,R6
+00001B 6003             494             JZ      ?C0018
+                        495     ;               int_print(val / 10);
+                        496                             ; SOURCE LINE # 109
+00001D 120000     F     497             LCALL   _?int_print
+000020                  498     ?C0018:
+                        499     ;       putc((val % 10) + '0');
+                        500                             ; SOURCE LINE # 110
+000020 A800       E     501             MOV     R0,?C_IBP
+000022 E6               502             MOV     A,@R0
+000023 FE               503             MOV     R6,A
+000024 08               504             INC     R0
+000025 E6               505             MOV     A,@R0
+000026 FF               506             MOV     R7,A
+000027 7C00             507             MOV     R4,#00H
+000029 7D0A             508             MOV     R5,#0AH
+00002B 120000     E     509             LCALL   ?C?UIDIV
+00002E ED               510             MOV     A,R5
+00002F 2430             511             ADD     A,#030H
+000031 FF               512             MOV     R7,A
+000032 120000     F     513             LCALL   _putc
+                        514     ; }
+                        515                             ; SOURCE LINE # 111
+000035 0500       E     516             INC     ?C_IBP
+000037 0500       E     517             INC     ?C_IBP
+000039 22               518             RET     
+                        519     ; END OF _?int_print
+AX51 MACRO ASSEMBLER  SERIAL                                                                05/03/09 13:49:37 PAGE     9
+
+                        520     
+                        521             END
+AX51 MACRO ASSEMBLER  SERIAL                                                                05/03/09 13:49:37 PAGE    10
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                                    T Y P E  V A L U E     ATTRIBUTES
+
+?_PUTS?BYTE . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_PUTS?SERIAL
+?C0001. . . . . . . . . . . . . . . . .    C  ADDR  0038H     R   SEG=?PR?_SETUP_BAUDRATE?SERIAL
+?C0002. . . . . . . . . . . . . . . . .    C  ADDR  0024H     R   SEG=?PR?_SETUP_BAUDRATE?SERIAL
+?C0003. . . . . . . . . . . . . . . . .    C  ADDR  002CH     R   SEG=?PR?_SETUP_BAUDRATE?SERIAL
+?C0004. . . . . . . . . . . . . . . . .    C  ADDR  0034H     R   SEG=?PR?_SETUP_BAUDRATE?SERIAL
+?C0005. . . . . . . . . . . . . . . . .    C  ADDR  003CH     R   SEG=?PR?_SETUP_BAUDRATE?SERIAL
+?C0007. . . . . . . . . . . . . . . . .    C  ADDR  0002H     R   SEG=?PR?_SERIAL_WRITE?SERIAL
+?C0008. . . . . . . . . . . . . . . . .    C  ADDR  0005H     R   SEG=?PR?_SERIAL_WRITE?SERIAL
+?C0010. . . . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?SERIAL_READ?SERIAL
+?C0011. . . . . . . . . . . . . . . . .    C  ADDR  0003H     R   SEG=?PR?SERIAL_READ?SERIAL
+?C0012. . . . . . . . . . . . . . . . .    C  ADDR  0007H     R   SEG=?PR?SERIAL_READ?SERIAL
+?C0014. . . . . . . . . . . . . . . . .    C  ADDR  0006H     R   SEG=?PR?_PUTS?SERIAL
+?C0016. . . . . . . . . . . . . . . . .    C  ADDR  0024H     R   SEG=?PR?_PUTS?SERIAL
+?C0017. . . . . . . . . . . . . . . . .    C  ADDR  0003H     R   SEG=?PR?GETC?SERIAL
+?C0018. . . . . . . . . . . . . . . . .    C  ADDR  0020H     R   SEG=?PR?_?INT_PRINT?SERIAL
+?C0020. . . . . . . . . . . . . . . . .    C  ADDR  0019H     R   SEG=?PR?_PUTS?SERIAL
+?C?CLDPTR . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C?ICASE. . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C?UIDIV. . . . . . . . . . . . . . . .    C  ADDR  -------       EXT
+?C_IBP. . . . . . . . . . . . . . . . .    D  ADDR  -------       EXT
+?DT?_PUTS?SERIAL. . . . . . . . . . . .    D  SEG   000003H       REL=UNIT, ALN=BYTE
+?PR?_?INT_PRINT?SERIAL. . . . . . . . .    C  SEG   00003AH       REL=UNIT, ALN=BYTE
+?PR?_PUTC?SERIAL. . . . . . . . . . . .    C  SEG   000003H       REL=UNIT, ALN=BYTE
+?PR?_PUTS?SERIAL. . . . . . . . . . . .    C  SEG   000025H       REL=UNIT, ALN=BYTE
+?PR?_SERIAL_INIT?SERIAL . . . . . . . .    C  SEG   00000AH       REL=UNIT, ALN=BYTE
+?PR?_SERIAL_WRITE?SERIAL. . . . . . . .    C  SEG   000008H       REL=UNIT, ALN=BYTE
+?PR?_SETUP_BAUDRATE?SERIAL. . . . . . .    C  SEG   00003DH       REL=UNIT, ALN=BYTE
+?PR?GETC?SERIAL . . . . . . . . . . . .    C  SEG   000004H       REL=UNIT, ALN=BYTE
+?PR?SERIAL_READ?SERIAL. . . . . . . . .    C  SEG   000008H       REL=UNIT, ALN=BYTE
+_?INT_PRINT . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_?INT_PRINT?SERIAL
+_PUTC . . . . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_PUTC?SERIAL
+_PUTS . . . . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_PUTS?SERIAL
+_SERIAL_INIT. . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_SERIAL_INIT?SERIAL
+_SERIAL_WRITE . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_SERIAL_WRITE?SERIAL
+_SETUP_BAUDRATE . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?_SETUP_BAUDRATE?SERIAL
+AC. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.6   A   
+ACC . . . . . . . . . . . . . . . . . .    D  ADDR  00E0H     A   
+ADCCON. . . . . . . . . . . . . . . . .    D  ADDR  00A1H     A   
+ADCDATAH. . . . . . . . . . . . . . . .    D  ADDR  00A2H     A   
+ADCDATAL. . . . . . . . . . . . . . . .    D  ADDR  00A3H     A   
+ADCSTATIC . . . . . . . . . . . . . . .    D  ADDR  00A4H     A   
+AR6 . . . . . . . . . . . . . . . . . .    D  ADDR  0006H     A   
+AR7 . . . . . . . . . . . . . . . . . .    D  ADDR  0007H     A   
+B . . . . . . . . . . . . . . . . . . .    D  ADDR  00F0H     A   
+C_T2. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.1   A   
+CE. . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+CK_CTRL . . . . . . . . . . . . . . . .    D  ADDR  00B6H     A   
+CKCON . . . . . . . . . . . . . . . . .    D  ADDR  008EH     A   
+CLK1. . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.1   A   
+CLK2. . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.5   A   
+CP_RL2. . . . . . . . . . . . . . . . .    B  ADDR  00C8H.0   A   
+CPRL2 . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.0   A   
+CS. . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.3   A   
+CT2 . . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.1   A   
+CY. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.7   A   
+DATA? . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.0   A   
+DEV_OFFSET. . . . . . . . . . . . . . .    D  ADDR  00BEH     A   
+DIN0. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.2   A   
+DIO0. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+DIO1. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.1   A   
+AX51 MACRO ASSEMBLER  SERIAL                                                                05/03/09 13:49:37 PAGE    11
+
+DIO2. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.0   A   
+DIO3. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+DIO4. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+DIO5. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+DIO6. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+DIO7. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+DIO8. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+DIO9. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+DOUT2 . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.4   A   
+DPH . . . . . . . . . . . . . . . . . .    D  ADDR  0083H     A   
+DPH0. . . . . . . . . . . . . . . . . .    D  ADDR  0083H     A   
+DPH1. . . . . . . . . . . . . . . . . .    D  ADDR  0085H     A   
+DPL . . . . . . . . . . . . . . . . . .    D  ADDR  0082H     A   
+DPL0. . . . . . . . . . . . . . . . . .    D  ADDR  0082H     A   
+DPL1. . . . . . . . . . . . . . . . . .    D  ADDR  0084H     A   
+DPS . . . . . . . . . . . . . . . . . .    D  ADDR  0086H     A   
+DR1 . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.2   A   
+DR2 . . . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+DR2_CE. . . . . . . . . . . . . . . . .    B  ADDR  00A0H.6   A   
+EA. . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.7   A   
+EICON . . . . . . . . . . . . . . . . .    D  ADDR  00D8H     A   
+EIE . . . . . . . . . . . . . . . . . .    D  ADDR  00E8H     A   
+EIP . . . . . . . . . . . . . . . . . .    D  ADDR  00F8H     A   
+ES. . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.4   A   
+ET0 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.1   A   
+ET1 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.3   A   
+ET2 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.5   A   
+EWDI. . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.4   A   
+EX0 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.0   A   
+EX1 . . . . . . . . . . . . . . . . . .    B  ADDR  00A8H.2   A   
+EX2 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.0   A   
+EX3 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.1   A   
+EX4 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.2   A   
+EX5 . . . . . . . . . . . . . . . . . .    B  ADDR  00E8H.3   A   
+EXEN2 . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.3   A   
+EXF2. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.6   A   
+EXIF. . . . . . . . . . . . . . . . . .    D  ADDR  0091H     A   
+F0. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.5   A   
+F1. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.1   A   
+GETC. . . . . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?GETC?SERIAL
+IE. . . . . . . . . . . . . . . . . . .    D  ADDR  00A8H     A   
+IE0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.1   A   
+IE1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.3   A   
+INT0_N. . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+INT1_N. . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+IP. . . . . . . . . . . . . . . . . . .    D  ADDR  00B8H     A   
+IT0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.0   A   
+IT1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.2   A   
+MPAGE . . . . . . . . . . . . . . . . .    D  ADDR  0092H     A   
+OV. . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.2   A   
+P . . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.0   A   
+P0. . . . . . . . . . . . . . . . . . .    D  ADDR  0080H     A   
+P0_0. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.0   A   
+P0_1. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+P0_2. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+P0_3. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
+P0_4. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
+P0_5. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+P0_6. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+P0_7. . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+P0_ALT. . . . . . . . . . . . . . . . .    D  ADDR  0095H     A   
+P0_DIR. . . . . . . . . . . . . . . . .    D  ADDR  0094H     A   
+P1. . . . . . . . . . . . . . . . . . .    D  ADDR  0090H     A   
+P1_0. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+P1_1. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.1   A   
+P1_2. . . . . . . . . . . . . . . . . .    B  ADDR  0090H.2   A   
+AX51 MACRO ASSEMBLER  SERIAL                                                                05/03/09 13:49:37 PAGE    12
+
+P1_ALT. . . . . . . . . . . . . . . . .    D  ADDR  0097H     A   
+P1_DIR. . . . . . . . . . . . . . . . .    D  ADDR  0096H     A   
+PCON. . . . . . . . . . . . . . . . . .    D  ADDR  0087H     A   
+PS. . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.4   A   
+PSW . . . . . . . . . . . . . . . . . .    D  ADDR  00D0H     A   
+PT0 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.1   A   
+PT1 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.3   A   
+PT2 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.5   A   
+PWDI. . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.4   A   
+PWM . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.7   A   
+PWMCON. . . . . . . . . . . . . . . . .    D  ADDR  00A9H     A   
+PWMDUTY . . . . . . . . . . . . . . . .    D  ADDR  00AAH     A   
+PWR_UP. . . . . . . . . . . . . . . . .    B  ADDR  00A0H.7   A   
+PX0 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.0   A   
+PX1 . . . . . . . . . . . . . . . . . .    B  ADDR  00B8H.2   A   
+PX2 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.0   A   
+PX3 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.1   A   
+PX4 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.2   A   
+PX5 . . . . . . . . . . . . . . . . . .    B  ADDR  00F8H.3   A   
+RADIO . . . . . . . . . . . . . . . . .    D  ADDR  00A0H     A   
+RB8 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.2   A   
+RCAP2H. . . . . . . . . . . . . . . . .    D  ADDR  00CBH     A   
+RCAP2L. . . . . . . . . . . . . . . . .    D  ADDR  00CAH     A   
+RCLK. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.5   A   
+REGX_CTRL . . . . . . . . . . . . . . .    D  ADDR  00ADH     A   
+REGX_LSB. . . . . . . . . . . . . . . .    D  ADDR  00ACH     A   
+REGX_MSB. . . . . . . . . . . . . . . .    D  ADDR  00ABH     A   
+REN . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.4   A   
+RI. . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.0   A   
+RS0 . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.3   A   
+RS1 . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.4   A   
+RSTREAS . . . . . . . . . . . . . . . .    D  ADDR  00B1H     A   
+RXD . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
+S?544 . . . . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?_PUTS?SERIAL
+SBUF. . . . . . . . . . . . . . . . . .    D  ADDR  0099H     A   
+SCON. . . . . . . . . . . . . . . . . .    D  ADDR  0098H     A   
+SERIAL. . . . . . . . . . . . . . . . .    -- ----  -------       
+SERIAL_READ . . . . . . . . . . . . . .    C  ADDR  0000H     R   SEG=?PR?SERIAL_READ?SERIAL
+SM0 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.7   A   
+SM1 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.6   A   
+SM2 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.5   A   
+SP. . . . . . . . . . . . . . . . . . .    D  ADDR  0081H     A   
+SPC_FNC . . . . . . . . . . . . . . . .    D  ADDR  008FH     A   
+SPI_CTRL. . . . . . . . . . . . . . . .    D  ADDR  00B3H     A   
+SPI_DATA. . . . . . . . . . . . . . . .    D  ADDR  00B2H     A   
+SPICLK. . . . . . . . . . . . . . . . .    D  ADDR  00B4H     A   
+T0. . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
+T1. . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.6   A   
+T1_1V2. . . . . . . . . . . . . . . . .    D  ADDR  00BCH     A   
+T2. . . . . . . . . . . . . . . . . . .    B  ADDR  0090H.0   A   
+T2_1V2. . . . . . . . . . . . . . . . .    D  ADDR  00BDH     A   
+T2CON . . . . . . . . . . . . . . . . .    D  ADDR  00C8H     A   
+TB8 . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.3   A   
+TCLK. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.4   A   
+TCON. . . . . . . . . . . . . . . . . .    D  ADDR  0088H     A   
+TEST_MODE . . . . . . . . . . . . . . .    D  ADDR  00B7H     A   
+TF0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.5   A   
+TF1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.7   A   
+TF2 . . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.7   A   
+TH0 . . . . . . . . . . . . . . . . . .    D  ADDR  008CH     A   
+TH1 . . . . . . . . . . . . . . . . . .    D  ADDR  008DH     A   
+TH2 . . . . . . . . . . . . . . . . . .    D  ADDR  00CDH     A   
+TI. . . . . . . . . . . . . . . . . . .    B  ADDR  0098H.1   A   
+TICK_DV . . . . . . . . . . . . . . . .    D  ADDR  00B5H     A   
+TL0 . . . . . . . . . . . . . . . . . .    D  ADDR  008AH     A   
+TL1 . . . . . . . . . . . . . . . . . .    D  ADDR  008BH     A   
+AX51 MACRO ASSEMBLER  SERIAL                                                                05/03/09 13:49:37 PAGE    13
+
+TL2 . . . . . . . . . . . . . . . . . .    D  ADDR  00CCH     A   
+TMOD. . . . . . . . . . . . . . . . . .    D  ADDR  0089H     A   
+TR0 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.4   A   
+TR1 . . . . . . . . . . . . . . . . . .    B  ADDR  0088H.6   A   
+TR2 . . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.2   A   
+TXD . . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
+WDTI. . . . . . . . . . . . . . . . . .    B  ADDR  00D8H.3   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S).

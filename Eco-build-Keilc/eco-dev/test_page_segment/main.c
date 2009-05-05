@@ -13,12 +13,10 @@ struct rf_config rf_data = { {0x00}, /* data2 width */
 	{0xF2, 0xF2, 0xF2, 0xF2, 0xF2}, /* addr1, host addr */
 	{0x63}, /* 24-bit address, 16-bit CRC */
 	{0x6f, 0xEC} };
-struct rf_config *cfg = &rf_data;
-char dst_addr[3] = {0xF1, 0xF1, 0xF1};
-idata char msg[7];
+char idata dst_addr[3] = {0xF1, 0xF1, 0xF1};
+char idata msg[7];
 
 
-extern unsigned char ECO_PAGE_SPI_CONN;
 /* rf.c
 void rf_init();
 void rf_configure(struct rf_config);
@@ -135,8 +133,10 @@ int main()
 	store_cpu_rate(16);
 	P0_DIR &= ~0x28;
 	P0_ALT &= ~0x28;
+
+	
 	rf_init();
-	rf_configure(cfg);
+	rf_configure(&rf_data);
 	serial_init(19200);	
 	eco_page_init();
 	

@@ -175,11 +175,10 @@ REGX_MSB	DATA	0ABH
 
 	RSEG  ?DT?main?MAIN
 ?main?BYTE:
-	ORG  3
-        seg?040:   DS   2
-	ORG  0
-        idx?041:   DS   1
+        idx?040:   DS   1
 	ORG  1
+        seg?041:   DS   2
+	ORG  3
           i?042:   DS   2
 ; #include "Eco/reg24e1.h"
 ; #include "Eco/eco_sys.h"
@@ -199,21 +198,25 @@ main:
 ; {
 			; SOURCE LINE # 11
 ; 	unsigned char idx;
-; 	unsigned int i = 0;
+; 	unsigned char xdata *seg = (unsigned char xdata *)(0x800);
 			; SOURCE LINE # 13
+	MOV  	seg?041,#08H
+	MOV  	seg?041+01H,#00H
+; 	unsigned int i = 0;
+			; SOURCE LINE # 14
 	CLR  	A
 	MOV  	i?042,A
 	MOV  	i?042+01H,A
 ; 	store_cpu_rate(16);
-			; SOURCE LINE # 14
+			; SOURCE LINE # 15
 	MOV  	R7,#010H
 	MOV  	R6,A
 	LCALL	_store_cpu_rate
 ; 	P0_DIR &= ~0x28;
-			; SOURCE LINE # 15
+			; SOURCE LINE # 16
 	ANL  	P0_DIR,#0D7H
 ; 	P0_ALT &= ~0x28;
-			; SOURCE LINE # 16
+			; SOURCE LINE # 17
 	ANL  	P0_ALT,#0D7H
 ; 	//rf_init();
 ; 	//rf_configure(cfg);
@@ -224,71 +227,65 @@ main:
 ; 
 ; 	
 ; 	for(idx = 4; idx > 0; idx--)
-			; SOURCE LINE # 25
-	MOV  	idx?041,#04H
+			; SOURCE LINE # 26
+	MOV  	idx?040,#04H
 ?C0001:
 ; 	{
-			; SOURCE LINE # 26
-; 		blink_led();		
 			; SOURCE LINE # 27
+; 		blink_led();		
+			; SOURCE LINE # 28
 	XRL  	P0,#020H
 ; 		mdelay(300);
-			; SOURCE LINE # 28
+			; SOURCE LINE # 29
 	MOV  	R7,#02CH
 	MOV  	R6,#01H
 	LCALL	_mdelay
 ; 	}
-			; SOURCE LINE # 29
-	DEC  	idx?041
-	MOV  	A,idx?041
+			; SOURCE LINE # 30
+	DEC  	idx?040
+	MOV  	A,idx?040
 	SETB 	C
 	SUBB 	A,#00H
 	JNC  	?C0001
 ?C0002:
 ; 	mdelay(1000);	
-			; SOURCE LINE # 30
+			; SOURCE LINE # 31
 	MOV  	R7,#0E8H
 	MOV  	R6,#03H
 	LCALL	_mdelay
 ; 
 ; 	eeprom_init();
-			; SOURCE LINE # 32
+			; SOURCE LINE # 33
 	LCALL	eeprom_init
 ?C0004:
 ; 	while(1)
-			; SOURCE LINE # 33
-; 	{
 			; SOURCE LINE # 34
-; 		unsigned char xdata *seg = (unsigned char xdata *)(0x800);
+; 	{
 			; SOURCE LINE # 35
-	MOV  	seg?040,#08H
-	MOV  	seg?040+01H,#00H
-; 		
 ; 		//memory page is in ram
-; 
 ; 		for(i=0;i<256;i++)
-			; SOURCE LINE # 39
+			; SOURCE LINE # 37
 	CLR  	A
 	MOV  	i?042,A
 	MOV  	i?042+01H,A
 ?C0006:
 ; 		{
-			; SOURCE LINE # 40
+			; SOURCE LINE # 38
 ; 			*(seg+i) = eeprom_read(i);
-			; SOURCE LINE # 41
+			; SOURCE LINE # 39
 	MOV  	R7,i?042+01H
 	MOV  	R6,i?042
 	LCALL	_eeprom_read
-	MOV  	A,seg?040+01H
+	MOV  	A,seg?041+01H
 	ADD  	A,i?042+01H
 	MOV  	DPL,A
-	MOV  	A,seg?040
+	MOV  	A,seg?041
 	ADDC 	A,i?042
 	MOV  	DPH,A
 	MOV  	A,R7
 	MOVX 	@DPTR,A
 ; 		}
-			; SOURCE LINE # 42
+			; SOURCE LINE # 40
 	INC  	i?042+01H
 	MOV  	A,i?042+01H
 	JNZ  	?C0010
@@ -298,17 +295,6 @@ main:
 	MOV  	A,i?042
 	SUBB 	A,#01H
 	JC   	?C0006
-?C0007:
-; 		blink_led();
-			; SOURCE LINE # 43
-	XRL  	P0,#020H
-; 		mdelay(300);
-			; SOURCE LINE # 44
-	MOV  	R7,#02CH
-	MOV  	R6,#01H
-	LCALL	_mdelay
-; 	}
-			; SOURCE LINE # 45
 	SJMP 	?C0004
 ; END OF main
 

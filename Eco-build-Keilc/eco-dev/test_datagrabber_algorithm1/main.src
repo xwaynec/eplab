@@ -222,7 +222,7 @@ REGX_MSB	DATA	0ABH
         rf_data:   DS   15
 
 	RSEG  ?ID?MAIN
-         s_data:   DS   20
+         s_data:   DS   28
 
 	RSEG  ?ID?main?MAIN
         msg?148:   DS   18
@@ -231,7 +231,7 @@ REGX_MSB	DATA	0ABH
 	DB	00FH
 	DB	rf_data
 	DB	000H
-	DB	0A0H
+	DB	0E0H
 	DB	000H
 	DB	000H
 	DB	000H
@@ -269,14 +269,14 @@ REGX_MSB	DATA	0ABH
 ; #include <math.h> /* for log */
 ; 
 ; struct rf_config rf_data = { {0x00}, /* data2 width */
-; 	{0xA0}, /* data1 width */ 
+; 	{0xE0}, /* data1 width */ 
 ; 	{0x00, 0x00, 0x00, 0x00, 0x00}, /* addr2 */
 ; 	{0xF2, 0xF2, 0xF2, 0xF2, 0xF2}, /* addr1, host addr */
 ; 	{0x63}, /* 24-bit address, 16-bit CRC */
 ; 	{0x6f, 0xEC} };
 ; struct rf_config *cfg = &rf_data;
 ; char dst_addr[3] = {0xF1, 0xF1, 0xF1};
-; char idata s_data[20];
+; char idata s_data[28];
 ; 
 ; 
 ; void delta_compress(char ptr[],int len)
@@ -690,12 +690,12 @@ main:
 	MOV  	R4,#00H
 	LCALL	_delta_compress
 ; 
-; 		rf_send(dst_addr, 3, s_data, 20);
+; 		rf_send(dst_addr, 3, s_data, 28);
 			; SOURCE LINE # 114
 	MOV  	?_rf_send?BYTE+04H,#00H
 	MOV  	?_rf_send?BYTE+05H,#HIGH (s_data)
 	MOV  	?_rf_send?BYTE+06H,#LOW (s_data)
-	MOV  	?_rf_send?BYTE+07H,#014H
+	MOV  	?_rf_send?BYTE+07H,#01CH
 	MOV  	R3,#00H
 	MOV  	R2,#HIGH (dst_addr)
 	MOV  	R1,#LOW (dst_addr)

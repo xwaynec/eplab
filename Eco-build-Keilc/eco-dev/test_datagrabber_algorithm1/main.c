@@ -10,14 +10,14 @@
 #include <math.h> /* for log */
 
 struct rf_config rf_data = { {0x00}, /* data2 width */
-	{0xA0}, /* data1 width */ 
+	{0xE0}, /* data1 width */ 
 	{0x00, 0x00, 0x00, 0x00, 0x00}, /* addr2 */
 	{0xF2, 0xF2, 0xF2, 0xF2, 0xF2}, /* addr1, host addr */
 	{0x63}, /* 24-bit address, 16-bit CRC */
 	{0x6f, 0xEC} };
 struct rf_config *cfg = &rf_data;
 char dst_addr[3] = {0xF1, 0xF1, 0xF1};
-char idata s_data[20];
+char idata s_data[28];
 
 
 void delta_compress(char ptr[],int len)
@@ -111,7 +111,7 @@ int main()
 
 		delta_compress(msg,18);
 
-		rf_send(dst_addr, 3, s_data, 20);
+		rf_send(dst_addr, 3, s_data, 28);
 
 		mdelay(200);
 		blink_led();

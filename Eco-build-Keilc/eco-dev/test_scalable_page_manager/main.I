@@ -967,7 +967,7 @@
  {0x6f, 0xEC} };
  struct rf_config *cfg = &rf_data;
  char dst_addr[3] = {0xF1, 0xF1, 0xF1};
- idata char msg[7];
+ char idata msg[7];
  
  
  
@@ -1057,7 +1057,8 @@
   P0 ^= 0x20;
  mdelay(400);
  }
- mdelay(1000);	
+ mdelay(1000);
+ 
  }
  void blink4()
  {
@@ -1077,7 +1078,8 @@
   P0 ^= 0x20;
  mdelay(400);
  }	
- mdelay(1000);	
+ mdelay(1000);
+ 
  }
  
  int main()

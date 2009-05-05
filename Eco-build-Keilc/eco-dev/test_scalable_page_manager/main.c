@@ -15,7 +15,7 @@ struct rf_config rf_data = { {0x00}, /* data2 width */
 	{0x6f, 0xEC} };
 struct rf_config *cfg = &rf_data;
 char dst_addr[3] = {0xF1, 0xF1, 0xF1};
-idata char msg[7];
+char idata msg[7];
 
 
 //extern unsigned char ECO_PAGE_SPI_CONN;

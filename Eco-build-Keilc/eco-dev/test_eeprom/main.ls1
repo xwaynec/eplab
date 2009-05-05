@@ -1,4 +1,4 @@
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:35:26 PAGE     1
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:50:29 PAGE     1
 
 
 MACRO ASSEMBLER AX51 V3.06a
@@ -65,7 +65,7 @@ LOC    OBJ             LINE     SOURCE
  0098.0                  55     RI      BIT     098H.0
  00D0.7                  56     CY      BIT     0D0H.7
  0098.1                  57     TI      BIT     098H.1
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:35:26 PAGE     2
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:50:29 PAGE     2
 
  00BC                    58     T1_1V2  DATA    0BCH
  008F                    59     SPC_FNC DATA    08FH
@@ -133,7 +133,7 @@ LOC    OBJ             LINE     SOURCE
  0098.7                 121     SM0     BIT     098H.7
  008A                   122     TL0     DATA    08AH
  00E8.2                 123     EX4     BIT     0E8H.2
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:35:26 PAGE     3
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:50:29 PAGE     3
 
  0098.6                 124     SM1     BIT     098H.6
  008B                   125     TL1     DATA    08BH
@@ -189,149 +189,135 @@ LOC    OBJ             LINE     SOURCE
                         175     
 ------                  176             RSEG  ?DT?main?MAIN
 000000                  177     ?main?BYTE:
-000003                  178             ORG  3
-000003                  179             seg?040:   DS   2
-000000                  180             ORG  0
-000000                  181             idx?041:   DS   1
-000001                  182             ORG  1
-000001                  183               i?042:   DS   2
-                        184     ; #include "Eco/reg24e1.h"
-                        185     ; #include "Eco/eco_sys.h"
-                        186     ; #include "utils/utils.h"
-                        187     ; #include "serial/serial.h"
-                        188     ; #include "isr/isr_rf.h"
-                        189     ; #include "eeprom/eeprom.h"
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:35:26 PAGE     4
+000000                  178             idx?040:   DS   1
+000001                  179             ORG  1
+000001                  180             seg?041:   DS   2
+000003                  181             ORG  3
+000003                  182               i?042:   DS   2
+                        183     ; #include "Eco/reg24e1.h"
+                        184     ; #include "Eco/eco_sys.h"
+                        185     ; #include "utils/utils.h"
+                        186     ; #include "serial/serial.h"
+                        187     ; #include "isr/isr_rf.h"
+                        188     ; #include "eeprom/eeprom.h"
+                        189     ; //#include "eco_page.h"
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:50:29 PAGE     4
 
-                        190     ; //#include "eco_page.h"
+                        190     ; 
                         191     ; 
-                        192     ; 
-                        193     ; int main()
-                        194     
-------                  195             RSEG  ?PR?main?MAIN
-000000                  196     main:
-                        197             USING   0
-                        198                             ; SOURCE LINE # 10
-                        199     ; {
-                        200                             ; SOURCE LINE # 11
-                        201     ;       unsigned char idx;
-                        202     ;       unsigned int i = 0;
-                        203                             ; SOURCE LINE # 13
-000000 E4               204             CLR     A
-000001 F500       F     205             MOV     i?042,A
-000003 F500       F     206             MOV     i?042+01H,A
-                        207     ;       store_cpu_rate(16);
-                        208                             ; SOURCE LINE # 14
-000005 7F10             209             MOV     R7,#010H
-000007 FE               210             MOV     R6,A
-000008 120000     E     211             LCALL   _store_cpu_rate
-                        212     ;       P0_DIR &= ~0x28;
-                        213                             ; SOURCE LINE # 15
-00000B 5394D7           214             ANL     P0_DIR,#0D7H
-                        215     ;       P0_ALT &= ~0x28;
+                        192     ; int main()
+                        193     
+------                  194             RSEG  ?PR?main?MAIN
+000000                  195     main:
+                        196             USING   0
+                        197                             ; SOURCE LINE # 10
+                        198     ; {
+                        199                             ; SOURCE LINE # 11
+                        200     ;       unsigned char idx;
+                        201     ;       unsigned char xdata *seg = (unsigned char xdata *)(0x800);
+                        202                             ; SOURCE LINE # 13
+000000 750008     F     203             MOV     seg?041,#08H
+000003 750000     F     204             MOV     seg?041+01H,#00H
+                        205     ;       unsigned int i = 0;
+                        206                             ; SOURCE LINE # 14
+000006 E4               207             CLR     A
+000007 F500       F     208             MOV     i?042,A
+000009 F500       F     209             MOV     i?042+01H,A
+                        210     ;       store_cpu_rate(16);
+                        211                             ; SOURCE LINE # 15
+00000B 7F10             212             MOV     R7,#010H
+00000D FE               213             MOV     R6,A
+00000E 120000     E     214             LCALL   _store_cpu_rate
+                        215     ;       P0_DIR &= ~0x28;
                         216                             ; SOURCE LINE # 16
-00000E 5395D7           217             ANL     P0_ALT,#0D7H
-                        218     ;       //rf_init();
-                        219     ;       //rf_configure(cfg);
-                        220     ;       //serial_init(19200);   
-                        221     ;       //eco_page_init();
-                        222     ;       
-                        223     ;       //long_function(4,6,8,4);
-                        224     ; 
+000011 5394D7           217             ANL     P0_DIR,#0D7H
+                        218     ;       P0_ALT &= ~0x28;
+                        219                             ; SOURCE LINE # 17
+000014 5395D7           220             ANL     P0_ALT,#0D7H
+                        221     ;       //rf_init();
+                        222     ;       //rf_configure(cfg);
+                        223     ;       //serial_init(19200);   
+                        224     ;       //eco_page_init();
                         225     ;       
-                        226     ;       for(idx = 4; idx > 0; idx--)
-                        227                             ; SOURCE LINE # 25
-000011 750004     F     228             MOV     idx?041,#04H
-000014                  229     ?C0001:
-                        230     ;       {
-                        231                             ; SOURCE LINE # 26
-                        232     ;               blink_led();            
-                        233                             ; SOURCE LINE # 27
-000014 638020           234             XRL     P0,#020H
-                        235     ;               mdelay(300);
+                        226     ;       //long_function(4,6,8,4);
+                        227     ; 
+                        228     ;       
+                        229     ;       for(idx = 4; idx > 0; idx--)
+                        230                             ; SOURCE LINE # 26
+000017 750004     F     231             MOV     idx?040,#04H
+00001A                  232     ?C0001:
+                        233     ;       {
+                        234                             ; SOURCE LINE # 27
+                        235     ;               blink_led();            
                         236                             ; SOURCE LINE # 28
-000017 7F2C             237             MOV     R7,#02CH
-000019 7E01             238             MOV     R6,#01H
-00001B 120000     E     239             LCALL   _mdelay
-                        240     ;       }
-                        241                             ; SOURCE LINE # 29
-00001E 1500       F     242             DEC     idx?041
-000020 E500       F     243             MOV     A,idx?041
-000022 D3               244             SETB    C
-000023 9400             245             SUBB    A,#00H
-000025 50ED             246             JNC     ?C0001
-000027                  247     ?C0002:
-                        248     ;       mdelay(1000);   
-                        249                             ; SOURCE LINE # 30
-000027 7FE8             250             MOV     R7,#0E8H
-000029 7E03             251             MOV     R6,#03H
-00002B 120000     E     252             LCALL   _mdelay
-                        253     ; 
-                        254     ;       eeprom_init();
-                        255                             ; SOURCE LINE # 32
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:35:26 PAGE     5
+00001A 638020           237             XRL     P0,#020H
+                        238     ;               mdelay(300);
+                        239                             ; SOURCE LINE # 29
+00001D 7F2C             240             MOV     R7,#02CH
+00001F 7E01             241             MOV     R6,#01H
+000021 120000     E     242             LCALL   _mdelay
+                        243     ;       }
+                        244                             ; SOURCE LINE # 30
+000024 1500       F     245             DEC     idx?040
+000026 E500       F     246             MOV     A,idx?040
+000028 D3               247             SETB    C
+000029 9400             248             SUBB    A,#00H
+00002B 50ED             249             JNC     ?C0001
+00002D                  250     ?C0002:
+                        251     ;       mdelay(1000);   
+                        252                             ; SOURCE LINE # 31
+00002D 7FE8             253             MOV     R7,#0E8H
+00002F 7E03             254             MOV     R6,#03H
+000031 120000     E     255             LCALL   _mdelay
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:50:29 PAGE     5
 
-00002E 120000     E     256             LCALL   eeprom_init
-000031                  257     ?C0004:
-                        258     ;       while(1)
-                        259                             ; SOURCE LINE # 33
-                        260     ;       {
-                        261                             ; SOURCE LINE # 34
-                        262     ;               unsigned char xdata *seg = (unsigned char xdata *)(0x800);
-                        263                             ; SOURCE LINE # 35
-000031 750008     F     264             MOV     seg?040,#08H
-000034 750000     F     265             MOV     seg?040+01H,#00H
-                        266     ;               
-                        267     ;               //memory page is in ram
-                        268     ; 
-                        269     ;               for(i=0;i<256;i++)
-                        270                             ; SOURCE LINE # 39
-000037 E4               271             CLR     A
-000038 F500       F     272             MOV     i?042,A
-00003A F500       F     273             MOV     i?042+01H,A
-00003C                  274     ?C0006:
-                        275     ;               {
-                        276                             ; SOURCE LINE # 40
-                        277     ;                       *(seg+i) = eeprom_read(i);
-                        278                             ; SOURCE LINE # 41
-00003C AF00       F     279             MOV     R7,i?042+01H
-00003E AE00       F     280             MOV     R6,i?042
-000040 120000     E     281             LCALL   _eeprom_read
-000043 E500       F     282             MOV     A,seg?040+01H
-000045 2500       F     283             ADD     A,i?042+01H
-000047 F582             284             MOV     DPL,A
-000049 E500       F     285             MOV     A,seg?040
-00004B 3500       F     286             ADDC    A,i?042
-00004D F583             287             MOV     DPH,A
-00004F EF               288             MOV     A,R7
-000050 F0               289             MOVX    @DPTR,A
-                        290     ;               }
-                        291                             ; SOURCE LINE # 42
-000051 0500       F     292             INC     i?042+01H
-000053 E500       F     293             MOV     A,i?042+01H
-000055 7002             294             JNZ     ?C0010
-000057 0500       F     295             INC     i?042
-000059                  296     ?C0010:
-000059 C3               297             CLR     C
-00005A E500       F     298             MOV     A,i?042
-00005C 9401             299             SUBB    A,#01H
-00005E 40DC             300             JC      ?C0006
-000060                  301     ?C0007:
-                        302     ;               blink_led();
-                        303                             ; SOURCE LINE # 43
-000060 638020           304             XRL     P0,#020H
-                        305     ;               mdelay(300);
-                        306                             ; SOURCE LINE # 44
-000063 7F2C             307             MOV     R7,#02CH
-000065 7E01             308             MOV     R6,#01H
-000067 120000     E     309             LCALL   _mdelay
-                        310     ;       }
-                        311                             ; SOURCE LINE # 45
-00006A 80C5             312             SJMP    ?C0004
-                        313     ; END OF main
-                        314     
-                        315             END
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:35:26 PAGE     6
+                        256     ; 
+                        257     ;       eeprom_init();
+                        258                             ; SOURCE LINE # 33
+000034 120000     E     259             LCALL   eeprom_init
+000037                  260     ?C0004:
+                        261     ;       while(1)
+                        262                             ; SOURCE LINE # 34
+                        263     ;       {
+                        264                             ; SOURCE LINE # 35
+                        265     ;               //memory page is in ram
+                        266     ;               for(i=0;i<256;i++)
+                        267                             ; SOURCE LINE # 37
+000037 E4               268             CLR     A
+000038 F500       F     269             MOV     i?042,A
+00003A F500       F     270             MOV     i?042+01H,A
+00003C                  271     ?C0006:
+                        272     ;               {
+                        273                             ; SOURCE LINE # 38
+                        274     ;                       *(seg+i) = eeprom_read(i);
+                        275                             ; SOURCE LINE # 39
+00003C AF00       F     276             MOV     R7,i?042+01H
+00003E AE00       F     277             MOV     R6,i?042
+000040 120000     E     278             LCALL   _eeprom_read
+000043 E500       F     279             MOV     A,seg?041+01H
+000045 2500       F     280             ADD     A,i?042+01H
+000047 F582             281             MOV     DPL,A
+000049 E500       F     282             MOV     A,seg?041
+00004B 3500       F     283             ADDC    A,i?042
+00004D F583             284             MOV     DPH,A
+00004F EF               285             MOV     A,R7
+000050 F0               286             MOVX    @DPTR,A
+                        287     ;               }
+                        288                             ; SOURCE LINE # 40
+000051 0500       F     289             INC     i?042+01H
+000053 E500       F     290             MOV     A,i?042+01H
+000055 7002             291             JNZ     ?C0010
+000057 0500       F     292             INC     i?042
+000059                  293     ?C0010:
+000059 C3               294             CLR     C
+00005A E500       F     295             MOV     A,i?042
+00005C 9401             296             SUBB    A,#01H
+00005E 40DC             297             JC      ?C0006
+000060 80D5             298             SJMP    ?C0004
+                        299     ; END OF main
+                        300     
+                        301             END
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:50:29 PAGE     6
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -339,16 +325,15 @@ SYMBOL TABLE LISTING
 
 N A M E                        T Y P E  V A L U E     ATTRIBUTES
 
-?C0001. . . . . . . . . . . .  C  ADDR  0014H     R   SEG=?PR?MAIN?MAIN
-?C0002. . . . . . . . . . . .  C  ADDR  0027H     R   SEG=?PR?MAIN?MAIN
-?C0004. . . . . . . . . . . .  C  ADDR  0031H     R   SEG=?PR?MAIN?MAIN
+?C0001. . . . . . . . . . . .  C  ADDR  001AH     R   SEG=?PR?MAIN?MAIN
+?C0002. . . . . . . . . . . .  C  ADDR  002DH     R   SEG=?PR?MAIN?MAIN
+?C0004. . . . . . . . . . . .  C  ADDR  0037H     R   SEG=?PR?MAIN?MAIN
 ?C0006. . . . . . . . . . . .  C  ADDR  003CH     R   SEG=?PR?MAIN?MAIN
-?C0007. . . . . . . . . . . .  C  ADDR  0060H     R   SEG=?PR?MAIN?MAIN
 ?C0010. . . . . . . . . . . .  C  ADDR  0059H     R   SEG=?PR?MAIN?MAIN
 ?C_STARTUP. . . . . . . . . .  C  ADDR  -------       EXT
 ?DT?MAIN?MAIN . . . . . . . .  D  SEG   000005H       REL=UNIT, ALN=BYTE
 ?MAIN?BYTE. . . . . . . . . .  D  ADDR  0000H     R   SEG=?DT?MAIN?MAIN
-?PR?MAIN?MAIN . . . . . . . .  C  SEG   00006CH       REL=UNIT, ALN=BYTE
+?PR?MAIN?MAIN . . . . . . . .  C  SEG   000062H       REL=UNIT, ALN=BYTE
 _EEPROM_READ. . . . . . . . .  C  ADDR  -------       EXT
 _MDELAY . . . . . . . . . . .  C  ADDR  -------       EXT
 _STORE_CPU_RATE . . . . . . .  C  ADDR  -------       EXT
@@ -399,9 +384,9 @@ EEPROM_INIT . . . . . . . . .  C  ADDR  -------       EXT
 EICON . . . . . . . . . . . .  D  ADDR  00D8H     A   
 EIE . . . . . . . . . . . . .  D  ADDR  00E8H     A   
 EIP . . . . . . . . . . . . .  D  ADDR  00F8H     A   
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:35:26 PAGE     7
-
 ES. . . . . . . . . . . . . .  B  ADDR  00A8H.4   A   
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:50:29 PAGE     7
+
 ET0 . . . . . . . . . . . . .  B  ADDR  00A8H.1   A   
 ET1 . . . . . . . . . . . . .  B  ADDR  00A8H.3   A   
 ET2 . . . . . . . . . . . . .  B  ADDR  00A8H.5   A   
@@ -417,8 +402,8 @@ EXF2. . . . . . . . . . . . .  B  ADDR  00C8H.6   A
 EXIF. . . . . . . . . . . . .  D  ADDR  0091H     A   
 F0. . . . . . . . . . . . . .  B  ADDR  00D0H.5   A   
 F1. . . . . . . . . . . . . .  B  ADDR  00D0H.1   A   
-I?042 . . . . . . . . . . . .  D  ADDR  0001H     R   SEG=?DT?MAIN?MAIN
-IDX?041 . . . . . . . . . . .  D  ADDR  0000H     R   SEG=?DT?MAIN?MAIN
+I?042 . . . . . . . . . . . .  D  ADDR  0003H     R   SEG=?DT?MAIN?MAIN
+IDX?040 . . . . . . . . . . .  D  ADDR  0000H     R   SEG=?DT?MAIN?MAIN
 IE. . . . . . . . . . . . . .  D  ADDR  00A8H     A   
 IE0 . . . . . . . . . . . . .  B  ADDR  0088H.1   A   
 IE1 . . . . . . . . . . . . .  B  ADDR  0088H.3   A   
@@ -467,9 +452,9 @@ PX4 . . . . . . . . . . . . .  B  ADDR  00F8H.2   A
 PX5 . . . . . . . . . . . . .  B  ADDR  00F8H.3   A   
 RADIO . . . . . . . . . . . .  D  ADDR  00A0H     A   
 RB8 . . . . . . . . . . . . .  B  ADDR  0098H.2   A   
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:35:26 PAGE     8
-
 RCAP2H. . . . . . . . . . . .  D  ADDR  00CBH     A   
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/28/09 16:50:29 PAGE     8
+
 RCAP2L. . . . . . . . . . . .  D  ADDR  00CAH     A   
 RCLK. . . . . . . . . . . . .  B  ADDR  00C8H.5   A   
 REGX_CTRL . . . . . . . . . .  D  ADDR  00ADH     A   
@@ -483,7 +468,7 @@ RSTREAS . . . . . . . . . . .  D  ADDR  00B1H     A
 RXD . . . . . . . . . . . . .  B  ADDR  0080H.1   A   
 SBUF. . . . . . . . . . . . .  D  ADDR  0099H     A   
 SCON. . . . . . . . . . . . .  D  ADDR  0098H     A   
-SEG?040 . . . . . . . . . . .  D  ADDR  0003H     R   SEG=?DT?MAIN?MAIN
+SEG?041 . . . . . . . . . . .  D  ADDR  0001H     R   SEG=?DT?MAIN?MAIN
 SM0 . . . . . . . . . . . . .  B  ADDR  0098H.7   A   
 SM1 . . . . . . . . . . . . .  B  ADDR  0098H.6   A   
 SM2 . . . . . . . . . . . . .  B  ADDR  0098H.5   A   

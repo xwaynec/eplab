@@ -1055,14 +1055,14 @@
  
  
  struct rf_config rf_data = { {0x00},  
- {0xA0},  
+ {0xE0},  
  {0x00, 0x00, 0x00, 0x00, 0x00},  
  {0xF2, 0xF2, 0xF2, 0xF2, 0xF2},  
  {0x63},  
  {0x6f, 0xEC} };
  struct rf_config *cfg = &rf_data;
  char dst_addr[3] = {0xF1, 0xF1, 0xF1};
- char idata s_data[20];
+ char idata s_data[28];
  
  
  void delta_compress(char ptr[],int len)
@@ -1156,7 +1156,7 @@
  
  delta_compress(msg,18);
  
- rf_send(dst_addr, 3, s_data, 20);
+ rf_send(dst_addr, 3, s_data, 28);
  
  mdelay(200);
   P0 ^= 0x20;

@@ -1,4 +1,4 @@
-C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:35:26 PAGE 1   
+C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:50:29 PAGE 1   
 
 
 C51 COMPILER V8.16, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   51      =1  sfr T1_1V2              = 0xBC ;
   52      =1  sfr T2_1V2              = 0xBD ;
   53      =1  sfr DEV_OFFSET  = 0xBE ;
-C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:35:26 PAGE 2   
+C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:50:29 PAGE 2   
 
   54      =1  sfr T2CON               = 0xC8 ;
   55      =1  sfr RCAP2L              = 0xCA ;
@@ -126,7 +126,7 @@ line level    source
  113      =1  sbit RI         = 0x98 ;
  114      =1  sbit TI         = 0x99 ;
  115      =1  sbit RB8        = 0x9A ;
-C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:35:26 PAGE 3   
+C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:50:29 PAGE 3   
 
  116      =1  sbit TB8        = 0x9B ;
  117      =1  sbit REN        = 0x9C ;
@@ -190,7 +190,7 @@ line level    source
  175      =1  
  176      =1  /*  EIE  */
  177      =1  sbit EX2        = 0xE8 ;
-C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:35:26 PAGE 4   
+C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:50:29 PAGE 4   
 
  178      =1  sbit EX3        = 0xE9 ;
  179      =1  sbit EX4        = 0xEA ;
@@ -254,7 +254,7 @@ line level    source
            =2 
            =2 /*  BYTE Registers  */
            =2 sfr P0                  = 0x80 ;
-C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:35:26 PAGE 5   
+C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:50:29 PAGE 5   
 
            =2 sfr SP                  = 0x81 ;
            =2 sfr DPL                 = 0x82 ;
@@ -318,7 +318,7 @@ line level    source
            =2 
            =2 
            =2 /*  BIT Registers  */
-C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:35:26 PAGE 6   
+C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:50:29 PAGE 6   
 
            =2 /* P0 */
            =2 sbit P0_0       = 0x80  ;
@@ -382,7 +382,7 @@ line level    source
            =2 sbit DOUT2      = 0xA4 ;
            =2 sbit CLK2       = 0xA5 ;
            =2 sbit DR2_CE     = 0xA6 ;
-C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:35:26 PAGE 7   
+C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:50:29 PAGE 7   
 
            =2 sbit DR2        = 0xA6 ;
            =2 sbit CE         = 0xA6 ;
@@ -446,7 +446,7 @@ line level    source
            =2 
            =2 
            =2 /* BIT definitions for bits that are not directly accessible */
-C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:35:26 PAGE 8   
+C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:50:29 PAGE 8   
 
            =2 /* PCON bits */
            =2 #define IDL             0x01
@@ -510,7 +510,7 @@ line level    source
    6      =1   * notice are retained. All other uses require explicit written
    7      =1   * permission from NTHU. 
    8      =1   */
-C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:35:26 PAGE 9   
+C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:50:29 PAGE 9   
 
    9      =1  #ifndef _SERIAL_H_
   10      =1  #define _SERIAL_H_
@@ -574,7 +574,7 @@ line level    source
   33      =1  void rf_init();
   34      =1  void rf_configure(struct rf_config *cfg);
   35      =1  void rf_send(char *addr, unsigned char addr_len,
-C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:35:26 PAGE 10  
+C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:50:29 PAGE 10  
 
   36      =1                  char *payload, unsigned char pl_len);
   37      =1  void rf_wait_msg();
@@ -618,45 +618,41 @@ line level    source
   10          int main()
   11          {
   12   1              unsigned char idx;
-  13   1              unsigned int i = 0;
-  14   1              store_cpu_rate(16);
-  15   1              P0_DIR &= ~0x28;
-  16   1              P0_ALT &= ~0x28;
-  17   1              //rf_init();
-  18   1              //rf_configure(cfg);
-  19   1              //serial_init(19200);   
-  20   1              //eco_page_init();
-  21   1              
-  22   1              //long_function(4,6,8,4);
-  23   1      
-  24   1              
-  25   1              for(idx = 4; idx > 0; idx--)
-  26   1              {
-  27   2                      blink_led();            
-  28   2                      mdelay(300);
-  29   2              }
-  30   1              mdelay(1000);   
-  31   1      
-  32   1              eeprom_init();
-C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:35:26 PAGE 11  
+  13   1              unsigned char xdata *seg = (unsigned char xdata *)(0x800);
+  14   1              unsigned int i = 0;
+  15   1              store_cpu_rate(16);
+  16   1              P0_DIR &= ~0x28;
+  17   1              P0_ALT &= ~0x28;
+  18   1              //rf_init();
+  19   1              //rf_configure(cfg);
+  20   1              //serial_init(19200);   
+  21   1              //eco_page_init();
+  22   1              
+  23   1              //long_function(4,6,8,4);
+  24   1      
+  25   1              
+  26   1              for(idx = 4; idx > 0; idx--)
+  27   1              {
+  28   2                      blink_led();            
+  29   2                      mdelay(300);
+  30   2              }
+  31   1              mdelay(1000);   
+  32   1      
+C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:50:29 PAGE 11  
 
-  33   1              while(1)
-  34   1              {
-  35   2                      unsigned char xdata *seg = (unsigned char xdata *)(0x800);
-  36   2                      
-  37   2                      //memory page is in ram
-  38   2      
-  39   2                      for(i=0;i<256;i++)
-  40   2                      {
-  41   3                              *(seg+i) = eeprom_read(i);
-  42   3                      }
-  43   2                      blink_led();
-  44   2                      mdelay(300);
-  45   2              }
-  46   1      
-  47   1              return 0;
-  48   1      }
-C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:35:26 PAGE 12  
+  33   1              eeprom_init();
+  34   1              while(1)
+  35   1              {
+  36   2                      //memory page is in ram
+  37   2                      for(i=0;i<256;i++)
+  38   2                      {
+  39   3                              *(seg+i) = eeprom_read(i);
+  40   3                      }
+  41   2              }
+  42   1      
+  43   1              return 0;
+  44   1      }
+C51 COMPILER V8.16   MAIN                                                                  04/28/2009 16:50:29 PAGE 12  
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -667,9 +663,9 @@ P0 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0080H  1
 _eeprom_read . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 eeprom_init. . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 main . . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  seg?040. . . . . . . . . . . . . . .  AUTO     DATA   PTR      0003H  2
-  idx?041. . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0000H  1
-  i?042. . . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0001H  2
+  idx?040. . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0000H  1
+  seg?041. . . . . . . . . . . . . . .  AUTO     DATA   PTR      0001H  2
+  i?042. . . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0003H  2
 rf_config. . . . . . . . . . . . . . .  * TAG *  -----  STRUCT   -----  15
   data2_width. . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0000H  1
   data1_width. . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0001H  1
@@ -686,7 +682,7 @@ radio_buffer . . . . . . . . . . . . .  * TAG *  -----  STRUCT   -----  24
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    108    ----
+   CODE SIZE        =     98    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

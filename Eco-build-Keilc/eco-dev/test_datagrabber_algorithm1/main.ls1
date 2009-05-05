@@ -1,4 +1,4 @@
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE     1
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE     1
 
 
 MACRO ASSEMBLER AX51 V3.06a
@@ -65,7 +65,7 @@ LOC    OBJ             LINE     SOURCE
  0098.0                  55     RI      BIT     098H.0
  00D0.7                  56     CY      BIT     0D0H.7
  0098.1                  57     TI      BIT     098H.1
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE     2
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE     2
 
  00BC                    58     T1_1V2  DATA    0BCH
  008F                    59     SPC_FNC DATA    08FH
@@ -133,7 +133,7 @@ LOC    OBJ             LINE     SOURCE
  0098.7                 121     SM0     BIT     098H.7
  008A                   122     TL0     DATA    08AH
  00E8.2                 123     EX4     BIT     0E8H.2
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE     3
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE     3
 
  0098.6                 124     SM1     BIT     098H.6
  008B                   125     TL1     DATA    08BH
@@ -201,7 +201,7 @@ LOC    OBJ             LINE     SOURCE
                         187             EXTRN   CODE (?C?FCASTI)
                         188             EXTRN   CODE (?C?FPCMP3)
                         189             EXTRN   CODE (?C?CASTF)
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE     4
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE     4
 
                         190             EXTRN   CODE (?C_STARTUP)
                         191             PUBLIC  s_data
@@ -238,7 +238,7 @@ LOC    OBJ             LINE     SOURCE
 000006                  222             rf_data:   DS   15
                         223     
 ------                  224             RSEG  ?ID?MAIN
-000000                  225              s_data:   DS   20
+000000                  225              s_data:   DS   28
                         226     
 ------                  227             RSEG  ?ID?main?MAIN
 000000                  228             msg?148:   DS   18
@@ -247,7 +247,7 @@ LOC    OBJ             LINE     SOURCE
 000000 0F               231             DB      00FH
 000001 00         F     232             DB      rf_data
 000002 00               233             DB      000H
-000003 A0               234             DB      0A0H
+000003 E0               234             DB      0E0H
 000004 00               235             DB      000H
 000005 00               236             DB      000H
 000006 00               237             DB      000H
@@ -269,7 +269,7 @@ LOC    OBJ             LINE     SOURCE
                         253     
 000016 03               254             DB      003H
 000017 00         F     255             DB      dst_addr
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE     5
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE     5
 
 000018 F1               256             DB      0F1H
 000019 F1               257             DB      0F1H
@@ -287,14 +287,14 @@ LOC    OBJ             LINE     SOURCE
                         269     ; #include <math.h> /* for log */
                         270     ; 
                         271     ; struct rf_config rf_data = { {0x00}, /* data2 width */
-                        272     ;       {0xA0}, /* data1 width */ 
+                        272     ;       {0xE0}, /* data1 width */ 
                         273     ;       {0x00, 0x00, 0x00, 0x00, 0x00}, /* addr2 */
                         274     ;       {0xF2, 0xF2, 0xF2, 0xF2, 0xF2}, /* addr1, host addr */
                         275     ;       {0x63}, /* 24-bit address, 16-bit CRC */
                         276     ;       {0x6f, 0xEC} };
                         277     ; struct rf_config *cfg = &rf_data;
                         278     ; char dst_addr[3] = {0xF1, 0xF1, 0xF1};
-                        279     ; char idata s_data[20];
+                        279     ; char idata s_data[28];
                         280     ; 
                         281     ; 
                         282     ; void delta_compress(char ptr[],int len)
@@ -337,7 +337,7 @@ LOC    OBJ             LINE     SOURCE
                         319     ;       {
                         320                             ; SOURCE LINE # 31
                         321     ;               delta = ptr[i] - ptr[i-1];
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE     6
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE     6
 
                         322                             ; SOURCE LINE # 32
 000027 AB00       F     323             MOV     R3,ptr?040
@@ -405,7 +405,7 @@ LOC    OBJ             LINE     SOURCE
                         385                             ; SOURCE LINE # 39
                         386     ;                       s_data[i] = delta;              
                         387                             ; SOURCE LINE # 40
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE     7
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE     7
 
 000083 AF00       F     388             MOV     R7,delta?043+03H
 000085 AE00       F     389             MOV     R6,delta?043+02H
@@ -473,7 +473,7 @@ LOC    OBJ             LINE     SOURCE
 00001A 120000     E     451             LCALL   rf_init
                         452     ;       rf_configure(cfg);
                         453                             ; SOURCE LINE # 56
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE     8
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE     8
 
 00001D AB00       F     454             MOV     R3,cfg
 00001F AA00       F     455             MOV     R2,cfg+01H
@@ -541,7 +541,7 @@ LOC    OBJ             LINE     SOURCE
 00005E 8E00       F     517             MOV     acc_y?145,R6
 000060 8F00       F     518             MOV     acc_y?145+01H,R7
                         519     ;               acc_z = adc_read(Z_AXIS);
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE     9
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE     9
 
                         520                             ; SOURCE LINE # 75
 000062 7F06             521             MOV     R7,#06H
@@ -609,7 +609,7 @@ LOC    OBJ             LINE     SOURCE
 0000A7 120000     E     583             LCALL   _adc_read
 0000AA 8E00       F     584             MOV     acc_z?146,R6
 0000AC 8F00       F     585             MOV     acc_z?146+01H,R7
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE    10
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE    10
 
                         586     ;       
                         587     ;               msg[6] = acc_x & 0x00FF;
@@ -677,7 +677,7 @@ LOC    OBJ             LINE     SOURCE
                         649                             ; SOURCE LINE # 103
 0000F1 E500       F     650             MOV     A,acc_x?144+01H
 0000F3 7800       F     651             MOV     R0,#LOW (msg?148+0CH)
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE    11
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE    11
 
 0000F5 F6               652             MOV     @R0,A
                         653     ;               msg[13] = acc_x >> 8;
@@ -720,12 +720,12 @@ LOC    OBJ             LINE     SOURCE
 000118 7C00             690             MOV     R4,#00H
 00011A 120000     F     691             LCALL   _delta_compress
                         692     ; 
-                        693     ;               rf_send(dst_addr, 3, s_data, 20);
+                        693     ;               rf_send(dst_addr, 3, s_data, 28);
                         694                             ; SOURCE LINE # 114
 00011D 750000     E     695             MOV     ?_rf_send?BYTE+04H,#00H
 000120 750000     F     696             MOV     ?_rf_send?BYTE+05H,#HIGH (s_data)
 000123 750000     F     697             MOV     ?_rf_send?BYTE+06H,#LOW (s_data)
-000126 750014     E     698             MOV     ?_rf_send?BYTE+07H,#014H
+000126 75001C     E     698             MOV     ?_rf_send?BYTE+07H,#01CH
 000129 7B00             699             MOV     R3,#00H
 00012B 7A00       F     700             MOV     R2,#HIGH (dst_addr)
 00012D 7900       F     701             MOV     R1,#LOW (dst_addr)
@@ -745,11 +745,11 @@ LOC    OBJ             LINE     SOURCE
                         715                             ; SOURCE LINE # 119
 00013E 020000     F     716             LJMP    ?C0010
                         717     ; END OF main
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE    12
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE    12
 
                         718     
                         719             END
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE    13
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE    13
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -779,7 +779,7 @@ N A M E                                   T Y P E  V A L U E     ATTRIBUTES
 ?DT?_DELTA_COMPRESS?MAIN . . . . . . .    D  SEG   00000BH       REL=UNIT, ALN=BYTE
 ?DT?MAIN . . . . . . . . . . . . . . .    D  SEG   000015H       REL=UNIT, ALN=BYTE
 ?DT?MAIN?MAIN. . . . . . . . . . . . .    D  SEG   000008H       REL=UNIT, ALN=BYTE
-?ID?MAIN . . . . . . . . . . . . . . .    I  SEG   000014H       REL=UNIT, ALN=BYTE
+?ID?MAIN . . . . . . . . . . . . . . .    I  SEG   00001CH       REL=UNIT, ALN=BYTE
 ?ID?MAIN?MAIN. . . . . . . . . . . . .    I  SEG   000012H       REL=UNIT, ALN=BYTE
 ?MAIN?BYTE . . . . . . . . . . . . . .    D  ADDR  0000H     R   SEG=?DT?MAIN?MAIN
 ?PR?_DELTA_COMPRESS?MAIN . . . . . . .    C  SEG   0000A1H       REL=UNIT, ALN=BYTE
@@ -817,7 +817,7 @@ CT2. . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.1   A
 CY . . . . . . . . . . . . . . . . . .    B  ADDR  00D0H.7   A   
 DATA?. . . . . . . . . . . . . . . . .    B  ADDR  00A0H.0   A   
 DELTA?043. . . . . . . . . . . . . . .    D  ADDR  0007H     R   SEG=?DT?_DELTA_COMPRESS?MAIN
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE    14
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE    14
 
 DEV_OFFSET . . . . . . . . . . . . . .    D  ADDR  00BEH     A   
 DIN0 . . . . . . . . . . . . . . . . .    B  ADDR  0090H.2   A   
@@ -885,7 +885,7 @@ P0_0 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.0   A
 P0_1 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.1   A   
 P0_2 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.2   A   
 P0_3 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.3   A   
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE    15
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE    15
 
 P0_4 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.4   A   
 P0_5 . . . . . . . . . . . . . . . . .    B  ADDR  0080H.5   A   
@@ -953,7 +953,7 @@ T2CON. . . . . . . . . . . . . . . . .    D  ADDR  00C8H     A
 TB8. . . . . . . . . . . . . . . . . .    B  ADDR  0098H.3   A   
 TCLK . . . . . . . . . . . . . . . . .    B  ADDR  00C8H.4   A   
 TCON . . . . . . . . . . . . . . . . .    D  ADDR  0088H     A   
-AX51 MACRO ASSEMBLER  MAIN                                                                  04/26/09 00:12:52 PAGE    16
+AX51 MACRO ASSEMBLER  MAIN                                                                  04/30/09 14:47:42 PAGE    16
 
 TEST_MODE. . . . . . . . . . . . . . .    D  ADDR  00B7H     A   
 TF0. . . . . . . . . . . . . . . . . .    B  ADDR  0088H.5   A   
