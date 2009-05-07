@@ -671,7 +671,8 @@
  
  
  
- unsigned int ECO_PAGE_TABLE[(16-13)]={13,14,15};
+ 
+ unsigned int ECO_PAGE_TABLE[(16-13)];
  
  unsigned char ECO_PAGE_PREV_VID;
  
@@ -703,7 +704,7 @@
  
  
  
-#line 103 ".\eco_page.c" /1
+#line 104 ".\eco_page.c" /1
  
  
  
@@ -901,7 +902,7 @@
  
  
  
-#line 300 ".\eco_page.c" /0
+#line 301 ".\eco_page.c" /0
  
  void eco_page_manager()
  {

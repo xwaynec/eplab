@@ -1248,9 +1248,9 @@
  n = 8;
   P0 ^= 0x20;
  
- 
+ compute_W(n, W_re, W_im); 
  fft(n, A_re, A_im, W_re, W_im);
- 
+ permute_bitrev(n, A_re, A_im);
  
  mdelay(100);
  

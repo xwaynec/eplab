@@ -1,4 +1,4 @@
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 1   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 1   
 
 
 C51 COMPILER V8.16, COMPILATION OF MODULE ECO_PAGE
@@ -62,7 +62,7 @@ line level    source
   18      =2  sfr TL1                 = 0x8B ;
   19      =2  sfr TH0                 = 0x8C ;
   20      =2  sfr TH1                 = 0x8D ;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 2   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 2   
 
   21      =2  sfr CKCON               = 0x8E ;
   22      =2  sfr SPC_FNC             = 0x8F ;
@@ -126,7 +126,7 @@ line level    source
   80      =2  sbit P0_4       = 0x84  ;
   81      =2  sbit INT1_N     = 0x84  ;
   82      =2  sbit DIO6       = 0x84  ;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 3   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 3   
 
   83      =2  sbit P0_5       = 0x85  ;
   84      =2  sbit T0         = 0x85  ;
@@ -190,7 +190,7 @@ line level    source
  142      =2  
  143      =2  /*  IP   */
  144      =2  sbit PX0        = 0xB8 ;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 4   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 4   
 
  145      =2  sbit PT0        = 0xB9 ;
  146      =2  sbit PX1        = 0xBA ;
@@ -254,7 +254,7 @@ line level    source
  204      =2  #define T1_M0           0x10
  205      =2  #define T1_M1           0x20
  206      =2  #define T1_CT           0x40
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 5   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 5   
 
  207      =2  #define T1_GATE         0x80
  208      =2  
@@ -318,7 +318,7 @@ line level    source
            =3 sfr RADIO               = 0xA0 ;
            =3 sfr ADCCON              = 0xA1 ;
            =3 sfr ADCDATAH    = 0xA2 ;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 6   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 6   
 
            =3 sfr ADCDATAL    = 0xA3 ;
            =3 sfr ADCSTATIC   = 0xA4 ;
@@ -382,7 +382,7 @@ line level    source
            =3 sbit IT0        = 0x88 ;
            =3 sbit IE0        = 0x89 ;
            =3 sbit IT1        = 0x8A ;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 7   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 7   
 
            =3 sbit IE1        = 0x8B ;
            =3 sbit TR0        = 0x8C ;
@@ -446,7 +446,7 @@ line level    source
            =3 sbit TR2        = 0xCA ;
            =3 sbit EXEN2      = 0xCB ;
            =3 sbit TCLK       = 0xCC ;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 8   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 8   
 
            =3 sbit RCLK       = 0xCD ;
            =3 sbit EXF2       = 0xCE ;
@@ -510,7 +510,7 @@ line level    source
            =3 
            =3 #endif
   15      =2  
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 9   
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 9   
 
   16      =2  #define blink_led() P0 ^= 0x20
   17      =2  
@@ -574,7 +574,7 @@ line level    source
   28      =1  /*
   29      =1  static unsigned char ECO_PAGE_TABLE[10];
   30      =1  
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 10  
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 10  
 
   31      =1  static unsigned int ECO_PAGE_ADDR;
   32      =1  
@@ -638,7 +638,7 @@ line level    source
   36          
   37          
   38          #if ECO_PAGE_SIZE == 64
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 11  
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 11  
 
                       
                       #define ECO_PAGE_ENTRY  (64-ECO_PAGE_ADDR_OFFSET)
@@ -672,40 +672,41 @@ line level    source
   68                  #define ECO_PAGE_MASK   0x00FF
   69                  #define ECO_PAGE_MOV_MASK       0xFF00
   70          
-  71                  unsigned int ECO_PAGE_TABLE[ECO_PAGE_ENTRY]={13,14,15};
-  72                  //Eco page virtual address id
-  73                  unsigned char ECO_PAGE_PREV_VID;
-  74                  //Eco page physical address id 
-  75                  unsigned char ECO_PAGE_PREV_PID;
-  76          
-  77          #endif
-  78          
-  79          unsigned char ECO_PAGE_TABLE_INDEX;
-  80          unsigned int ECO_PAGE_ADDR;
-  81          unsigned char ECO_PAGE_SPI_CONN;
-  82          
-  83          unsigned char idata ECO_PAGE_REGISTER1;
-  84          unsigned char idata ECO_PAGE_REGISTER2;
-  85          unsigned char idata ECO_PAGE_REGISTER3;
-  86          unsigned char idata ECO_PAGE_REGISTER4;
-  87          unsigned char idata ECO_PAGE_REGISTER5;
-  88          unsigned char idata ECO_PAGE_REGISTER6;
-  89          unsigned char idata ECO_PAGE_REGISTER7;
-  90          
+  71                  //unsigned int ECO_PAGE_TABLE[ECO_PAGE_ENTRY]={13,14,15};
+  72                  unsigned int ECO_PAGE_TABLE[ECO_PAGE_ENTRY];
+  73                  //Eco page virtual address id
+  74                  unsigned char ECO_PAGE_PREV_VID;
+  75                  //Eco page physical address id 
+  76                  unsigned char ECO_PAGE_PREV_PID;
+  77          
+  78          #endif
+  79          
+  80          unsigned char ECO_PAGE_TABLE_INDEX;
+  81          unsigned int ECO_PAGE_ADDR;
+  82          unsigned char ECO_PAGE_SPI_CONN;
+  83          
+  84          unsigned char idata ECO_PAGE_REGISTER1;
+  85          unsigned char idata ECO_PAGE_REGISTER2;
+  86          unsigned char idata ECO_PAGE_REGISTER3;
+  87          unsigned char idata ECO_PAGE_REGISTER4;
+  88          unsigned char idata ECO_PAGE_REGISTER5;
+  89          unsigned char idata ECO_PAGE_REGISTER6;
+  90          unsigned char idata ECO_PAGE_REGISTER7;
   91          
-  92          void eco_page_init()
-  93          {
-  94   1              //ECO_PAGE_TABLE_INDEX = ECO_PAGE_ENTRY - 1;
-  95   1              ECO_PAGE_TABLE_INDEX = 0;       
-  96   1              ECO_PAGE_ADDR = 0;
-  97   1              ECO_PAGE_PREV_VID = 0;
-  98   1              ECO_PAGE_PREV_PID = 0;
-  99   1      }
- 100          
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 12  
+  92          
+  93          void eco_page_init()
+  94          {
+  95   1              //ECO_PAGE_TABLE_INDEX = ECO_PAGE_ENTRY - 1;
+  96   1              ECO_PAGE_TABLE_INDEX = 0;       
+  97   1              ECO_PAGE_ADDR = 0;
+  98   1              ECO_PAGE_PREV_VID = 0;
+  99   1              ECO_PAGE_PREV_PID = 0;
+ 100   1      }
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 12  
 
  101          
- 102          #if PAGE_REPLACEMENT == 0 
+ 102          
+ 103          #if PAGE_REPLACEMENT == 0 
               //LRU page replacement
               void eco_page_manager()
               {
@@ -765,9 +766,9 @@ line level    source
               
                                       //set LRU bit is 1
                                       ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] | 0x8000;
-                                      break;
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 13  
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 13  
 
+                                      break;
                               }
                       }
               
@@ -829,9 +830,9 @@ line level    source
                               {
                                       if((ECO_PAGE_TABLE[i] & 0x8000) == 0x8000)
                                       {
-                                              //LRU bit is 1 and then set this bit is 0
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 14  
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 14  
 
+                                              //LRU bit is 1 and then set this bit is 0
                                               ECO_PAGE_TABLE[i] = ECO_PAGE_TABLE[i] & 0x7FFF;
                                       }
                                       else
@@ -893,9 +894,9 @@ line level    source
                                               MOV     R7,A
               
                                               MOV     SPI_CTRL,ECO_PAGE_SPI_CONN
-                                              MOV     DPH,ECO_PAGE_ADDR
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 15  
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 15  
 
+                                              MOV     DPH,ECO_PAGE_ADDR
                                               MOV     DPL,ECO_PAGE_ADDR+01H
                                               
                                               CLR     A
@@ -910,210 +911,210 @@ line level    source
               }
               
               #else
- 300          
- 301          void eco_page_manager()
- 302          {
- 303   1              unsigned int idata i;
- 304   1              unsigned int idata page_index = -1; 
- 305   1      
- 306   1              //Check POP instruction 
- 307   1              //for(i=0;i<10;i++)
- 308   1              //{    
- 309   1              //      blink_led();
- 310   1              //      mdelay(200);
- 311   1              //}    
- 312   1              //mdelay(1000);
- 313   1              
- 314   1              //if page id is the same with the last page id
- 315   1              if((ECO_PAGE_ADDR >> ECO_PAGE_SHIFT) == ECO_PAGE_PREV_PID)
- 316   1              {
- 317   2                      //virtual address id + function offset
- 318   2                      ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << ECO_PAGE_SHIFT) + (ECO_PAGE_ADDR & ECO_PAGE_MASK);
- 319   2                      #pragma asm
- 320   2      
- 321   2                      MOV R0,#LOW (ECO_PAGE_REGISTER1)
- 322   2                      MOV A,@R0
- 323   2                      MOV     R1,A
- 324   2      
- 325   2                      MOV R0,#LOW (ECO_PAGE_REGISTER2)
- 326   2                      MOV A,@R0
- 327   2                      MOV     R2,A
- 328   2      
- 329   2                      MOV R0,#LOW (ECO_PAGE_REGISTER3)
- 330   2                      MOV A,@R0
- 331   2                      MOV     R3,A
- 332   2      
- 333   2                      MOV R0,#LOW (ECO_PAGE_REGISTER4)
- 334   2                      MOV A,@R0
- 335   2                      MOV     R4,A
- 336   2      
- 337   2                      MOV R0,#LOW (ECO_PAGE_REGISTER5)
- 338   2                      MOV A,@R0
- 339   2                      MOV     R5,A
- 340   2      
- 341   2                      MOV R0,#LOW (ECO_PAGE_REGISTER6)
- 342   2                      MOV A,@R0
- 343   2                      MOV     R6,A
- 344   2      
- 345   2                      MOV R0,#LOW (ECO_PAGE_REGISTER7)
- 346   2                      MOV A,@R0
- 347   2                      MOV     R7,A
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 16  
+ 301          
+ 302          void eco_page_manager()
+ 303          {
+ 304   1              unsigned int idata i;
+ 305   1              unsigned int idata page_index = -1; 
+ 306   1      
+ 307   1              //Check POP instruction 
+ 308   1              //for(i=0;i<10;i++)
+ 309   1              //{    
+ 310   1              //      blink_led();
+ 311   1              //      mdelay(200);
+ 312   1              //}    
+ 313   1              //mdelay(1000);
+ 314   1              
+ 315   1              //if page id is the same with the last page id
+ 316   1              if((ECO_PAGE_ADDR >> ECO_PAGE_SHIFT) == ECO_PAGE_PREV_PID)
+ 317   1              {
+ 318   2                      //virtual address id + function offset
+ 319   2                      ECO_PAGE_ADDR = (ECO_PAGE_PREV_VID << ECO_PAGE_SHIFT) + (ECO_PAGE_ADDR & ECO_PAGE_MASK);
+ 320   2                      #pragma asm
+ 321   2      
+ 322   2                      MOV R0,#LOW (ECO_PAGE_REGISTER1)
+ 323   2                      MOV A,@R0
+ 324   2                      MOV     R1,A
+ 325   2      
+ 326   2                      MOV R0,#LOW (ECO_PAGE_REGISTER2)
+ 327   2                      MOV A,@R0
+ 328   2                      MOV     R2,A
+ 329   2      
+ 330   2                      MOV R0,#LOW (ECO_PAGE_REGISTER3)
+ 331   2                      MOV A,@R0
+ 332   2                      MOV     R3,A
+ 333   2      
+ 334   2                      MOV R0,#LOW (ECO_PAGE_REGISTER4)
+ 335   2                      MOV A,@R0
+ 336   2                      MOV     R4,A
+ 337   2      
+ 338   2                      MOV R0,#LOW (ECO_PAGE_REGISTER5)
+ 339   2                      MOV A,@R0
+ 340   2                      MOV     R5,A
+ 341   2      
+ 342   2                      MOV R0,#LOW (ECO_PAGE_REGISTER6)
+ 343   2                      MOV A,@R0
+ 344   2                      MOV     R6,A
+ 345   2      
+ 346   2                      MOV R0,#LOW (ECO_PAGE_REGISTER7)
+ 347   2                      MOV A,@R0
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 16  
 
- 348   2      
- 349   2              
- 350   2                      MOV     SPI_CTRL,ECO_PAGE_SPI_CONN
- 351   2                      MOV     DPH,ECO_PAGE_ADDR
- 352   2                      MOV     DPL,ECO_PAGE_ADDR+01H
- 353   2                      
- 354   2                      CLR     A
- 355   2                      JMP     @A+DPTR
- 356   2                      #pragma endasm
- 357   2              }       
- 358   1                                      
- 359   1              //Check Table   
- 360   1              for(i=0;i<ECO_PAGE_ENTRY;i++)
- 361   1              {   
- 362   2                      if((ECO_PAGE_ADDR >> ECO_PAGE_SHIFT) == ECO_PAGE_TABLE[i])
- 363   2                      {
- 364   3                              page_index = i;
- 365   3                              break;
- 366   3                      }
- 367   2              }
- 368   1      
- 369   1              if(page_index != -1) 
- 370   1              {  
- 371   2                      //store function physical addres id 
- 372   2                      ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;
- 373   2              
- 374   2                      //memory page is in ram
- 375   2                      ECO_PAGE_ADDR = ((page_index + ECO_PAGE_ADDR_OFFSET) << ECO_PAGE_SHIFT) + (ECO_PAGE_ADDR & ECO_PAGE_MASK
+ 348   2                      MOV     R7,A
+ 349   2      
+ 350   2              
+ 351   2                      MOV     SPI_CTRL,ECO_PAGE_SPI_CONN
+ 352   2                      MOV     DPH,ECO_PAGE_ADDR
+ 353   2                      MOV     DPL,ECO_PAGE_ADDR+01H
+ 354   2                      
+ 355   2                      CLR     A
+ 356   2                      JMP     @A+DPTR
+ 357   2                      #pragma endasm
+ 358   2              }       
+ 359   1                                      
+ 360   1              //Check Table   
+ 361   1              for(i=0;i<ECO_PAGE_ENTRY;i++)
+ 362   1              {   
+ 363   2                      if((ECO_PAGE_ADDR >> ECO_PAGE_SHIFT) == ECO_PAGE_TABLE[i])
+ 364   2                      {
+ 365   3                              page_index = i;
+ 366   3                              break;
+ 367   3                      }
+ 368   2              }
+ 369   1      
+ 370   1              if(page_index != -1) 
+ 371   1              {  
+ 372   2                      //store function physical addres id 
+ 373   2                      ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;
+ 374   2              
+ 375   2                      //memory page is in ram
+ 376   2                      ECO_PAGE_ADDR = ((page_index + ECO_PAGE_ADDR_OFFSET) << ECO_PAGE_SHIFT) + (ECO_PAGE_ADDR & ECO_PAGE_MASK
              -);
- 376   2      
- 377   2                      //cache the virtual address id
- 378   2                      ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;
- 379   2      
- 380   2                      #pragma asm
- 381   2      
- 382   2                      MOV R0,#LOW (ECO_PAGE_REGISTER1)
- 383   2                      MOV A,@R0
- 384   2                      MOV     R1,A
- 385   2      
- 386   2                      MOV R0,#LOW (ECO_PAGE_REGISTER2)
- 387   2                      MOV A,@R0
- 388   2                      MOV     R2,A
- 389   2      
- 390   2                      MOV R0,#LOW (ECO_PAGE_REGISTER3)
- 391   2                      MOV A,@R0
- 392   2                      MOV     R3,A
- 393   2      
- 394   2                      MOV R0,#LOW (ECO_PAGE_REGISTER4)
- 395   2                      MOV A,@R0
- 396   2                      MOV     R4,A
- 397   2      
- 398   2                      MOV R0,#LOW (ECO_PAGE_REGISTER5)
- 399   2                      MOV A,@R0
- 400   2                      MOV     R5,A
- 401   2      
- 402   2                      MOV R0,#LOW (ECO_PAGE_REGISTER6)
- 403   2                      MOV A,@R0
- 404   2                      MOV     R6,A
- 405   2      
- 406   2                      MOV R0,#LOW (ECO_PAGE_REGISTER7)
- 407   2                      MOV A,@R0
- 408   2                      MOV     R7,A
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 17  
+ 377   2      
+ 378   2                      //cache the virtual address id
+ 379   2                      ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;
+ 380   2      
+ 381   2                      #pragma asm
+ 382   2      
+ 383   2                      MOV R0,#LOW (ECO_PAGE_REGISTER1)
+ 384   2                      MOV A,@R0
+ 385   2                      MOV     R1,A
+ 386   2      
+ 387   2                      MOV R0,#LOW (ECO_PAGE_REGISTER2)
+ 388   2                      MOV A,@R0
+ 389   2                      MOV     R2,A
+ 390   2      
+ 391   2                      MOV R0,#LOW (ECO_PAGE_REGISTER3)
+ 392   2                      MOV A,@R0
+ 393   2                      MOV     R3,A
+ 394   2      
+ 395   2                      MOV R0,#LOW (ECO_PAGE_REGISTER4)
+ 396   2                      MOV A,@R0
+ 397   2                      MOV     R4,A
+ 398   2      
+ 399   2                      MOV R0,#LOW (ECO_PAGE_REGISTER5)
+ 400   2                      MOV A,@R0
+ 401   2                      MOV     R5,A
+ 402   2      
+ 403   2                      MOV R0,#LOW (ECO_PAGE_REGISTER6)
+ 404   2                      MOV A,@R0
+ 405   2                      MOV     R6,A
+ 406   2      
+ 407   2                      MOV R0,#LOW (ECO_PAGE_REGISTER7)
+ 408   2                      MOV A,@R0
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 17  
 
- 409   2      
+ 409   2                      MOV     R7,A
  410   2      
- 411   2                      MOV     SPI_CTRL,ECO_PAGE_SPI_CONN
- 412   2                      MOV     DPH,ECO_PAGE_ADDR
- 413   2                      MOV     DPL,ECO_PAGE_ADDR+01H
- 414   2                      
- 415   2                      CLR     A
- 416   2                      JMP     @A+DPTR
- 417   2                      #pragma endasm
- 418   2              }   
- 419   1              else
- 420   1              {
- 421   2                      //page fault
- 422   2                      // Move Data from EEPROM to iRAM 
- 423   2                      unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << ECO_
+ 411   2      
+ 412   2                      MOV     SPI_CTRL,ECO_PAGE_SPI_CONN
+ 413   2                      MOV     DPH,ECO_PAGE_ADDR
+ 414   2                      MOV     DPL,ECO_PAGE_ADDR+01H
+ 415   2                      
+ 416   2                      CLR     A
+ 417   2                      JMP     @A+DPTR
+ 418   2                      #pragma endasm
+ 419   2              }   
+ 420   1              else
+ 421   1              {
+ 422   2                      //page fault
+ 423   2                      // Move Data from EEPROM to iRAM 
+ 424   2                      unsigned char xdata *seg = (unsigned char xdata *)((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << ECO_
              -PAGE_SHIFT);
- 424   2                      
- 425   2                      //memory page is in ram
- 426   2                      eeprom_init();
- 427   2      
- 428   2                      //mov code from eeprom to external ram
- 429   2                      for(i=0;i<ECO_PAGE_SIZE;i++)
- 430   2                      {
- 431   3                              *(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR & ECO_PAGE_MOV_MASK) +i);
- 432   3                      }
- 433   2                      
- 434   2                      //update page table to connect this physical address id with virtual address id 
- 435   2                      ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;
- 436   2      
- 437   2                      //store physical address id
- 438   2                      //ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX];
- 439   2                      ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;
- 440   2      
- 441   2                      //update page address
- 442   2                      ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << ECO_PAGE_SHIFT) + (ECO_PAGE_ADDR & ECO
+ 425   2                      
+ 426   2                      //memory page is in ram
+ 427   2                      eeprom_init();
+ 428   2      
+ 429   2                      //mov code from eeprom to external ram
+ 430   2                      for(i=0;i<ECO_PAGE_SIZE;i++)
+ 431   2                      {
+ 432   3                              *(seg+i) = eeprom_read(ECO_ADDR_SHIFT(ECO_PAGE_ADDR & ECO_PAGE_MOV_MASK) +i);
+ 433   3                      }
+ 434   2                      
+ 435   2                      //update page table to connect this physical address id with virtual address id 
+ 436   2                      ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX] = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;
+ 437   2      
+ 438   2                      //store physical address id
+ 439   2                      //ECO_PAGE_PREV_PID = ECO_PAGE_TABLE[ECO_PAGE_TABLE_INDEX];
+ 440   2                      ECO_PAGE_PREV_PID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;
+ 441   2      
+ 442   2                      //update page address
+ 443   2                      ECO_PAGE_ADDR = ((ECO_PAGE_TABLE_INDEX + ECO_PAGE_ADDR_OFFSET) << ECO_PAGE_SHIFT) + (ECO_PAGE_ADDR & ECO
              -_PAGE_MASK);
- 443   2      
- 444   2                      //store virtual address id 
- 445   2                      ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;    
- 446   2      
- 447   2                      //mov to the next index
- 448   2                      ECO_PAGE_TABLE_INDEX = (ECO_PAGE_TABLE_INDEX + 1) % ECO_PAGE_ENTRY;
- 449   2                              
- 450   2                      //jump  to function address
- 451   2                      #pragma asm
- 452   2      
- 453   2                      MOV R0,#LOW (ECO_PAGE_REGISTER1)
- 454   2                      MOV A,@R0
- 455   2                      MOV     R1,A
- 456   2      
- 457   2                      MOV R0,#LOW (ECO_PAGE_REGISTER2)
- 458   2                      MOV A,@R0
- 459   2                      MOV     R2,A
- 460   2      
- 461   2                      MOV R0,#LOW (ECO_PAGE_REGISTER3)
- 462   2                      MOV A,@R0
- 463   2                      MOV     R3,A
- 464   2      
- 465   2                      MOV R0,#LOW (ECO_PAGE_REGISTER4)
- 466   2                      MOV A,@R0
- 467   2                      MOV     R4,A
- 468   2      
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 18  
+ 444   2      
+ 445   2                      //store virtual address id 
+ 446   2                      ECO_PAGE_PREV_VID = ECO_PAGE_ADDR >> ECO_PAGE_SHIFT;    
+ 447   2      
+ 448   2                      //mov to the next index
+ 449   2                      ECO_PAGE_TABLE_INDEX = (ECO_PAGE_TABLE_INDEX + 1) % ECO_PAGE_ENTRY;
+ 450   2                              
+ 451   2                      //jump  to function address
+ 452   2                      #pragma asm
+ 453   2      
+ 454   2                      MOV R0,#LOW (ECO_PAGE_REGISTER1)
+ 455   2                      MOV A,@R0
+ 456   2                      MOV     R1,A
+ 457   2      
+ 458   2                      MOV R0,#LOW (ECO_PAGE_REGISTER2)
+ 459   2                      MOV A,@R0
+ 460   2                      MOV     R2,A
+ 461   2      
+ 462   2                      MOV R0,#LOW (ECO_PAGE_REGISTER3)
+ 463   2                      MOV A,@R0
+ 464   2                      MOV     R3,A
+ 465   2      
+ 466   2                      MOV R0,#LOW (ECO_PAGE_REGISTER4)
+ 467   2                      MOV A,@R0
+ 468   2                      MOV     R4,A
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 18  
 
- 469   2                      MOV R0,#LOW (ECO_PAGE_REGISTER5)
- 470   2                      MOV A,@R0
- 471   2                      MOV     R5,A
- 472   2      
- 473   2                      MOV R0,#LOW (ECO_PAGE_REGISTER6)
- 474   2                      MOV A,@R0
- 475   2                      MOV     R6,A
- 476   2      
- 477   2                      MOV R0,#LOW (ECO_PAGE_REGISTER7)
- 478   2                      MOV A,@R0
- 479   2                      MOV     R7,A
- 480   2              
- 481   2                      MOV     SPI_CTRL,ECO_PAGE_SPI_CONN
- 482   2                      MOV     DPH,ECO_PAGE_ADDR
- 483   2                      MOV     DPL,ECO_PAGE_ADDR+01H
- 484   2                      
- 485   2                      CLR     A
- 486   2                      JMP     @A+DPTR
- 487   2                      #pragma endasm
- 488   2      
- 489   2              }
- 490   1      
- 491   1      }
- 492          
- 493          #endif
-C51 COMPILER V8.16   ECO_PAGE                                                              05/06/2009 20:56:32 PAGE 19  
+ 469   2      
+ 470   2                      MOV R0,#LOW (ECO_PAGE_REGISTER5)
+ 471   2                      MOV A,@R0
+ 472   2                      MOV     R5,A
+ 473   2      
+ 474   2                      MOV R0,#LOW (ECO_PAGE_REGISTER6)
+ 475   2                      MOV A,@R0
+ 476   2                      MOV     R6,A
+ 477   2      
+ 478   2                      MOV R0,#LOW (ECO_PAGE_REGISTER7)
+ 479   2                      MOV A,@R0
+ 480   2                      MOV     R7,A
+ 481   2              
+ 482   2                      MOV     SPI_CTRL,ECO_PAGE_SPI_CONN
+ 483   2                      MOV     DPH,ECO_PAGE_ADDR
+ 484   2                      MOV     DPL,ECO_PAGE_ADDR+01H
+ 485   2                      
+ 486   2                      CLR     A
+ 487   2                      JMP     @A+DPTR
+ 488   2                      #pragma endasm
+ 489   2      
+ 490   2              }
+ 491   1      
+ 492   1      }
+ 493          
+ 494          #endif
+C51 COMPILER V8.16   ECO_PAGE                                                              05/07/2009 13:56:42 PAGE 19  
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====

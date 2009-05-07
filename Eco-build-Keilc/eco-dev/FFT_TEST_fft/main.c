@@ -203,9 +203,9 @@ int main()
 		n = 8;
 		blink_led();
 
-		//compute_W(n, W_re, W_im); 
+		compute_W(n, W_re, W_im); 
 		fft(n, A_re, A_im, W_re, W_im);
-		//permute_bitrev(n, A_re, A_im);
+		permute_bitrev(n, A_re, A_im);
 
 		mdelay(100);
 	//}

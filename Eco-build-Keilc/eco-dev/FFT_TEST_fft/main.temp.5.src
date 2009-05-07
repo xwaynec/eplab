@@ -171,7 +171,6 @@ REGX_MSB	DATA	0ABH
 ?DT?_compute_W?MAIN  SEGMENT DATA OVERLAYABLE 
 ?PR?_permute_bitrev?MAIN                 SEGMENT CODE 
 ?DT?_permute_bitrev?MAIN                 SEGMENT DATA OVERLAYABLE 
-?PR?_permute_bitrev_2?MAIN                 SEGMENT CODE 
 ?PR?_fft?MAIN        SEGMENT CODE 
 ?DT?_fft?MAIN        SEGMENT DATA OVERLAYABLE 
 ?PR?_fft_2?MAIN        SEGMENT CODE 
@@ -213,7 +212,6 @@ REGX_MSB	DATA	0ABH
 	PUBLIC	_fft_3
 	PUBLIC	?_permute_bitrev?BYTE
 	PUBLIC	_permute_bitrev
-	PUBLIC	_permute_bitrev_2
 	PUBLIC	?_compute_W?BYTE
 	PUBLIC	_compute_W
 	PUBLIC	_log_2
@@ -364,6 +362,7 @@ _bitrev:
 ; 	int idata i;
 ; 	int idata rev=0;
 			; SOURCE LINE # 22
+
 	CLR  	A
 	MOV  	R0,#LOW (rev?043)
 	MOV  	@R0,A
@@ -427,7 +426,7 @@ _bitrev:
 	JNZ  	?C0001
 	INC  	@R0
 ?C0034:
-	SJMP 	?C0001
+	SJMP 	?C0001	
 ?C0002:
 ; 	return rev;
 			; SOURCE LINE # 28
@@ -563,28 +562,33 @@ _compute_W:
 	SUBB 	A,R0
 	JC   	$ + 0BH
 	;LJMP 	?C0012
-	MOV ECO_PAGE_ADDR,#HIGH (?C0012)
+	;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    MOV ECO_PAGE_ADDR,#HIGH (?C0012)
     MOV ECO_PAGE_ADDR+01H,#LOW (?C0012)
-    LJMP   eco_page_manager
+    LJMP   eco_page_manager	
 ; 	{
 			; SOURCE LINE # 55
 ; 		br = bitrev(i,log2n-1); 
 			; SOURCE LINE # 56
+
 	MOV  	A,log2n?251+01H
 	ADD  	A,#0FFH
+
 	;MOV  	R5,A
 	MOV R0,#LOW (ECO_PAGE_REGISTER5)
     MOV @R0,A
 
 	MOV  	A,log2n?251
 	ADDC 	A,#0FFH
+
 	;MOV  	R4,A
 	MOV R0,#LOW (ECO_PAGE_REGISTER4)
     MOV @R0,A
 
 	;LCALL	_bitrev
-	MOV ECO_PAGE_ADDR,#HIGH (bitrev)
-    MOV ECO_PAGE_ADDR+01H,#LOW (bitrev)
+	;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    MOV ECO_PAGE_ADDR,#HIGH (_bitrev)
+    MOV ECO_PAGE_ADDR+01H,#LOW (_bitrev)
     LCALL   eco_page_manager
 
 	MOV  	R0,#LOW (br?250)
@@ -648,6 +652,8 @@ _compute_W:
 	LCALL	_sin
 	LCALL	?C?CASTF
 	MOV  	R5,AR7
+	
+
 	MOV  	R0,#LOW (br?250+01H)
 	MOV  	A,@R0
 	ADD  	A,ACC
@@ -671,14 +677,17 @@ _compute_W:
 	DEC  	R0
 	JZ   	$ + 0BH
 	;LJMP 	?C0009
-	MOV ECO_PAGE_ADDR,#HIGH (?C0009)
+	;XRL  	P0,#020H
+	;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    MOV ECO_PAGE_ADDR,#HIGH (?C0009)
     MOV ECO_PAGE_ADDR+01H,#LOW (?C0009)
     LJMP   eco_page_manager
-
 	INC  	@R0
 ?C0036:
 	;LJMP 	?C0009
-	MOV ECO_PAGE_ADDR,#HIGH (?C0009)
+	;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+	;XRL  	P0,#020H
+    MOV ECO_PAGE_ADDR,#HIGH (?C0009)
     MOV ECO_PAGE_ADDR+01H,#LOW (?C0009)
     LJMP   eco_page_manager
 ; //#ifdef COMMENT_ONLY 
@@ -746,31 +755,19 @@ _permute_bitrev:
 	MOV  	A,R6
 	XRL  	A,#080H
 	SUBB 	A,R0
-	JC   	$ + 0BH
-	MOV ECO_PAGE_ADDR,#HIGH (?C0017)
-    MOV ECO_PAGE_ADDR+01H,#LOW (?C0017)
-    LJMP   eco_page_manager
-	;LJMP 	?C0017
+	JC   	$ + 5H
+	LJMP 	?C0017
 ; 	{
 			; SOURCE LINE # 82
 ; 		bri  = bitrev(i, log2n);
 			; SOURCE LINE # 83
 	MOV  	R0,#LOW (log2n?357)
 	MOV  	A,@R0
-	;MOV  	R4,A
-	MOV R0,#LOW (ECO_PAGE_REGISTER4)
-    MOV @R0,A
+	MOV  	R4,A
 	INC  	R0
 	MOV  	A,@R0
-	;MOV  	R5,A
-	MOV R0,#LOW (ECO_PAGE_REGISTER5)
-    MOV @R0,A
-	;LCALL	_bitrev
-
-	MOV ECO_PAGE_ADDR,#HIGH (_bitrev)
-    MOV ECO_PAGE_ADDR+01H,#LOW (_bitrev)
-    LCALL   eco_page_manager
-
+	MOV  	R5,A
+	LCALL	_bitrev
 	MOV  	R0,#LOW (bri?356)
 	MOV  	A,R6
 	MOV  	@R0,A
@@ -796,11 +793,8 @@ _permute_bitrev:
 	MOV  	A,R6
 	XRL  	A,#080H
 	SUBB 	A,R0
-	JNC  	$ + 0BH
-	;LJMP 	?C0015
-	MOV ECO_PAGE_ADDR,#HIGH (?C0015)
-    MOV ECO_PAGE_ADDR+01H,#LOW (?C0015)
-    LJMP   eco_page_manager
+	JNC  	$ + 5H
+	LJMP 	?C0015
 ?C0016:
 ; 
 ; 		t_re = A_re[i];
@@ -837,16 +831,6 @@ _permute_bitrev:
 	MOV  	@R0,A
 ; 		A_re[i]= A_re[bri];
 			; SOURCE LINE # 90
-	MOV ECO_PAGE_ADDR,#HIGH (_permute_bitrev_2)
-    MOV ECO_PAGE_ADDR+01H,#LOW (_permute_bitrev_2)
-    LJMP   eco_page_manager
-
-
-
-    RSEG  ?PR?_permute_bitrev_2?MAIN
-_permute_bitrev_2:
-    USING   0
-	
 	MOV  	R0,#LOW (bri?356+01H)
 	MOV  	A,@R0
 	ADD  	A,ACC
@@ -947,17 +931,11 @@ _permute_bitrev_2:
 	INC  	@R0
 	MOV  	A,@R0
 	DEC  	R0
-	JZ   	$ + 0BH
-	;LJMP 	?C0013
-	MOV ECO_PAGE_ADDR,#HIGH (?C0013)
-    MOV ECO_PAGE_ADDR+01H,#LOW (?C0013)
-    LJMP   eco_page_manager
+	JZ   	$ + 5H
+	LJMP 	?C0013
 	INC  	@R0
 ?C0037:
-	;LJMP 	?C0013
-	MOV ECO_PAGE_ADDR,#HIGH (?C0013)
-    MOV ECO_PAGE_ADDR+01H,#LOW (?C0013)
-    LJMP   eco_page_manager
+	LJMP 	?C0013
 ; } 
 			; SOURCE LINE # 95
 ?C0017:
@@ -1019,8 +997,9 @@ _fft:
 	MOV  	A,R6
 	XRL  	A,#080H
 	SUBB 	A,#080H
-	JNC  	$ + 0BH
+	JNC  	$ + 0EH
 	;LJMP 	?C0027
+	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
     MOV ECO_PAGE_ADDR,#HIGH (?C0027)
     MOV ECO_PAGE_ADDR+01H,#LOW (?C0027)
     LJMP   eco_page_manager
@@ -1063,7 +1042,7 @@ _fft:
 	MOV  	A,@R0
 	XRL  	A,#080H
 	SUBB 	A,B
-	JC   	$ + 0BH
+	JC   	$ + 0EH
 	;LJMP 	?C0020
 	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
     MOV ECO_PAGE_ADDR,#HIGH (?C0020)
@@ -1148,7 +1127,7 @@ _fft:
 	MOV  	A,@R0
 	XRL  	A,#080H
 	SUBB 	A,B
-	JC   	$ + 0BH
+	JC   	$ + 0EH
 	;LJMP 	?C0023
 	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
     MOV ECO_PAGE_ADDR,#HIGH (?C0023)
@@ -1189,10 +1168,9 @@ _fft:
 	MOV R0,#LOW (ECO_PAGE_REGISTER5)
     MOV @R0,A
     MOV R0,#LOW (ECO_PAGE_REGISTER4)
-    MOV @R0,B
-    ;XRL    P0,#020H
-
-    ;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    MOV @R0,B	
+	
+	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
     MOV ECO_PAGE_ADDR,#HIGH (_fft_2)
     MOV ECO_PAGE_ADDR+01H,#LOW (_fft_2)
     LJMP   eco_page_manager
@@ -1370,8 +1348,7 @@ _fft_2:
 	LCALL	?C?ISTOPTR
 ; 				A_im[b] = u_im + t_im;
 			; SOURCE LINE # 157
-
-	;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
     MOV ECO_PAGE_ADDR,#HIGH (_fft_3)
     MOV ECO_PAGE_ADDR+01H,#LOW (_fft_3)
     LJMP   eco_page_manager
@@ -1380,8 +1357,7 @@ _fft_2:
     RSEG  ?PR?_fft_3?MAIN
 _fft_3:
     USING   0
-
-
+	
 	MOV  	R1,#LOW (u_im?468+01H)
 	MOV  	A,@R1
 	MOV  	R0,#LOW (t_im?470+01H)
@@ -1493,7 +1469,7 @@ _fft_3:
 	INC  	@R0
 ?C0038:
 	;LJMP 	?C0024
-	;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
     MOV ECO_PAGE_ADDR,#HIGH (?C0024)
     MOV ECO_PAGE_ADDR+01H,#LOW (?C0024)
     LJMP   eco_page_manager
@@ -1516,15 +1492,20 @@ _fft_3:
 	INC  	@R0
 	MOV  	A,@R0
 	DEC  	R0
-	JZ   	$ + 0BH
+	;blink_led
+	;XRL  	P0,#020H
+	JZ   	$ + 0EH
 	;LJMP 	?C0021
 	;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
     MOV ECO_PAGE_ADDR,#HIGH (?C0021)
     MOV ECO_PAGE_ADDR+01H,#LOW (?C0021)
     LJMP   eco_page_manager
+	;blink_led
+	XRL  	P0,#020H
 	INC  	@R0
 ?C0039:
 	;LJMP 	?C0021
+	;XRL  	P0,#020H
 	;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
     MOV ECO_PAGE_ADDR,#HIGH (?C0021)
     MOV ECO_PAGE_ADDR+01H,#LOW (?C0021)
@@ -1544,10 +1525,11 @@ _fft_3:
 	INC  	R1
 	MOV  	@R1,A
 	;LJMP 	?C0018
-	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+	;XRL    P0,#020H
+	;MOV ECO_PAGE_SPI_CONN,SPI_CTRL
     MOV ECO_PAGE_ADDR,#HIGH (?C0018)
     MOV ECO_PAGE_ADDR+01H,#LOW (?C0018)
-    LJMP   eco_page_manager
+    LJMP   eco_page_manager	
 ; }
 			; SOURCE LINE # 167
 ?C0027:
@@ -1645,7 +1627,7 @@ main:
 	MOV  	@R0,#08H
 ; 		blink_led();
 			; SOURCE LINE # 204
-	XRL  	P0,#020H
+	;XRL  	P0,#020H
 ; 
 ; 		compute_W(n, W_re, W_im); 
 			; SOURCE LINE # 206
@@ -1657,20 +1639,18 @@ main:
 	MOV  	R7,A
 
 	MOV R0,#LOW (ECO_PAGE_REGISTER6)
-    MOV A,R6
+    MOV A,R6 
     MOV @R0,A
     MOV R0,#LOW (ECO_PAGE_REGISTER7)
-    MOV A,R7
+    MOV A,R7 
     MOV @R0,A
-
+	
 	MOV  	?_compute_W?BYTE+05H,#00H
 	MOV  	?_compute_W?BYTE+06H,#HIGH (W_im?580)
 	MOV  	?_compute_W?BYTE+07H,#LOW (W_im?580)
 	;MOV  	R3,#00H
 	;MOV  	R2,#HIGH (W_re?579)
 	;MOV  	R1,#LOW (W_re?579)
-	;LCALL	_compute_W
-	
 	MOV R0,#LOW (ECO_PAGE_REGISTER3)
     MOV @R0,#00H
 
@@ -1679,13 +1659,13 @@ main:
 
     MOV R0,#LOW (ECO_PAGE_REGISTER1)
     MOV @R0,#LOW (W_re?579)
+	;LCALL	_compute_W
 
 	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
     MOV ECO_PAGE_ADDR,#HIGH (_compute_W)
     MOV ECO_PAGE_ADDR+01H,#LOW (_compute_W)
     LCALL   eco_page_manager
-
-
+	
 ; 		fft(n, A_re, A_im, W_re, W_im);
 			; SOURCE LINE # 207
 	MOV  	R0,#LOW (n?576)
@@ -1696,10 +1676,10 @@ main:
 	MOV  	R7,A
 
 	MOV R0,#LOW (ECO_PAGE_REGISTER6)
-    MOV A,R6
+    MOV A,R6 
     MOV @R0,A
     MOV R0,#LOW (ECO_PAGE_REGISTER7)
-    MOV A,R7
+    MOV A,R7 
     MOV @R0,A
 
 	MOV  	?_fft?BYTE+05H,#00H
@@ -1714,7 +1694,7 @@ main:
 	;MOV  	R3,#00H
 	;MOV  	R2,#HIGH (A_re?577)
 	;MOV  	R1,#LOW (A_re?577)
-
+	;LCALL	_fft
 	MOV R0,#LOW (ECO_PAGE_REGISTER3)
     MOV @R0,#00H
 
@@ -1724,49 +1704,11 @@ main:
     MOV R0,#LOW (ECO_PAGE_REGISTER1)
     MOV @R0,#LOW (A_re?577)
 
-	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+    MOV ECO_PAGE_SPI_CONN,SPI_CTRL
     MOV ECO_PAGE_ADDR,#HIGH (_fft)
     MOV ECO_PAGE_ADDR+01H,#LOW (_fft)
     LCALL   eco_page_manager
-
-	;LCALL	_fft
-; 		permute_bitrev(n, A_re, A_im);
-			; SOURCE LINE # 208
-	MOV  	R0,#LOW (n?576)
-	MOV  	A,@R0
-	MOV  	R6,A
-	INC  	R0
-	MOV  	A,@R0
-	MOV  	R7,A
-
-	MOV R0,#LOW (ECO_PAGE_REGISTER6)
-    MOV A,R6
-    MOV @R0,A
-    MOV R0,#LOW (ECO_PAGE_REGISTER7)
-    MOV A,R7
-    MOV @R0,A
-	
-	MOV  	?_permute_bitrev?BYTE+05H,#00H
-	MOV  	?_permute_bitrev?BYTE+06H,#HIGH (A_im?578)
-	MOV  	?_permute_bitrev?BYTE+07H,#LOW (A_im?578)
-	;MOV  	R3,#00H
-	;MOV  	R2,#HIGH (A_re?577)
-	;MOV  	R1,#LOW (A_re?577)
-
-	MOV R0,#LOW (ECO_PAGE_REGISTER3)
-    MOV @R0,#00H
-
-    MOV R0,#LOW (ECO_PAGE_REGISTER2)
-    MOV @R0,#HIGH (A_re?577)
-
-    MOV R0,#LOW (ECO_PAGE_REGISTER1)
-    MOV @R0,#LOW (A_re?577)
-
-	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
-    MOV ECO_PAGE_ADDR,#HIGH (_permute_bitrev)
-    MOV ECO_PAGE_ADDR+01H,#LOW (_permute_bitrev)
-    LCALL   eco_page_manager	
-	;LCALL	_permute_bitrev
+; 		//permute_bitrev(n, A_re, A_im);
 ; 
 ; 		mdelay(100);
 			; SOURCE LINE # 210

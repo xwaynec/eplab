@@ -68,7 +68,8 @@
 	#define ECO_PAGE_MASK	0x00FF
 	#define ECO_PAGE_MOV_MASK	0xFF00
 
-	unsigned int ECO_PAGE_TABLE[ECO_PAGE_ENTRY]={13,14,15};
+	//unsigned int ECO_PAGE_TABLE[ECO_PAGE_ENTRY]={13,14,15};
+	unsigned int ECO_PAGE_TABLE[ECO_PAGE_ENTRY];
 	//Eco page virtual address id
 	unsigned char ECO_PAGE_PREV_VID;
 	//Eco page physical address id 
