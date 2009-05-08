@@ -13,6 +13,7 @@
 
 #include <math.h>
 
+volatile unsigned int test_counter;
 /* treats inp as a numbits number and bitreverses it. 
  * inp < 2^(numbits) for meaningful bit-reversal
  */ 
@@ -179,12 +180,15 @@ int main()
 	//int idata W_re[8];
 	//int idata W_im[8]; 
 
-	
 	store_cpu_rate(16);
 
 	P0_DIR &= ~0x28;
 	P0_ALT &= ~0x28;
 
+	test_counter = 0;	
+
+	serial_init(19200);
+	int_print(test_counter);
 	for(n=0;n<6;n++)
 	{
 		blink_led();
@@ -208,6 +212,8 @@ int main()
 		permute_bitrev(n, A_re, A_im);
 
 		mdelay(100);
+		test_counter++;
+		int_print(test_counter);	
 	//}
 	}
 	//free(A_re); 
