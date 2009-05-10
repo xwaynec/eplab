@@ -177,6 +177,7 @@ REGX_MSB	DATA	0ABH
 ?PR?_fft_2?MAIN        SEGMENT CODE 
 ?PR?_fft_3?MAIN        SEGMENT CODE 
 ?PR?main?MAIN        SEGMENT CODE 
+?CO?MAIN             SEGMENT CODE 
 ?DT?MAIN             SEGMENT DATA 
 ?ID?_bitrev?MAIN     SEGMENT IDATA OVERLAYABLE 
 ?ID?_log_2?MAIN      SEGMENT IDATA OVERLAYABLE 
@@ -188,6 +189,7 @@ REGX_MSB	DATA	0ABH
 	EXTRN	CODE (_serial_init)
 	EXTRN	CODE (_cos)
 	EXTRN	CODE (_sin)
+	EXTRN	CODE (_puts)
 	EXTRN	CODE (_?int_print)
 	EXTRN	CODE (_store_cpu_rate)
 	EXTRN	CODE (?C?SIDIV)
@@ -197,7 +199,7 @@ REGX_MSB	DATA	0ABH
 	EXTRN	CODE (?C?ISTOPTR)
 	EXTRN	CODE (?C?ILDOPTR)
 	EXTRN	CODE (?C_STARTUP)
-
+	
 	EXTRN   CODE (eco_page_manager)
     EXTRN   DATA (ECO_PAGE_ADDR)
     EXTRN   DATA (ECO_PAGE_SPI_CONN)
@@ -337,6 +339,11 @@ REGX_MSB	DATA	0ABH
 
 	RSEG  ?ID?main?MAIN
        W_im?580:   DS   8
+
+	RSEG  ?CO?MAIN
+?SC_0:
+	DB  00DH,00AH,000H
+
 ; /* gets no. of points from the user, initialize the points and roots of unity lookup table 
 ;  * and lets fft go. finally bit-reverses the results and outputs them into a file. 
 ;  * n should be a power of 2. 
@@ -448,6 +455,7 @@ _bitrev:
 ; }
 			; SOURCE LINE # 30
 ?C0004:
+	;XRL  	P0,#020H
 	RET  	
 ; END OF _bitrev
 
@@ -508,6 +516,7 @@ _log_2:
 ; }
 			; SOURCE LINE # 40
 ?C0008:
+	;XRL  	P0,#020H
 	RET  	
 ; END OF _log_2
 
@@ -584,7 +593,18 @@ _compute_W:
 	MOV  	A,log2n?251
 	ADDC 	A,#0FFH
 	MOV  	R4,A
-	LCALL	_bitrev
+	;LCALL	_bitrev
+	MOV R0,#LOW (ECO_PAGE_REGISTER4)
+    MOV @R0,A
+
+    MOV R0,#LOW (ECO_PAGE_REGISTER5)
+    MOV @R0,A
+
+    ;LCALL  _bitrev
+    MOV ECO_PAGE_ADDR,#HIGH (_bitrev)
+    MOV ECO_PAGE_ADDR+01H,#LOW (_bitrev)
+    LCALL   eco_page_manager
+
 	MOV  	R0,#LOW (br?250)
 	MOV  	@R0,AR6
 	INC  	R0
@@ -747,7 +767,7 @@ _permute_bitrev:
 	;LJMP 	?C0017
 	MOV ECO_PAGE_ADDR,#HIGH (?C0017)
     MOV ECO_PAGE_ADDR+01H,#LOW (?C0017)
-    LJMP   eco_page_manager	
+    LJMP   eco_page_manager
 ; 	{
 			; SOURCE LINE # 83
 ; 		bri  = bitrev(i, log2n);
@@ -758,15 +778,15 @@ _permute_bitrev:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R5,A
-
-	MOV	R0,#LOW	(ECO_PAGE_REGISTER4)
-	MOV	@R0,A
-
-	MOV	R0,#LOW	(ECO_PAGE_REGISTER5)
-	MOV	@R0,A
-
 	;LCALL	_bitrev
-	MOV ECO_PAGE_ADDR,#HIGH (_bitrev)
+	MOV R0,#LOW (ECO_PAGE_REGISTER4)
+    MOV @R0,A
+
+    MOV R0,#LOW (ECO_PAGE_REGISTER5)
+    MOV @R0,A
+
+    ;LCALL  _bitrev
+    MOV ECO_PAGE_ADDR,#HIGH (_bitrev)
     MOV ECO_PAGE_ADDR+01H,#LOW (_bitrev)
     LCALL   eco_page_manager
 
@@ -1183,7 +1203,6 @@ _fft:
 	LCALL	?C?ILDOPTR
 	;MOV  	R5,A
 	;MOV  	R4,B
-
 	MOV R0,#LOW (ECO_PAGE_REGISTER5)
     MOV @R0,A
     MOV R0,#LOW (ECO_PAGE_REGISTER4)
@@ -1595,8 +1614,14 @@ main:
 	MOV  	R6,test_counter
 	MOV  	R7,test_counter+01H
 	LCALL	_?int_print
-; 	for(n=0;n<6;n++)
+; 	puts("\r\n");	
 			; SOURCE LINE # 192
+	MOV  	R3,#0FFH
+	MOV  	R2,#HIGH (?SC_0)
+	MOV  	R1,#LOW (?SC_0)
+	LCALL	_puts
+; 	for(n=0;n<6;n++)
+			; SOURCE LINE # 193
 	CLR  	A
 	MOV  	R0,#LOW (n?576)
 	MOV  	@R0,A
@@ -1604,17 +1629,17 @@ main:
 	MOV  	@R0,A
 ?C0028:
 ; 	{
-			; SOURCE LINE # 193
-; 		blink_led();
 			; SOURCE LINE # 194
+; 		blink_led();
+			; SOURCE LINE # 195
 	XRL  	P0,#020H
 ; 		mdelay(400);
-			; SOURCE LINE # 195
+			; SOURCE LINE # 196
 	MOV  	R7,#090H
 	MOV  	R6,#01H
 	LCALL	_mdelay
 ; 	}
-			; SOURCE LINE # 196
+			; SOURCE LINE # 197
 	MOV  	R0,#LOW (n?576+01H)
 	INC  	@R0
 	MOV  	A,@R0
@@ -1639,43 +1664,29 @@ main:
 ; 	//assert(A_re != NULL && A_im != NULL && W_re != NULL && W_im != NULL); 
 ; 	
 ; 	while(1)
-			; SOURCE LINE # 203
-; 	{
 			; SOURCE LINE # 204
+; 	{
+			; SOURCE LINE # 205
 ; 	//for (i=0; i<3; i++) {
 ; 		//init_array(n, A_re, A_im); 
 ; 		n = 8;
-			; SOURCE LINE # 207
+			; SOURCE LINE # 208
 	MOV  	R0,#LOW (n?576)
 	MOV  	@R0,#00H
 	INC  	R0
 	MOV  	@R0,#08H
-; 		blink_led();
-			; SOURCE LINE # 208
-	XRL  	P0,#020H
 ; 
 ; 		compute_W(n, W_re, W_im); 
 			; SOURCE LINE # 210
-	DEC  	R0
-	MOV  	A,@R0
-	MOV  	R6,A
-	INC  	R0
-	MOV  	A,@R0
-	MOV  	R7,A
-	
-	MOV R0,#LOW (ECO_PAGE_REGISTER6)
-    MOV A,R6 
-    MOV @R0,A
-    MOV R0,#LOW (ECO_PAGE_REGISTER7)
-    MOV A,R7 
-    MOV @R0,A
-
 	MOV  	?_compute_W?BYTE+05H,#00H
 	MOV  	?_compute_W?BYTE+06H,#HIGH (W_im?580)
 	MOV  	?_compute_W?BYTE+07H,#LOW (W_im?580)
 	;MOV  	R3,#00H
 	;MOV  	R2,#HIGH (W_re?579)
 	;MOV  	R1,#LOW (W_re?579)
+	;MOV  	R7,#08H
+	;MOV  	R6,#00H
+
 	MOV R0,#LOW (ECO_PAGE_REGISTER3)
     MOV @R0,#00H
 
@@ -1685,13 +1696,17 @@ main:
     MOV R0,#LOW (ECO_PAGE_REGISTER1)
     MOV @R0,#LOW (W_re?579)
 
+	MOV R0,#LOW (ECO_PAGE_REGISTER7)
+    MOV @R0,#08H
+
+    MOV R0,#LOW (ECO_PAGE_REGISTER6)
+    MOV @R0,#00H
+
 	;LCALL	_compute_W
-    MOV ECO_PAGE_SPI_CONN,SPI_CTRL
+	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
     MOV ECO_PAGE_ADDR,#HIGH (_compute_W)
     MOV ECO_PAGE_ADDR+01H,#LOW (_compute_W)
     LCALL   eco_page_manager
-
-
 ; 		fft(n, A_re, A_im, W_re, W_im);
 			; SOURCE LINE # 211
 	MOV  	R0,#LOW (n?576)
@@ -1700,12 +1715,12 @@ main:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R7,A
-	
+
 	MOV R0,#LOW (ECO_PAGE_REGISTER6)
-    MOV A,R6 
+    MOV A,R6
     MOV @R0,A
     MOV R0,#LOW (ECO_PAGE_REGISTER7)
-    MOV A,R7 
+    MOV A,R7
     MOV @R0,A
 
 	MOV  	?_fft?BYTE+05H,#00H
@@ -1742,7 +1757,7 @@ main:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R7,A
-	
+
 	MOV R0,#LOW (ECO_PAGE_REGISTER6)
     MOV A,R6
     MOV @R0,A
@@ -1764,33 +1779,43 @@ main:
 
     MOV R0,#LOW (ECO_PAGE_REGISTER1)
     MOV @R0,#LOW (A_re?577)
-
 	;LCALL	_permute_bitrev
 	MOV ECO_PAGE_SPI_CONN,SPI_CTRL
     MOV ECO_PAGE_ADDR,#HIGH (_permute_bitrev)
     MOV ECO_PAGE_ADDR+01H,#LOW (_permute_bitrev)
     LCALL   eco_page_manager
 ; 
-; 		mdelay(100);
+; 		blink_led();
 			; SOURCE LINE # 214
-	MOV  	R7,#064H
-	MOV  	R6,#00H
-	LCALL	_mdelay
-; 		test_counter++;
+	;XRL  	P0,#020H
+; 		mdelay(100);
 			; SOURCE LINE # 215
+	;MOV  	R7,#064H
+	;MOV  	R6,#00H
+	;LCALL	_mdelay
+; 
+; 		test_counter++;
+			; SOURCE LINE # 217
 	INC  	test_counter+01H
 	MOV  	A,test_counter+01H
 	JNZ  	?C0041
 	INC  	test_counter
 ?C0041:
-; 		int_print(test_counter);	
-			; SOURCE LINE # 216
+; 
+; 		int_print(test_counter);
+			; SOURCE LINE # 219
 	MOV  	R6,test_counter
 	MOV  	R7,test_counter+01H
 	LCALL	_?int_print
+; 		puts("\r\n");
+			; SOURCE LINE # 220
+	MOV  	R3,#0FFH
+	MOV  	R2,#HIGH (?SC_0)
+	MOV  	R1,#LOW (?SC_0)
+	LCALL	_puts
 ; 	//}
 ; 	}
-			; SOURCE LINE # 218
+			; SOURCE LINE # 222
 	LJMP 	?C0031
 ; END OF main
 

@@ -189,6 +189,7 @@ int main()
 
 	serial_init(19200);
 	int_print(test_counter);
+	puts("\r\n");	
 	for(n=0;n<6;n++)
 	{
 		blink_led();
@@ -205,15 +206,18 @@ int main()
 	//for (i=0; i<3; i++) {
 		//init_array(n, A_re, A_im); 
 		n = 8;
-		blink_led();
 
 		compute_W(n, W_re, W_im); 
 		fft(n, A_re, A_im, W_re, W_im);
 		permute_bitrev(n, A_re, A_im);
 
+		blink_led();
 		mdelay(100);
+
 		test_counter++;
-		int_print(test_counter);	
+
+		int_print(test_counter);
+		puts("\r\n");
 	//}
 	}
 	//free(A_re); 

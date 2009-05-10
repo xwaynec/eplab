@@ -1234,6 +1234,7 @@
  
  serial_init(19200);
  int_print(test_counter);
+ puts("\r\n");	
  for(n=0;n<6;n++)
  {
   P0 ^= 0x20;
@@ -1250,15 +1251,18 @@
  
  
  n = 8;
-  P0 ^= 0x20;
  
  compute_W(n, W_re, W_im); 
  fft(n, A_re, A_im, W_re, W_im);
  permute_bitrev(n, A_re, A_im);
  
+  P0 ^= 0x20;
  mdelay(100);
+ 
  test_counter++;
- int_print(test_counter);	
+ 
+ int_print(test_counter);
+ puts("\r\n");
  
  }
  
