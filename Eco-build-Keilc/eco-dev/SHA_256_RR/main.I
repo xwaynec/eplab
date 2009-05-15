@@ -601,7 +601,7 @@
  0x8F1BBCDC,
  0xCA62C1D6
  };
- idata int         t;                   
+ idata char         t;                   
  idata unsigned    temp;                
  xdata unsigned    W[80];               
  idata unsigned    A, B, C, D, E;       
@@ -687,6 +687,7 @@
  
  context->Message_Block_Index = 0;
  
+ 
  }
  
  
@@ -704,6 +705,7 @@
  
  context->Computed   = 0;
  context->Corrupted  = 0;
+  P0 ^= 0x20;
  }
  
  
@@ -752,10 +754,12 @@
  context->Message_Block[31] = (context->Length_Low) & 0xFF;
  
  SHA1ProcessMessageBlock(context);
+ 
+ 
  }
  
  
- int SHA1Result(SHA1Context idata *context)
+ int SHA1Result(SHA1Context idata *context) reentrant
  {
  
  if (context->Corrupted)
@@ -790,6 +794,7 @@
  {
  context->Message_Block[context->Message_Block_Index++] =(*message_array & 0xFF);
  
+ 
  context->Length_Low += 8;
  
  context->Length_Low &= 0xFFFFFFFF;
@@ -818,7 +823,7 @@
  void main()
  {
  
- idata char i;
+ char i;
  idata SHA1Context sha;
  
  store_cpu_rate(16);
@@ -844,7 +849,7 @@
  
  SHA1Result(&sha);
  sha_counter++;
-  P0 ^= 0x20;
+ 
  int_print(sha_counter);
  puts("\r\n");
  }	

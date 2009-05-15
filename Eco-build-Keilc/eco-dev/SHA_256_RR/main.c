@@ -40,7 +40,7 @@ void SHA1ProcessMessageBlock(SHA1Context idata *context)
         0x8F1BBCDC,
         0xCA62C1D6
     };
-    idata int         t;                  /* Loop counter                 */
+    idata char         t;                  /* Loop counter                 */
     idata unsigned    temp;               /* Temporary word value         */
     xdata unsigned    W[80];              /* Word sequence                */
     idata unsigned    A, B, C, D, E;      /* Word buffers                 */
@@ -125,6 +125,7 @@ void SHA1ProcessMessageBlock(SHA1Context idata *context)
                         (context->Message_Digest[4] + E) & 0xFFFFFFFF;
 
     context->Message_Block_Index = 0;
+	//blink_led();
 
 }
 
@@ -143,6 +144,7 @@ void SHA1Reset(SHA1Context idata *context)
 
     context->Computed   = 0;
     context->Corrupted  = 0;
+	blink_led();
 }
 
 
@@ -191,10 +193,12 @@ void SHA1PadMessage(SHA1Context idata *context)
     context->Message_Block[31] = (context->Length_Low) & 0xFF;
 
     SHA1ProcessMessageBlock(context);
+
+	//blink_led();
 }
 
 
-int SHA1Result(SHA1Context idata *context)
+int SHA1Result(SHA1Context idata *context) reentrant
 {
 
     if (context->Corrupted)
@@ -229,6 +233,7 @@ void SHA1Input(SHA1Context idata *context,unsigned char idata *message_array,uns
     {
         context->Message_Block[context->Message_Block_Index++] =(*message_array & 0xFF);
 
+		//blink_led();
         context->Length_Low += 8;
         /* Force it to 32 bits */
         context->Length_Low &= 0xFFFFFFFF;
@@ -257,7 +262,7 @@ void SHA1Input(SHA1Context idata *context,unsigned char idata *message_array,uns
 void main()
 {
 
-	idata char i;
+	char i;
 	idata SHA1Context sha;
 
 	store_cpu_rate(16);
@@ -283,7 +288,7 @@ void main()
 
 		SHA1Result(&sha);
 		sha_counter++;
-		blink_led();
+		//blink_led();
 		int_print(sha_counter);
 		puts("\r\n");
 	}	

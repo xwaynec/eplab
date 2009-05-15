@@ -1,4 +1,4 @@
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 1   
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 1   
 
 
 C51 COMPILER V8.16, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   51      =1  sfr T1_1V2              = 0xBC ;
   52      =1  sfr T2_1V2              = 0xBD ;
   53      =1  sfr DEV_OFFSET  = 0xBE ;
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 2   
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 2   
 
   54      =1  sfr T2CON               = 0xC8 ;
   55      =1  sfr RCAP2L              = 0xCA ;
@@ -126,7 +126,7 @@ line level    source
  113      =1  sbit RI         = 0x98 ;
  114      =1  sbit TI         = 0x99 ;
  115      =1  sbit RB8        = 0x9A ;
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 3   
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 3   
 
  116      =1  sbit TB8        = 0x9B ;
  117      =1  sbit REN        = 0x9C ;
@@ -190,7 +190,7 @@ line level    source
  175      =1  
  176      =1  /*  EIE  */
  177      =1  sbit EX2        = 0xE8 ;
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 4   
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 4   
 
  178      =1  sbit EX3        = 0xE9 ;
  179      =1  sbit EX4        = 0xEA ;
@@ -254,7 +254,7 @@ line level    source
            =2 
            =2 /*  BYTE Registers  */
            =2 sfr P0                  = 0x80 ;
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 5   
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 5   
 
            =2 sfr SP                  = 0x81 ;
            =2 sfr DPL                 = 0x82 ;
@@ -318,7 +318,7 @@ line level    source
            =2 
            =2 
            =2 /*  BIT Registers  */
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 6   
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 6   
 
            =2 /* P0 */
            =2 sbit P0_0       = 0x80  ;
@@ -382,7 +382,7 @@ line level    source
            =2 sbit DOUT2      = 0xA4 ;
            =2 sbit CLK2       = 0xA5 ;
            =2 sbit DR2_CE     = 0xA6 ;
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 7   
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 7   
 
            =2 sbit DR2        = 0xA6 ;
            =2 sbit CE         = 0xA6 ;
@@ -446,7 +446,7 @@ line level    source
            =2 
            =2 
            =2 /* BIT definitions for bits that are not directly accessible */
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 8   
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 8   
 
            =2 /* PCON bits */
            =2 #define IDL             0x01
@@ -510,7 +510,7 @@ line level    source
    6      =1   * notice are retained. All other uses require explicit written
    7      =1   * permission from NTHU. 
    8      =1   */
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 9   
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 9   
 
    9      =1  #ifndef _SERIAL_H_
   10      =1  #define _SERIAL_H_
@@ -574,7 +574,7 @@ line level    source
    9          
   10          #define TESTA   "abc"
   11          #define SHA1CircularShift(bits,word) \
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 10  
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 10  
 
   12                          ((((word) << (bits)) & 0xFFFFFFFF) | \
   13                          ((word) >> (32-(bits))))
@@ -607,7 +607,7 @@ line level    source
   40   1              0x8F1BBCDC,
   41   1              0xCA62C1D6
   42   1          };
-  43   1          idata int         t;                  /* Loop counter                 */
+  43   1          idata char         t;                  /* Loop counter                 */
   44   1          idata unsigned    temp;               /* Temporary word value         */
   45   1          xdata unsigned    W[80];              /* Word sequence                */
   46   1          idata unsigned    A, B, C, D, E;      /* Word buffers                 */
@@ -638,7 +638,7 @@ line level    source
   71   1          {
   72   2              temp =  SHA1CircularShift(5,A) +
   73   2                      ((B & C) | ((~B) & D)) + E + W[t] + K[0];
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 11  
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 11  
 
   74   2              temp &= 0xFFFFFFFF;
   75   2              E = D;
@@ -694,179 +694,184 @@ line level    source
  125   1                              (context->Message_Digest[4] + E) & 0xFFFFFFFF;
  126   1      
  127   1          context->Message_Block_Index = 0;
- 128   1      
- 129   1      }
- 130          
+ 128   1              //blink_led();
+ 129   1      
+ 130   1      }
  131          
- 132          void SHA1Reset(SHA1Context idata *context)
- 133          {
- 134   1          context->Length_Low             = 0;
- 135   1          context->Length_High            = 0;
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 12  
+ 132          
+ 133          void SHA1Reset(SHA1Context idata *context)
+ 134          {
+ 135   1          context->Length_Low             = 0;
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 12  
 
- 136   1          context->Message_Block_Index    = 0;
- 137   1      
- 138   1          context->Message_Digest[0]      = 0x67452301;
- 139   1          context->Message_Digest[1]      = 0xEFCDAB89;
- 140   1          context->Message_Digest[2]      = 0x98BADCFE;
- 141   1          context->Message_Digest[3]      = 0x10325476;
- 142   1          context->Message_Digest[4]      = 0xC3D2E1F0;
- 143   1      
- 144   1          context->Computed   = 0;
- 145   1          context->Corrupted  = 0;
- 146   1      }
- 147          
- 148          
- 149          void SHA1PadMessage(SHA1Context idata *context)
- 150          {
- 151   1          /*
- 152   1           *  Check to see if the current message block is too small to hold
- 153   1           *  the initial padding bits and length.  If so, we will pad the
- 154   1           *  block, process it, and then continue padding into a second
- 155   1           *  block.
- 156   1           */
- 157   1          if (context->Message_Block_Index > 55)
- 158   1          {
- 159   2              context->Message_Block[context->Message_Block_Index++] = 0x80;
- 160   2              while(context->Message_Block_Index < 64)
- 161   2              {
- 162   3                  context->Message_Block[context->Message_Block_Index++] = 0;
- 163   3              }
- 164   2      
- 165   2              SHA1ProcessMessageBlock(context);
+ 136   1          context->Length_High            = 0;
+ 137   1          context->Message_Block_Index    = 0;
+ 138   1      
+ 139   1          context->Message_Digest[0]      = 0x67452301;
+ 140   1          context->Message_Digest[1]      = 0xEFCDAB89;
+ 141   1          context->Message_Digest[2]      = 0x98BADCFE;
+ 142   1          context->Message_Digest[3]      = 0x10325476;
+ 143   1          context->Message_Digest[4]      = 0xC3D2E1F0;
+ 144   1      
+ 145   1          context->Computed   = 0;
+ 146   1          context->Corrupted  = 0;
+ 147   1              blink_led();
+ 148   1      }
+ 149          
+ 150          
+ 151          void SHA1PadMessage(SHA1Context idata *context)
+ 152          {
+ 153   1          /*
+ 154   1           *  Check to see if the current message block is too small to hold
+ 155   1           *  the initial padding bits and length.  If so, we will pad the
+ 156   1           *  block, process it, and then continue padding into a second
+ 157   1           *  block.
+ 158   1           */
+ 159   1          if (context->Message_Block_Index > 55)
+ 160   1          {
+ 161   2              context->Message_Block[context->Message_Block_Index++] = 0x80;
+ 162   2              while(context->Message_Block_Index < 64)
+ 163   2              {
+ 164   3                  context->Message_Block[context->Message_Block_Index++] = 0;
+ 165   3              }
  166   2      
- 167   2              while(context->Message_Block_Index < 56)
- 168   2              {
- 169   3                  context->Message_Block[context->Message_Block_Index++] = 0;
- 170   3              }
- 171   2          }
- 172   1          else
- 173   1          {
- 174   2              context->Message_Block[context->Message_Block_Index++] = 0x80;
- 175   2              while(context->Message_Block_Index < 56)
- 176   2              {
- 177   3                  context->Message_Block[context->Message_Block_Index++] = 0;
- 178   3              }
- 179   2          }
- 180   1      
- 181   1          /*
- 182   1           *  Store the message length as the last 8 octets
- 183   1           */
- 184   1          context->Message_Block[24] = (context->Length_High >> 24) & 0xFF;
- 185   1          context->Message_Block[25] = (context->Length_High >> 16) & 0xFF;
- 186   1          context->Message_Block[26] = (context->Length_High >> 8) & 0xFF;
- 187   1          context->Message_Block[27] = (context->Length_High) & 0xFF;
- 188   1          context->Message_Block[28] = (context->Length_Low >> 24) & 0xFF;
- 189   1          context->Message_Block[29] = (context->Length_Low >> 16) & 0xFF;
- 190   1          context->Message_Block[30] = (context->Length_Low >> 8) & 0xFF;
- 191   1          context->Message_Block[31] = (context->Length_Low) & 0xFF;
- 192   1      
- 193   1          SHA1ProcessMessageBlock(context);
- 194   1      }
- 195          
- 196          
- 197          int SHA1Result(SHA1Context idata *context)
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 13  
+ 167   2              SHA1ProcessMessageBlock(context);
+ 168   2      
+ 169   2              while(context->Message_Block_Index < 56)
+ 170   2              {
+ 171   3                  context->Message_Block[context->Message_Block_Index++] = 0;
+ 172   3              }
+ 173   2          }
+ 174   1          else
+ 175   1          {
+ 176   2              context->Message_Block[context->Message_Block_Index++] = 0x80;
+ 177   2              while(context->Message_Block_Index < 56)
+ 178   2              {
+ 179   3                  context->Message_Block[context->Message_Block_Index++] = 0;
+ 180   3              }
+ 181   2          }
+ 182   1      
+ 183   1          /*
+ 184   1           *  Store the message length as the last 8 octets
+ 185   1           */
+ 186   1          context->Message_Block[24] = (context->Length_High >> 24) & 0xFF;
+ 187   1          context->Message_Block[25] = (context->Length_High >> 16) & 0xFF;
+ 188   1          context->Message_Block[26] = (context->Length_High >> 8) & 0xFF;
+ 189   1          context->Message_Block[27] = (context->Length_High) & 0xFF;
+ 190   1          context->Message_Block[28] = (context->Length_Low >> 24) & 0xFF;
+ 191   1          context->Message_Block[29] = (context->Length_Low >> 16) & 0xFF;
+ 192   1          context->Message_Block[30] = (context->Length_Low >> 8) & 0xFF;
+ 193   1          context->Message_Block[31] = (context->Length_Low) & 0xFF;
+ 194   1      
+ 195   1          SHA1ProcessMessageBlock(context);
+ 196   1      
+ 197   1              //blink_led();
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 13  
 
- 198          {
- 199   1      
- 200   1          if (context->Corrupted)
- 201   1          {
- 202   2              return 0;
- 203   2          }
- 204   1      
- 205   1          if (!context->Computed)
- 206   1          {
- 207   2              SHA1PadMessage(context);
- 208   2              context->Computed = 1;
- 209   2          }
- 210   1      
- 211   1          return 1;
- 212   1      }
- 213          
- 214          
- 215          void SHA1Input(SHA1Context idata *context,unsigned char idata *message_array,unsigned idata length)
- 216          {
- 217   1          if (!length)
- 218   1          {
- 219   2              return;
- 220   2          }
- 221   1      
- 222   1          if (context->Computed || context->Corrupted)
- 223   1          {
- 224   2              context->Corrupted = 1;
- 225   2              return;
- 226   2          }
- 227   1      
- 228   1          while(length-- && !context->Corrupted)
- 229   1          {
- 230   2              context->Message_Block[context->Message_Block_Index++] =(*message_array & 0xFF);
- 231   2      
- 232   2              context->Length_Low += 8;
- 233   2              /* Force it to 32 bits */
- 234   2              context->Length_Low &= 0xFFFFFFFF;
- 235   2              if (context->Length_Low == 0)
- 236   2              {
- 237   3                  context->Length_High++;
- 238   3                  /* Force it to 32 bits */
- 239   3                  context->Length_High &= 0xFFFFFFFF;
- 240   3                  if (context->Length_High == 0)
- 241   3                  {
- 242   4                      /* Message is too long */
- 243   4                      context->Corrupted = 1;
- 244   4                  }
- 245   3              }
- 246   2      
- 247   2              if (context->Message_Block_Index == 32)
- 248   2              {
- 249   3                  SHA1ProcessMessageBlock(context);
+ 198   1      }
+ 199          
+ 200          
+ 201          int SHA1Result(SHA1Context idata *context) reentrant
+ 202          {
+ 203   1      
+ 204   1          if (context->Corrupted)
+ 205   1          {
+ 206   2              return 0;
+ 207   2          }
+ 208   1      
+ 209   1          if (!context->Computed)
+ 210   1          {
+ 211   2              SHA1PadMessage(context);
+ 212   2              context->Computed = 1;
+ 213   2          }
+ 214   1      
+ 215   1          return 1;
+ 216   1      }
+ 217          
+ 218          
+ 219          void SHA1Input(SHA1Context idata *context,unsigned char idata *message_array,unsigned idata length)
+ 220          {
+ 221   1          if (!length)
+ 222   1          {
+ 223   2              return;
+ 224   2          }
+ 225   1      
+ 226   1          if (context->Computed || context->Corrupted)
+ 227   1          {
+ 228   2              context->Corrupted = 1;
+ 229   2              return;
+ 230   2          }
+ 231   1      
+ 232   1          while(length-- && !context->Corrupted)
+ 233   1          {
+ 234   2              context->Message_Block[context->Message_Block_Index++] =(*message_array & 0xFF);
+ 235   2      
+ 236   2                      //blink_led();
+ 237   2              context->Length_Low += 8;
+ 238   2              /* Force it to 32 bits */
+ 239   2              context->Length_Low &= 0xFFFFFFFF;
+ 240   2              if (context->Length_Low == 0)
+ 241   2              {
+ 242   3                  context->Length_High++;
+ 243   3                  /* Force it to 32 bits */
+ 244   3                  context->Length_High &= 0xFFFFFFFF;
+ 245   3                  if (context->Length_High == 0)
+ 246   3                  {
+ 247   4                      /* Message is too long */
+ 248   4                      context->Corrupted = 1;
+ 249   4                  }
  250   3              }
  251   2      
- 252   2              message_array++;
- 253   2          }
- 254   1      }
- 255          
- 256          
- 257          void main()
- 258          {
- 259   1      
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 14  
+ 252   2              if (context->Message_Block_Index == 32)
+ 253   2              {
+ 254   3                  SHA1ProcessMessageBlock(context);
+ 255   3              }
+ 256   2      
+ 257   2              message_array++;
+ 258   2          }
+ 259   1      }
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 14  
 
- 260   1              idata char i;
- 261   1              idata SHA1Context sha;
- 262   1      
- 263   1              store_cpu_rate(16);
+ 260          
+ 261          
+ 262          void main()
+ 263          {
  264   1      
- 265   1          P0_DIR &= ~0x28;
- 266   1          P0_ALT &= ~0x28;
+ 265   1              char i;
+ 266   1              idata SHA1Context sha;
  267   1      
- 268   1              serial_init(19200);
+ 268   1              store_cpu_rate(16);
  269   1      
- 270   1      
- 271   1              for(i=0;i<6;i++)
- 272   1              {
- 273   2                      blink_led();
- 274   2                      mdelay(400);
- 275   2              }       
- 276   1              
- 277   1              sha_counter++;
- 278   1      
- 279   1              while(1)
- 280   1              {
- 281   2                      SHA1Reset(&sha);
- 282   2                      SHA1Input(&sha, (const unsigned char *) TESTA, 3);
- 283   2      
- 284   2                      SHA1Result(&sha);
- 285   2                      sha_counter++;
- 286   2                      blink_led();
- 287   2                      int_print(sha_counter);
- 288   2                      puts("\r\n");
- 289   2              }       
- 290   1      
- 291   1      }
- 292          
- 293          
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 15  
+ 270   1          P0_DIR &= ~0x28;
+ 271   1          P0_ALT &= ~0x28;
+ 272   1      
+ 273   1              serial_init(19200);
+ 274   1      
+ 275   1      
+ 276   1              for(i=0;i<6;i++)
+ 277   1              {
+ 278   2                      blink_led();
+ 279   2                      mdelay(400);
+ 280   2              }       
+ 281   1              
+ 282   1              sha_counter++;
+ 283   1      
+ 284   1              while(1)
+ 285   1              {
+ 286   2                      SHA1Reset(&sha);
+ 287   2                      SHA1Input(&sha, (const unsigned char *) TESTA, 3);
+ 288   2      
+ 289   2                      SHA1Result(&sha);
+ 290   2                      sha_counter++;
+ 291   2                      //blink_led();
+ 292   2                      int_print(sha_counter);
+ 293   2                      puts("\r\n");
+ 294   2              }       
+ 295   1      
+ 296   1      }
+ 297          
+ 298          
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 15  
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -874,30 +879,30 @@ NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 
 _mdelay. . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 P0 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0080H  1
-_SHA1Result. . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  context?352. . . . . . . . . . . . .  AUTO     DATA   PTR      0000H  1
+_?SHA1Result . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  context. . . . . . . . . . . . . . .  AUTO     IDATA  PTR      0000H  1
 _SHA1Reset . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
   context?150. . . . . . . . . . . . .  * REG *  DATA   PTR      0007H  1
 _serial_init . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 _SHA1Input . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  context?453. . . . . . . . . . . . .  AUTO     DATA   PTR      0000H  1
-  message_array?454. . . . . . . . . .  AUTO     DATA   PTR      0001H  1
-  length?455 . . . . . . . . . . . . .  AUTO     DATA   U_INT    0002H  2
+  context?452. . . . . . . . . . . . .  AUTO     DATA   PTR      0000H  1
+  message_array?453. . . . . . . . . .  AUTO     DATA   PTR      0001H  1
+  length?454 . . . . . . . . . . . . .  AUTO     DATA   U_INT    0002H  2
 sha_counter. . . . . . . . . . . . . .  PUBLIC   DATA   INT      0000H  2
 main . . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  i?556. . . . . . . . . . . . . . . .  AUTO     IDATA  CHAR     0000H  1
-  sha?557. . . . . . . . . . . . . . .  AUTO     IDATA  STRUCT   0001H  83
+  i?555. . . . . . . . . . . . . . . .  AUTO     DATA   CHAR     0000H  1
+  sha?556. . . . . . . . . . . . . . .  AUTO     IDATA  STRUCT   0000H  83
 _SHA1ProcessMessageBlock . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
   context?040. . . . . . . . . . . . .  AUTO     DATA   PTR      0000H  1
   K?041. . . . . . . . . . . . . . . .  AUTO     IDATA  ARRAY    0000H  8
-  t?042. . . . . . . . . . . . . . . .  AUTO     IDATA  INT      0008H  2
-  temp?043 . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    000AH  2
+  t?042. . . . . . . . . . . . . . . .  AUTO     IDATA  CHAR     0008H  1
+  temp?043 . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    0009H  2
   W?044. . . . . . . . . . . . . . . .  AUTO     XDATA  ARRAY    0000H  160
-  A?045. . . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    000CH  2
-  B?046. . . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    000EH  2
-  C?047. . . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    0010H  2
-  D?048. . . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    0012H  2
-  E?049. . . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    0014H  2
+  A?045. . . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    000BH  2
+  B?046. . . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    000DH  2
+  C?047. . . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    000FH  2
+  D?048. . . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    0011H  2
+  E?049. . . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    0013H  2
 P0_DIR . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0094H  1
 P0_ALT . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0095H  1
 _?ix1000 . . . . . . . . . . . . . . .  STATIC   CODE   ARRAY    0007H  8
@@ -925,14 +930,14 @@ SHA1Context. . . . . . . . . . . . . .  * TAG *  -----  STRUCT   -----  83
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   2632    ----
+   CODE SIZE        =   2646    ----
    CONSTANT SIZE    =     15    ----
    XDATA SIZE       =   ----     160
    PDATA SIZE       =   ----    ----
    DATA SIZE        =      2       7
-C51 COMPILER V8.16   MAIN                                                                  05/14/2009 22:31:02 PAGE 16  
+C51 COMPILER V8.16   MAIN                                                                  05/15/2009 16:46:33 PAGE 16  
 
-   IDATA SIZE       =   ----     106
+   IDATA SIZE       =   ----     104
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 

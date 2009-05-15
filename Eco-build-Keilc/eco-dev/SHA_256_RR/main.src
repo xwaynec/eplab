@@ -169,11 +169,12 @@ REGX_MSB	DATA	0ABH
 ?PR?_SHA1Reset?MAIN  SEGMENT CODE 
 ?PR?_SHA1PadMessage?MAIN                 SEGMENT CODE 
 ?DT?_SHA1PadMessage?MAIN                 SEGMENT DATA OVERLAYABLE 
-?PR?_SHA1Result?MAIN SEGMENT CODE 
-?DT?_SHA1Result?MAIN SEGMENT DATA OVERLAYABLE 
+?PR?_SHA1PadMessage_2?MAIN                 SEGMENT CODE 
+?PR?_?SHA1Result?MAIN                    SEGMENT CODE 
 ?PR?_SHA1Input?MAIN  SEGMENT CODE 
 ?DT?_SHA1Input?MAIN  SEGMENT DATA OVERLAYABLE 
 ?PR?main?MAIN        SEGMENT CODE 
+?DT?main?MAIN        SEGMENT DATA OVERLAYABLE 
 ?CO?MAIN             SEGMENT CODE 
 ?C_INITSEG           SEGMENT CODE 
 ?DT?MAIN             SEGMENT DATA 
@@ -186,26 +187,40 @@ REGX_MSB	DATA	0ABH
 	EXTRN	CODE (_?int_print)
 	EXTRN	CODE (_store_cpu_rate)
 	EXTRN	CODE (?C?COPY)
+	EXTRN	DATA (?C_IBP)
 	EXTRN	CODE (?C_STARTUP)
+
+	EXTRN   CODE (eco_page_manager)
+    EXTRN   DATA (ECO_PAGE_ADDR)
+    EXTRN   DATA (ECO_PAGE_SPI_CONN)
+    EXTRN   IDATA (ECO_PAGE_REGISTER1)
+    EXTRN   IDATA (ECO_PAGE_REGISTER2)
+    EXTRN   IDATA (ECO_PAGE_REGISTER3)
+    EXTRN   IDATA (ECO_PAGE_REGISTER4)
+    EXTRN   IDATA (ECO_PAGE_REGISTER5)
+    EXTRN   IDATA (ECO_PAGE_REGISTER6)
+    EXTRN   IDATA (ECO_PAGE_REGISTER7)
+
 	PUBLIC	sha_counter
 	PUBLIC	main
 	PUBLIC	_SHA1Input
-	PUBLIC	_SHA1Result
+	PUBLIC	_?SHA1Result
 	PUBLIC	_SHA1PadMessage
+	PUBLIC	_SHA1PadMessage_2
 	PUBLIC	_SHA1Reset
 	PUBLIC	_SHA1ProcessMessageBlock
 
-	RSEG  ?DT?_SHA1Result?MAIN
-?_SHA1Result?BYTE:
-    context?352:   DS   1
-
 	RSEG  ?DT?_SHA1Input?MAIN
 ?_SHA1Input?BYTE:
-    context?453:   DS   1
+    context?452:   DS   1
 	ORG  1
-message_array?454:   DS   1
+message_array?453:   DS   1
 	ORG  2
-     length?455:   DS   2
+     length?454:   DS   2
+
+	RSEG  ?DT?main?MAIN
+?main?BYTE:
+          i?555:   DS   1
 
 	RSEG  ?DT?_SHA1ProcessMessageBlock?MAIN
 ?_SHA1ProcessMessageBlock?BYTE:
@@ -222,7 +237,7 @@ message_array?454:   DS   1
           K?041:   DS   8
 
 	RSEG  ?ID?_SHA1ProcessMessageBlock?MAIN
-          t?042:   DS   2
+          t?042:   DS   1
 
 	RSEG  ?ID?_SHA1ProcessMessageBlock?MAIN
        temp?043:   DS   2
@@ -246,10 +261,7 @@ message_array?454:   DS   1
           W?044:   DS   160
 
 	RSEG  ?ID?main?MAIN
-          i?556:   DS   1
-
-	RSEG  ?ID?main?MAIN
-        sha?557:   DS   83
+        sha?556:   DS   83
 
 	RSEG  ?CO?MAIN
 ?SC_0:
@@ -329,7 +341,7 @@ _SHA1ProcessMessageBlock:
 ;         0x8F1BBCDC,
 ;         0xCA62C1D6
 ;     };
-;     idata int         t;                  /* Loop counter                 */
+;     idata char         t;                  /* Loop counter                 */
 ;     idata unsigned    temp;               /* Temporary word value         */
 ;     xdata unsigned    W[80];              /* Word sequence                */
 ;     idata unsigned    A, B, C, D, E;      /* Word buffers                 */
@@ -342,8 +354,6 @@ _SHA1ProcessMessageBlock:
 	CLR  	A
 	MOV  	R0,#LOW (t?042)
 	MOV  	@R0,A
-	INC  	R0
-	MOV  	@R0,A
 ?C0001:
 ;     {
 			; SOURCE LINE # 52
@@ -354,9 +364,6 @@ _SHA1ProcessMessageBlock:
 	MOV  	R0,A
 	PUSH 	AR0
 	MOV  	R0,#LOW (t?042)
-	MOV  	A,@R0
-	MOV  	R4,A
-	INC  	R0
 	MOV  	A,@R0
 	MOV  	R5,A
 	POP  	AR0
@@ -377,9 +384,14 @@ _SHA1ProcessMessageBlock:
 	MOV  	R3,A
 	MOV  	R2,AR6
 	MOV  	A,R5
+	MOV  	R7,A
+	RLC  	A
+	SUBB 	A,ACC
+	MOV  	R6,A
+	MOV  	A,R7
 	ADD  	A,ACC
 	MOV  	R7,A
-	MOV  	A,R4
+	MOV  	A,R6
 	RLC  	A
 	MOV  	R6,A
 	MOV  	A,#LOW (W?044)
@@ -404,9 +416,6 @@ _SHA1ProcessMessageBlock:
 	PUSH 	DPH
 	PUSH 	DPL
 	MOV  	R0,#LOW (t?042)
-	MOV  	A,@R0
-	MOV  	R4,A
-	INC  	R0
 	MOV  	A,@R0
 	MOV  	R5,A
 	ADD  	A,ACC
@@ -442,9 +451,14 @@ _SHA1ProcessMessageBlock:
 ;         W[t] |= ((unsigned) context->Message_Block[t * 4 + 2]) << 8;
 			; SOURCE LINE # 55
 	MOV  	A,R5
+	MOV  	R7,A
+	RLC  	A
+	SUBB 	A,ACC
+	MOV  	R6,A
+	MOV  	A,R7
 	ADD  	A,ACC
 	MOV  	R7,A
-	MOV  	A,R4
+	MOV  	A,R6
 	RLC  	A
 	MOV  	R6,A
 	MOV  	A,#LOW (W?044)
@@ -456,9 +470,6 @@ _SHA1ProcessMessageBlock:
 	PUSH 	DPH
 	PUSH 	DPL
 	MOV  	R0,#LOW (t?042)
-	MOV  	A,@R0
-	MOV  	R4,A
-	INC  	R0
 	MOV  	A,@R0
 	MOV  	R5,A
 	ADD  	A,ACC
@@ -483,9 +494,14 @@ _SHA1ProcessMessageBlock:
 ;         W[t] |= ((unsigned) context->Message_Block[t * 4 + 3]);
 			; SOURCE LINE # 56
 	MOV  	A,R5
+	MOV  	R7,A
+	RLC  	A
+	SUBB 	A,ACC
+	MOV  	R6,A
+	MOV  	A,R7
 	ADD  	A,ACC
 	MOV  	R7,A
-	MOV  	A,R4
+	MOV  	A,R6
 	RLC  	A
 	MOV  	R6,A
 	MOV  	A,#LOW (W?044)
@@ -496,7 +512,7 @@ _SHA1ProcessMessageBlock:
 	MOV  	DPH,A
 	PUSH 	DPH
 	PUSH 	DPL
-	MOV  	R0,#LOW (t?042+01H)
+	MOV  	R0,#LOW (t?042)
 	MOV  	A,@R0
 	ADD  	A,ACC
 	ADD  	A,ACC
@@ -520,18 +536,10 @@ _SHA1ProcessMessageBlock:
 	MOVX 	@DPTR,A
 ;     }
 			; SOURCE LINE # 57
-	MOV  	R0,#LOW (t?042+01H)
+	MOV  	R0,#LOW (t?042)
 	INC  	@R0
-	MOV  	A,@R0
-	DEC  	R0
-	JNZ  	?C0050
-	INC  	@R0
-?C0050:
-	MOV  	R0,#LOW (t?042+01H)
 	MOV  	A,@R0
 	XRL  	A,#010H
-	DEC  	R0
-	ORL  	A,@R0
 	JZ   	$ + 5H
 	LJMP 	?C0001
 ?C0002:
@@ -539,20 +547,26 @@ _SHA1ProcessMessageBlock:
 ;     for(t = 16; t < 80; t++)
 			; SOURCE LINE # 59
 	MOV  	R0,#LOW (t?042)
-	MOV  	@R0,#00H
-	INC  	R0
 	MOV  	@R0,#010H
 ?C0004:
+	MOV  	R0,#LOW (t?042)
+	MOV  	A,@R0
+	MOV  	R1,A
+	CLR  	C
+	XRL  	A,#080H
+	SUBB 	A,#0D0H
+	JC   	$ + 5H
+	LJMP 	?C0005
 ;     {
 			; SOURCE LINE # 60
 ;        W[t] = SHA1CircularShift(1,W[t-3] ^ W[t-8] ^ W[t-14] ^ W[t-16]);
 			; SOURCE LINE # 61
-	MOV  	R0,#LOW (t?042)
-	MOV  	A,@R0
-	MOV  	R4,A
-	INC  	R0
-	MOV  	A,@R0
+	MOV  	A,R1
 	MOV  	R5,A
+	RLC  	A
+	SUBB 	A,ACC
+	MOV  	R4,A
+	MOV  	A,R5
 	ADD  	A,ACC
 	MOV  	R7,A
 	MOV  	A,R4
@@ -625,12 +639,12 @@ _SHA1ProcessMessageBlock:
 	PUSH 	AR5
 	PUSH 	AR6
 	PUSH 	AR7
-	DEC  	R0
-	MOV  	A,@R0
-	MOV  	R4,A
-	INC  	R0
 	MOV  	A,@R0
 	MOV  	R5,A
+	RLC  	A
+	SUBB 	A,ACC
+	MOV  	R4,A
+	MOV  	A,R5
 	ADD  	A,ACC
 	MOV  	R7,A
 	MOV  	A,R4
@@ -692,13 +706,13 @@ _SHA1ProcessMessageBlock:
 	MOVX 	A,@DPTR
 	XRL  	A,R5
 	MOV  	R0,#01FH
-?C0051:
+?C0050:
 	XCH  	A,R6
 	CLR  	C
 	RRC  	A
 	XCH  	A,R6
 	RRC  	A
-	DJNZ 	R0,?C0051
+	DJNZ 	R0,?C0050
 	MOV  	R7,A
 	POP  	AR3
 	POP  	AR2
@@ -712,12 +726,16 @@ _SHA1ProcessMessageBlock:
 	MOV  	R6,A
 	MOV  	R5,AR7
 	MOV  	R4,AR6
-	MOV  	R0,#LOW (t?042+01H)
+	MOV  	R0,#LOW (t?042)
 	MOV  	A,@R0
+	MOV  	R7,A
+	RLC  	A
+	SUBB 	A,ACC
+	MOV  	R6,A
+	MOV  	A,R7
 	ADD  	A,ACC
 	MOV  	R7,A
-	DEC  	R0
-	MOV  	A,@R0
+	MOV  	A,R6
 	RLC  	A
 	MOV  	R6,A
 	MOV  	A,#LOW (W?044)
@@ -733,19 +751,7 @@ _SHA1ProcessMessageBlock:
 	MOVX 	@DPTR,A
 ;     }
 			; SOURCE LINE # 62
-	INC  	R0
 	INC  	@R0
-	MOV  	A,@R0
-	DEC  	R0
-	JNZ  	?C0052
-	INC  	@R0
-?C0052:
-	MOV  	R0,#LOW (t?042+01H)
-	MOV  	A,@R0
-	XRL  	A,#050H
-	DEC  	R0
-	ORL  	A,@R0
-	JZ   	$ + 5H
 	LJMP 	?C0004
 ?C0005:
 ; 
@@ -823,8 +829,6 @@ _SHA1ProcessMessageBlock:
 	CLR  	A
 	MOV  	R0,#LOW (t?042)
 	MOV  	@R0,A
-	INC  	R0
-	MOV  	@R0,A
 ?C0007:
 ;     {
 			; SOURCE LINE # 71
@@ -836,13 +840,13 @@ _SHA1ProcessMessageBlock:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R0,#05H
-?C0053:
+?C0051:
 	CLR  	C
 	RLC  	A
 	XCH  	A,R6
 	RLC  	A
 	XCH  	A,R6
-	DJNZ 	R0,?C0053
+	DJNZ 	R0,?C0051
 	MOV  	R7,A
 	CLR  	A
 	MOV  	R4,A
@@ -857,13 +861,13 @@ _SHA1ProcessMessageBlock:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R0,#01BH
-?C0054:
+?C0052:
 	XCH  	A,R6
 	CLR  	C
 	RRC  	A
 	XCH  	A,R6
 	RRC  	A
-	DJNZ 	R0,?C0054
+	DJNZ 	R0,?C0052
 	MOV  	R7,A
 	POP  	AR3
 	POP  	AR2
@@ -891,13 +895,17 @@ _SHA1ProcessMessageBlock:
 	INC  	R0
 	ANL  	A,@R0
 	MOV  	R5,A
-	MOV  	R1,#LOW (B?046)
-	MOV  	A,@R1
-	MOV  	R0,#LOW (C?047)
+	MOV  	R0,#LOW (B?046)
+	MOV  	A,@R0
+	MOV  	R2,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R3,A
+	MOV  	A,R2
+	INC  	R0
 	ANL  	A,@R0
 	MOV  	R2,A
-	INC  	R1
-	MOV  	A,@R1
+	MOV  	A,R3
 	INC  	R0
 	ANL  	A,@R0
 	MOV  	R3,A
@@ -919,12 +927,16 @@ _SHA1ProcessMessageBlock:
 	DEC  	R0
 	ADDC 	A,@R0
 	MOV  	R4,A
-	MOV  	R0,#LOW (t?042+01H)
+	MOV  	R0,#LOW (t?042)
 	MOV  	A,@R0
+	MOV  	R7,A
+	RLC  	A
+	SUBB 	A,ACC
+	MOV  	R6,A
+	MOV  	A,R7
 	ADD  	A,ACC
 	MOV  	R7,A
-	DEC  	R0
-	MOV  	A,@R0
+	MOV  	A,R6
 	RLC  	A
 	MOV  	R6,A
 	MOV  	A,#LOW (W?044)
@@ -996,13 +1008,13 @@ _SHA1ProcessMessageBlock:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R0,#01EH
-?C0055:
+?C0053:
 	CLR  	C
 	RLC  	A
 	XCH  	A,R6
 	RLC  	A
 	XCH  	A,R6
-	DJNZ 	R0,?C0055
+	DJNZ 	R0,?C0053
 	MOV  	R7,A
 	CLR  	A
 	MOV  	R4,A
@@ -1017,13 +1029,13 @@ _SHA1ProcessMessageBlock:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R0,#02H
-?C0056:
+?C0054:
 	XCH  	A,R6
 	CLR  	C
 	RRC  	A
 	XCH  	A,R6
 	RRC  	A
-	DJNZ 	R0,?C0056
+	DJNZ 	R0,?C0054
 	MOV  	R7,A
 	POP  	AR3
 	POP  	AR2
@@ -1065,18 +1077,10 @@ _SHA1ProcessMessageBlock:
 	MOV  	@R0,AR7
 ;     }
 			; SOURCE LINE # 80
-	MOV  	R0,#LOW (t?042+01H)
+	MOV  	R0,#LOW (t?042)
 	INC  	@R0
-	MOV  	A,@R0
-	DEC  	R0
-	JNZ  	?C0057
-	INC  	@R0
-?C0057:
-	MOV  	R0,#LOW (t?042+01H)
 	MOV  	A,@R0
 	XRL  	A,#014H
-	DEC  	R0
-	ORL  	A,@R0
 	JZ   	$ + 5H
 	LJMP 	?C0007
 ?C0008:
@@ -1084,8 +1088,6 @@ _SHA1ProcessMessageBlock:
 ;     for(t = 20; t < 40; t++)
 			; SOURCE LINE # 82
 	MOV  	R0,#LOW (t?042)
-	MOV  	@R0,#00H
-	INC  	R0
 	MOV  	@R0,#014H
 ?C0010:
 ;     {
@@ -1098,13 +1100,13 @@ _SHA1ProcessMessageBlock:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R0,#05H
-?C0058:
+?C0055:
 	CLR  	C
 	RLC  	A
 	XCH  	A,R6
 	RLC  	A
 	XCH  	A,R6
-	DJNZ 	R0,?C0058
+	DJNZ 	R0,?C0055
 	MOV  	R7,A
 	CLR  	A
 	MOV  	R4,A
@@ -1119,13 +1121,13 @@ _SHA1ProcessMessageBlock:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R0,#01BH
-?C0059:
+?C0056:
 	XCH  	A,R6
 	CLR  	C
 	RRC  	A
 	XCH  	A,R6
 	RRC  	A
-	DJNZ 	R0,?C0059
+	DJNZ 	R0,?C0056
 	MOV  	R7,A
 	POP  	AR3
 	POP  	AR2
@@ -1137,13 +1139,17 @@ _SHA1ProcessMessageBlock:
 	MOV  	A,R2
 	ORL  	A,R6
 	MOV  	R6,A
-	MOV  	R1,#LOW (B?046)
-	MOV  	A,@R1
-	MOV  	R0,#LOW (C?047)
+	MOV  	R0,#LOW (B?046)
+	MOV  	A,@R0
+	MOV  	R4,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R5,A
+	MOV  	A,R4
+	INC  	R0
 	XRL  	A,@R0
 	MOV  	R4,A
-	INC  	R1
-	MOV  	A,@R1
+	MOV  	A,R5
 	INC  	R0
 	XRL  	A,@R0
 	MOV  	R5,A
@@ -1171,12 +1177,16 @@ _SHA1ProcessMessageBlock:
 	DEC  	R0
 	ADDC 	A,@R0
 	MOV  	R4,A
-	MOV  	R0,#LOW (t?042+01H)
+	MOV  	R0,#LOW (t?042)
 	MOV  	A,@R0
+	MOV  	R7,A
+	RLC  	A
+	SUBB 	A,ACC
+	MOV  	R6,A
+	MOV  	A,R7
 	ADD  	A,ACC
 	MOV  	R7,A
-	DEC  	R0
-	MOV  	A,@R0
+	MOV  	A,R6
 	RLC  	A
 	MOV  	R6,A
 	MOV  	A,#LOW (W?044)
@@ -1197,16 +1207,17 @@ _SHA1ProcessMessageBlock:
 	MOV  	A,R7
 	MOV  	R0,#LOW (K?041+03H)
 	ADD  	A,@R0
-	MOV  	R1,#LOW (temp?043+01H)
-	MOV  	@R1,A
+	MOV  	R7,A
 	MOV  	A,R6
 	DEC  	R0
 	ADDC 	A,@R0
-	DEC  	R1
-	MOV  	@R1,A
+	MOV  	R0,#LOW (temp?043)
+	MOV  	@R0,A
+	INC  	R0
+	MOV  	@R0,AR7
 ;         temp &= 0xFFFFFFFF;
 			; SOURCE LINE # 85
-	MOV  	R0,#LOW (temp?043)
+	DEC  	R0
 	MOV  	A,@R0
 	MOV  	@R0,A
 	INC  	R0
@@ -1238,13 +1249,13 @@ _SHA1ProcessMessageBlock:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R0,#01EH
-?C0060:
+?C0057:
 	CLR  	C
 	RLC  	A
 	XCH  	A,R6
 	RLC  	A
 	XCH  	A,R6
-	DJNZ 	R0,?C0060
+	DJNZ 	R0,?C0057
 	MOV  	R7,A
 	CLR  	A
 	MOV  	R4,A
@@ -1259,13 +1270,13 @@ _SHA1ProcessMessageBlock:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R0,#02H
-?C0061:
+?C0058:
 	XCH  	A,R6
 	CLR  	C
 	RRC  	A
 	XCH  	A,R6
 	RRC  	A
-	DJNZ 	R0,?C0061
+	DJNZ 	R0,?C0058
 	MOV  	R7,A
 	POP  	AR3
 	POP  	AR2
@@ -1307,18 +1318,10 @@ _SHA1ProcessMessageBlock:
 	MOV  	@R0,AR7
 ;     }
 			; SOURCE LINE # 91
-	MOV  	R0,#LOW (t?042+01H)
+	MOV  	R0,#LOW (t?042)
 	INC  	@R0
-	MOV  	A,@R0
-	DEC  	R0
-	JNZ  	?C0062
-	INC  	@R0
-?C0062:
-	MOV  	R0,#LOW (t?042+01H)
 	MOV  	A,@R0
 	XRL  	A,#028H
-	DEC  	R0
-	ORL  	A,@R0
 	JZ   	$ + 5H
 	LJMP 	?C0010
 ?C0011:
@@ -1326,8 +1329,6 @@ _SHA1ProcessMessageBlock:
 ;     for(t = 40; t < 60; t++)
 			; SOURCE LINE # 93
 	MOV  	R0,#LOW (t?042)
-	MOV  	@R0,#00H
-	INC  	R0
 	MOV  	@R0,#028H
 ?C0013:
 ;     {
@@ -1340,13 +1341,13 @@ _SHA1ProcessMessageBlock:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R0,#05H
-?C0063:
+?C0059:
 	CLR  	C
 	RLC  	A
 	XCH  	A,R6
 	RLC  	A
 	XCH  	A,R6
-	DJNZ 	R0,?C0063
+	DJNZ 	R0,?C0059
 	MOV  	R7,A
 	CLR  	A
 	MOV  	R4,A
@@ -1361,13 +1362,13 @@ _SHA1ProcessMessageBlock:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R0,#01BH
-?C0064:
+?C0060:
 	XCH  	A,R6
 	CLR  	C
 	RRC  	A
 	XCH  	A,R6
 	RRC  	A
-	DJNZ 	R0,?C0064
+	DJNZ 	R0,?C0060
 	MOV  	R7,A
 	POP  	AR3
 	POP  	AR2
@@ -1379,23 +1380,31 @@ _SHA1ProcessMessageBlock:
 	MOV  	A,R2
 	ORL  	A,R6
 	MOV  	R6,A
-	MOV  	R1,#LOW (B?046)
-	MOV  	A,@R1
+	MOV  	R0,#LOW (B?046)
+	MOV  	A,@R0
+	MOV  	R4,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R5,A
+	MOV  	A,R4
 	MOV  	R0,#LOW (D?048)
 	ANL  	A,@R0
 	MOV  	R4,A
-	INC  	R1
-	MOV  	A,@R1
+	MOV  	A,R5
 	INC  	R0
 	ANL  	A,@R0
 	MOV  	R5,A
-	DEC  	R1
-	MOV  	A,@R1
-	MOV  	R0,#LOW (C?047)
+	MOV  	R0,#LOW (B?046)
+	MOV  	A,@R0
+	MOV  	R2,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R3,A
+	MOV  	A,R2
+	INC  	R0
 	ANL  	A,@R0
 	MOV  	R2,A
-	INC  	R1
-	MOV  	A,@R1
+	MOV  	A,R3
 	INC  	R0
 	ANL  	A,@R0
 	MOV  	R3,A
@@ -1405,13 +1414,17 @@ _SHA1ProcessMessageBlock:
 	MOV  	A,R3
 	ORL  	A,R5
 	MOV  	R5,A
-	INC  	R1
-	MOV  	A,@R1
+	DEC  	R0
+	MOV  	A,@R0
+	MOV  	R2,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R3,A
+	MOV  	A,R2
 	INC  	R0
 	ANL  	A,@R0
 	MOV  	R2,A
-	INC  	R1
-	MOV  	A,@R1
+	MOV  	A,R3
 	INC  	R0
 	ANL  	A,@R0
 	MOV  	R3,A
@@ -1433,12 +1446,16 @@ _SHA1ProcessMessageBlock:
 	DEC  	R0
 	ADDC 	A,@R0
 	MOV  	R4,A
-	MOV  	R0,#LOW (t?042+01H)
+	MOV  	R0,#LOW (t?042)
 	MOV  	A,@R0
+	MOV  	R7,A
+	RLC  	A
+	SUBB 	A,ACC
+	MOV  	R6,A
+	MOV  	A,R7
 	ADD  	A,ACC
 	MOV  	R7,A
-	DEC  	R0
-	MOV  	A,@R0
+	MOV  	A,R6
 	RLC  	A
 	MOV  	R6,A
 	MOV  	A,#LOW (W?044)
@@ -1510,6 +1527,247 @@ _SHA1ProcessMessageBlock:
 	INC  	R0
 	MOV  	A,@R0
 	MOV  	R0,#01EH
+?C0061:
+	CLR  	C
+	RLC  	A
+	XCH  	A,R6
+	RLC  	A
+	XCH  	A,R6
+	DJNZ 	R0,?C0061
+	MOV  	R7,A
+	CLR  	A
+	MOV  	R4,A
+	MOV  	R5,A
+	PUSH 	AR4
+	PUSH 	AR5
+	PUSH 	AR6
+	PUSH 	AR7
+	MOV  	R0,#LOW (B?046)
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R0,#02H
+?C0062:
+	XCH  	A,R6
+	CLR  	C
+	RRC  	A
+	XCH  	A,R6
+	RRC  	A
+	DJNZ 	R0,?C0062
+	MOV  	R7,A
+	POP  	AR3
+	POP  	AR2
+	POP  	AR1
+	POP  	AR0
+	MOV  	A,R3
+	ORL  	A,R7
+	MOV  	R7,A
+	MOV  	A,R2
+	ORL  	A,R6
+	MOV  	R6,A
+	MOV  	R0,#LOW (C?047)
+	MOV  	@R0,AR6
+	INC  	R0
+	MOV  	@R0,AR7
+;         B = A;
+			; SOURCE LINE # 101
+	MOV  	R0,#LOW (A?045)
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R7,A
+	INC  	R0
+	MOV  	@R0,AR6
+	INC  	R0
+	MOV  	@R0,AR7
+;         A = temp;
+			; SOURCE LINE # 102
+	MOV  	R0,#LOW (temp?043)
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R7,A
+	INC  	R0
+	MOV  	@R0,AR6
+	INC  	R0
+	MOV  	@R0,AR7
+;     }
+			; SOURCE LINE # 103
+	MOV  	R0,#LOW (t?042)
+	INC  	@R0
+	MOV  	A,@R0
+	XRL  	A,#03CH
+	JZ   	$ + 5H
+	LJMP 	?C0013
+?C0014:
+; 
+;     for(t = 60; t < 80; t++)
+			; SOURCE LINE # 105
+	MOV  	R0,#LOW (t?042)
+	MOV  	@R0,#03CH
+?C0016:
+;     {
+			; SOURCE LINE # 106
+;         temp = SHA1CircularShift(5,A) + (B ^ C ^ D) + E + W[t] + K[3];
+			; SOURCE LINE # 107
+	MOV  	R0,#LOW (A?045)
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R0,#05H
+?C0063:
+	CLR  	C
+	RLC  	A
+	XCH  	A,R6
+	RLC  	A
+	XCH  	A,R6
+	DJNZ 	R0,?C0063
+	MOV  	R7,A
+	CLR  	A
+	MOV  	R4,A
+	MOV  	R5,A
+	PUSH 	AR4
+	PUSH 	AR5
+	PUSH 	AR6
+	PUSH 	AR7
+	MOV  	R0,#LOW (A?045)
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R0,#01BH
+?C0064:
+	XCH  	A,R6
+	CLR  	C
+	RRC  	A
+	XCH  	A,R6
+	RRC  	A
+	DJNZ 	R0,?C0064
+	MOV  	R7,A
+	POP  	AR3
+	POP  	AR2
+	POP  	AR1
+	POP  	AR0
+	MOV  	A,R3
+	ORL  	A,R7
+	MOV  	R7,A
+	MOV  	A,R2
+	ORL  	A,R6
+	MOV  	R6,A
+	MOV  	R0,#LOW (B?046)
+	MOV  	A,@R0
+	MOV  	R4,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R5,A
+	MOV  	A,R4
+	INC  	R0
+	XRL  	A,@R0
+	MOV  	R4,A
+	MOV  	A,R5
+	INC  	R0
+	XRL  	A,@R0
+	MOV  	R5,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R2,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R3,A
+	MOV  	A,R4
+	XRL  	A,R2
+	MOV  	R4,A
+	MOV  	A,R5
+	XRL  	A,R3
+	ADD  	A,R7
+	MOV  	R7,A
+	MOV  	A,R4
+	ADDC 	A,R6
+	MOV  	R6,A
+	MOV  	A,R7
+	MOV  	R0,#LOW (E?049+01H)
+	ADD  	A,@R0
+	MOV  	R5,A
+	MOV  	A,R6
+	DEC  	R0
+	ADDC 	A,@R0
+	MOV  	R4,A
+	MOV  	R0,#LOW (t?042)
+	MOV  	A,@R0
+	MOV  	R7,A
+	RLC  	A
+	SUBB 	A,ACC
+	MOV  	R6,A
+	MOV  	A,R7
+	ADD  	A,ACC
+	MOV  	R7,A
+	MOV  	A,R6
+	RLC  	A
+	MOV  	R6,A
+	MOV  	A,#LOW (W?044)
+	ADD  	A,R7
+	MOV  	DPL,A
+	MOV  	A,#HIGH (W?044)
+	ADDC 	A,R6
+	MOV  	DPH,A
+	MOVX 	A,@DPTR
+	MOV  	R6,A
+	INC  	DPTR
+	MOVX 	A,@DPTR
+	ADD  	A,R5
+	MOV  	R7,A
+	MOV  	A,R6
+	ADDC 	A,R4
+	MOV  	R6,A
+	MOV  	A,R7
+	DEC  	R0
+	ADD  	A,@R0
+	MOV  	R7,A
+	MOV  	A,R6
+	DEC  	R0
+	ADDC 	A,@R0
+	MOV  	R0,#LOW (temp?043)
+	MOV  	@R0,A
+	INC  	R0
+	MOV  	@R0,AR7
+;         temp &= 0xFFFFFFFF;
+			; SOURCE LINE # 108
+	DEC  	R0
+	MOV  	A,@R0
+	MOV  	@R0,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	@R0,A
+;         E = D;
+			; SOURCE LINE # 109
+	MOV  	R0,#LOW (E?049)
+	MOV  	@R0,AR2
+	INC  	R0
+	MOV  	@R0,AR3
+;         D = C;
+			; SOURCE LINE # 110
+	MOV  	R0,#LOW (C?047)
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R7,A
+	INC  	R0
+	MOV  	@R0,AR6
+	INC  	R0
+	MOV  	@R0,AR7
+;         C = SHA1CircularShift(30,B);
+			; SOURCE LINE # 111
+	MOV  	R0,#LOW (B?046)
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
+	MOV  	R0,#01EH
 ?C0065:
 	CLR  	C
 	RLC  	A
@@ -1554,248 +1812,6 @@ _SHA1ProcessMessageBlock:
 	INC  	R0
 	MOV  	@R0,AR7
 ;         B = A;
-			; SOURCE LINE # 101
-	MOV  	R0,#LOW (A?045)
-	MOV  	A,@R0
-	MOV  	R6,A
-	INC  	R0
-	MOV  	A,@R0
-	MOV  	R7,A
-	INC  	R0
-	MOV  	@R0,AR6
-	INC  	R0
-	MOV  	@R0,AR7
-;         A = temp;
-			; SOURCE LINE # 102
-	MOV  	R0,#LOW (temp?043)
-	MOV  	A,@R0
-	MOV  	R6,A
-	INC  	R0
-	MOV  	A,@R0
-	MOV  	R7,A
-	INC  	R0
-	MOV  	@R0,AR6
-	INC  	R0
-	MOV  	@R0,AR7
-;     }
-			; SOURCE LINE # 103
-	MOV  	R0,#LOW (t?042+01H)
-	INC  	@R0
-	MOV  	A,@R0
-	DEC  	R0
-	JNZ  	?C0067
-	INC  	@R0
-?C0067:
-	MOV  	R0,#LOW (t?042+01H)
-	MOV  	A,@R0
-	XRL  	A,#03CH
-	DEC  	R0
-	ORL  	A,@R0
-	JZ   	$ + 5H
-	LJMP 	?C0013
-?C0014:
-; 
-;     for(t = 60; t < 80; t++)
-			; SOURCE LINE # 105
-	MOV  	R0,#LOW (t?042)
-	MOV  	@R0,#00H
-	INC  	R0
-	MOV  	@R0,#03CH
-?C0016:
-;     {
-			; SOURCE LINE # 106
-;         temp = SHA1CircularShift(5,A) + (B ^ C ^ D) + E + W[t] + K[3];
-			; SOURCE LINE # 107
-	MOV  	R0,#LOW (A?045)
-	MOV  	A,@R0
-	MOV  	R6,A
-	INC  	R0
-	MOV  	A,@R0
-	MOV  	R0,#05H
-?C0068:
-	CLR  	C
-	RLC  	A
-	XCH  	A,R6
-	RLC  	A
-	XCH  	A,R6
-	DJNZ 	R0,?C0068
-	MOV  	R7,A
-	CLR  	A
-	MOV  	R4,A
-	MOV  	R5,A
-	PUSH 	AR4
-	PUSH 	AR5
-	PUSH 	AR6
-	PUSH 	AR7
-	MOV  	R0,#LOW (A?045)
-	MOV  	A,@R0
-	MOV  	R6,A
-	INC  	R0
-	MOV  	A,@R0
-	MOV  	R0,#01BH
-?C0069:
-	XCH  	A,R6
-	CLR  	C
-	RRC  	A
-	XCH  	A,R6
-	RRC  	A
-	DJNZ 	R0,?C0069
-	MOV  	R7,A
-	POP  	AR3
-	POP  	AR2
-	POP  	AR1
-	POP  	AR0
-	MOV  	A,R3
-	ORL  	A,R7
-	MOV  	R7,A
-	MOV  	A,R2
-	ORL  	A,R6
-	MOV  	R6,A
-	MOV  	R1,#LOW (B?046)
-	MOV  	A,@R1
-	MOV  	R0,#LOW (C?047)
-	XRL  	A,@R0
-	MOV  	R4,A
-	INC  	R1
-	MOV  	A,@R1
-	INC  	R0
-	XRL  	A,@R0
-	MOV  	R5,A
-	INC  	R0
-	MOV  	A,@R0
-	MOV  	R2,A
-	INC  	R0
-	MOV  	A,@R0
-	MOV  	R3,A
-	MOV  	A,R4
-	XRL  	A,R2
-	MOV  	R4,A
-	MOV  	A,R5
-	XRL  	A,R3
-	ADD  	A,R7
-	MOV  	R7,A
-	MOV  	A,R4
-	ADDC 	A,R6
-	MOV  	R6,A
-	MOV  	A,R7
-	MOV  	R0,#LOW (E?049+01H)
-	ADD  	A,@R0
-	MOV  	R5,A
-	MOV  	A,R6
-	DEC  	R0
-	ADDC 	A,@R0
-	MOV  	R4,A
-	MOV  	R0,#LOW (t?042+01H)
-	MOV  	A,@R0
-	ADD  	A,ACC
-	MOV  	R7,A
-	DEC  	R0
-	MOV  	A,@R0
-	RLC  	A
-	MOV  	R6,A
-	MOV  	A,#LOW (W?044)
-	ADD  	A,R7
-	MOV  	DPL,A
-	MOV  	A,#HIGH (W?044)
-	ADDC 	A,R6
-	MOV  	DPH,A
-	MOVX 	A,@DPTR
-	MOV  	R6,A
-	INC  	DPTR
-	MOVX 	A,@DPTR
-	ADD  	A,R5
-	MOV  	R7,A
-	MOV  	A,R6
-	ADDC 	A,R4
-	MOV  	R6,A
-	MOV  	A,R7
-	DEC  	R0
-	ADD  	A,@R0
-	MOV  	R1,#LOW (temp?043+01H)
-	MOV  	@R1,A
-	MOV  	A,R6
-	DEC  	R0
-	ADDC 	A,@R0
-	DEC  	R1
-	MOV  	@R1,A
-;         temp &= 0xFFFFFFFF;
-			; SOURCE LINE # 108
-	MOV  	R0,#LOW (temp?043)
-	MOV  	A,@R0
-	MOV  	@R0,A
-	INC  	R0
-	MOV  	A,@R0
-	MOV  	@R0,A
-;         E = D;
-			; SOURCE LINE # 109
-	MOV  	R0,#LOW (E?049)
-	MOV  	@R0,AR2
-	INC  	R0
-	MOV  	@R0,AR3
-;         D = C;
-			; SOURCE LINE # 110
-	MOV  	R0,#LOW (C?047)
-	MOV  	A,@R0
-	MOV  	R6,A
-	INC  	R0
-	MOV  	A,@R0
-	MOV  	R7,A
-	INC  	R0
-	MOV  	@R0,AR6
-	INC  	R0
-	MOV  	@R0,AR7
-;         C = SHA1CircularShift(30,B);
-			; SOURCE LINE # 111
-	MOV  	R0,#LOW (B?046)
-	MOV  	A,@R0
-	MOV  	R6,A
-	INC  	R0
-	MOV  	A,@R0
-	MOV  	R0,#01EH
-?C0070:
-	CLR  	C
-	RLC  	A
-	XCH  	A,R6
-	RLC  	A
-	XCH  	A,R6
-	DJNZ 	R0,?C0070
-	MOV  	R7,A
-	CLR  	A
-	MOV  	R4,A
-	MOV  	R5,A
-	PUSH 	AR4
-	PUSH 	AR5
-	PUSH 	AR6
-	PUSH 	AR7
-	MOV  	R0,#LOW (B?046)
-	MOV  	A,@R0
-	MOV  	R6,A
-	INC  	R0
-	MOV  	A,@R0
-	MOV  	R0,#02H
-?C0071:
-	XCH  	A,R6
-	CLR  	C
-	RRC  	A
-	XCH  	A,R6
-	RRC  	A
-	DJNZ 	R0,?C0071
-	MOV  	R7,A
-	POP  	AR3
-	POP  	AR2
-	POP  	AR1
-	POP  	AR0
-	MOV  	A,R3
-	ORL  	A,R7
-	MOV  	R7,A
-	MOV  	A,R2
-	ORL  	A,R6
-	MOV  	R6,A
-	MOV  	R0,#LOW (C?047)
-	MOV  	@R0,AR6
-	INC  	R0
-	MOV  	@R0,AR7
-;         B = A;
 			; SOURCE LINE # 112
 	MOV  	R0,#LOW (A?045)
 	MOV  	A,@R0
@@ -1821,32 +1837,25 @@ _SHA1ProcessMessageBlock:
 	MOV  	@R0,AR7
 ;     }
 			; SOURCE LINE # 114
-	MOV  	R0,#LOW (t?042+01H)
+	MOV  	R0,#LOW (t?042)
 	INC  	@R0
-	MOV  	A,@R0
-	DEC  	R0
-	JNZ  	?C0072
-	INC  	@R0
-?C0072:
-	MOV  	R0,#LOW (t?042+01H)
 	MOV  	A,@R0
 	XRL  	A,#050H
-	DEC  	R0
-	ORL  	A,@R0
 	JZ   	$ + 5H
 	LJMP 	?C0016
 ?C0017:
 ; 
 ;     context->Message_Digest[0] =
 			; SOURCE LINE # 116
-	MOV  	R1,context?040
-	INC  	R1
-	MOV  	A,@R1
+	MOV  	R0,context?040
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
 	MOV  	R0,#LOW (A?045+01H)
 	ADD  	A,@R0
 	MOV  	R7,A
-	DEC  	R1
-	MOV  	A,@R1
+	MOV  	A,R6
 	DEC  	R0
 	ADDC 	A,@R0
 	MOV  	R6,A
@@ -1858,14 +1867,16 @@ _SHA1ProcessMessageBlock:
 ;     context->Message_Digest[1] =
 			; SOURCE LINE # 118
 	MOV  	A,context?040
-	ADD  	A,#03H
-	MOV  	R1,A
-	MOV  	A,@R1
+	ADD  	A,#02H
+	MOV  	R0,A
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
 	MOV  	R0,#LOW (B?046+01H)
 	ADD  	A,@R0
 	MOV  	R7,A
-	DEC  	R1
-	MOV  	A,@R1
+	MOV  	A,R6
 	DEC  	R0
 	ADDC 	A,@R0
 	MOV  	R6,A
@@ -1879,14 +1890,16 @@ _SHA1ProcessMessageBlock:
 ;     context->Message_Digest[2] =
 			; SOURCE LINE # 120
 	MOV  	A,context?040
-	ADD  	A,#05H
-	MOV  	R1,A
-	MOV  	A,@R1
+	ADD  	A,#04H
+	MOV  	R0,A
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
 	MOV  	R0,#LOW (C?047+01H)
 	ADD  	A,@R0
 	MOV  	R7,A
-	DEC  	R1
-	MOV  	A,@R1
+	MOV  	A,R6
 	DEC  	R0
 	ADDC 	A,@R0
 	MOV  	R6,A
@@ -1900,14 +1913,16 @@ _SHA1ProcessMessageBlock:
 ;     context->Message_Digest[3] =
 			; SOURCE LINE # 122
 	MOV  	A,context?040
-	ADD  	A,#07H
-	MOV  	R1,A
-	MOV  	A,@R1
+	ADD  	A,#06H
+	MOV  	R0,A
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
 	MOV  	R0,#LOW (D?048+01H)
 	ADD  	A,@R0
 	MOV  	R7,A
-	DEC  	R1
-	MOV  	A,@R1
+	MOV  	A,R6
 	DEC  	R0
 	ADDC 	A,@R0
 	MOV  	R6,A
@@ -1921,14 +1936,16 @@ _SHA1ProcessMessageBlock:
 ;     context->Message_Digest[4] =
 			; SOURCE LINE # 124
 	MOV  	A,context?040
-	ADD  	A,#09H
-	MOV  	R1,A
-	MOV  	A,@R1
+	ADD  	A,#08H
+	MOV  	R0,A
+	MOV  	A,@R0
+	MOV  	R6,A
+	INC  	R0
+	MOV  	A,@R0
 	MOV  	R0,#LOW (E?049+01H)
 	ADD  	A,@R0
 	MOV  	R7,A
-	DEC  	R1
-	MOV  	A,@R1
+	MOV  	A,R6
 	DEC  	R0
 	ADDC 	A,@R0
 	MOV  	R6,A
@@ -1947,9 +1964,10 @@ _SHA1ProcessMessageBlock:
 	MOV  	R0,A
 	CLR  	A
 	MOV  	@R0,A
+; 	//blink_led();
 ; 
 ; }
-			; SOURCE LINE # 129
+			; SOURCE LINE # 130
 	RET  	
 ; END OF _SHA1ProcessMessageBlock
 
@@ -1960,12 +1978,12 @@ _SHA1ProcessMessageBlock:
 	RSEG  ?PR?_SHA1Reset?MAIN
 _SHA1Reset:
 	USING	0
-			; SOURCE LINE # 132
+			; SOURCE LINE # 133
 ;---- Variable 'context?150' assigned to Register 'R7' ----
 ; {
-			; SOURCE LINE # 133
-;     context->Length_Low             = 0;
 			; SOURCE LINE # 134
+;     context->Length_Low             = 0;
+			; SOURCE LINE # 135
 	MOV  	A,R7
 	ADD  	A,#0AH
 	MOV  	R0,A
@@ -1974,7 +1992,7 @@ _SHA1Reset:
 	INC  	R0
 	MOV  	@R0,A
 ;     context->Length_High            = 0;
-			; SOURCE LINE # 135
+			; SOURCE LINE # 136
 	MOV  	A,R7
 	ADD  	A,#0CH
 	MOV  	R0,A
@@ -1983,7 +2001,7 @@ _SHA1Reset:
 	INC  	R0
 	MOV  	@R0,A
 ;     context->Message_Block_Index    = 0;
-			; SOURCE LINE # 136
+			; SOURCE LINE # 137
 	MOV  	A,R7
 	ADD  	A,#04EH
 	MOV  	R0,A
@@ -1991,13 +2009,13 @@ _SHA1Reset:
 	MOV  	@R0,A
 ; 
 ;     context->Message_Digest[0]      = 0x67452301;
-			; SOURCE LINE # 138
+			; SOURCE LINE # 139
 	MOV  	R0,AR7
 	MOV  	@R0,#023H
 	INC  	R0
 	MOV  	@R0,#01H
 ;     context->Message_Digest[1]      = 0xEFCDAB89;
-			; SOURCE LINE # 139
+			; SOURCE LINE # 140
 	MOV  	A,R7
 	ADD  	A,#02H
 	MOV  	R0,A
@@ -2005,7 +2023,7 @@ _SHA1Reset:
 	INC  	R0
 	MOV  	@R0,#089H
 ;     context->Message_Digest[2]      = 0x98BADCFE;
-			; SOURCE LINE # 140
+			; SOURCE LINE # 141
 	MOV  	A,R7
 	ADD  	A,#04H
 	MOV  	R0,A
@@ -2013,7 +2031,7 @@ _SHA1Reset:
 	INC  	R0
 	MOV  	@R0,#0FEH
 ;     context->Message_Digest[3]      = 0x10325476;
-			; SOURCE LINE # 141
+			; SOURCE LINE # 142
 	MOV  	A,R7
 	ADD  	A,#06H
 	MOV  	R0,A
@@ -2021,7 +2039,7 @@ _SHA1Reset:
 	INC  	R0
 	MOV  	@R0,#076H
 ;     context->Message_Digest[4]      = 0xC3D2E1F0;
-			; SOURCE LINE # 142
+			; SOURCE LINE # 143
 	MOV  	A,R7
 	ADD  	A,#08H
 	MOV  	R0,A
@@ -2030,7 +2048,7 @@ _SHA1Reset:
 	MOV  	@R0,#0F0H
 ; 
 ;     context->Computed   = 0;
-			; SOURCE LINE # 144
+			; SOURCE LINE # 145
 	MOV  	A,R7
 	ADD  	A,#04FH
 	MOV  	R0,A
@@ -2039,7 +2057,7 @@ _SHA1Reset:
 	INC  	R0
 	MOV  	@R0,A
 ;     context->Corrupted  = 0;
-			; SOURCE LINE # 145
+			; SOURCE LINE # 146
 	MOV  	A,R7
 	ADD  	A,#051H
 	MOV  	R0,A
@@ -2047,8 +2065,11 @@ _SHA1Reset:
 	MOV  	@R0,A
 	INC  	R0
 	MOV  	@R0,A
+; 	blink_led();
+			; SOURCE LINE # 147
+	;XRL  	P0,#020H
 ; }
-			; SOURCE LINE # 146
+			; SOURCE LINE # 148
 	RET  	
 ; END OF _SHA1Reset
 
@@ -2059,10 +2080,10 @@ _SHA1Reset:
 	RSEG  ?PR?_SHA1PadMessage?MAIN
 _SHA1PadMessage:
 	USING	0
-			; SOURCE LINE # 149
+			; SOURCE LINE # 151
 	MOV  	context?251,R7
 ; {
-			; SOURCE LINE # 150
+			; SOURCE LINE # 152
 ;     /*
 ;      *  Check to see if the current message block is too small to hold
 ;      *  the initial padding bits and length.  If so, we will pad the
@@ -2070,7 +2091,7 @@ _SHA1PadMessage:
 ;      *  block.
 ;      */
 ;     if (context->Message_Block_Index > 55)
-			; SOURCE LINE # 157
+			; SOURCE LINE # 159
 	MOV  	R0,AR7
 	MOV  	A,R0
 	ADD  	A,#04EH
@@ -2079,11 +2100,11 @@ _SHA1PadMessage:
 	MOV  	A,@R1
 	XRL  	A,#080H
 	SUBB 	A,#0B7H
-	JC   	?C0021
+	JC   	?C0021_1
 ;     {
-			; SOURCE LINE # 158
+			; SOURCE LINE # 160
 ;         context->Message_Block[context->Message_Block_Index++] = 0x80;
-			; SOURCE LINE # 159
+			; SOURCE LINE # 161
 	MOV  	A,R0
 	ADD  	A,#04EH
 	MOV  	R0,A
@@ -2097,7 +2118,7 @@ _SHA1PadMessage:
 	MOV  	@R0,#080H
 ?C0022:
 ;         while(context->Message_Block_Index < 64)
-			; SOURCE LINE # 160
+			; SOURCE LINE # 162
 	MOV  	A,context?251
 	ADD  	A,#04EH
 	MOV  	R1,A
@@ -2107,9 +2128,9 @@ _SHA1PadMessage:
 	SUBB 	A,#0C0H
 	JNC  	?C0023
 ;         {
-			; SOURCE LINE # 161
+			; SOURCE LINE # 163
 ;             context->Message_Block[context->Message_Block_Index++] = 0;
-			; SOURCE LINE # 162
+			; SOURCE LINE # 164
 	MOV  	A,context?251
 	ADD  	A,#04EH
 	MOV  	R0,A
@@ -2123,18 +2144,38 @@ _SHA1PadMessage:
 	CLR  	A
 	MOV  	@R0,A
 ;         }
-			; SOURCE LINE # 163
+			; SOURCE LINE # 165
 	SJMP 	?C0022
+	;MOV ECO_PAGE_ADDR,#HIGH (?C0022)
+    ;MOV ECO_PAGE_ADDR+01H,#LOW (?C0022)
+    ;LJMP   eco_page_manager
+
 ?C0023:
 ; 
 ;         SHA1ProcessMessageBlock(context);
-			; SOURCE LINE # 165
+			; SOURCE LINE # 167
 	MOV  	R7,context?251
 	LCALL	_SHA1ProcessMessageBlock
 ?C0024:
 ; 
 ;         while(context->Message_Block_Index < 56)
-			; SOURCE LINE # 167
+			; SOURCE LINE # 169
+	MOV ECO_PAGE_ADDR,#HIGH (_SHA1PadMessage_2)
+    MOV ECO_PAGE_ADDR+01H,#LOW (_SHA1PadMessage_2)
+    LJMP   eco_page_manager
+
+
+?C0021_1:
+	MOV ECO_PAGE_ADDR,#HIGH (?C0021)
+    MOV ECO_PAGE_ADDR+01H,#LOW (?C0021)
+    LJMP   eco_page_manager
+
+
+
+    RSEG  ?PR?_SHA1PadMessage_2?MAIN	
+_SHA1PadMessage_2:
+	USING	0
+
 	MOV  	A,context?251
 	ADD  	A,#04EH
 	MOV  	R1,A
@@ -2144,9 +2185,9 @@ _SHA1PadMessage:
 	SUBB 	A,#0B8H
 	JNC  	?C0026
 ;         {
-			; SOURCE LINE # 168
+			; SOURCE LINE # 170
 ;             context->Message_Block[context->Message_Block_Index++] = 0;
-			; SOURCE LINE # 169
+			; SOURCE LINE # 171
 	MOV  	A,context?251
 	ADD  	A,#04EH
 	MOV  	R0,A
@@ -2160,16 +2201,20 @@ _SHA1PadMessage:
 	CLR  	A
 	MOV  	@R0,A
 ;         }
-			; SOURCE LINE # 170
-	SJMP 	?C0024
+			; SOURCE LINE # 172
+	;SJMP 	?C0024
+	MOV ECO_PAGE_ADDR,#HIGH (?C0024)
+    MOV ECO_PAGE_ADDR+01H,#LOW (?C0024)
+    LJMP   eco_page_manager
 ;     }
-			; SOURCE LINE # 171
+			; SOURCE LINE # 173
 ?C0021:
 ;     else
 ;     {
-			; SOURCE LINE # 173
+			; SOURCE LINE # 175
 ;         context->Message_Block[context->Message_Block_Index++] = 0x80;
-			; SOURCE LINE # 174
+			; SOURCE LINE # 176
+
 	MOV  	A,context?251
 	ADD  	A,#04EH
 	MOV  	R0,A
@@ -2183,7 +2228,7 @@ _SHA1PadMessage:
 	MOV  	@R0,#080H
 ?C0027:
 ;         while(context->Message_Block_Index < 56)
-			; SOURCE LINE # 175
+			; SOURCE LINE # 177
 	MOV  	A,context?251
 	ADD  	A,#04EH
 	MOV  	R1,A
@@ -2193,9 +2238,9 @@ _SHA1PadMessage:
 	SUBB 	A,#0B8H
 	JNC  	?C0026
 ;         {
-			; SOURCE LINE # 176
+			; SOURCE LINE # 178
 ;             context->Message_Block[context->Message_Block_Index++] = 0;
-			; SOURCE LINE # 177
+			; SOURCE LINE # 179
 	MOV  	A,context?251
 	ADD  	A,#04EH
 	MOV  	R0,A
@@ -2209,17 +2254,20 @@ _SHA1PadMessage:
 	CLR  	A
 	MOV  	@R0,A
 ;         }
-			; SOURCE LINE # 178
+			; SOURCE LINE # 180
 	SJMP 	?C0027
+	;MOV ECO_PAGE_ADDR,#HIGH (?C0027)
+    ;MOV ECO_PAGE_ADDR+01H,#LOW (?C0027)
+    ;LJMP   eco_page_manager
 ;     }
-			; SOURCE LINE # 179
+			; SOURCE LINE # 181
 ?C0026:
 ; 
 ;     /*
 ;      *  Store the message length as the last 8 octets
 ;      */
 ;     context->Message_Block[24] = (context->Length_High >> 24) & 0xFF;
-			; SOURCE LINE # 184
+			; SOURCE LINE # 186
 	MOV  	A,context?251
 	ADD  	A,#0CH
 	MOV  	R1,A
@@ -2228,20 +2276,20 @@ _SHA1PadMessage:
 	INC  	R1
 	MOV  	A,@R1
 	MOV  	R0,#018H
-?C0073:
+?C0067:
 	XCH  	A,R6
 	CLR  	C
 	RRC  	A
 	XCH  	A,R6
 	RRC  	A
-	DJNZ 	R0,?C0073
+	DJNZ 	R0,?C0067
 	MOV  	R7,A
 	MOV  	A,context?251
 	ADD  	A,#026H
 	MOV  	R0,A
 	MOV  	@R0,AR7
 ;     context->Message_Block[25] = (context->Length_High >> 16) & 0xFF;
-			; SOURCE LINE # 185
+			; SOURCE LINE # 187
 	MOV  	A,context?251
 	ADD  	A,#0CH
 	MOV  	R1,A
@@ -2250,20 +2298,20 @@ _SHA1PadMessage:
 	INC  	R1
 	MOV  	A,@R1
 	MOV  	R0,#010H
-?C0074:
+?C0068:
 	XCH  	A,R6
 	CLR  	C
 	RRC  	A
 	XCH  	A,R6
 	RRC  	A
-	DJNZ 	R0,?C0074
+	DJNZ 	R0,?C0068
 	MOV  	R7,A
 	MOV  	A,context?251
 	ADD  	A,#027H
 	MOV  	R0,A
 	MOV  	@R0,AR7
 ;     context->Message_Block[26] = (context->Length_High >> 8) & 0xFF;
-			; SOURCE LINE # 186
+			; SOURCE LINE # 188
 	MOV  	A,context?251
 	ADD  	A,#0CH
 	MOV  	R1,A
@@ -2274,7 +2322,7 @@ _SHA1PadMessage:
 	MOV  	R0,A
 	MOV  	@R0,AR7
 ;     context->Message_Block[27] = (context->Length_High) & 0xFF;
-			; SOURCE LINE # 187
+			; SOURCE LINE # 189
 	MOV  	A,context?251
 	ADD  	A,#0DH
 	MOV  	R1,A
@@ -2285,7 +2333,7 @@ _SHA1PadMessage:
 	MOV  	R0,A
 	MOV  	@R0,AR7
 ;     context->Message_Block[28] = (context->Length_Low >> 24) & 0xFF;
-			; SOURCE LINE # 188
+			; SOURCE LINE # 190
 	MOV  	A,context?251
 	ADD  	A,#0AH
 	MOV  	R1,A
@@ -2294,20 +2342,20 @@ _SHA1PadMessage:
 	INC  	R1
 	MOV  	A,@R1
 	MOV  	R0,#018H
-?C0075:
+?C0069:
 	XCH  	A,R6
 	CLR  	C
 	RRC  	A
 	XCH  	A,R6
 	RRC  	A
-	DJNZ 	R0,?C0075
+	DJNZ 	R0,?C0069
 	MOV  	R7,A
 	MOV  	A,context?251
 	ADD  	A,#02AH
 	MOV  	R0,A
 	MOV  	@R0,AR7
 ;     context->Message_Block[29] = (context->Length_Low >> 16) & 0xFF;
-			; SOURCE LINE # 189
+			; SOURCE LINE # 191
 	MOV  	A,context?251
 	ADD  	A,#0AH
 	MOV  	R1,A
@@ -2316,20 +2364,20 @@ _SHA1PadMessage:
 	INC  	R1
 	MOV  	A,@R1
 	MOV  	R0,#010H
-?C0076:
+?C0070:
 	XCH  	A,R6
 	CLR  	C
 	RRC  	A
 	XCH  	A,R6
 	RRC  	A
-	DJNZ 	R0,?C0076
+	DJNZ 	R0,?C0070
 	MOV  	R7,A
 	MOV  	A,context?251
 	ADD  	A,#02BH
 	MOV  	R0,A
 	MOV  	@R0,AR7
 ;     context->Message_Block[30] = (context->Length_Low >> 8) & 0xFF;
-			; SOURCE LINE # 190
+			; SOURCE LINE # 192
 	MOV  	A,context?251
 	ADD  	A,#0AH
 	MOV  	R1,A
@@ -2340,7 +2388,7 @@ _SHA1PadMessage:
 	MOV  	R0,A
 	MOV  	@R0,AR7
 ;     context->Message_Block[31] = (context->Length_Low) & 0xFF;
-			; SOURCE LINE # 191
+			; SOURCE LINE # 193
 	MOV  	A,context?251
 	ADD  	A,#0BH
 	MOV  	R1,A
@@ -2352,28 +2400,32 @@ _SHA1PadMessage:
 	MOV  	@R0,AR7
 ; 
 ;     SHA1ProcessMessageBlock(context);
-			; SOURCE LINE # 193
+			; SOURCE LINE # 195
 	MOV  	R7,context?251
 	LJMP 	_SHA1ProcessMessageBlock
 ; END OF _SHA1PadMessage
 
+; 
+; 	//blink_led();
 ; }
 ; 
 ; 
-; int SHA1Result(SHA1Context idata *context)
+; int SHA1Result(SHA1Context idata *context) reentrant
 
-	RSEG  ?PR?_SHA1Result?MAIN
-_SHA1Result:
+	RSEG  ?PR?_?SHA1Result?MAIN
+_?SHA1Result:
 	USING	0
-			; SOURCE LINE # 197
-	MOV  	context?352,R7
+			; SOURCE LINE # 201
+	DEC  	?C_IBP
+	MOV  	R0,?C_IBP
+	MOV  	@R0,AR7
 ; {
-			; SOURCE LINE # 198
 ; 
 ;     if (context->Corrupted)
-			; SOURCE LINE # 200
-	MOV  	R0,AR7
-	MOV  	A,R0
+			; SOURCE LINE # 204
+	MOV  	R0,?C_IBP
+	MOV  	A,@R0
+	MOV  	R5,A
 	ADD  	A,#052H
 	MOV  	R1,A
 	MOV  	A,@R1
@@ -2381,20 +2433,20 @@ _SHA1Result:
 	ORL  	A,@R1
 	JZ   	?C0030
 ;     {
-			; SOURCE LINE # 201
+			; SOURCE LINE # 205
 ;         return 0;
-			; SOURCE LINE # 202
+			; SOURCE LINE # 206
 	CLR  	A
 	MOV  	R6,A
 	MOV  	R7,A
-	RET  	
+	SJMP 	?C0031
 ;     }
-			; SOURCE LINE # 203
+			; SOURCE LINE # 207
 ?C0030:
 ; 
 ;     if (!context->Computed)
-			; SOURCE LINE # 205
-	MOV  	A,context?352
+			; SOURCE LINE # 209
+	MOV  	A,R5
 	ADD  	A,#050H
 	MOV  	R1,A
 	MOV  	A,@R1
@@ -2402,32 +2454,36 @@ _SHA1Result:
 	ORL  	A,@R1
 	JNZ  	?C0032
 ;     {
-			; SOURCE LINE # 206
+			; SOURCE LINE # 210
 ;         SHA1PadMessage(context);
-			; SOURCE LINE # 207
-	MOV  	R7,context?352
-	LCALL	_SHA1PadMessage
+			; SOURCE LINE # 211
+	MOV  	R0,?C_IBP
+	MOV  	A,@R0
+	MOV  	R7,A
+	;LCALL	_SHA1PadMessage
 ;         context->Computed = 1;
-			; SOURCE LINE # 208
-	MOV  	A,context?352
+			; SOURCE LINE # 212
+	MOV  	R0,?C_IBP
+	MOV  	A,@R0
 	ADD  	A,#04FH
 	MOV  	R0,A
 	MOV  	@R0,#00H
 	INC  	R0
 	MOV  	@R0,#01H
 ;     }
-			; SOURCE LINE # 209
+			; SOURCE LINE # 213
 ?C0032:
 ; 
 ;     return 1;
-			; SOURCE LINE # 211
+			; SOURCE LINE # 215
 	MOV  	R6,#00H
 	MOV  	R7,#01H
 ; }
-			; SOURCE LINE # 212
+			; SOURCE LINE # 216
 ?C0031:
+	INC  	?C_IBP
 	RET  	
-; END OF _SHA1Result
+; END OF _?SHA1Result
 
 ; 
 ; 
@@ -2436,36 +2492,36 @@ _SHA1Result:
 	RSEG  ?PR?_SHA1Input?MAIN
 _SHA1Input:
 	USING	0
-			; SOURCE LINE # 215
-	MOV  	context?453,R7
-	MOV  	message_array?454,R5
-	MOV  	length?455,R2
-	MOV  	length?455+01H,R3
+			; SOURCE LINE # 219
+	MOV  	context?452,R7
+	MOV  	message_array?453,R5
+	MOV  	length?454,R2
+	MOV  	length?454+01H,R3
 ; {
-			; SOURCE LINE # 216
+			; SOURCE LINE # 220
 ;     if (!length)
-			; SOURCE LINE # 217
-	MOV  	A,length?455+01H
-	ORL  	A,length?455
+			; SOURCE LINE # 221
+	MOV  	A,length?454+01H
+	ORL  	A,length?454
 	JNZ  	$ + 5H
 	LJMP 	?C0034
 ;     {
-			; SOURCE LINE # 218
+			; SOURCE LINE # 222
 ;         return;
 ;     }
-			; SOURCE LINE # 220
+			; SOURCE LINE # 224
 ?C0033:
 ; 
 ;     if (context->Computed || context->Corrupted)
-			; SOURCE LINE # 222
-	MOV  	A,context?453
+			; SOURCE LINE # 226
+	MOV  	A,context?452
 	ADD  	A,#050H
 	MOV  	R1,A
 	MOV  	A,@R1
 	DEC  	R1
 	ORL  	A,@R1
 	JNZ  	?C0036
-	MOV  	A,context?453
+	MOV  	A,context?452
 	ADD  	A,#052H
 	MOV  	R1,A
 	MOV  	A,@R1
@@ -2474,10 +2530,10 @@ _SHA1Input:
 	JZ   	?C0037
 ?C0036:
 ;     {
-			; SOURCE LINE # 223
+			; SOURCE LINE # 227
 ;         context->Corrupted = 1;
-			; SOURCE LINE # 224
-	MOV  	A,context?453
+			; SOURCE LINE # 228
+	MOV  	A,context?452
 	ADD  	A,#051H
 	MOV  	R0,A
 	MOV  	@R0,#00H
@@ -2486,20 +2542,20 @@ _SHA1Input:
 	RET  	
 ;         return;
 ;     }
-			; SOURCE LINE # 226
+			; SOURCE LINE # 230
 ?C0037:
 ; 
 ;     while(length-- && !context->Corrupted)
-			; SOURCE LINE # 228
-	MOV  	A,length?455+01H
-	DEC  	length?455+01H
-	MOV  	R6,length?455
-	JNZ  	?C0077
-	DEC  	length?455
-?C0077:
+			; SOURCE LINE # 232
+	MOV  	A,length?454+01H
+	DEC  	length?454+01H
+	MOV  	R6,length?454
+	JNZ  	?C0071
+	DEC  	length?454
+?C0071:
 	ORL  	A,R6
 	JZ   	?C0034
-	MOV  	A,context?453
+	MOV  	A,context?452
 	ADD  	A,#052H
 	MOV  	R1,A
 	MOV  	A,@R1
@@ -2507,27 +2563,28 @@ _SHA1Input:
 	ORL  	A,@R1
 	JNZ  	?C0034
 ;     {
-			; SOURCE LINE # 229
+			; SOURCE LINE # 233
 ;         context->Message_Block[context->Message_Block_Index++] =(*message_array & 0xFF);
-			; SOURCE LINE # 230
-	MOV  	R0,message_array?454
+			; SOURCE LINE # 234
+	MOV  	R0,message_array?453
 	MOV  	A,@R0
 	MOV  	R7,A
-	MOV  	A,context?453
+	MOV  	A,context?452
 	ADD  	A,#04EH
 	MOV  	R0,A
 	MOV  	A,@R0
 	INC  	@R0
 	MOV  	R6,A
-	MOV  	A,context?453
+	MOV  	A,context?452
 	ADD  	A,#0EH
 	ADD  	A,R6
 	MOV  	R0,A
 	MOV  	@R0,AR7
 ; 
+; 		//blink_led();
 ;         context->Length_Low += 8;
-			; SOURCE LINE # 232
-	MOV  	A,context?453
+			; SOURCE LINE # 237
+	MOV  	A,context?452
 	ADD  	A,#0BH
 	MOV  	R0,A
 	MOV  	A,#08H
@@ -2539,8 +2596,8 @@ _SHA1Input:
 	MOV  	@R0,A
 ;         /* Force it to 32 bits */
 ;         context->Length_Low &= 0xFFFFFFFF;
-			; SOURCE LINE # 234
-	MOV  	A,context?453
+			; SOURCE LINE # 239
+	MOV  	A,context?452
 	ADD  	A,#0AH
 	MOV  	R0,A
 	MOV  	A,@R0
@@ -2549,8 +2606,8 @@ _SHA1Input:
 	MOV  	A,@R0
 	MOV  	@R0,A
 ;         if (context->Length_Low == 0)
-			; SOURCE LINE # 235
-	MOV  	A,context?453
+			; SOURCE LINE # 240
+	MOV  	A,context?452
 	ADD  	A,#0BH
 	MOV  	R1,A
 	MOV  	A,@R1
@@ -2558,23 +2615,23 @@ _SHA1Input:
 	ORL  	A,@R1
 	JNZ  	?C0039
 ;         {
-			; SOURCE LINE # 236
+			; SOURCE LINE # 241
 ;             context->Length_High++;
-			; SOURCE LINE # 237
-	MOV  	A,context?453
+			; SOURCE LINE # 242
+	MOV  	A,context?452
 	ADD  	A,#0CH
 	MOV  	R0,A
 	INC  	R0
 	INC  	@R0
 	MOV  	A,@R0
 	DEC  	R0
-	JNZ  	?C0078
+	JNZ  	?C0072
 	INC  	@R0
-?C0078:
+?C0072:
 ;             /* Force it to 32 bits */
 ;             context->Length_High &= 0xFFFFFFFF;
-			; SOURCE LINE # 239
-	MOV  	A,context?453
+			; SOURCE LINE # 244
+	MOV  	A,context?452
 	ADD  	A,#0CH
 	MOV  	R0,A
 	MOV  	A,@R0
@@ -2583,8 +2640,8 @@ _SHA1Input:
 	MOV  	A,@R0
 	MOV  	@R0,A
 ;             if (context->Length_High == 0)
-			; SOURCE LINE # 240
-	MOV  	A,context?453
+			; SOURCE LINE # 245
+	MOV  	A,context?452
 	ADD  	A,#0DH
 	MOV  	R1,A
 	MOV  	A,@R1
@@ -2592,47 +2649,49 @@ _SHA1Input:
 	ORL  	A,@R1
 	JNZ  	?C0039
 ;             {
-			; SOURCE LINE # 241
+			; SOURCE LINE # 246
 ;                 /* Message is too long */
 ;                 context->Corrupted = 1;
-			; SOURCE LINE # 243
-	MOV  	A,context?453
+			; SOURCE LINE # 248
+	MOV  	A,context?452
 	ADD  	A,#051H
 	MOV  	R0,A
 	MOV  	@R0,#00H
 	INC  	R0
 	MOV  	@R0,#01H
 ;             }
-			; SOURCE LINE # 244
+			; SOURCE LINE # 249
 ;         }
-			; SOURCE LINE # 245
+			; SOURCE LINE # 250
 ?C0039:
 ; 
 ;         if (context->Message_Block_Index == 32)
-			; SOURCE LINE # 247
-	MOV  	A,context?453
+			; SOURCE LINE # 252
+	MOV  	A,context?452
 	ADD  	A,#04EH
 	MOV  	R1,A
 	MOV  	A,@R1
 	CJNE 	A,#020H,?C0041
+
+	;XRL  	P0,#020H
 ;         {
-			; SOURCE LINE # 248
+			; SOURCE LINE # 253
 ;             SHA1ProcessMessageBlock(context);
-			; SOURCE LINE # 249
-	MOV  	R7,context?453
+			; SOURCE LINE # 254
+	MOV  	R7,context?452
 	LCALL	_SHA1ProcessMessageBlock
 ;         }
-			; SOURCE LINE # 250
+			; SOURCE LINE # 255
 ?C0041:
 ; 
 ;         message_array++;
-			; SOURCE LINE # 252
-	INC  	message_array?454
+			; SOURCE LINE # 257
+	INC  	message_array?453
 ;     }
-			; SOURCE LINE # 253
+			; SOURCE LINE # 258
 	LJMP 	?C0037
 ; }
-			; SOURCE LINE # 254
+			; SOURCE LINE # 259
 ?C0034:
 	RET  	
 ; END OF _SHA1Input
@@ -2644,111 +2703,122 @@ _SHA1Input:
 	RSEG  ?PR?main?MAIN
 main:
 	USING	0
-			; SOURCE LINE # 257
+			; SOURCE LINE # 262
 ; {
-			; SOURCE LINE # 258
+			; SOURCE LINE # 263
 ; 
-; 	idata char i;
+; 	char i;
 ; 	idata SHA1Context sha;
 ; 
 ; 	store_cpu_rate(16);
-			; SOURCE LINE # 263
+			; SOURCE LINE # 268
 	MOV  	R7,#010H
 	MOV  	R6,#00H
 	LCALL	_store_cpu_rate
 ; 
 ;     P0_DIR &= ~0x28;
-			; SOURCE LINE # 265
+			; SOURCE LINE # 270
 	ANL  	P0_DIR,#0D7H
 ;     P0_ALT &= ~0x28;
-			; SOURCE LINE # 266
+			; SOURCE LINE # 271
 	ANL  	P0_ALT,#0D7H
 ; 
 ; 	serial_init(19200);
-			; SOURCE LINE # 268
+			; SOURCE LINE # 273
 	MOV  	R7,#00H
 	MOV  	R6,#04BH
 	LCALL	_serial_init
 ; 
 ; 
 ; 	for(i=0;i<6;i++)
-			; SOURCE LINE # 271
+			; SOURCE LINE # 276
 	CLR  	A
-	MOV  	R0,#LOW (i?556)
-	MOV  	@R0,A
+	MOV  	i?555,A
 ?C0042:
 ; 	{
-			; SOURCE LINE # 272
+			; SOURCE LINE # 277
 ; 		blink_led();
-			; SOURCE LINE # 273
+			; SOURCE LINE # 278
 	XRL  	P0,#020H
 ; 		mdelay(400);
-			; SOURCE LINE # 274
+			; SOURCE LINE # 279
 	MOV  	R7,#090H
 	MOV  	R6,#01H
 	LCALL	_mdelay
 ; 	}	
-			; SOURCE LINE # 275
-	MOV  	R0,#LOW (i?556)
-	INC  	@R0
+			; SOURCE LINE # 280
+	INC  	i?555
 	CLR  	C
-	MOV  	A,@R0
+	MOV  	A,i?555
 	XRL  	A,#080H
 	SUBB 	A,#086H
 	JC   	?C0042
 ?C0043:
 ; 	
 ; 	sha_counter++;
-			; SOURCE LINE # 277
+			; SOURCE LINE # 282
 	INC  	sha_counter+01H
 	MOV  	A,sha_counter+01H
-	JNZ  	?C0079
+	JNZ  	?C0073
 	INC  	sha_counter
-?C0079:
+?C0073:
 ?C0045:
 ; 
 ; 	while(1)
-			; SOURCE LINE # 279
+			; SOURCE LINE # 284
 ; 	{
-			; SOURCE LINE # 280
+			; SOURCE LINE # 285
 ; 		SHA1Reset(&sha);
-			; SOURCE LINE # 281
-	MOV  	R7,#LOW (sha?557)
-	LCALL	_SHA1Reset
+			; SOURCE LINE # 286
+	;MOV  	R7,#LOW (sha?556)
+	MOV R0,#LOW (ECO_PAGE_REGISTER7)
+    MOV @R0,#LOW (sha?556)
+	;LCALL	_SHA1Reset
+	MOV ECO_PAGE_ADDR,#HIGH (_SHA1Reset)
+    MOV ECO_PAGE_ADDR+01H,#LOW (_SHA1Reset)
+    LJMP   eco_page_manager
 ; 		SHA1Input(&sha, (const unsigned char *) TESTA, 3);
-			; SOURCE LINE # 282
-	MOV  	R5,#LOW (?SC_0)
-	MOV  	R3,#03H
-	MOV  	R2,#00H
-	LCALL	_SHA1Input
+			; SOURCE LINE # 287
+	;MOV  	R5,#LOW (?SC_0)
+	;MOV  	R3,#03H
+	;MOV  	R2,#00H
+	MOV R0,#LOW (ECO_PAGE_REGISTER5)
+    MOV @R0,#LOW (?SC_0)
+	MOV R0,#LOW (ECO_PAGE_REGISTER3)
+    MOV @R0,#03H
+	MOV R0,#LOW (ECO_PAGE_REGISTER2)
+    MOV @R0,#00H
+	;LCALL	_SHA1Input
+	MOV ECO_PAGE_ADDR,#HIGH (_SHA1Input)
+    MOV ECO_PAGE_ADDR+01H,#LOW (_SHA1Input)
+    LJMP   eco_page_manager
+	
 ; 
 ; 		SHA1Result(&sha);
-			; SOURCE LINE # 284
-	MOV  	R7,#LOW (sha?557)
-	LCALL	_SHA1Result
+			; SOURCE LINE # 289
+	MOV  	R7,#LOW (sha?556)
+	LCALL	_?SHA1Result
 ; 		sha_counter++;
-			; SOURCE LINE # 285
+			; SOURCE LINE # 290
 	INC  	sha_counter+01H
 	MOV  	A,sha_counter+01H
-	JNZ  	?C0080
+	JNZ  	?C0074
 	INC  	sha_counter
-?C0080:
-; 		blink_led();
-			; SOURCE LINE # 286
-	XRL  	P0,#020H
+?C0074:
+; 		//blink_led();
 ; 		int_print(sha_counter);
-			; SOURCE LINE # 287
+			; SOURCE LINE # 292
 	MOV  	R6,sha_counter
 	MOV  	R7,sha_counter+01H
 	LCALL	_?int_print
 ; 		puts("\r\n");
-			; SOURCE LINE # 288
+			; SOURCE LINE # 293
 	MOV  	R3,#0FFH
 	MOV  	R2,#HIGH (?SC_4)
 	MOV  	R1,#LOW (?SC_4)
 	LCALL	_puts
 ; 	}	
-			; SOURCE LINE # 289
+			; SOURCE LINE # 294
 	SJMP 	?C0045
 ; END OF main
 
